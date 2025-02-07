@@ -37,8 +37,8 @@
               </button>
 
               <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-[2000px] max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
+              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-[2000px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+                <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
                   <div v-for="category in menuData" :key="category.route" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
                       <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
@@ -85,11 +85,11 @@
     </div>
 
     <!-- Sidebar Menu (Mobile) -->
-    <div v-if="isSidebarOpen" class="fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden" @click.self="toggleSidebar">
-      <div class="absolute left-0 top-0 w-3/4 h-full bg-customBlue shadow-lg p-4 transition-transform transform"
-           :class="{'translate-x-0': isSidebarOpen, '-translate-x-full': !isSidebarOpen}">
+    <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-40 md:hidden" @click.self="toggleSidebar">
+      <div class="absolute left-0 top-0 w-3/4 h-full bg-customBlue shadow-lg p-4 transform transition-transform duration-300"
+           :class="{'translate-x-0 ': isSidebarOpen, '-translate-x-full': !isSidebarOpen}">
         <button @click="toggleSidebar" class="absolute top-4 right-4 text-xl text-gray-600">
-          <i class="fa fa-times text-customRed"></i>
+          <i class="fa fa-times text-gray-700 "></i>
         </button>
         <div class="flex flex-col space-y-6 mt-10">
           <router-link
@@ -100,16 +100,15 @@
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'text-gray-900': !isDropdownVisible, 'text-white': isDropdownVisible }"
-                class="hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+                class="text-gray-900 hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
               >
                 Coins
-                <i class="fa fa-chevron-down text-xs ml-1"></i>
+                <i class="fa fa-chevron-down text-xs ml-1" :class="{ 'text-customRed': isDropdownVisible, 'text-gray-700': !isDropdownVisible }"></i>
               </button>
 
-              <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-50 max-w-[600px] md:max-w-[800px] lg:max-w-[1000px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
+              <!-- Contenu du menu déroulant  mobile -->
+              <div v-if="isDropdownVisible" class="absolute scroll-m-5 z-50 bg-white shadow-xl w-[250px] mt-2 rounded-lg p-5">
+                <div class="grid grid-cols-1 gap-4">
                   <div v-for="category in menuData" :key="category.route" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
                       <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
@@ -172,12 +171,12 @@
     <div id="searchBar" class="container mx-auto px-4">
       <p class="text-white text-xl font-bold font-poppins">ENJOY ,</p>
       <p class="text-white text-lg font-bold font-poppins">Te trouve les coins de qualités !</p>
-      <div class="flex flex-wrap gap-4 p-4 justify-between items-center">
+      <div class="flex flex-wrap gap-1 p-4 items-center justify-center">
         <!-- Inputs de recherche -->
-        <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-full max-w-[250px] sm:max-w-[200px] md:max-w-[250px]" />
-        <FloatingInput ph="Ville ou région" icon="fa fa-location-dot" class="text-sm w-full max-w-[150px] sm:max-w-[200px] md:max-w-[150px]" />
-        <FloatingInput ph="Quartier ou adresse" icon="fa fa-location-arrow" class="text-sm w-full max-w-[200px] sm:max-w-[250px] md:max-w-[200px]" />
-        <Button variant="danger" size="md" class="w-full max-w-[200px] sm:max-w-[250px] md:max-w-[200px] font-poppins px-6 py-2">
+        <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[250px]" />
+        <FloatingInput ph="Ville ou région" icon="fa fa-location-dot" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[150px]" />
+        <FloatingInput ph="Quartier ou adresse" icon="fa fa-location-arrow" class="text-sm w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px]" />
+        <Button variant="danger" size="md" class="w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px] font-poppins px-6 py-2">
           Recherche
         </Button>
       </div>
