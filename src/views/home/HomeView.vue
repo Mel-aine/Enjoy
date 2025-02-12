@@ -29,10 +29,10 @@ const menuCategory = [
     label: "Restauration",
     icon: "fa fa-utensils",
     Cards: [
-      { route: "/fr/categorie/21/restaurant", title: "Restaurant", image: new URL('@/assets/koala.jpg', import.meta.url).href },
-      { route: "/fr/categorie/22/restaurant-dhotel", title: "Restaurant d'hôtel", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant", title: "Restaurant", image: new URL('@/assets/koala.jpg', import.meta.url).href },
+      { route: "/fr/categorie/restaurant-dhotel", title: "Restaurant d'hôtel", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -40,10 +40,10 @@ const menuCategory = [
     label: "Hôtels Et Hebergements",
     icon: "fa fa-hotel",
     Cards: [
-      { route: "/fr/categorie/31/hotel-luxe", title: "Hôtel de Luxe", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/32/hotel-budget", title: "Hôtel Budget", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/hotel-luxe", title: "Hôtel de Luxe", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/hotel-budget", title: "Hôtel Budget", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -51,10 +51,10 @@ const menuCategory = [
     label: "Divertissements",
     icon: "fa fa-gamepad",
     Cards: [
-      { route: "/fr/categorie/41/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/42/parc-loisir", title: "Parc de Loisirs", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/parc-loisir", title: "Parc de Loisirs", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -62,10 +62,10 @@ const menuCategory = [
     label: "Sites Touristiques",
     icon: "fa fa-camera",
     Cards: [
-      { route: "/fr/categorie/51/musee", title: "Musée", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/52/monuments", title: "Monuments Historiques", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/musee", title: "Musée", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/monuments", title: "Monuments Historiques", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -73,10 +73,10 @@ const menuCategory = [
     label: "Modes et Beauté",
     icon: "fa fa-cut",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -84,10 +84,10 @@ const menuCategory = [
     label: "Transports",
     icon: "fa fa-bus",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -95,10 +95,10 @@ const menuCategory = [
     label: "Commerces",
     icon: "fa fa-shopping-bag",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -106,12 +106,12 @@ const menuCategory = [
     label: "Sports",
     icon: "fa fa-dumbbell",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -119,10 +119,10 @@ const menuCategory = [
     label: "Secours",
     icon: "fa fa-ambulance",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
   {
@@ -130,10 +130,10 @@ const menuCategory = [
     label: "Administrations",
     icon: "fa fa-building",
     Cards: [
-      { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/25/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-      { route: "/fr/categorie/26/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
+      { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
     ],
   },
 ];
@@ -160,7 +160,7 @@ const menuCategory = [
             <router-link
               v-for="(card, index) in category.Cards"
               :key="index"
-              :to="card.route"
+              :to="`/fr/categorie/${card.route.split('/').pop()}`"
               class="bg-white rounded flex-shrink-0 p-2 hover:shadow-lg w-[250px] sm:w-[200px] md:w-[250px]"
             >
               <Card :title="card.title" :description="card.description" />
