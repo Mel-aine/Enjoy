@@ -27,7 +27,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/11/restauration",
     label: "Restauration",
-    icon: "fa fa-utensils",
+    icon: "Utensils",
     Cards: [
       { route: "/fr/categorie/21/restaurant", title: "Restaurant", image: new URL('@/assets/koala.jpg', import.meta.url).href },
       { route: "/fr/categorie/22/restaurant-dhotel", title: "Restaurant d'hôtel", image: "https://via.placeholder.com/150" },
@@ -38,7 +38,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/12/hotels",
     label: "Hôtels Et Hebergements",
-    icon: "fa fa-hotel",
+    icon: "Hotel",
     Cards: [
       { route: "/fr/categorie/31/hotel-luxe", title: "Hôtel de Luxe", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/32/hotel-budget", title: "Hôtel Budget", image: "https://via.placeholder.com/150" },
@@ -49,7 +49,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/13/divertissements",
     label: "Divertissements",
-    icon: "fa fa-gamepad",
+    icon: "Gamepad2",
     Cards: [
       { route: "/fr/categorie/41/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/42/parc-loisir", title: "Parc de Loisirs", image: "https://via.placeholder.com/150" },
@@ -60,7 +60,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/14/sites-touristiques",
     label: "Sites Touristiques",
-    icon: "fa fa-camera",
+    icon: "Camera",
     Cards: [
       { route: "/fr/categorie/51/musee", title: "Musée", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/52/monuments", title: "Monuments Historiques", image: "https://via.placeholder.com/150" },
@@ -71,7 +71,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Modes et Beauté",
-    icon: "fa fa-cut",
+    icon: "Scissors",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -82,7 +82,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Transports",
-    icon: "fa fa-bus",
+    icon: "BusFront",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -93,7 +93,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Commerces",
-    icon: "fa fa-shopping-bag",
+    icon: "ShoppingBag",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -104,7 +104,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Sports",
-    icon: "fa fa-dumbbell",
+    icon: "Dumbbell",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -117,7 +117,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Secours",
-    icon: "fa fa-ambulance",
+    icon: "Ambulance",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -128,7 +128,7 @@ const menuCategory = [
   {
     route: "/fr/categorie/15/modes-et-beaute",
     label: "Administrations",
-    icon: "fa fa-building",
+    icon: "Building2",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
       { route: "/fr/categorie/62/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -142,7 +142,7 @@ const menuCategory = [
 
 <template>
   <div class="p-7">
-    <div class="bg-white px-10 py-5 container mx-auto w-full md:w-[1400px]">
+    <div class="bg-customWhite px-10 py-5 container mx-auto w-full md:w-[1400px]">
       <p class="text-xl font-poppins">Découvrez des bons plans et amusez-vous sans effort.</p>
       <p class="text-xs font-poppins">Que vous voyagiez seul, en famille, entre amis ou avec des collègues, <span class="font-bold"> Enjoy</span> vous guide vers les meilleurs snacks, restaurants, attractions, piscines, hôtels et sites touristiques, avec des informations en temps réel !</p>
 
@@ -161,7 +161,7 @@ const menuCategory = [
               v-for="(card, index) in category.Cards"
               :key="index"
               :to="card.route"
-              class="bg-white rounded flex-shrink-0 p-2 hover:shadow-lg w-[250px] sm:w-[200px] md:w-[250px]"
+              class="bg-transparent rounded flex-shrink-0 p-2 w-[250px] sm:w-[200px] md:w-[250px]"
             >
               <Card :title="card.title" :description="card.description" />
             </router-link>

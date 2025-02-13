@@ -1,11 +1,11 @@
 <template>
-    <div class="max-w-sm bg-white border rounded-xl shadow-lg overflow-hidden relative group">
+    <div class="max-w-sm bg-customWhite border rounded-xl shadow-lg overflow-hidden relative group">
       <!-- Image en fond -->
       <div class="relative">
         <img :src="image" alt="Card Background" class="w-full h-40 object-cover" />
-        <!-- Superposition de l'icône -->
+        <!-- Superposition de l'ombre au passage de la souris -->
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300">
-          <i :class="icon" class="text-white text-5xl"></i>
+          <!-- <i :class="icon" class="text-customNeutreColor text-5xl"></i> -->
         </div>
       </div>
       <div class="my-1 border rounded-full"></div>
@@ -14,6 +14,7 @@
       <!-- Conteneur pour le titre et l'icône alignés -->
       <div class="flex justify-between items-center">
         <h3 class="text-sm font-semibold">{{ title }}</h3>
+        <BaseIcon name="ThumbsUp" size="20"/>
         <i class="fa fa-circle-check text-blue-500"></i>
 
       </div>
@@ -26,9 +27,10 @@
   
   <script setup>
   import { computed } from 'vue';
+  import BaseIcon from '../icons/BaseIcon.vue';
   
   // Définir l'image par défaut dans un computed
-  const defaultImage = new URL('@/assets/logo.png', import.meta.url).href;
+  const defaultImage = new URL('@/assets/koala.png', import.meta.url).href;
   
   const props = defineProps({
     image: {

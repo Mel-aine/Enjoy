@@ -4,7 +4,7 @@
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
       <!-- Logo -->
       <div id="logo" class="rounded-full flex-shrink-0">
-        <img class="rounded-full" src="@/assets/logo.png" width="50" alt="Logo">
+        <img class="rounded-full" src="@/assets/logo2.png" width="50" alt="Logo">
       </div>
 
       <!-- Menu Mobile: Bouton avec icône "fa-bars" -->
@@ -70,6 +70,7 @@
               active-class="border-b-2 border-indigo-400">
               Contact
             </router-link>
+            
           </div>
         </nav>
       </div>
@@ -77,7 +78,7 @@
       <!-- User Management (à droite) -->
       <div id="userManage" class="flex items-center space-x-4">
         <button>
-          <i class="fa fa-star text-white"></i>
+          <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
         <Button variant="ligth" class="font-poppins">Inscription</Button>
         <Button variant="ligth" class="font-poppins">Connexion</Button>
@@ -148,18 +149,20 @@
             <!-- Menu principal avec défilement horizontal -->
             <ul ref="scrollMenu" class="flex overflow-x-auto whitespace-nowrap w-full space-x-6 scrollbar-hide transition-transform duration-200 ease-in-out">
               <li v-for="(menuItem, index) in menuItems" :key="index" class="menu-item">
-                <router-link :to="menuItem.route" class="flex items-center text-xs text-white hover:text-gray-900 rounded-full hover:bg-gray-300 px-3 py-2 hover:transition-transform duration-200 hover:text-sm">
-                  <i :class="menuItem.icon" class="text-xs hover:text-xs"></i>
+                <router-link :to="menuItem.route" class="flex items-center text-xs text-white hover:text-gray-900 rounded-full hover:bg-customNeutreColor px-3 py-2 hover:transition-transform duration-200 hover:text-sm">
+                  <!-- <i :class="menuItem.icon" class="text-xs hover:text-xs"></i> -->
+                  <BaseIcon :name="menuItem.icon" size="12" stroke-width="2" class="text-xs hover:text-xs"/> 
+
                   <span class="ml-2">{{ menuItem.label }}</span>
                 </router-link>
               </li>
             </ul>
 
             <!-- Boutons de défilement -->
-            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 text-white rounded-l">
+            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 w-10 text-white rounded-full ">
               <i class="fa fa-chevron-left"></i>
             </button>
-            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 bg-gray-900 text-white rounded-r">
+            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 w-10 bg-gray-900 text-white rounded-full ">
               <i class="fa fa-chevron-right"></i>
             </button>
           </div>
@@ -188,6 +191,8 @@
   import { ref, onMounted, onUnmounted } from 'vue';
   import Button from '@/components/buttons/Button.vue';
   import FloatingInput from '../input/FloatingInput.vue';
+  import BaseIcon from '../icons/BaseIcon.vue';
+
 
   const isDropdownVisible = ref(false) ;
   const scrollMenu = ref(null);
@@ -236,16 +241,16 @@ onUnmounted(() => {
 });
 
   const menuItems = [
-  { route: "/fr/categorie/11/restauration", label: "Restauration", icon: "fa fa-utensils" },
-  { route: "/fr/categorie/12/hotels-et-hebergements", label: "Hotels Et Hébergements", icon: "fa fa-hotel" },
-  { route: "/fr/categorie/13/divertissements", label: "Divertissements", icon: "fa fa-gamepad" },
-  { route: "/fr/categorie/14/sites-touristiques", label: "Sites Touristiques", icon: "fa fa-camera" },
-  { route: "/fr/categorie/15/modes-et-beaute", label: "Modes Et Beauté", icon: "fa fa-cut" },
-  { route: "/fr/categorie/16/transports", label: "Transports", icon: "fa fa-bus" },
-  { route: "/fr/categorie/17/commerces", label: "Commerces", icon: "fa fa-shopping-bag" },
-  { route: "/fr/categorie/18/sports", label: "Sports", icon: "fa fa-dumbbell" },
-  { route: "/fr/categorie/19/secours", label: "Secours", icon: "fa fa-ambulance" },
-  { route: "/fr/categorie/20/administrations", label: "Administrations", icon: "fa fa-building" },
+  { route: "/fr/categorie/11/restauration", label: "Restauration", icon: "Utensils" },
+  { route: "/fr/categorie/12/hotels-et-hebergements", label: "Hotels Et Hébergements", icon: "Hotel" },
+  { route: "/fr/categorie/13/divertissements", label: "Divertissements", icon: "Gamepad2" },
+  { route: "/fr/categorie/14/sites-touristiques", label: "Sites Touristiques", icon: "Camera" },
+  { route: "/fr/categorie/15/modes-et-beaute", label: "Modes Et Beauté", icon: "Scissors" },
+  { route: "/fr/categorie/16/transports", label: "Transports", icon: "BusFront" },
+  { route: "/fr/categorie/17/commerces", label: "Commerces", icon: "ShoppingBag" },
+  { route: "/fr/categorie/18/sports", label: "Sports", icon: "Dumbbell" },
+  { route: "/fr/categorie/19/secours", label: "Secours", icon: "Ambulance" },
+  { route: "/fr/categorie/20/administrations", label: "Administrations", icon: "Building2" },
 ];
 
 const menuData = [
