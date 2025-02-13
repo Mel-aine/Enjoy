@@ -149,22 +149,21 @@ const menuCategory = [
       <div class="flex flex-col gap-6 p-4">
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
           <!-- Catégorie fixe -->
-          <router-link :to="category.route" class="flex-shrink-0 mb-4 md:mb-0">
+          <div :to="category.route" class="flex-shrink-0 mb-4 md:mb-0">
             <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
-          </router-link>
+          </div>
 
           <!-- Cartes scrollables -->
           <div ref="scrollableList"
             class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth"
           >
-            <router-link
+            <div
               v-for="(card, index) in category.Cards"
               :key="index"
-              :to="card.route"
               class="bg-white rounded flex-shrink-0 p-2 hover:shadow-lg w-[250px] sm:w-[200px] md:w-[250px]"
             >
-              <Card :title="card.title" :description="card.description" />
-            </router-link>
+              <Card :title="card.title" :route="card.route" :description="card.description" />
+            </div>
           </div>
 
           <!-- Bouton suivant -->
