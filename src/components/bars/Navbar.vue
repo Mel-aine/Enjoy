@@ -20,7 +20,7 @@
           <div class="flex justify-center space-x-4">
             <router-link
               to="/"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               >
               Accueil
             </router-link>
@@ -29,11 +29,11 @@
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'text-gray-800': isDropdownVisible, 'text-white': !isDropdownVisible }"
-                class="hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+                :class="{ 'text-customRed': isDropdownVisible, 'text-customNeutreColor': !isDropdownVisible }"
+                class="hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               >
                 Coins
-                <i class="fa fa-chevron-down text-xs ml-1 " :class="{ 'text-customRed': isDropdownVisible, 'text-white': !isDropdownVisible }"></i>
+                <i class="fa fa-chevron-down text-xs ml-1 " :class="{ 'text-white': isDropdownVisible, 'text-white': !isDropdownVisible }"></i>
               </button>
 
               <!-- Contenu du menu déroulant -->
@@ -59,14 +59,14 @@
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Application Mobile
             </router-link>
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Contact
             </router-link>
@@ -95,16 +95,16 @@
         <div class="flex flex-col space-y-6 mt-10">
           <router-link
             to="/home"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
+            class="text-lg text-white  px-4 py-2 rounded-md"
             @click="toggleSidebar">Accueil</router-link>
           
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                class="text-gray-900 hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+                class="text-white  px-4 py-2 rounded-sm font-medium font-poppins"
               >
                 Coins
-                <i class="fa fa-chevron-down text-xs ml-1" :class="{ 'text-customRed': isDropdownVisible, 'text-gray-700': !isDropdownVisible }"></i>
+                <i class="fa fa-chevron-down text-xs ml-1" :class="{ 'text-customRed': isDropdownVisible, 'text-customRed': !isDropdownVisible }"></i>
               </button>
 
               <!-- Contenu du menu déroulant  mobile -->
@@ -112,13 +112,13 @@
                 <div class="grid grid-cols-1 gap-4">
                   <div v-for="category in menuData" :key="category.route" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
+                      <router-link :to="category.route" class="block text-sm text-customRed ">
                         {{ category.label }}
                       </router-link>
                     </h3>
                     <ul class="space-y-1">
                       <li v-for="subItem in category.subCategories" :key="subItem.route">
-                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-gray-500">
+                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-customDarkVariant2">
                           {{ subItem.label }}
                         </router-link>
                       </li>
@@ -149,20 +149,18 @@
             <!-- Menu principal avec défilement horizontal -->
             <ul ref="scrollMenu" class="flex overflow-x-auto whitespace-nowrap w-full space-x-6 scrollbar-hide transition-transform duration-200 ease-in-out">
               <li v-for="(menuItem, index) in menuItems" :key="index" class="menu-item">
-                <router-link :to="menuItem.route" class="flex items-center text-xs text-white hover:text-gray-900 rounded-full hover:bg-customNeutreColor px-3 py-2 hover:transition-transform duration-200 hover:text-sm">
-                  <!-- <i :class="menuItem.icon" class="text-xs hover:text-xs"></i> -->
-                  <BaseIcon :name="menuItem.icon" size="12" stroke-width="2" class="text-xs hover:text-xs"/> 
-
-                  <span class="ml-2">{{ menuItem.label }}</span>
+                <router-link :to="menuItem.route" class="flex flex-col items-center text-xs text-white hover:text-gray-900  hover:border-customWhite hover:border-b-2 hover:bg-customNeutreColor hover:rounded-sm px-3 py-2 transition duration-200">
+                  <BaseIcon :name="menuItem.icon" size="14" stroke-width="2" class="text-xs opacity-0 translate-y-2 transition-all duration-300 base-icon" />
+                  <span>{{ menuItem.label }}</span>
                 </router-link>
               </li>
             </ul>
 
             <!-- Boutons de défilement -->
-            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 w-10 text-white rounded-full ">
+            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 w-10 text-white rounded-full">
               <i class="fa fa-chevron-left"></i>
             </button>
-            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 w-10 bg-gray-900 text-white rounded-full ">
+            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 w-10 bg-gray-900 text-white rounded-full">
               <i class="fa fa-chevron-right"></i>
             </button>
           </div>
@@ -465,5 +463,9 @@ const menuData = [
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+.menu-item:hover .base-icon {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 </style>
