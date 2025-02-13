@@ -10,9 +10,11 @@ export default {
         poppins: ["Poppins", "sans-serif"],
       },
       colors:{
-        customBlue: '#11a6ba',
-        customRed: '#d63384',
-        custumRed: '#'
+        customBlue: '#7B2CBF',
+        customRed: '#FF5400',
+        customNeutreColor: '#FCEFE3',
+        customDark: '#171616',
+        customWhite: '#fff9f9'
       },
     },
   },

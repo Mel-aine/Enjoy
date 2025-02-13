@@ -25,10 +25,10 @@ const handleClick = () => {
 };
 
 const buttonClasses = computed(() => {
-    const baseClasses = 'front-medium rounded focus:outline-none focus:ring-2 transition rounded-sm';
+    const baseClasses = 'front-medium rounded focus:outline-none focus:ring-2 transition rounded-md';
 
     const variantClasses = {
-        ligth: 'bg-white text-indigo hover:bg-gray-200 focus:ring-gray-100',
+        ligth: 'bg-customWhite text-indigo hover:bg-gray-200 focus:ring-gray-100',
         primary: 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-300',
         secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-300',
         danger: 'bg-customRed text-white hover:bg-customRed focus:ring-red-300',
