@@ -5,29 +5,32 @@
         <img :src="image" alt="Card Background" class="w-full h-40 object-cover" />
         <!-- Superposition de l'ombre au passage de la souris -->
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300">
-          <!-- <i :class="icon" class="text-customNeutreColor text-5xl"></i> -->
+          <i :class="[icon, 'text-customNeutreColor text-5xl']"></i>
         </div>
       </div>
       <div class="my-1 border rounded-full"></div>
       <!-- Description -->
-      <div class="px-4 py-1">
-      <!-- Conteneur pour le titre et l'icône alignés -->
-      <div class="flex justify-between items-center">
-        <h3 class="text-sm font-semibold">{{ title }}</h3>
-        <BaseIcon name="ThumbsUp" size="20"/>
-        <i class="fa fa-circle-check text-blue-500"></i>
+        <router-link :to="route">
+          <div class="px-4 py-1">
+          <!-- Conteneur pour le titre et l'icône alignés -->
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-semibold">{{ title }}</h3>
+              <i class="fa fa-circle-check text-blue-500"></i>
+            </div>
 
-      </div>
-      <!-- Description en dessous -->
-      <p class="text-xs text-gray-600 mt-1">{{ description }}</p>
+            <p class="text-xs text-gray-600 mt-1">{{ truncateText(description, 20) }}</p>
+
+          <!-- Description en dessous -->
+          </div>
+        </router-link>
     </div>
-    </div>
-    <div class="flex flex-col items-start"></div>
+    
   </template>
   
   <script setup>
   import { computed } from 'vue';
-  import BaseIcon from '../icons/BaseIcon.vue';
+  import { truncateText } from '@/utils/functions'
+  // import BaseIcon from '../icons/BaseIcon.vue';
   
   // Définir l'image par défaut dans un computed
   const defaultImage = new URL('@/assets/koala.png', import.meta.url).href;
@@ -53,6 +56,10 @@
       required: true,
       default: 'Ceci est une description personnalisable.',
     },
+    route: {
+      type: String,
+      default: '/Route disponible',
+    }
   });
   
   // Utilisation d'un computed pour obtenir l'image, ou celle par défaut si vide

@@ -11,16 +11,32 @@ import Carousel from '@/components/carousel/Carousel.vue';
 //   console.log('locale.value', locale.value)
 // };
 
-const showNavButtons = ref(true);
+
+const showLeftButton = ref(false);
+const showRightButton = ref(true);
 
 const scrollableList = ref([]);
 
-const scrollLeft = (index) => {
-  scrollableList.value[index].scrollBy({ left: -300, behavior: "smooth" });
+const checkScrollButtonsVisibility = () => {
+  if (!scrollableList.value || scrollableList.value.length === 0) return;
+
+  const element = scrollableList.value[0];
+  showLeftButton.value = element.scrollLeft > 0;
+  showRightButton.value = element.scrollWidth > element.clientWidth + element.scrollLeft;
 };
 
-const scrollRight = (index) => {
-  scrollableList.value[index].scrollBy({ left: 300, behavior: "smooth" });
+const scrollLeft = () => {
+  if (scrollableList.value[0]) {
+    scrollableList.value[0].scrollBy({ left: -300, behavior: "smooth" });
+    setTimeout(() => checkScrollButtonsVisibility(), 300);
+  }
+};
+
+const scrollRight = () => {
+  if (scrollableList.value[0]) {
+    scrollableList.value[0].scrollBy({ left: 300, behavior: "smooth" });
+    setTimeout(() => checkScrollButtonsVisibility(), 300);
+  }
 };
 
 const menuCategory = [
@@ -149,31 +165,37 @@ const menuCategory = [
       <div class="flex flex-col gap-6 p-4">
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
           <!-- Catégorie fixe -->
-          <router-link :to="category.route" class="flex-shrink-0 mb-4 md:mb-0">
+          <div class="flex-shrink-0 mb-4 md:mb-0">
             <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
-          </router-link>
+          </div>
 
           <!-- Cartes scrollables -->
           <div ref="scrollableList"
-            class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth"
-          >
-            <router-link
+            class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth "
+           >
+            <div
               v-for="(card, index) in category.Cards"
               :key="index"
-              :to="card.route"
               class="bg-transparent rounded flex-shrink-0 p-2 w-[250px] sm:w-[200px] md:w-[250px]"
-            >
-              <Card :title="card.title" :description="card.description" />
-            </router-link>
+             >
+              <Card :title="card.title" :route="card.route" :description="card.description" />
+            </div>
           </div>
 
           <!-- Bouton suivant -->
           <button
-            class="absolute right-0 -mr-4 z-10 bg-gray-300 p-2 w-10 h-10 rounded-full hover:bg-gray-400 focus:outline-none"
+            class="absolute right-0 -mr-4 z-10 bg-customNeutreColor p-2 w-10 h-10 rounded-full hover:bg-white focus:outline-none"
             @click="scrollRight(index)"
-            v-show="showNavButtons"
+            v-show="showRightButton"
           >
             <i class="fas fa-chevron-right"></i>
+          </button>
+          <button
+            class="absolute left-52 -ml-4 z-10 bg-customNeutreColor p-2 w-10 h-10 rounded-full hover:bg-white focus:outline-none"
+            @click="scrollLeft(index)"
+            v-show="showLeftButton"
+          >
+            <i class="fas fa-chevron-left"></i>
           </button>
         </div>
       </div>
@@ -210,5 +232,3 @@ const menuCategory = [
   }
 }
 </style>
-
-
