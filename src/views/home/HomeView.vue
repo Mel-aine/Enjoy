@@ -13,23 +13,39 @@ import { Hotels } from '@/mocks/categories';
 //   console.log('locale.value', locale.value)
 // };
 
-const showNavButtons = ref(true);
+
+const showLeftButton = ref(false);
+const showRightButton = ref(true);
 
 const scrollableList = ref([]);
 
-const scrollLeft = (index) => {
-  scrollableList.value[index].scrollBy({ left: -300, behavior: "smooth" });
+const checkScrollButtonsVisibility = () => {
+  if (!scrollableList.value || scrollableList.value.length === 0) return;
+
+  const element = scrollableList.value[0];
+  showLeftButton.value = element.scrollLeft > 0;
+  showRightButton.value = element.scrollWidth > element.clientWidth + element.scrollLeft;
 };
 
-const scrollRight = (index) => {
-  scrollableList.value[index].scrollBy({ left: 300, behavior: "smooth" });
+const scrollLeft = () => {
+  if (scrollableList.value[0]) {
+    scrollableList.value[0].scrollBy({ left: -300, behavior: "smooth" });
+    setTimeout(() => checkScrollButtonsVisibility(), 300);
+  }
+};
+
+const scrollRight = () => {
+  if (scrollableList.value[0]) {
+    scrollableList.value[0].scrollBy({ left: 300, behavior: "smooth" });
+    setTimeout(() => checkScrollButtonsVisibility(), 300);
+  }
 };
 
 
 const menuCategory = [
   {
     label: "Restaurants",
-    icon: "fa fa-utensils", // Icône représentative (optionnelle)
+    icon: "Utensils", // Icône représentative (optionnelle)
     route: "/fr/categorie/restaurants",
     Cards: Restaurants.map((restaurant) => ({
       title: restaurant.name,
@@ -39,7 +55,7 @@ const menuCategory = [
   },
   {
     label: "Hôtels & Hébergements",
-    icon: "fa fa-hotel",
+    icon: "Hotel",
     route: "/fr/categorie/hotels",
     Cards: Hotels.map((hotel) => ({
       title: hotel.name,
@@ -76,7 +92,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/13/divertissements",
 //     label: "Divertissements",
-//     icon: "fa fa-gamepad",
+//     icon: "Gamepad2",
 //     Cards: [
 //       { route: "/fr/categorie/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/parc-loisir", title: "Parc de Loisirs", image: "https://via.placeholder.com/150" },
@@ -87,7 +103,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/14/sites-touristiques",
 //     label: "Sites Touristiques",
-//     icon: "fa fa-camera",
+//     icon: "Camera",
 //     Cards: [
 //       { route: "/fr/categorie/musee", title: "Musée", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/monuments", title: "Monuments Historiques", image: "https://via.placeholder.com/150" },
@@ -98,7 +114,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Modes et Beauté",
-//     icon: "fa fa-cut",
+//     icon: "Scissors",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -109,7 +125,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Transports",
-//     icon: "fa fa-bus",
+//     icon: "BusFront",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -120,7 +136,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Commerces",
-//     icon: "fa fa-shopping-bag",
+//     icon: "ShoppingBag",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -131,7 +147,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Sports",
-//     icon: "fa fa-dumbbell",
+//     icon: "Dumbbell",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -144,7 +160,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Secours",
-//     icon: "fa fa-ambulance",
+//     icon: "Ambulance",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -155,7 +171,7 @@ const menuCategory = [
 //   {
 //     route: "/fr/categorie/15/modes-et-beaute",
 //     label: "Administrations",
-//     icon: "fa fa-building",
+//     icon: "Building2",
 //     Cards: [
 //       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
 //       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
@@ -169,7 +185,7 @@ const menuCategory = [
 
 <template>
   <div class="p-7">
-    <div class="bg-white px-10 py-5 container mx-auto w-full md:w-[1400px]">
+    <div class="bg-customWhite px-10 py-5 container mx-auto w-full md:w-[1400px]">
       <p class="text-xl font-poppins">Découvrez des bons plans et amusez-vous sans effort.</p>
       <p class="text-xs font-poppins">
         Que vous voyagiez seul, en famille, entre amis ou avec des collègues, <span class="font-bold">Enjoy</span> vous guide vers les meilleurs snacks, restaurants, attractions, piscines, hôtels et sites touristiques, avec des informations en temps réel !
@@ -178,29 +194,35 @@ const menuCategory = [
       <div class="flex flex-col gap-6 p-4">
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
           <!-- Catégorie fixe -->
-          <router-link :to="category.route" class="flex-shrink-0 mb-4 md:mb-0">
+          <div class="flex-shrink-0 mb-4 md:mb-0">
             <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
-          </router-link>
+          </div>
 
           <!-- Cartes scrollables -->
           <div ref="scrollableList" class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth">
             <router-link
               v-for="(card, index) in category.Cards"
               :key="index"
-              :to="card.route"
-              class="bg-white rounded flex-shrink-0 p-2 hover:shadow-lg w-[250px] sm:w-[200px] md:w-[250px]"
-            >
-              <Card :title="card.title" :address="card.address" />
+              class="bg-transparent rounded flex-shrink-0 p-2 w-[250px] sm:w-[200px] md:w-[250px]"
+             >
+              <Card :title="card.title" :route="card.route" :address="card.address" />
             </router-link>
           </div>
             <!-- Bouton suivant -->
             <button
-              class="absolute right-0 -mr-4 z-10 bg-gray-300 p-2 w-10 h-10 rounded-full hover:bg-gray-400 focus:outline-none"
+              class="absolute right-0 -mr-4 z-10 bg-customNeutreColor p-2 w-10 h-10 rounded-full hover:bg-white focus:outline-none"
               @click="scrollRight(index)"
-              v-show="showNavButtons"
+              v-show="showRightButton"
             >
               <i class="fas fa-chevron-right"></i>
             </button>
+          <button
+            class="absolute left-52 -ml-4 z-10 bg-customNeutreColor p-2 w-10 h-10 rounded-full hover:bg-white focus:outline-none"
+            @click="scrollLeft(index)"
+            v-show="showLeftButton"
+          >
+            <i class="fas fa-chevron-left"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -236,5 +258,3 @@ const menuCategory = [
   }
 }
 </style>
-
-

@@ -41,7 +41,7 @@ const handleInput = (event) => {
         <div class="relative">
             <div class="w-full">
                 <!-- Label -->
-                <label :for="forLabel" class="block text-sm text-white mb-1">
+                <label :for="forLabel" class="block text-sm text-customBlue mb-1">
                 {{ lb }}<span v-if="isRequired" class="text-red-500">*</span>
                 </label>
 
@@ -54,11 +54,11 @@ const handleInput = (event) => {
                     :value="modelValue"
                     :required="isRequired"
                     @input="handleInput"
-                    class="block w-full px-4 py-2 text-sm text-gray-500 bg-White border-2 border-white rounded-sm focus:border-customRed focus:outline-none pr-10"
+                    class="block w-full px-4 py-2 text-sm bg-White border-2 border-customWhite rounded-sm focus:border-customRed focus:outline-none pr-10"
                 />
 
                 <!-- Icône -->
-                <i class="absolute right-3 top-1/2 transform -translate-y-1/2 text-customRed peer-focus:text-customBlue" :class="icon"></i>
+                <i class="absolute right-3 top-1/2 transform -translate-y-1/2 text-customRed " :class="icon"></i>
                 </div>
             </div>
         </div>

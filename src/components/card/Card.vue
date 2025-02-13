@@ -1,46 +1,43 @@
 <template>
-    <div class="max-w-sm bg-white border rounded-xl shadow-lg overflow-hidden relative group">
+    <div class="max-w-sm bg-customWhite border rounded-xl shadow-lg overflow-hidden relative group">
       <!-- Image en fond -->
       <div class="relative">
         <img :src="image" alt="Card Background" class="w-full h-40 object-cover" />
-        <!-- Superposition de l'icône -->
+        <!-- Superposition de l'ombre au passage de la souris -->
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300">
-          <i :class="icon" class="text-white text-5xl"></i>
         </div>
       </div>
       <div class="my-1 border rounded-full"></div>
       <!-- Description -->
-      <!-- <div class="px-4 py-1 ">
-      <div class="flex justify-between items-center">
-        <h3 class="text-sm font-semibold">{{ title }}</h3>
-        <i class="fa fa-circle-check text-blue-500"></i>
+          <div class="px-4 py-1">
+          <!-- Conteneur pour le titre et l'icône alignés -->
+            <div class="flex justify-between items-center">
+              <h3 class="text-sm font-semibold">{{ title }}</h3>
+              <i class="fa fa-circle-check text-customBlueVariant"></i>
+            </div>
+            <div class="flex justify">
 
-      </div>
+            <BaseIcon name="MapPin" custom-color="text-customRed" size="12" stroke-width="3" class="mr-1"/>
+            <p class="text-xs text-customDarkVariant1 font-poppins font-medium "><b>{{ localisation }}</b></p>
 
-      <i class="fas fa-map-marker-alt text-red-500 "></i>
-      <p class="text-xs text-gray-600 mt-1 inline-flex">{{ description }}</p>
-    </div> -->
-     <div class="px-4 py-1">
-        <div class="flex justify-between items-center mb-2">
-          <h3 class="text-lg font-semibold text-gray-800 truncate">{{ title }}</h3>
-          <i class="fa fa-circle-check text-blue-500 text-xl"></i>
-        </div>
-        <div class="flex items-center text-gray-600 text-sm mb-2">
-          <i class="fas fa-map-marker-alt text-red-500 mr-2"></i>
-          <p>{{ address }}</p>
-      <div>
-      </div>
-        </div>
-     </div>
+            </div>
+
+            <p class="text-xs text-customDarkVariant2 font-poppins">{{ truncateText(description, 30) }}</p>
+
+          <!-- Description en dessous -->
+          </div>
     </div>
-    <div class="flex flex-col items-start"></div>
+
   </template>
 
   <script setup>
   import { computed } from 'vue';
+  import BaseIcon from '../icons/BaseIcon.vue';
+  import { truncateText } from '@/utils/functions'
+  // import BaseIcon from '../icons/BaseIcon.vue';
 
   // Définir l'image par défaut dans un computed
-  const defaultImage = new URL('@/assets/logo.png', import.meta.url).href;
+  const defaultImage = new URL('@/assets/koala.png', import.meta.url).href;
 
   const props = defineProps({
     image: {
@@ -61,13 +58,12 @@
     description: {
       type: String,
       required: true,
-      default: 'Ceci est une description personnalisable.',
+      default: 'Venez, vivez, détendez vous.',
     },
-    address: {
+    localisation: {
       type: String,
-      required: true,
-      default: 'Adresse de la Card',
-    },
+      default: 'Yaoundé, Damas, Cameroun',
+    }
   });
 
   // Utilisation d'un computed pour obtenir l'image, ou celle par défaut si vide
