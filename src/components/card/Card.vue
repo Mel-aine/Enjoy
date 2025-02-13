@@ -5,30 +5,34 @@
         <img :src="image" alt="Card Background" class="w-full h-40 object-cover" />
         <!-- Superposition de l'ombre au passage de la souris -->
         <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300">
-          <i :class="[icon, 'text-customNeutreColor text-5xl']"></i>
         </div>
       </div>
       <div class="my-1 border rounded-full"></div>
       <!-- Description -->
-        <router-link :to="route">
           <div class="px-4 py-1">
           <!-- Conteneur pour le titre et l'icône alignés -->
             <div class="flex justify-between items-center">
               <h3 class="text-sm font-semibold">{{ title }}</h3>
-              <i class="fa fa-circle-check text-blue-500"></i>
+              <i class="fa fa-circle-check text-customBlueVariant"></i>
+            </div>
+            <div class="flex justify">
+
+            <BaseIcon name="MapPin" custom-color="text-customRed" size="12" stroke-width="3" class="mr-1"/>
+            <p class="text-xs text-customDarkVariant1 font-poppins font-medium "><b>{{ localisation }}</b></p>
+
             </div>
 
-            <p class="text-xs text-gray-600 mt-1">{{ truncateText(description, 20) }}</p>
+            <p class="text-xs text-customDarkVariant2 font-poppins">{{ truncateText(description, 30) }}</p>
 
           <!-- Description en dessous -->
           </div>
-        </router-link>
     </div>
     
   </template>
   
   <script setup>
   import { computed } from 'vue';
+  import BaseIcon from '../icons/BaseIcon.vue';
   import { truncateText } from '@/utils/functions'
   // import BaseIcon from '../icons/BaseIcon.vue';
   
@@ -54,11 +58,11 @@
     description: {
       type: String,
       required: true,
-      default: 'Ceci est une description personnalisable.',
+      default: 'Venez, vivez, détendez vous.',
     },
-    route: {
+    localisation: {
       type: String,
-      default: '/Route disponible',
+      default: 'Yaoundé, Damas, Cameroun',
     }
   });
   

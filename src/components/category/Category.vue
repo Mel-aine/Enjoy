@@ -15,7 +15,7 @@
     icon: {
       type: String,
       required: true,
-      default: 'fa fa-info-circle',
+      default: 'Circle',
     },
     category: {
       type: String,
