@@ -146,7 +146,6 @@
       <div class="w-full flex items-center p-4">
         <div class="container mx-auto">
           <div class="flex flex-wrap items-center relative">
-            <!-- Menu principal avec défilement horizontal -->
             <ul ref="scrollMenu" class="flex overflow-x-auto whitespace-nowrap w-full space-x-6 scrollbar-hide transition-transform duration-200 ease-in-out">
               <li v-for="(menuItem, index) in menuItems" :key="index" class="menu-item">
                 <router-link :to="menuItem.route" class="flex flex-col items-center text-xs text-white hover:text-gray-900  hover:border-customWhite hover:border-b-2 hover:bg-customNeutreColor hover:rounded-sm px-3 py-2 transition duration-200">
@@ -261,7 +260,7 @@ const menuData = [
       { route: "/fr/categorie/25/fast-food", label: "Fast food" },
       { route: "/fr/categorie/26/restaurant-livreur", label: "Restaurant livreur" },
       { route: "/fr/categorie/27/cuisine-a-la-commande", label: "Cuisine à la commande" },
-      { route: "/fr/categorie/28/traiteur", label: "Traiteur" },
+      { route: "/fr/categorie/28/traiteur", label: "Traiteur" }, 
       { route: "/fr/categorie/642/restaurant-lounge", label: "RESTORANT LOUNGE" },
       { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTORANT PLEIN AIR" },
       { route: "/fr/categorie/643/restaurant-plein-air", label: "Restaurant-Glacier" },
