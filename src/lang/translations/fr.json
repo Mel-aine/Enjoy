@@ -25,5 +25,51 @@
   "statut": "Statut",
   "cancel": "Annuler",
   "services": "Services",
-  "info": "Infos"
+  "info": "Infos",
+  "Plus":"Plus",
+  "Moins" : "Moins",
+  "category": "Catégories",	
+  "categories": {
+      "Restauration": "Restauration",
+      "Vie nocturne": "Vie nocturne",
+      "Shopping": "Shopping",
+      "Sports & Activités de loisirs": "Sports & Activités de loisirs",
+      "Salons de beauté & Spas": "Salons de beauté & Spas",
+      "Automobile": "Automobile",
+      "Maisons & Travaux": "Maisons & Travaux",
+      "Alimentations":"Alimentations",
+      "Art & Loisirs":"Art & Loisirs",
+      "Santé & Médical":"Santé & Médical",
+      "Services destiné aux prof":"Services destiné aux prof",
+      "Animaux de companie":"Animaux de companie",
+      "Immobilier":"Immobilier",
+      "Hôtels & Séjours":"Hôtels & Séjours",
+      "Services Locaux":"Services Locaux",
+      "Organisation d événements" : "Organisation d'événements",
+      "Services publics & gouvernement":"Services publics & gouvernement",
+      "Services financiers":"Services financiers",
+      "Formation & Enseignement":"Formation & Enseignement",
+      "Organisation religieuse":"Organisation religieuse",
+      "Couleur locale":"Couleur locale",
+      "Média":"Média",
+      "Cafés & Thés":"Cafés & Thés"
+      
+    },
+    "places": {
+      "Le Gourmet": {
+        "name": "Le Gourmet",
+        "description": "Restaurant gastronomique proposant des plats raffinés.",
+        "address": "Bastos, Yaoundé",
+        "phone": "+237690111222",
+        "email": "contact@legourmet.cm",
+        "opening_hours": {
+          "monday_friday": "12h00 - 23h00",
+          "saturday": "14h00 - 00h00",
+          "sunday": "Fermé"
+        },
+        "min_price": "10,000 FCFA"
+      }
+    }
+  
+  
 }

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/home/HomeView.vue'
+import HomeView from '../views/home/EHomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,14 +18,14 @@ const router = createRouter({
       component: () => import('../views/AboutView.vue'),
     },
     {
-      path: '/fr/categorie/:categoryType/:categoryId',
+      path: '/fr/categorie/:categoryId',
       name: 'DetailService',
-      component: () => import('../views/services/DetailServices.vue'),
+      component: () => import('../views/EDetailServices.vue'),
     },
     {
       path: '/menu',
       name: 'Menu',
-      component: () => import('../views/restaurants/Menu.vue'),
+      component: () => import('../views/restaurants/EMenu.vue'),
     },
 
   ],
