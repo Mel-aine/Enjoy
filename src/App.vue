@@ -9,6 +9,8 @@ import Navbar from '@/components/bars/Navbar.vue';
 import Footer from '@/components/footer/Footer.vue'
 import { useFooterStore } from '@/stores/footer';
 
+import FilterView from '@/components/restaurants/FilterView.vue'
+
 const footerStore = useFooterStore();
 
 
@@ -31,6 +33,7 @@ if (useLanguage.language) {
 
     </div>
     <!-- <Footer /> -->
+     <FilterView/>
     <Footer :showMoreFooter="footerStore.getShowMoreFooter" />
   </div>
 
