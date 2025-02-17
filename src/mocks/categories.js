@@ -120,7 +120,11 @@ export const Hotels = [
       location: "3.8869° N, 11.5021° E",
       phone: "+237690987654",
       email: "contact@montfebe.cm",
-      opening_hours: "24/7",
+      opening_hours: [
+        { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+        { day: "Samedi", open: "14h00", close: "00h00" },
+        { day: "Dimanche", open: "Fermé", close: "Fermé" }
+      ],
       min_price: "50,000 FCFA",
       status: "active",
       logo: "logo",
@@ -135,7 +139,11 @@ export const Hotels = [
       location: "3.8640° N, 11.5174° E",
       phone: "+237677654321",
       email: "contact@hiltonyaounde.cm",
-      opening_hours: "24/7",
+      opening_hours: [
+        { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+        { day: "Samedi", open: "14h00", close: "00h00" },
+        { day: "Dimanche", open: "Fermé", close: "Fermé" }
+      ],
       min_price: "80,000 FCFA",
       status: "active",
       logo: "logo",
@@ -150,7 +158,11 @@ export const Hotels = [
       location: "4.0515° N, 9.7073° E",
       phone: "+237699321456",
       email: "contact@starland.cm",
-      opening_hours: "24/7",
+      opening_hours: [
+        { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+        { day: "Samedi", open: "14h00", close: "00h00" },
+        { day: "Dimanche", open: "Fermé", close: "Fermé" }
+      ],
       min_price: "60,000 FCFA",
       status: "active",
       logo: "logo",
@@ -165,7 +177,11 @@ export const Hotels = [
       location: "4.0458° N, 9.7029° E",
       phone: "+237655789123",
       email: "contact@krystalpalace.cm",
-      opening_hours: "24/7",
+      opening_hours: [
+        { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+        { day: "Samedi", open: "14h00", close: "00h00" },
+        { day: "Dimanche", open: "Fermé", close: "Fermé" }
+      ],
       min_price: "70,000 FCFA",
       status: "active",
       logo: "logo",
@@ -180,7 +196,11 @@ export const Hotels = [
       location: "4.0489° N, 9.7041° E",
       phone: "+237699654123",
       email: "contact@lafalaise.cm",
-      opening_hours: "24/7",
+      opening_hours: [
+        { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+        { day: "Samedi", open: "14h00", close: "00h00" },
+        { day: "Dimanche", open: "Fermé", close: "Fermé" }
+      ],
       min_price: "55,000 FCFA",
       status: "active",
       logo: "logo",

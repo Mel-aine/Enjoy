@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <header class="sticky top-0 z-999 flex flex-col w-full bg-slate-50">
+  <header class="sticky top-0 z-999 flex flex-col w-full bg-transparent">
     <div class="flex flex-grow items-center justify-between py-4 px-4 md:px-6 2xl:px-11">
       <!-- search bar -->
       <div class="flex items-center p-2 rounded-lg bg-white shadow-lg h-14 w-3/5 sm:w-4/5 md:w-9/12 lg:w-full">

@@ -30,7 +30,7 @@
         <div class="flex items-center " v-if="selectedService.label === 'Restaurants'">
           <router-link to="/menu" class="hover:underline space-x-2 text-purple-500">
             <i class="fas fa-utensils text-[#B57EDC]" aria-label="Menu de restaurant"></i>
-            <span class="font-semibold text-orange-500">Menu du restaurant</span>
+            <span class="font-semibold text-orange-500">Menu du jour</span>
           </router-link>
         </div>
       </div>
@@ -50,11 +50,11 @@
       </div>
 
           <!-- Bouton "Afficher toutes les photos" -->
-        <div class="text-center mt-5">
+        <!-- <div class="text-center mt-5">
           <button class="bg-indigo-600 text-white py-2 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition duration-300">
             Afficher toutes les photos ({{ selectedService.images.length }})
           </button>
-        </div>
+        </div> -->
       </div>
 
       <div class="my-10 shadow-2xl ">
@@ -89,7 +89,7 @@
           </section>
 
           <!-- Section des infos & horaires -->
-          <div class="w-full sm:w-1/3 mx-5 mt-6 sm:mt-0 sticky top-20 space-y-5">
+          <div class="w-80 sm:w-1/3 mx-5 mt-6 sm:mt-0 sticky top-20 space-y-5">
 
             <!-- Informations de contact -->
             <div class="p-5 shadow-lg rounded-lg border bg-white">
@@ -113,26 +113,23 @@
                 <i class="fas fa-calendar-alt text-[#B57EDC]"></i> Horaires
               </h3>
 
-              <div class="p-3 bg-white " v-if="selectedService.opening_hours.length > 0 && selectedService.label !== 'Hôtels & Hébergements' ">
+              <div class="p-3 bg-white " v-if="selectedService.opening_hours.length > 0 ">
                 <table class="min-w-full table-auto border-collapse border border-gray-300">
                   <thead>
-                    <tr class="bg-gray-100">
-                      <th class="py-3 px-6 text-left text-gray-700 font-semibold">Jour</th>
-                      <th class="py-3 px-6 text-left text-gray-700 font-semibold">Ouverture</th>
-                      <th class="py-3 px-6 text-left text-gray-700 font-semibold">Fermeture</th>
+                    <tr class="bg-gray-100 ">
+                      <th class="py-3 px-2 text-left text-gray-700 font-semibold">Jour</th>
+                      <th class="py-3 px-2 text-left text-gray-700 font-semibold">Ouverture</th>
+                      <th class="py-3 px-2 text-left text-gray-700 font-semibold">Fermeture</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(schedule, index) in selectedService.opening_hours" :key="index" class="border-b hover:bg-gray-50">
-                      <td class="py-3 px-6 text-gray-800">{{ schedule.day }}</td>
-                      <td class="py-3 px-6 text-gray-500">{{ schedule.open }}</td>
-                      <td class="py-3 px-6 text-gray-500">{{ schedule.close }}</td>
+                      <td class="py-3 px-2 text-gray-800">{{ schedule.day }}</td>
+                      <td class="py-3 px-2 text-gray-500">{{ schedule.open }}</td>
+                      <td class="py-3 px-2 text-gray-500">{{ schedule.close }}</td>
                     </tr>
                   </tbody>
                 </table>
-              </div>
-              <div class="p-3 bg-white" v-else-if="selectedService.label === 'Hôtels & Hébergements'">
-                <p class="text-gray-600 text-center">Disponible {{ selectedService.opening_hours }}</p>
               </div>
               <div class="p-3 bg-white" v-else>
                 <p class="text-gray-600 text-center">Aucun horaire disponible pour ce service.</p>
