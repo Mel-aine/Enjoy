@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 // import { useI18n } from 'vue-i18n';
 import Card from '@/components/card/Card.vue';
-import Category from '@/components/category/Category.vue';
+import Category from '@/components/category/CategoryList.vue';
 import Carousel from '@/components/carousel/Carousel.vue';
 
 // const { locale } = useI18n();
