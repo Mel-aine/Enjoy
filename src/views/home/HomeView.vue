@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 // import { useI18n } from 'vue-i18n';
 import Card from '@/components/card/Card.vue';
-import Category from '@/components/category/Category.vue';
+import CategoryList from '@/components/category/CategoryList.vue';
 import Carousel from '@/components/carousel/Carousel.vue';
 import { Restaurants } from '@/mocks/categories';
 import { Hotels } from '@/mocks/categories';
@@ -195,7 +195,7 @@ const menuCategory = [
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
           <!-- Catégorie fixe -->
           <div class="flex-shrink-0 mb-4 md:mb-0">
-            <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
+            <CategoryList :category="category.label" :icon="category.icon" class="w-[200px]" />
           </div>
 
           <!-- Cartes scrollables -->
