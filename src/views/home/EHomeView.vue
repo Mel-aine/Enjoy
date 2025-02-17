@@ -2,10 +2,12 @@
 import { ref } from 'vue';
 // import { useI18n } from 'vue-i18n';
 import Card from '@/components/card/Card.vue';
-import CategoryList from '@/components/category/CategoryList.vue';
+import Category from '@/components/category/Category.vue';
 import Carousel from '@/components/carousel/Carousel.vue';
-import { Restaurants } from '@/mocks/categories';
-import { Hotels } from '@/mocks/categories';
+import CategoryView from '@/components/category/CategoryView.vue';
+import { Categories } from '@/mocks/categories';
+import { useFooterStore } from '@/stores/footer';
+
 
 // const { locale } = useI18n();
 // const changeLanguage = (lang) => {
@@ -13,7 +15,7 @@ import { Hotels } from '@/mocks/categories';
 //   console.log('locale.value', locale.value)
 // };
 
-
+const showMoreFooter = ref(false);
 const showLeftButton = ref(false);
 const showRightButton = ref(true);
 
@@ -41,31 +43,20 @@ const scrollRight = () => {
   }
 };
 
+// route: `/fr/categorie/hotel/${hotel.id}`,
+const menuCategory = Categories.map((category) => ({
+  route: `/fr/categorie/${category.id}`,
+  label: category.label,
+  icon: category.icon,
+  Cards: category.places.map((card) => ({
+    title: card.name,
+    address: card.address,
+    image: card.images,
+    route: `/fr/categorie/${card.id}`,
+  })),
 
-const menuCategory = [
-  {
-    label: "Restaurants",
-    icon: "Utensils", // Icône représentative (optionnelle)
-    route: "/fr/categorie/restaurants",
-    Cards: Restaurants.map((restaurant) => ({
-      title: restaurant.name,
-      address: restaurant.address,
-      route: `/fr/categorie/restaurant/${restaurant.id}`,
-    })),
-  },
-  {
-    label: "Hôtels & Hébergements",
-    icon: "Hotel",
-    route: "/fr/categorie/hotels",
-    Cards: Hotels.map((hotel) => ({
-      title: hotel.name,
-      address: hotel.address,
-      route: `/fr/categorie/hotel/${hotel.id}`,
-    })),
-  },
-];
-
-
+}));
+console.log('category',menuCategory[0].Cards)
 // const menuCategory = [
 //   {
 //     route: "/fr/categorie/11/restauration",
@@ -181,6 +172,13 @@ const menuCategory = [
 //   },
 // ];
 
+
+const footerStore = useFooterStore();
+
+const toggleFooter = () => {
+      const newValue = !footerStore.getShowMoreFooter;  // On inverse la valeur
+      footerStore.updateFooter(newValue);  // Mettre à jour l'état
+    };
 </script>
 
 <template>
@@ -195,7 +193,7 @@ const menuCategory = [
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
           <!-- Catégorie fixe -->
           <div class="flex-shrink-0 mb-4 md:mb-0">
-            <CategoryList :category="category.label" :icon="category.icon" class="w-[200px]" />
+            <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
           </div>
 
           <!-- Cartes scrollables -->
@@ -230,6 +228,8 @@ const menuCategory = [
 
     <!-- Carousel -->
     <Carousel />
+    <CategoryView @toggle-footer="toggleFooter" />
+
   </div>
 </template>
 <style scoped>
@@ -246,7 +246,7 @@ const menuCategory = [
     padding: 20px;
   }
 
-  .w-[250px] {
+  /* .w-[250px] {
     width: 100%;
   }
 
@@ -256,6 +256,7 @@ const menuCategory = [
 
   .w-full {
     width: 100%;
-  }
+  }*/
+
 }
 </style>

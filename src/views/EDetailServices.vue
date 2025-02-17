@@ -4,7 +4,7 @@
       <div class="flex justify-between items-center ">
         <div>
           <h4 class="mb-3 text-2xl font-bold flex items-center">
-            {{ selectedService.name }}
+            {{ name }}
             <span class="text-[#B57EDC] text-2xl ml-2">
               <i class="fas fa-check-circle" aria-label="Vérifié"></i>
             </span>
@@ -15,19 +15,19 @@
             Catégories :
             <strong>
                 <router-link class="text-dark hover:underline">
-                  {{ selectedService.label }}
+                  {{ label }}
                 </router-link>
             </strong>
             <br>
 
             <i class="fas fa-map-marker-alt text-purple-500"></i>
             &nbsp;<strong>Adresse:</strong>
-            {{ selectedService.address }}
+            {{address }}
             <br>
             <!-- <i class="fas fa-utensils" aria-label="Menu de restaurant"></i> -->
           </p>
         </div>
-        <div class="flex items-center " v-if="selectedService.label === 'Restaurants'">
+        <div class="flex items-center " v-if="label === 'Restaurants'">
           <router-link to="/menu" class="hover:underline space-x-2 text-purple-500">
             <i class="fas fa-utensils text-[#B57EDC]" aria-label="Menu de restaurant"></i>
             <span class="font-semibold text-orange-500">Menu du jour</span>
@@ -38,13 +38,13 @@
       <div class="my-10">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-5">
         <div class="flex justify-center">
-          <img class="h-auto max-w-full rounded-lg shadow-xl" :src="selectedService.logo" :alt="`${selectedService.name} logo`" />
+          <img class="h-auto max-w-full rounded-lg shadow-xl" :src="logo" :alt="`${name} logo`" />
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-4">
-          <div v-for="(image, index) in selectedService.images" :key="index">
+          <div v-for="(image, index) in images" :key="index">
             <img class="h-auto max-w-full rounded-lg shadow-md transition-transform transform hover:scale-105"
                 :src="image"
-                :alt="`${selectedService.name} image ${index + 1}`" />
+                :alt="`${name} image ${index + 1}`" />
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@
           <section class="relative w-full sm:w-2/3 bg-white rounded-xl shadow-lg p-6">
             <div class="flex justify-between items-center pb-4 border-b border-gray-200">
               <h3 class="text-2xl font-semibold text-orange-500">
-                {{ selectedService.name }}
+                {{ name }}
               </h3>
               <button
                 @click="toggleFavorite"
@@ -77,7 +77,7 @@
             <div class="pt-4">
               <h4 class="text-lg font-semibold text-gray-900 mb-3">Description</h4>
               <p class="text-gray-600 leading-relaxed">
-                {{ selectedService.description }}
+                {{ description }}
               </p>
             </div>
 
@@ -95,15 +95,15 @@
             <div class="p-5 shadow-lg rounded-lg border bg-white">
               <p class="text-gray-600 flex items-center gap-2 mb-3">
                 <i class="fas fa-envelope text-[#B57EDC]"></i>
-                {{ selectedService.email }}
+                {{ email }}
               </p>
               <p class="text-gray-600 flex items-center gap-2 mb-3">
                 <i class="fas fa-phone text-[#B57EDC]"></i>
-                {{ selectedService.phone }}
+                {{ phone }}
               </p>
               <p class="text-gray-600 flex items-center gap-2 mb-3">
                 <i class="fas fa-map-marker-alt text-[#B57EDC]"></i>
-                {{ selectedService.address }}
+                {{ address }}
               </p>
             </div>
 
@@ -113,7 +113,7 @@
                 <i class="fas fa-calendar-alt text-[#B57EDC]"></i> Horaires
               </h3>
 
-              <div class="p-3 bg-white " v-if="selectedService.opening_hours.length > 0 ">
+              <div class="p-3 bg-white " v-if="opening_hours">
                 <table class="min-w-full table-auto border-collapse border border-gray-300">
                   <thead>
                     <tr class="bg-gray-100 ">
@@ -123,7 +123,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(schedule, index) in selectedService.opening_hours" :key="index" class="border-b hover:bg-gray-50">
+                    <tr v-for="(schedule, index) in opening_hours" :key="index" class="border-b hover:bg-gray-50">
                       <td class="py-3 px-2 text-gray-800">{{ schedule.day }}</td>
                       <td class="py-3 px-2 text-gray-500">{{ schedule.open }}</td>
                       <td class="py-3 px-2 text-gray-500">{{ schedule.close }}</td>
@@ -153,22 +153,11 @@
 
 <script setup>
 import { computed,ref } from 'vue';
-import { useRoute } from 'vue-router';
-import { Restaurants } from '@/mocks/categories';
-import { Hotels } from '@/mocks/categories';
+import router from '../router';
+import { Categories } from '@/mocks/categories';
 
-
-const route = useRoute();
-const categoryType = route.params.categoryType;
-const categoryId = route.params.categoryId;
-const isFavorite = ref(false);
-
-const dataList = categoryType === "hotel" ? Hotels : Restaurants;
-
-
-const selectedService = dataList.find(service => service.id === categoryId);
-
-console.log(selectedService)
+const name = ref('Nom du restaurant');
+const description = ref('...');
 
 
 
