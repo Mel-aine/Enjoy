@@ -207,3 +207,313 @@ export const Hotels = [
       images: [ ]
   }
 ];
+export const Categories = [
+    {
+      id: "REST-001",
+      label: "Restauration",
+      icon: "fa fa-utensils",
+      places: [
+        {
+          id: "PLACE-REST-001",
+          name: "Le Gourmet",
+          description: "Restaurant gastronomique proposant des plats raffinés.",
+          address: "Bastos, Yaoundé",
+          location: "3.8700° N, 11.5001° E",
+          phone: "+237690111222",
+          email: "contact@legourmet.cm",
+          opening_hours: "12:00 - 23:00",
+          min_price: "10,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+          id: "PLACE-REST-002",
+          name: "Chez Tantie",
+          description: "Restaurant populaire offrant des plats camerounais traditionnels.",
+          address: "Mvog-Mbi, Yaoundé",
+          location: "3.8550° N, 11.5050° E",
+          phone: "+237690333444",
+          email: "contact@cheztantie.cm",
+          opening_hours: "07:00 - 22:00",
+          min_price: "3,500 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        }
+      ]
+    },
+    {
+      id: "HOTEL-001",
+      label: "Hôtels & Hébergements",
+      icon: "fa fa-hotel",
+      places: [
+        {
+          id: "PLACE-HOTEL-001",
+          name: "Hôtel Mont Fébé",
+          description: "Un hôtel luxueux avec une vue panoramique sur Yaoundé.",
+          address: "Mont Fébé, Yaoundé",
+          location: "3.8869° N, 11.5021° E",
+          phone: "+237690987654",
+          email: "contact@montfebe.cm",
+          opening_hours: "24/7",
+          min_price: "50,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+            id: "PLACE-HOTEL-002",
+            name: "Hilton Yaoundé",
+            description: "Hôtel 5 étoiles avec restaurants raffinés, piscine et centre de remise en forme.",
+            address: "Centre-ville, Yaoundé",
+            location: "3.8640° N, 11.5174° E",
+            phone: "+237677654321",
+            email: "contact@hiltonyaounde.cm",
+            opening_hours: "24/7",
+            min_price: "80,000 FCFA",
+            status: "active",
+            logo: "logo",
+            images: [ ]
+        },
+
+    ]
+
+    },
+    {
+      id: "ENT-001",
+      label: "Divertissements",
+      icon: "fa fa-film",
+      places: [
+        {
+          id: "PLACE-ENT-001",
+          name: "Cinéma Eden",
+          description: "Un cinéma moderne proposant les derniers films internationaux et locaux.",
+          address: "Centre-ville, Yaoundé",
+          location: "3.8666° N, 11.5167° E",
+          phone: "+237690123456",
+          email: "contact@cinemaeden.cm",
+          opening_hours: "10:00 - 23:00",
+          min_price: "5,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+          id: "PLACE-ENT-002",
+          name: "Bowling Club",
+          description: "Un espace de bowling et de jeux en famille ou entre amis.",
+          address: "Essos, Yaoundé",
+          location: "3.8702° N, 11.5033° E",
+          phone: "+237690987654",
+          email: "contact@bowlingyaounde.cm",
+          opening_hours: "14:00 - 01:00",
+          min_price: "6,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        }
+      ]
+    },
+    {
+      id: "TOUR-001",
+      label: "Sites Touristiques",
+      icon: "fa fa-landmark",
+      places: [
+        {
+          id: "PLACE-TOUR-001",
+          name: "Musée National",
+          description: "Un lieu emblématique retraçant l'histoire et la culture camerounaise.",
+          address: "Boulevard du 20 Mai, Yaoundé",
+          location: "3.8741° N, 11.5174° E",
+          phone: "+237690654321",
+          email: "contact@museenational.cm",
+          opening_hours: "09:00 - 18:00",
+          min_price: "2,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+          id: "PLACE-TOUR-002",
+          name: "Mont Fébé",
+          description: "Une magnifique montagne offrant une vue panoramique sur Yaoundé.",
+          address: "Mont Fébé, Yaoundé",
+          location: "3.8869° N, 11.5021° E",
+          phone: "+237690777888",
+          email: "contact@montfebe.cm",
+          opening_hours: "24/7",
+          min_price: "Gratuit",
+          status: "active",
+          logo: "logo",
+          images: []
+        }
+      ]
+    },
+    {
+      id: "FASH-001",
+      label: "Mode et Beauté",
+      icon: "fa fa-shopping-bag",
+      places: [
+        {
+          id: "PLACE-FASH-001",
+          name: "Beauty & Style Spa",
+          description: "Un salon de beauté et spa offrant des soins haut de gamme.",
+          address: "Bastos, Yaoundé",
+          location: "3.8688° N, 11.5023° E",
+          phone: "+237691234567",
+          email: "contact@beautystyle.cm",
+          opening_hours: "08:00 - 20:00",
+          min_price: "10,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+          id: "PLACE-FASH-002",
+          name: "Elegance Boutique",
+          description: "Boutique de vêtements de créateurs pour hommes et femmes.",
+          address: "Warda, Yaoundé",
+          location: "3.8645° N, 11.5100° E",
+          phone: "+237692345678",
+          email: "contact@eleganceboutique.cm",
+          opening_hours: "09:00 - 20:00",
+          min_price: "Variable",
+          status: "active",
+          logo: "logo",
+          images: []
+        }
+      ]
+    },
+    {
+      id: "TRAN-001",
+      label: "Transports",
+      icon: "fa fa-bus",
+      places: [
+        {
+          id: "PLACE-TRAN-001",
+          name: "Express Voyages",
+          description: "Agence de voyage proposant des liaisons interurbaines confortables et sécurisées.",
+          address: "Gare Routière, Yaoundé",
+          location: "3.8589° N, 11.5170° E",
+          phone: "+237692345678",
+          email: "contact@expressvoyages.cm",
+          opening_hours: "06:00 - 22:00",
+          min_price: "7,500 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        },
+        {
+          id: "PLACE-TRAN-002",
+          name: "Taxi Rapide",
+          description: "Service de taxi rapide et sécurisé dans tout Yaoundé.",
+          address: "Toute la ville",
+          location: "3.8610° N, 11.5055° E",
+          phone: "+237693456789",
+          email: "contact@taxirapide.cm",
+          opening_hours: "24/7",
+          min_price: "2,000 FCFA",
+          status: "active",
+          logo: "logo",
+          images: []
+        }
+      ]
+    },
+    {
+      id: "COMM-001",
+      label: "Commerces",
+      icon: "fa fa-store",
+      places: [
+        {
+            id: "PLACE-COMM-001",
+            name: "Supermarché Carrefour",
+            description: "Un supermarché bien achalandé offrant une variété de produits locaux et importés.",
+            address: "Warda, Yaoundé",
+            location: "3.8647° N, 11.5135° E",
+            phone: "+237693456789",
+            email: "contact@carrefour.cm",
+            opening_hours: "07:00 - 22:00",
+            min_price: "Variable",
+            status: "active",
+            logo: "logo",
+            images: []
+        },
+        {
+            id: "PLACE-COMM-002",
+            name: "Supermarché Carrefour",
+            description: "Un supermarché bien achalandé offrant une variété de produits locaux et importés.",
+            address: "Warda, Yaoundé",
+            location: "3.8647° N, 11.5135° E",
+            phone: "+237693456789",
+            email: "contact@carrefour.cm",
+            opening_hours: "07:00 - 22:00",
+            min_price: "Variable",
+            status: "active",
+            logo: "logo",
+            images: []
+        }]
+    },
+    {
+        id: "SPORT-001",
+        label: "Sports",
+        icon: "fa fa-football-ball",
+        places: [
+          {
+            id: "PLACE-SPORT-001",
+            name: "Fitness Club Yaoundé",
+            description: "Salle de sport équipée avec des coachs professionnels pour un entraînement optimal.",
+            address: "Omnisports, Yaoundé",
+            location: "3.8734° N, 11.5201° E",
+            phone: "+237694567890",
+            email: "contact@fitnessyaounde.cm",
+            opening_hours: "06:00 - 22:00",
+            min_price: "15,000 FCFA",
+            status: "active",
+            logo: "logo",
+            images: []
+         },]
+    },
+    {
+        id: "SEC-001",
+        label: "Secours",
+        icon: "fa fa-ambulance",
+        places: [
+          {
+            id: "PLACE-SEC-001",
+            name: "Hôpital Central",
+            description: "Centre hospitalier offrant des soins d'urgence et des services médicaux spécialisés.",
+            address: "Avenue Kennedy, Yaoundé",
+            location: "3.8756° N, 11.5189° E",
+            phone: "+237695678901",
+            email: "contact@hopitalcentral.cm",
+            opening_hours: "24/7",
+            min_price: "Consultation: 5,000 FCFA",
+            status: "active",
+            logo: "logo",
+            images: []
+         },]
+    },
+    {
+        id: "ADMIN-001",
+        label: "Administrations",
+        icon: "fa fa-building",
+        places: [
+          {
+            id: "PLACE-ADMIN-001",
+            name: "Mairie de Yaoundé",
+            description: "Institution publique gérant les affaires administratives et municipales de la ville.",
+            address: "Hôtel de Ville, Yaoundé",
+            location: "3.8767° N, 11.5198° E",
+            phone: "+237696789012",
+            email: "contact@mairieyaounde.cm",
+            opening_hours: "08:00 - 16:00",
+            min_price: "N/A",
+            status: "active",
+            logo: "logo",
+            images: []
+          }
+         ]
+    },
+  ];
+ 

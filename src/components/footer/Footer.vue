@@ -1,5 +1,16 @@
 <template>
-    <footer class="bg-customDark text-white py-8">
+    
+               <!-- Section cachée affichée avec animation -->
+      <div v-if="showMoreFooter" class=" grid grid-cols-1  gap-10 sm:grid-cols-4 md:grid-cols-4 mx-auto justify-center sm:mx-56 my-6 items-center  transition-opacity duration-700 ease-in-out">
+        <div v-for="category in hiddenCategories" :key="category.id" class="flex flex-row items-center gap-2 p-2 rounded-lg  transition-all cursor-pointer">
+          <i :class="`${category.icon} text-2xl text-customBlue`"></i>
+          <h4 class="text-sm md:text-md sm:text-sm lg:text-lg font-semibold text-gray-700 hover:text-customBlue hover:underline">
+            {{ category.label }}
+          </h4>
+        </div>
+      </div>
+
+      <footer  v-else class="bg-customDark text-white py-8"> 
       <div class="container mx-auto px-4">
         <!-- Sections principales -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -49,6 +60,7 @@
           </div>
         </div>
   
+     
         <!-- Section bas de page -->
         <div class="border-t border-white mt-8 pt-4 text-center">
           <p class="text-xs">
@@ -62,7 +74,15 @@
   <script setup>
 import Button from '../buttons/Button.vue';
 import FloatingInput from '@/components/input/FloatingInput.vue';
-
+import { computed } from "vue";
+  import CategoryCard from "@/components/categoryCard/CategoryCard.vue";
+  import { Categories } from '@/mocks/categories';
+  
+  // Catégories cachées (dernières du mock)
+  const hiddenCategories = computed(() => Categories.slice(3));
+  defineProps({
+    showMoreFooter : Boolean,
+  });
 
   </script>
   
