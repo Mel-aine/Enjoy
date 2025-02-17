@@ -6,7 +6,7 @@
 <div class="flex h-screen overflow-hidden">
 
 <!-- ===== Content Area Start ===== -->
-<div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-slate-50 scrollbar-hide">
+<div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-transparent scrollbar-hide">
   <!-- ===== Header Start ===== -->
   <HeaderMenu />
 

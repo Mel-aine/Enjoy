@@ -202,10 +202,11 @@ const menuCategory = [
           <div ref="scrollableList" class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth">
             <router-link
               v-for="(card, index) in category.Cards"
+              :to="card.route"
               :key="index"
               class="bg-transparent rounded flex-shrink-0 p-2 w-[250px] sm:w-[200px] md:w-[250px]"
              >
-              <Card :title="card.title" :route="card.route" :address="card.address" />
+              <Card :title="card.title"  :localisation="card.address" />
             </router-link>
           </div>
             <!-- Bouton suivant -->
