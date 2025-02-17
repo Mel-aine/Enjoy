@@ -1,5 +1,5 @@
 <template>
-    <button class="" :class="buttonClasses" @click="handleClick">
+    <button class="flex items-center justify-center whitespace-nowrap" :class="buttonClasses" @click="handleClick">
         <slot> </slot>
     </button>
 </template>
@@ -10,7 +10,7 @@ import { computed } from 'vue';
 const props = defineProps({
     variant: {
         type: String,
-        default: 'primary',
+        default: 'nothing',
     },
     size: {
         type: String,
@@ -25,13 +25,14 @@ const handleClick = () => {
 };
 
 const buttonClasses = computed(() => {
-    const baseClasses = 'front-medium rounded focus:outline-none focus:ring-2 transition rounded-md';
+    const baseClasses = 'front-medium rounded-sm focus:outline-none focus:ring-2 transition';
 
     const variantClasses = {
-        ligth: 'bg-customWhite text-indigo hover:bg-gray-200 focus:ring-gray-100',
+        nothing: '',
+        ligth: 'bg-white/10 text-customWhite hover:bg-white/30 focus:ring-gray-100',
         primary: 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-300',
         secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-300',
-        danger: 'bg-customRed text-white hover:bg-customRed focus:ring-red-300',
+        danger: 'bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300',
 
     };
 

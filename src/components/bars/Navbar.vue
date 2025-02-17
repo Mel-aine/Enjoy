@@ -18,21 +18,70 @@
       <div id="mainMenu" class="relative w-full hidden md:block">
         <nav>
           <div class="flex justify-center space-x-4">
-            <router-link
+
+            
+
+
+
+
+
+            <div class="w-full max-w-sm min-w-[200px] relative ml-2">
+    <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
+      <input 
+        v-model="leftValue"
+        @mouseenter="activeInput = 'left'"
+        placeholder="Restaurant" 
+        class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+      />
+      <div class="h-6 border-l border-slate-200 ml-1"></div>
+      <input 
+        v-model="rightValue"
+        @mouseenter="activeInput = 'right'"
+        placeholder="Yaoun" 
+        class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+      />
+      <button class="bg-customRed px-4 py-2 text-white ml-2">
+        <BaseIcon name="Search" size="20" stroke-width="2" />
+      </button>
+    </div>
+
+    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white border rounded shadow-lg mt-1 max-h-40 overflow-auto">
+      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+        <BaseIcon  :name="item.icon" size="12" stroke-width="2"></BaseIcon>
+        <span class="ml-2">
+          {{ item.label }} 
+        </span>
+      </li>
+    </ul>
+
+    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border rounded shadow-lg mt-1 max-h-40 overflow-auto">
+      <li v-for="item in rightSuggestions" :key="item" @mouseenter="rightValue = item" @click="selectItem('right', item)" class="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+        {{ item }}
+      </li>
+    </ul>
+  </div>
+
+
+
+
+
+
+            
+            <!-- <router-link
               to="/"
               class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               >
               Accueil
-            </router-link>
+            </router-link> -->
 
             <!-- Dropdown Menu -->
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'text-customRed': isDropdownVisible, 'text-customNeutreColor': !isDropdownVisible }"
-                class="hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
+                :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+                class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-                Coins
+                Yelp pour les professionnels
                 <i class="fa fa-chevron-down text-xs ml-1 " :class="{ 'text-white': isDropdownVisible, 'text-white': !isDropdownVisible }"></i>
               </button>
 
@@ -59,16 +108,16 @@
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Application Mobile
+              Ecrire un avis
             </router-link>
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Contact
+              Commence le projet
             </router-link>
             
           </div>
@@ -80,8 +129,8 @@
         <button>
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
-        <Button variant="ligth" class="font-poppins">Inscription</Button>
-        <Button variant="ligth" class="font-poppins">Connexion</Button>
+        <Button variant="ligth" class="font-poppins">Se connecter</Button>
+        <Button variant="danger" class="font-poppins">S'inscrire</Button>
       </div>
     </div>
 
@@ -142,52 +191,29 @@
     </div>
 
     <!-- MidleBar (menu défilant horizontal) -->
-    <div id="midleBar" class="container mx-auto">
-      <div class="w-full flex items-center p-4">
-        <div class="container mx-auto">
-          <div class="flex flex-wrap items-center relative">
-            <ul ref="scrollMenu" class="flex overflow-x-auto whitespace-nowrap w-full space-x-6 scrollbar-hide transition-transform duration-200 ease-in-out">
-              <li v-for="(menuItem, index) in menuItems" :key="index" class="menu-item">
-                <router-link :to="menuItem.route" class="flex flex-col items-center text-xs text-white hover:text-gray-900  hover:border-customWhite hover:border-b-2 hover:bg-customNeutreColor hover:rounded-sm px-3 py-2 transition duration-200">
-                  <BaseIcon :name="menuItem.icon" size="14" stroke-width="2" class="text-xs opacity-0 translate-y-2 transition-all duration-300 base-icon" />
-                  <span>{{ menuItem.label }}</span>
-                </router-link>
-              </li>
-            </ul>
-
-            <!-- Boutons de défilement -->
-            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 w-10 text-white rounded-full">
-              <i class="fa fa-chevron-left"></i>
-            </button>
-            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 w-10 bg-gray-900 text-white rounded-full">
-              <i class="fa fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- SearchBar -->
-    <div id="searchBar" class="container mx-auto px-4">
+    <!-- <div id="searchBar" class="container mx-auto px-4">
       <p class="text-white text-xl font-bold font-poppins">ENJOY ,</p>
       <p class="text-white text-lg font-bold font-poppins">Te trouve les coins de qualités !</p>
-      <div class="flex flex-wrap gap-1 p-4 items-center justify-center">
+      <div class="flex flex-wrap gap-1 p-4 items-center justify-center"> -->
         <!-- Inputs de recherche -->
-        <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[250px]" />
+        <!-- <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[250px]" />
         <FloatingInput ph="Ville ou région" icon="fa fa-location-dot" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[150px]" />
         <FloatingInput ph="Quartier ou adresse" icon="fa fa-location-arrow" class="text-sm w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px]" />
         <Button variant="danger" size="md" class="w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px] font-poppins px-6 py-2">
           Recherche
         </Button>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
   
   <script setup>
   import { ref, onMounted, onUnmounted } from 'vue';
   import Button from '@/components/buttons/Button.vue';
-  import FloatingInput from '../input/FloatingInput.vue';
+  // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
 
 
@@ -211,21 +237,77 @@ const checkScrollButtonsVisibility = () => {
 
 };
 
-const scrollLeft = () => {
-  scrollMenu.value.scrollLeft -= 100;
-  checkScrollButtonsVisibility(); 
-};
+// const scrollLeft = () => {
+//   scrollMenu.value.scrollLeft -= 100;
+//   checkScrollButtonsVisibility(); 
+// };
 
-const scrollRight = () => {
-  scrollMenu.value.scrollLeft += 100;
-  checkScrollButtonsVisibility(); // Update visibility after scrolling
-};
+// const scrollRight = () => {
+//   scrollMenu.value.scrollLeft += 100;
+//   checkScrollButtonsVisibility(); // Update visibility after scrolling
+// };
 
 const handleClickOutside = (event) => {
   if (!event.target.closest('.group')) {
     isDropdownVisible.value = false;
   }
 };
+
+const leftValue = ref('');
+const rightValue = ref('');
+const activeInput = ref(null);
+
+const leftSuggestions = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice'];
+const rightSuggestions = ['France', 'Italie', 'Espagne', 'Allemagne', 'Belgique'];
+let leftSelected = false; // Track if a selection is made for left field
+let rightSelected = false; // Track if a selection is made for right field
+
+const selectItem = (side, item) => {
+  if (side === 'left') {
+    leftValue.value = item;
+    leftSelected = true; // Mark as selected
+  } else if (side === 'right') {
+    rightValue.value = item;
+    rightSelected = true; // Mark as selected
+  }
+  activeInput.value = null; // Hide the list when an item is selected
+};
+
+const handleMouseLeave = (input) => {
+  if (input === 'left' && !leftSelected) {
+    leftValue.value = ''; // Reset if no selection made
+  }
+  if (input === 'right' && !rightSelected) {
+    rightValue.value = ''; // Reset if no selection made
+  }
+  // Reset selected flags for future checks
+  if (input === 'left') {
+    leftSelected = false;
+  } else if (input === 'right') {
+    rightSelected = false;
+  }
+  activeInput.value = null; // Hide the list when an item is selected
+};
+
+// const showLeft = ref(false);
+// const showRight = ref(false);
+
+// const hide = (side) => {
+//   setTimeout(() => {
+//     if (side === 'left') showLeft.value = false;
+//     if (side === 'right') showRight.value = false;
+//   }, 200);
+// };
+
+// const select = (side, item) => {
+//   if (side === 'left') {
+//     leftValue.value = item;
+//     showLeft.value = false;
+//   } else {
+//     rightValue.value = item;
+//     showRight.value = false;
+//   }
+// };
 
 onMounted(() => {
   checkScrollButtonsVisibility(); // Initial check after component is mounted
@@ -237,18 +319,15 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
-  const menuItems = [
-  { route: "/fr/categorie/11/restauration", label: "Restauration", icon: "Utensils" },
-  { route: "/fr/categorie/12/hotels-et-hebergements", label: "Hotels Et Hébergements", icon: "Hotel" },
-  { route: "/fr/categorie/13/divertissements", label: "Divertissements", icon: "Gamepad2" },
-  { route: "/fr/categorie/14/sites-touristiques", label: "Sites Touristiques", icon: "Camera" },
-  { route: "/fr/categorie/15/modes-et-beaute", label: "Modes Et Beauté", icon: "Scissors" },
-  { route: "/fr/categorie/16/transports", label: "Transports", icon: "BusFront" },
-  { route: "/fr/categorie/17/commerces", label: "Commerces", icon: "ShoppingBag" },
-  { route: "/fr/categorie/18/sports", label: "Sports", icon: "Dumbbell" },
-  { route: "/fr/categorie/19/secours", label: "Secours", icon: "Ambulance" },
-  { route: "/fr/categorie/20/administrations", label: "Administrations", icon: "Building2" },
-];
+  const menuItems = ref([
+  {  label: "Restaurant", icon: "Utensils" },
+  {  label: "Livraison", icon: "Package" },
+  {  label: "A emporter", icon: "ShoppingBasket" },
+  {  label: "Accountants", icon: "Calculator" },
+  {  label: "Plumbiers", icon: "Scissors" },
+  {  label: "Reparation auto", icon: "Wrench" },
+  
+]);
 
 const menuData = [
   {
