@@ -1,37 +1,79 @@
 <template>
-  <div class="p-5">
-    <div class="flex-1 flex flex-col overflow-auto ">
-          <div class="border-b-2 border-gray-800 pb-5">
-            <h1 class="text-gray-950 text-lg font-medium">Filtres</h1>
-            <h2 class="text-gray-950 text-md mt-2">Price</h2>
-            <div class="border rounded-full h-6 border-gray-800 flex items-center justify-between px-3 w-full max-w-xs mt-2">
-              <span class="text-gray-800 px-2">$</span>
-              <span class="text-gray-800 border-l px-2 border-gray-800">$$</span>
-              <span class="text-gray-800 border-x px-2 border-gray-800">$$$</span>
-              <span class="text-gray-800 px-2">$$$$</span>
-            </div>
-          </div>
-    </div>
-    <!-- Other components -->
-
-    <div class="flex-1 flex flex-col ">
-      <h1 class="text-gray-950 text-lg font-medium py-2">Suggested</h1>
-      <div >
-        <div class="border-b-2 border-gray-800 pb-5">
-          <div class="flex items-center" v-for="item in Suggested" :key="item.id">
-            <input  id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-            <label for="checked-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ item }}</label>
-          </div>
-        </div>
+  <div class="p-5 space-y-5">
+    <!-- Filtres -->
+    <FilterSection :title="$t('filter')">
+      <h2 class="text-gray-950 text-md mt-2">{{ $t('price') }}</h2>
+      <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between px-3 w-full max-w-xs mt-2">
+        <span v-for="(symbol, index) in priceOptions" :key="index"
+              class="text-gray-800 px-2 text-sm font-medium" :class="{ 'border-l': index > 0, 'border-gray-300': index > 0 }">
+          {{ symbol }}
+        </span>
       </div>
+    </FilterSection>
 
+    <!-- Suggestions -->
+    <FilterSection :title="$t('suggested')">
+      <CheckboxGroup :items="suggestedOptions" />
+    </FilterSection>
+
+    <!-- Categories -->
+    <FilterSection :title="$t('categorie')">
+      <div class="grid grid-cols-2 gap-2">
+        <RoundedButton v-for="item in mainCategory" :key="item.id" :label="item" />
+        <button type="button" @click="isModalOpen = true" class="text-customBlueVariant font-bold hover:underline">{{ $t('see') }}</button>
+      </div>
+    </FilterSection>
+
+    <!-- Features -->
+    <FilterSection :title="$t('feature')">
+      <CheckboxGroup :items="featuresOptions" />
+      <button type="button" class="text-customBlueVariant font-bold mt-2 hover:underline">{{ $t('see') }}</button>
+    </FilterSection>
+
+    <ModalCategory
+      :isOpen="isModalOpen"
+      :showActionButton="true"
+      actionText="Rechercher"
+      @close="isModalOpen = false"
+    >
+    <div >
+      <CheckboxGroup :items="Category" class="grid grid-cols-2 gap-2 mx-2" />
     </div>
-
+    </ModalCategory>
   </div>
 </template>
-<script setup>
-import {ref} from'vue';
 
-const Suggested = ref(['Open Now', 'Offers Delivery','Offers Takeout','Good for Dinner','Outdor Seating','Good for Lunch'])
+<script setup>
+import {ref,computed} from'vue';
+import FilterSection from '../filter/FilterSection.vue';
+import CheckboxGroup from '../filter/CheckboxGroup.vue';
+import RoundedButton from '../filter/RoundedButton.vue'
+import ModalCategory from '../modals/ModalCategory.vue';
+import { useI18n } from "vue-i18n";
+
+
+
+
+const priceOptions = ref(['$', '$$', '$$$', '$$$$']);
+const { t } = useI18n();
+const isModalOpen = ref(false);
+const suggestedOptions = computed(() => [
+  t('open_now'),
+  t('offers_delivery'),
+  t('offers_takeout'),
+  t('good_for_dinner'),
+  t('outdoor_seating'),
+  t('good_for_lunch')
+]);
+
+const mainCategory = computed(() => Category.value.slice(0, 6));
+
+const featuresOptions = computed(()=>[t('good_for_kids'),t('good_for_groups'),t('dogs_allowed'),t('full_bar'),t('good_for_brunch'),t('takes_reservations')]);
+const Category = computed(()=> [
+  t('burgers'), t('hot_dogs'), t('fast_food'), t('american'), t('food_trucks'), t('diners'), t('salad'), t('restaurants'),
+  t('food_delivery_services'), t('beer_bar'), t('vegan'), t('sandwiches'), t('sports_bars'), t('food_stands'), t('pubs'),
+  t('fish_and_chips'), t('halal'), t('breakfast_and_brunch'), t('vegetarian'), t('pizza'), t('international'), t('cocktail_bars'),
+  t('chicken_shops'), t('bars'), t('food'), t('steakhouses'), t('modern_european'), t('falafel')
+]);
 
 </script>

@@ -22,11 +22,6 @@ const router = createRouter({
       name: 'DetailService',
       component: () => import('../views/EDetailServices.vue'),
     },
-    {
-      path: '/menu',
-      name: 'Menu',
-      component: () => import('../views/restaurants/EMenu.vue'),
-    },
 
   ],
 })
