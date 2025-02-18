@@ -69,8 +69,82 @@
         },
         "min_price": "10,000 FCFA"
       }
+    },
+    "price": "Price",
+    "filter": "Filters",
+    "suggested": "Suggested",
+    "categorie": "Category",
+    "feature": "Features",
+    "see":"See All",
+    "open_now": "Open Now",
+    "offers_delivery": "Offers Delivery",
+    "offers_takeout": "Offers Take-Out",
+    "good_for_dinner": "Good For Dinner",
+    "outdoor_seating": "Outdoor Seating",
+    "good_for_lunch": "Good For Lunch",
+    "burgers": "Burgers",
+    "hot_dogs": "Hot Dogs",
+    "fast_food": "Fast Food",
+    "american": "Américain",
+    "food_trucks": "Food Trucks",
+    "diners": "Diners",
+    "salad": "Salad",
+    "restaurants": "Restaurants",
+    "food_delivery_services": "Food Delivery Services",
+    "beer_bar": "Beer Bar",
+    "vegan": "Vegan",
+    "sandwiches": "Sandwiches",
+    "sports_bars": "Sports Bars",
+    "food_stands": "Food Stands",
+    "pubs": "Pubs",
+    "fish_and_chips": "Fish & Chips",
+    "halal": "Halal",
+    "breakfast_and_brunch": "Breakfast & Brunch",
+    "vegetarian": "Vegetarian",
+    "pizza": "Pizza",
+    "international": "International",
+    "cocktail_bars": "Cocktail Bars",
+    "chicken_shops": "Chicken Shops",
+    "bars": "Bars",
+    "food": "Food",
+    "steakhouses": "Steakhouses",
+    "modern_european": "Modern European",
+    "falafel": "Falafel",
+    "good_for_kids": "Good for Kids",
+    "good_for_groups": "Good for Groups",
+    "dogs_allowed": "Dogs allowed",
+    "full_bar": "Full Bar",
+    "good_for_brunch": "Good for Brunch",
+    "takes_reservations": "Take Reservations",
+    "les_meilleurs_burgers":"The Best Burgers",
+    "restaurant": {
+    "le_safoutier": {
+      "nom": "The Safoutier",
+      "adresse": "Hilton Hotel, Yaoundé",
+      "heureFermeture": "11:00 PM",
+      "description": "High-end restaurant offering refined international cuisine in an elegant setting."
+    },
+    "cosy_pool": {
+      "nom": "Cosy Pool",
+      "adresse": "Bastos Quarter, Yaoundé",
+      "heureFermeture": "11:30 PM",
+      "description": "A peaceful spot around a pool offering light meals and live concerts."
+    },
+    "l_hybride": {
+      "nom": "L’Hybride",
+      "adresse": "Bastos Quarter, Yaoundé",
+      "heureFermeture": "10:00 PM",
+      "description": "Modern restaurant with tropical decor, offering a fusion of flavors and various artistic activities."
+    },
+    "le_club_yannick_noah": {
+      "nom": "Yannick Noah Club",
+      "adresse": "Etoudi Quarter, Yaoundé",
+      "heureFermeture": "10:00 PM",
+      "description": "A club combining sports facilities and an elegant restaurant, ideal for a sophisticated lunch."
     }
+  }
   
+    
   
   
 }

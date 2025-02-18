@@ -1,4 +1,4 @@
-import leSafariImage1 from '../assets/images/safari-night-club-logo.jpg';
+
 export const Categories = [
     {
       id: "REST-001",
