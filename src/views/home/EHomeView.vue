@@ -218,17 +218,5 @@ const menuCategory = [
   .bg-white {
     padding: 20px;
   }
-
-  .w-[250px] {
-    width: 100%;
-  }
-
-  .w-[200px] {
-    width: 100%;
-  }
-
-  .w-full {
-    width: 100%;
-  }
 }
 </style>

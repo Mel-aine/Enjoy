@@ -63,7 +63,8 @@
     localisation: {
       type: String,
       default: 'Yaoundé, Damas, Cameroun',
-    }
+    },
+    
   });
   
   // Utilisation d'un computed pour obtenir l'image, ou celle par défaut si vide
