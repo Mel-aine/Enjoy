@@ -25,7 +25,7 @@
 
 
 
-            <div class="w-full max-w-sm min-w-[200px] relative ml-2">
+    <div class="w-full max-w-sm min-w-[200px] relative ml-2">
     <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
       <input 
         v-model="leftValue"
@@ -45,34 +45,38 @@
       </button>
     </div>
 
-    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white border rounded shadow-lg mt-1 max-h-40 overflow-auto">
-      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-        <BaseIcon  :name="item.icon" size="12" stroke-width="2"></BaseIcon>
+    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-50 border rounded shadow-lg mt-1 overflow-auto ">
+      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-50 px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+        <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
         <span class="ml-2">
           {{ item.label }} 
         </span>
       </li>
     </ul>
 
-    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border rounded shadow-lg mt-1 max-h-40 overflow-auto">
-      <li v-for="item in rightSuggestions" :key="item" @mouseenter="rightValue = item" @click="selectItem('right', item)" class="px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-        {{ item }}
+    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-50 rounded shadow-lg mt-1 overflow-auto">
+      <li class="flex justify-center items-center mt-3">
+        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
+        <span class="text-sm text-blue-400"> Emplacement actuel </span> 
+      </li>
+      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-sm z-50 hover:bg-gray-100 cursor-pointer mx-2">
+        {{ item.label }}
       </li>
     </ul>
   </div>
 
-
+      
 
 
 
 
             
-            <!-- <router-link
+            <!-- <imageUrlr-link
               to="/"
               class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
               >
               Accueil
-            </router-link> -->
+            </imageUrlr-link> -->
 
             <!-- Dropdown Menu -->
             <div class="relative group">
@@ -81,24 +85,24 @@
                 :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
                 class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-                Yelp pour les professionnels
-                <i class="fa fa-chevron-down text-xs ml-1 " :class="{ 'text-white': isDropdownVisible, 'text-white': !isDropdownVisible }"></i>
+              Yelp pour les professionnels
+                <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
               </button>
 
               <!-- Contenu du menu déroulant -->
               <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-[2000px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
                 <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
-                  <div v-for="category in menuData" :key="category.route" class="space-y-1">
+                  <div v-for="category in menuData" :key="category.imageUrl" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
+                      <imageUrlr-link :to="category.imageUrl" class="block text-sm text-customRed hover:text-gray-900">
                         {{ category.label }}
-                      </router-link>
+                      </imageUrlr-link>
                     </h3>
                     <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.route">
-                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-gray-500">
+                      <li v-for="subItem in category.subCategories" :key="subItem.imageUrl">
+                        <imageUrlr-link :to="subItem.imageUrl" class="block text-xs text-gray-700 hover:bg-gray-500">
                           {{ subItem.label }}
-                        </router-link>
+                        </imageUrlr-link>
                       </li>
                     </ul>
                   </div>
@@ -106,19 +110,19 @@
               </div>
             </div>
 
-            <router-link
+            <imageUrlr-link
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Ecrire un avis
-            </router-link>
+            </imageUrlr-link>
 
-            <router-link
+            <imageUrlr-link
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Commence le projet
-            </router-link>
+            </imageUrlr-link>
             
           </div>
         </nav>
@@ -142,10 +146,10 @@
           <i class="fa fa-times text-gray-700 "></i>
         </button>
         <div class="flex flex-col space-y-6 mt-10">
-          <router-link
+          <imageUrlr-link
             to="/home"
             class="text-lg text-white  px-4 py-2 rounded-md"
-            @click="toggleSidebar">Accueil</router-link>
+            @click="toggleSidebar">Accueil</imageUrlr-link>
           
             <div class="relative group">
               <button
@@ -159,17 +163,17 @@
               <!-- Contenu du menu déroulant  mobile -->
               <div v-if="isDropdownVisible" class="absolute scroll-m-5 z-50 bg-white shadow-xl w-[250px] mt-2 rounded-lg p-5">
                 <div class="grid grid-cols-1 gap-4">
-                  <div v-for="category in menuData" :key="category.route" class="space-y-1">
+                  <div v-for="category in menuData" :key="category.imageUrl" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="category.route" class="block text-sm text-customRed ">
+                      <imageUrlr-link :to="category.imageUrl" class="block text-sm text-customRed ">
                         {{ category.label }}
-                      </router-link>
+                      </imageUrlr-link>
                     </h3>
                     <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.route">
-                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-customDarkVariant2">
+                      <li v-for="subItem in category.subCategories" :key="subItem.imageUrl">
+                        <imageUrlr-link :to="subItem.imageUrl" class="block text-xs text-gray-700 hover:bg-customDarkVariant2">
                           {{ subItem.label }}
-                        </router-link>
+                        </imageUrlr-link>
                       </li>
                     </ul>
                   </div>
@@ -177,36 +181,32 @@
               </div>
             </div>
           
-          <router-link
+          <imageUrlr-link
             to="/comunity"
             class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Application Mobile</router-link>
+            @click="toggleSidebar">Application Mobile</imageUrlr-link>
           
-          <router-link
+          <imageUrlr-link
             to="/comunity"
             class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Contact</router-link>
+            @click="toggleSidebar">Contact</imageUrlr-link>
         </div>
       </div>
     </div>
 
-    <!-- MidleBar (menu défilant horizontal) -->
     
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4">
+    <div class="container mx-auto px-4 flex flex-wrap justify-center md:justify-start items-center gap-4">
+      <DropDown :menuData="menuRestaurants">Restaurants</DropDown>
+      <DropDown :menuData="menuHouseWork">Maison et travaux</DropDown>
+      <DropDown :menuData="menuCarService">Service auto</DropDown>
+      <DropDown :menuData="menuOthers">Plus</DropDown>
+    </div>
+  </div>
 
-    <!-- SearchBar -->
-    <!-- <div id="searchBar" class="container mx-auto px-4">
-      <p class="text-white text-xl font-bold font-poppins">ENJOY ,</p>
-      <p class="text-white text-lg font-bold font-poppins">Te trouve les coins de qualités !</p>
-      <div class="flex flex-wrap gap-1 p-4 items-center justify-center"> -->
-        <!-- Inputs de recherche -->
-        <!-- <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[250px]" />
-        <FloatingInput ph="Ville ou région" icon="fa fa-location-dot" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[150px]" />
-        <FloatingInput ph="Quartier ou adresse" icon="fa fa-location-arrow" class="text-sm w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px]" />
-        <Button variant="danger" size="md" class="w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px] font-poppins px-6 py-2">
-          Recherche
-        </Button>
-      </div>
-    </div> -->
+
+
   </div>
 </template>
   
@@ -215,6 +215,8 @@
   import Button from '@/components/buttons/Button.vue';
   // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
+  import DropDown from '../dropDown/DropDown.vue'
+ 
 
 
   const isDropdownVisible = ref(false) ;
@@ -257,8 +259,6 @@ const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
 
-const leftSuggestions = ['Paris', 'Lyon', 'Marseille', 'Bordeaux', 'Nice'];
-const rightSuggestions = ['France', 'Italie', 'Espagne', 'Allemagne', 'Belgique'];
 let leftSelected = false; // Track if a selection is made for left field
 let rightSelected = false; // Track if a selection is made for right field
 
@@ -324,214 +324,73 @@ onUnmounted(() => {
   {  label: "Livraison", icon: "Package" },
   {  label: "A emporter", icon: "ShoppingBasket" },
   {  label: "Accountants", icon: "Calculator" },
-  {  label: "Plumbiers", icon: "Scissors" },
+  {  label: "Plumbiers", icon: "Droplets" },
   {  label: "Reparation auto", icon: "Wrench" },
   
 ]);
 
-const menuData = [
-  {
-    route: "/fr/categorie/11/restauration",
-    label: "Restauration",
-    subCategories: [
-      { route: "/fr/categorie/21/restaurant", label: "Restaurant" },
-      { route: "/fr/categorie/22/restaurant-dhotel", label: "Restaurant d'hôtel" },
-      { route: "/fr/categorie/25/fast-food", label: "Fast food" },
-      { route: "/fr/categorie/26/restaurant-livreur", label: "Restaurant livreur" },
-      { route: "/fr/categorie/27/cuisine-a-la-commande", label: "Cuisine à la commande" },
-      { route: "/fr/categorie/28/traiteur", label: "Traiteur" }, 
-      { route: "/fr/categorie/642/restaurant-lounge", label: "RESTORANT LOUNGE" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTORANT PLEIN AIR" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Restaurant-Glacier" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTAURANT/CAV" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTAURANT/GRILL" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "LOUNGE/RESTAURANT" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Creperie/Pizzaria/Patisserie" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Restaurant en ligne" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Café" },
 
-    ],
-  },
-  {
-    route: "/fr/categorie/12/hotels-et-hebergements",
-    label: "Hôtels et Hébergements",
-    subCategories: [
-      { route: "/fr/categorie/56/hotel", label: "Hôtel" },
-      { route: "/fr/categorie/57/centre-climatique", label: "Centre climatique" },
-      { route: "/fr/categorie/58/58-appartements-studios-meubles", label: "Appartements/Studios meublés" },
-      { route: "/fr/categorie/59/auberge-habitat-maison-d-hote", label: "Auberge/Maison d'hôte" },
-      { route: "/fr/categorie/890/villa", label: "Site touristique avec hébergements" },
-      { route: "/fr/categorie/890/villa", label: "Villa" },
-      { route: "/fr/categorie/890/villa", label: "Complexe Hôtelier" },
-      { route: "/fr/categorie/890/villa", label: "Motel" },
+const menuData = ref([
+{ label: "Yaounde, CE, Cameroun" },
+  { label: "Douala, LT , Cameroun" },
+  { label: "Bamenda, NW, Cameroun" },
+  { label: "Garoua, NO, Cameroun" },
+  { label: "Bafoussam, OU, Cameroun" },
+  { label: "Limbe, SO, Cameroun" },
+  { label: "Kribi, SU, Cameroun" },
+  { label: "Buea, SW, Cameroun" },
+  { label: "Maroua, EN, Cameroun" },
+  { label: "Dschang, OU, Cameroun" },
+]);
 
-    ],
-  },
-  {
-    route: "/fr/categorie/13/divertissements",
-    label: "Divertissements",
-    subCategories: [
-      { route: "/fr/categorie/29/manege", label: "Manège" },
-      { route: "/fr/categorie/30/cinema", label: "Cinéma" },
-      { route: "/fr/categorie/31/salle-de-theatre", label: "Salle de théâtre" },
-      { route: "/fr/categorie/32/snack-club-bar-boite", label: "Snack/Club/Bar/Boîte de nuit" },
-      { route: "/fr/categorie/33/salle-de-concert", label: "Salle de concert" },
-      { route: "/fr/categorie/35/parc-dattraction", label: "Parc d'attraction" },
-      { route: "/fr/categorie/37/cabaret-lounge-cafe", label: "Cabaret/Lounge/Cafe" },
-      { route: "/fr/categorie/38/stade-match-competition", label: "Stade/Match/Compétition" },
-      { route: "/fr/categorie/79/centre_de-loisirs", label: "Centre de Loisirs" },
-      { route: "/fr/categorie/88/complexe-sportif", label: "Complexe Sportif" },
-      { route: "/fr/categorie/94/bowling", label: "BOWLING" },
-      { route: "/fr/categorie/96/base-nautique", label: "BASE NAUTIQUE" },
-      { route: "/fr/categorie/101/101-salle-lecture-bibliotheque", label: "SALLE LECTURE/Bibliothèque" },
-      { route: "/fr/categorie/634/gallerie-dart", label: "GALLERIE D'ART" },
-      { route: "/fr/categorie/710/complexe-touristique", label: "Complexe touristique" },
-      { route: "/fr/categorie/881/snack", label: "SNACK" },
-      { route: "/fr/categorie/888/studio-de-danse", label: "Studio de danse" },
-      { route: "/fr/categorie/895/cabaret", label: "Cabaret" },
-      { route: "/fr/categorie/904/snack-1", label: "Snack" },
-      { route: "/fr/categorie/905/bar", label: "Bar" },
-      { route: "/fr/categorie/906/boite-de-nuit-club", label: "Boîte de nuit/Club" },
-      { route: "/fr/categorie/915/915-salle-des-fetes", label: "Salle des fêtes" },
-      { route: "/fr/categorie/879/piscine", label: "Piscine" }
-    ]
-  },
-  {
-    route: '/fr/categorie/14/sites-touristiques',
-    label: 'Sites Touristiques',
-    subCategories: [
-      { route: "/fr/categorie/34/plage", label: "Plage" },
-      { route: "/fr/categorie/47/zoo-parcs-musee", label: "Monument/Zoo/Parcs/Musée" },
-      { route: "/fr/categorie/50/habitat-construction-historique", label: "Habitat/construction historique" },
-      { route: "/fr/categorie/52/chefferie-royaume", label: "Chefferie/Royaume" },
-      { route: "/fr/categorie/53/53-fleuve", label: "Fleuve" },
-      { route: "/fr/categorie/54/mont", label: "Mont" },
-      { route: "/fr/categorie/55/pont", label: "Pont" },
-      { route: "/fr/categorie/81/lac", label: "LAC" },
-      { route: "/fr/categorie/82/ile", label: "ILE" },
-      { route: "/fr/categorie/97/agence-decotourisme", label: "Agence d'écotourisme" },
-      { route: "/fr/categorie/102/rocher", label: "ROCHER" },
-      { route: "/fr/categorie/104/agence-de-tourisme", label: "Agence De Tourisme" },
-      { route: "/fr/categorie/635/chutte-deau", label: "CHUTTE D'EAU" },
-      { route: "/fr/categorie/761/761-port-barrage", label: "Port/Barrage" },
-      { route: "/fr/categorie/887/centre-culturel-1", label: "Centre culturel" },
-      { route: "/fr/categorie/896/zoo", label: "Zoo" },
-      { route: "/fr/categorie/897/musee", label: "Musée" },
-      { route: "/fr/categorie/898/parcs", label: "Parcs" },
-      { route: "/fr/categorie/899/monument", label: "Monument" },
-      { route: "/fr/categorie/900/chutes", label: "Chutes" },
-      { route: "/fr/categorie/901/grottes", label: "Grottes" },
-      { route: "/fr/categorie/902/gallerie-dart-1", label: "Gallérie d'art" },
-      { route: "/fr/categorie/903/falaise", label: "Falaise" }
-    ]
-  },
-  {
-    route: '/fr/categorie/15/modes-et-beaute',
-    label: 'Modes Et Beauté',
-    subCategories: [
-      { route: "/fr/categorie/61/instituts-de-beaute", label: "Instituts de beauté" },
-      { route: "/fr/categorie/62/salon-de-coiffure", label: "Salon de coiffure" },
-      { route: "/fr/categorie/63/shop-de-vetements", label: "Shop de vêtements" },
-      { route: "/fr/categorie/64/stylistes-modelistes", label: "Stylistes-modélistes" },
-      { route: "/fr/categorie/621/maison-de-couture", label: "MAISON DE COUTURE" },
-      { route: "/fr/categorie/651/haute-couture", label: "Haute couture" },
-      { route: "/fr/categorie/878/878-body-care-consulting", label: "Body care consulting" },
-      { route: "/fr/categorie/883/883-salon-donglerie", label: "Salon d'onglerie" },
-      { route: "/fr/categorie/886/salon-de-beaute", label: "Salon de beauté" },
-      { route: "/fr/categorie/891/beaute-a-domicile", label: "Beauté à domicile" }
-    ]
-  },
-  {
-    route: '/fr/categorie/16/transports',
-    label: 'Transports',
-    subCategories: [
-      { route: "/fr/categorie/39/agence-de-transport-aerien", label: "Agence de transport aérien" },
-      { route: "/fr/categorie/40/agence-de-transport-maritime", label: "Agence de transport maritime" },
-      { route: "/fr/categorie/41/agence-de-transport-ferroviaire", label: "Agence de transport ferroviaire" },
-      { route: "/fr/categorie/43/agence-de-moto-taxi", label: "Agence de moto-taxi" },
-      { route: "/fr/categorie/44/agence-de-location-de-vehicule", label: "Agence de location de véhicule" },
-      { route: "/fr/categorie/45/agence-de-transport-pour-tourisme", label: "Agence de transport pour tourisme" },
-      { route: "/fr/categorie/46/aeroport-port-gare-ferroviaire-gare-routiere", label: "Aéroport/Port/Gare ferroviaire/Gare routière" },
-      { route: "/fr/categorie/108/agence-de-voyage", label: "Agence de voyage" },
-      { route: "/fr/categorie/685/centre-d%C3%A9co-tourisme", label: "Centre d'éco-tourisme" }
-    ]
-  },
-  {
-    route: '/fr/categorie/17/commerces',
-    label: 'Commerces',
-    subCategories: [
-      { route: "/fr/categorie/75/marche", label: "Marché" },
-      { route: "/fr/categorie/76/supermarche", label: "Supermarché" },
-      { route: "/fr/categorie/77/centre-commercial", label: "Centre commercial" },
-      { route: "/fr/categorie/80/boulangerie", label: "BOULANGERIE" },
-      { route: "/fr/categorie/87/decoration-interieure", label: "Décoration intérieure" },
-      { route: "/fr/categorie/95/boutique", label: "BOUTIQUE" },
-      { route: "/fr/categorie/98/shop-de-friandises", label: "SHOP DE FRIANDISES" },
-      { route: "/fr/categorie/99/magasin-electro-menage", label: "MAGASIN ELECTRO-MENAGE" },
-      { route: "/fr/categorie/100/magasin-deco", label: "MAGASIN DECO" },
-      { route: "/fr/categorie/106/boutique-en-ligne", label: "Boutique en ligne" },
-      { route: "/fr/categorie/633/magasin", label: "Magasin" },
-      { route: "/fr/categorie/703/alimentation", label: "ALIMENTATION" },
-      { route: "/fr/categorie/704/magasin-de-d%C3%A9co", label: "Magasin de déco" },
-      { route: "/fr/categorie/749/decoration-interieure-boutique-en-ligne", label: "Decoration Interieure( Boutique en Ligne)" },
-      { route: "/fr/categorie/777/services-%C3%A9v%C3%A8nementiels", label: "Services évènementiels" },
-      { route: "/fr/categorie/798/shop", label: "Shop" },
-      { route: "/fr/categorie/805/hypermarch%C3%A9", label: "Hypermarché" },
-      { route: "/fr/categorie/876/livreur", label: "Livreur" },
-      { route: "/fr/categorie/880/pressing", label: "Pressing" },
-      { route: "/fr/categorie/884/cave-a-vins", label: "Cave à vins" },
-      { route: "/fr/categorie/908/construction-btp", label: "Construction (BTP)" },
-      { route: "/fr/categorie/913/service-de-nettoyage", label: "Service de Nettoyage" }
-    ]
-  },
-  {
-    route: '/fr/categorie/18/sports',
-    label: 'Sports',
-    subCategories: [
-      { route: "/fr/categorie/78/salle-de-sport-fitness", label: "Salle de sport/Fitness" },
-      { route: "/fr/categorie/664/salle-de-sports", label: "Salle de sports" }
-    ]
-  },
-  {
-    route: '/fr/categorie/19/secours',
-    label: 'Secours',
-    subCategories: [
-      { route: "/fr/categorie/65/urgences", label: "Urgences" },
-      { route: "/fr/categorie/66/pompier", label: "Pompier" },
-      { route: "/fr/categorie/67/hopital-centre-de-sante", label: "Hôpital/Centre de santé" },
-      { route: "/fr/categorie/68/police-gendarmerie", label: "Police/gendarmerie" },
-      { route: "/fr/categorie/91/centre-ophtamologie", label: "CENTRE OPHTAMOLOGIE" },
-      { route: "/fr/categorie/650/hopital", label: "Hopital" },
-      { route: "/fr/categorie/652/centre-de-sant%C3%A9", label: "Centre de santé" },
-      { route: "/fr/categorie/661/pompiers", label: "Pompiers" },
-      { route: "/fr/categorie/758/centre-m%C3%A9dical-ophtalmologique", label: "Centre médical Ophtalmologique" },
-      { route: "/fr/categorie/877/cabinet-dentaire", label: "Cabinet Dentaire" },
-      { route: "/fr/categorie/889/opticien", label: "Opticien" },
-      { route: "/fr/categorie/907/pharmacie", label: "Pharmacie" },
-      { route: "/fr/categorie/909/laboratoire-danalyse", label: "Laboratoire d'Analyse" },
-      { route: "/fr/categorie/107/clinique", label: "Clinique" },
-      { route: "/fr/categorie/893/centre-medical", label: "Centre Médical" }
-    ]
-  },
-  {
-    route: '/fr/categorie/20/administrations',
-    label: 'Administrations',
-    subCategories: [
-      { route: "/fr/categorie/69/ministere", label: "Ministère" },
-      { route: "/fr/categorie/70/delegation-regionale_departementale_communale", label: "Délégation Régionale/Départementale/Communale" },
-      { route: "/fr/categorie/71/mairie", label: "Mairie" },
-      { route: "/fr/categorie/72/services-administratif", label: "Services Administratif" },
-      { route: "/fr/categorie/73/office-du-tourisme", label: "Office du tourisme" },
-      { route: "/fr/categorie/74/74-universite-institut-enseignement-superieur", label: "Université/Institut/Enseignement Supérieur" },
-      { route: "/fr/categorie/660/organisation-a-but-non-lucratif", label: "Organisation à but non lucratif" },
-      { route: "/fr/categorie/721/eglise-cathedrale", label: "EGLISE/CATHEDRALE" },
-      { route: "/fr/categorie/885/centre-de-formation", label: "Centre de Formation" },
-      { route: "/fr/categorie/910/creche-halte-garderie", label: "Crèche/Halte garderie" },
-      { route: "/fr/categorie/911/primaire-education-de-base", label: "Primaire/Education de base" },
-      { route: "/fr/categorie/912/college-lycee-enseignement-secondaire", label: "Collège/Lycée/Enseignement secondaire" }
-    ]
-  }
+const menuRestaurants = [
+  { route: "/fr/categorie/11/restauration", label: "A emporter",icon: "ShoppingBag" },
+  { route: "/fr/categorie/11/restauration", label: "Burgers",icon: "Pizza" },
+  { route: "/fr/categorie/11/restauration", label: "Cuisine chinoise",icon: "Soup" },
+  { route: "/fr/categorie/11/restauration", label: "Cuisine italienne",icon: "Salad" },
+  { route: "/fr/categorie/11/restauration", label: "Reservations",icon: "Calendar1" },
+  { route: "/fr/categorie/11/restauration", label: "Livraison",icon: "Package2" },
+  { route: "/fr/categorie/11/restauration", label: "Cuisine mexicaine",icon: "CookingPot" },
+  { route: "/fr/categorie/11/restauration", label: "Cuisine Thai",icon: "Fish" },
+
 ];
+
+const menuHouseWork = [
+  { route: "/fr/categorie/11/restauration", label: "Prestataire",icon: "HandCoins" },
+  { route: "/fr/categorie/11/restauration", label: "Electreiciens",icon: "PlugZap" },
+  { route: "/fr/categorie/11/restauration", label: "Menage",icon: "Recycle" },
+  { route: "/fr/categorie/11/restauration", label: "Chauffage & air conditionne",icon: "ThermometerSun" },
+  { route: "/fr/categorie/11/restauration", label: "Amenagement paysager",icon: "Shrub" },
+  { route: "/fr/categorie/11/restauration", label: "Serruriers",icon: "Key" },
+  { route: "/fr/categorie/11/restauration", label: "Demenageurs",icon: "BriefcaseConveyorBelt" },
+  { route: "/fr/categorie/11/restauration", label: "Plombiers",icon: "Droplets" },
+
+];
+
+const menuCarService = [
+  { route: "/fr/categorie/11/restauration", label: "Repartion auto",icon: "Bolt" },
+  { route: "/fr/categorie/11/restauration", label: "Nettoyage auto de precision",icon: "SprayCan" },
+  { route: "/fr/categorie/11/restauration", label: "Carrosserie",icon: "RectangleHorizontal" },
+  { route: "/fr/categorie/11/restauration", label: "Nettoyage de voiture",icon: "Sparkles" },
+  { route: "/fr/categorie/11/restauration", label: "Concessionaire auto",icon: "KeySquare" },
+  { route: "/fr/categorie/11/restauration", label: "Vidange d'huile",icon: "Beaker" },
+  { route: "/fr/categorie/11/restauration", label: "Parking",icon: "CircleParking" },
+  { route: "/fr/categorie/11/restauration", label: "Remorquage",icon: "Tangent" },
+
+];
+
+const menuOthers = [
+  { route: "/fr/categorie/11/restauration", label: "Nettoyage a sec",icon: "VenetianMask" },
+  { route: "/fr/categorie/11/restauration", label: "Reparation des telephones",icon: "Smartphone" },
+  { route: "/fr/categorie/11/restauration", label: "Bars",icon: "Beer" },
+  { route: "/fr/categorie/11/restauration", label: "vie nocturne",icon: "Martini" },
+  { route: "/fr/categorie/11/restauration", label: "Coiffeurs&salons de coiffure",icon: "SquareScissors" },
+  { route: "/fr/categorie/11/restauration", label: "Salle de sport",icon: "Dumbbell" },
+  { route: "/fr/categorie/11/restauration", label: "Massage",icon: "MarsStroke" },
+  { route: "/fr/categorie/11/restauration", label: "Shopping",icon: "ShoppingCart" },
+
+];
+
   </script>
   
   <style scoped>
