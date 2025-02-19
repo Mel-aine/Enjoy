@@ -3,6 +3,7 @@ export const Categories = [
     {
       id: "REST-001",
       label: "Restauration",
+      route: "/recherche",
       icon: "fa fa-utensils",
       places: [
         {
@@ -46,6 +47,7 @@ export const Categories = [
     {
       id: "SHOP-001",
       label: "Shopping",
+      route: "/recherche",
       icon: "fa fa-shopping-bag",
       places: [
         {
@@ -120,6 +122,7 @@ export const Categories = [
     {
       id: "FASH-001",
       label: "Salons de beauté & Spas",
+      route: "/recherche",
       icon: "fa fa-spa",
       places: [
         {
@@ -166,6 +169,7 @@ export const Categories = [
     {
       id: "TRAN-001",
       label: "Automobile",
+      route: "/recherche",
       icon: "fa fa-bus",
       places: [
         {
@@ -210,6 +214,7 @@ export const Categories = [
     {
       id: "MAIS-001",
       label: "Maisons & Travaux",
+      route: "/recherche",
       icon: "fa fa-home",
       places: [
         {
@@ -235,6 +240,7 @@ export const Categories = [
     {
       id: "COF-001",
       label: "Cafés & Thés",
+      route: "/recherche",
       icon: "fa fa-coffee",
       places: [
         {
@@ -259,6 +265,7 @@ export const Categories = [
     {
       id: "ALI-001",
       label: "Alimentations",
+      route: "/recherche",
       icon: "fa fa-apple-alt",
       places: [
         {
@@ -283,6 +290,7 @@ export const Categories = [
     {
       id: "LOI-001",
       label: "Art & Loisirs",
+      route: "/recherche",
       icon: "fa fa-palette",
       places: [
         {
@@ -307,6 +315,7 @@ export const Categories = [
     {
       id: "SEC-001",
       label: "Santé & Médical",
+      route: "/recherche",
       icon: "fa fa-briefcase-medical",
       places: [
         {
@@ -331,6 +340,7 @@ export const Categories = [
     {
       id: "SERV-001",
       label: "Services destiné aux prof",
+      route: "/recherche",
       icon: "fa fa-shield-alt",
       places: [
         {
@@ -355,6 +365,7 @@ export const Categories = [
     {
       id: "ANI-001",
       label: "Animaux de companie",
+      route: "/recherche",
       icon: "fa fa-paw",
       places: [
         {
@@ -379,6 +390,7 @@ export const Categories = [
     {
       id: "IMM-001",
       label: "Immobilier",
+      route: "/recherche",
       icon: "fa fa-home",
       places: [
         {
@@ -405,6 +417,7 @@ export const Categories = [
     {
       id: "HOTEL-001",
       label: "Hôtels & Séjours",
+      route: "/recherche",
       icon: "fa fa-hotel",
       places: [
         {
@@ -450,6 +463,7 @@ export const Categories = [
     {
       id: "ENT-001",
       label: "Services Locaux",
+      route: "/recherche",
       icon: "fa fa-map-marker-alt",
       places: [
         {
@@ -475,6 +489,7 @@ export const Categories = [
     {
       id: "TOUR-001",
       label: "Organisation d événements",
+      route: "/recherche",
       icon: "fa fa-calendar-alt",
       places: [
         {
@@ -502,6 +517,7 @@ export const Categories = [
     {
       id: "ADMIN-001",
       label: "Services publics & gouvernement",
+      route: "/recherche",
       icon: "fa fa-landmark",
       places: [
         {
@@ -530,6 +546,7 @@ export const Categories = [
     {
         id: "FIN-001",
         label: "Services financiers",
+        route: "/recherche",
         icon: "fa fa-chart-line",
         places: [
           {
@@ -555,6 +572,7 @@ export const Categories = [
     {
       id: "FORM-001",
       label: "Formation & Enseignement",
+      route: "/recherche",
       icon: "fa fa-pencil-alt",
       places: [
         {
@@ -580,6 +598,7 @@ export const Categories = [
     {
       id: "RELI-001",
       label: "Organisation religieuse",
+      route: "/recherche",
       icon: "fa fa-church",
       places: [
         {
@@ -605,6 +624,7 @@ export const Categories = [
     {
       id: "COUL-001",
       label: "Couleur locale",
+      route: "/recherche",
       icon: "fa fa-tree",
       places: [
         {
@@ -630,6 +650,7 @@ export const Categories = [
     {
       id: "MEDI-001",
       label: "Média",
+      route: "/recherche",
       icon: "fa fa-newspaper",
       places: [
         {

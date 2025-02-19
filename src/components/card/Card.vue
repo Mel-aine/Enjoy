@@ -4,7 +4,7 @@
       <div class="relative">
         <img :src="image" alt="Card Background" class="w-full h-40 object-cover" />
         <!-- Superposition de l'ombre au passage de la souris -->
-        <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black bg-opacity-50 transition-opacity duration-300">
+        <div class="absolute inset-0 flex justify-center items-center opacity-0 group-hover:opacity-100 bg-black/50 bg-opacity-50 transition-opacity duration-300">
         </div>
       </div>
       <div class="my-1 border rounded-full"></div>
@@ -63,7 +63,8 @@
     localisation: {
       type: String,
       default: 'Yaoundé, Damas, Cameroun',
-    }
+    },
+    
   });
 
   // Utilisation d'un computed pour obtenir l'image, ou celle par défaut si vide

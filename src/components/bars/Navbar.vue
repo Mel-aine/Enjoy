@@ -1,74 +1,119 @@
 <template>
-  <div class="bg-customBlue">
-    <!-- Top Bar -->
+  <div class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
+    <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Superposition sombre -->
+        <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
       <!-- Logo -->
-      <div id="logo" class="rounded-full flex-shrink-0">
+      <div id="logo" class="relative rounded-full flex-shrink-0">
         <img class="rounded-full" src="@/assets/logo2.png" width="50" alt="Logo">
       </div>
 
       <!-- Menu Mobile: Bouton avec icône "fa-bars" -->
-      <div id="menuToggle" class="block md:hidden">
+      <div id="menuToggle" class="relative block md:hidden">
         <button @click="toggleSidebar" class="text-white text-2xl">
           <i class="fa fa-bars"></i>
         </button>
       </div>
 
+
       <!-- Menu Principal (Desktop) -->
       <div id="mainMenu" class="relative w-full hidden md:block">
         <nav>
           <div class="flex justify-center space-x-4">
-            <router-link
-              to="/"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
-              >
-              Accueil
-            </router-link>
+
+    
+            <div class="w-full max-w-sm min-w-[200px] relative ml-2">
+    <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
+      <input 
+        v-model="leftValue"
+        @mouseenter="activeInput = 'left'"
+        placeholder="Restaurant" 
+        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+      />
+      <div class="h-6 border-l border-slate-200 ml-1"></div>
+      <input 
+        v-model="rightValue"
+        @mouseenter="activeInput = 'right'"
+        placeholder="Yaoun" 
+        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+      />
+      <router-link to="/recherche">
+        <button class="bg-customRed px-4 py-3 text-white ml-2">
+          <BaseIcon name="Search" size="20" stroke-width="2" />
+        </button>
+      </router-link>
+
+    </div>
+
+    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
+      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+        <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
+        <span class="ml-2">
+          {{ item.label }} 
+        </span>
+      </li>
+    </ul>
+
+    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
+      <li class="flex justify-center items-center mt-3">
+        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
+        <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span> 
+      </li>
+      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+        {{ item.label }}
+      </li>
+    </ul>
+  </div>
+
+    
 
             <!-- Dropdown Menu -->
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'text-gray-800': isDropdownVisible, 'text-white': !isDropdownVisible }"
-                class="hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+                :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+                class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-                Coins
-                <i class="fa fa-chevron-down text-xs ml-1 " :class="{ 'text-customRed': isDropdownVisible, 'text-white': !isDropdownVisible }"></i>
+              {{ $t('navbar.yelpProfessional') }}                
+              <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
               </button>
 
               <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-[2000px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
-                  <div v-for="category in menuData" :key="category.route" class="space-y-1">
+              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+                <div class="grid grid-cols-1  md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
+                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
-                        {{ category.label }}
+                      <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
                       </router-link>
                     </h3>
-                    <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.route">
-                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-gray-500">
-                          {{ subItem.label }}
-                        </router-link>
-                      </li>
-                    </ul>
+                    
+                   
                   </div>
+                  <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
+                    <h3 class="text-lg font-semibold text-gray-800 mt-3">
+                      <router-link to="" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> Explorez Yelp pour votre Business</span>
+                      </router-link>
+                    </h3>
                 </div>
               </div>
             </div>
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Application Mobile
+              {{ $t('navbar.writeReview') }}
             </router-link>
 
             <router-link
               to="/comunity"
-              class="text-white hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Contact
+              {{ $t('navbar.startProject') }}
             </router-link>
             
           </div>
@@ -76,122 +121,161 @@
       </div>
 
       <!-- User Management (à droite) -->
-      <div id="userManage" class="flex items-center space-x-4">
+      <div id="userManage" class="relative flex items-center space-x-4">
         <button>
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
-        <Button variant="ligth" class="font-poppins">Inscription</Button>
-        <Button variant="ligth" class="font-poppins">Connexion</Button>
+        <Button variant="ligth" class="font-poppins">{{$t('login')}}</Button>
+        <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button>
       </div>
     </div>
 
     <!-- Sidebar Menu (Mobile) -->
     <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-40 md:hidden" @click.self="toggleSidebar">
-      <div class="absolute left-0 top-0 w-3/4 h-full bg-customBlue shadow-lg p-4 transform transition-transform duration-300"
-           :class="{'translate-x-0 ': isSidebarOpen, '-translate-x-full': !isSidebarOpen}">
-        <button @click="toggleSidebar" class="absolute top-4 right-4 text-xl text-gray-600">
-          <i class="fa fa-times text-gray-700 "></i>
+  <div class="absolute transform h-full bg-customBlue shadow-lg p-4 transition-transform duration-500"
+       :class="{'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen}">
+    <button @click="toggleSidebar" class="absolute top-4 right-4 text-xl text-gray-600">
+      <BaseIcon name="ChevronsLeft" customColor="text-gray-800" size="25" stroke-width="2" />
+    </button>
+    <div class="flex flex-col space-y-6 mt-10">
+      <!-- Dropdown Menu -->
+      <div class="relative group">
+        <button
+          @click="isDropdownVisible = !isDropdownVisible"
+          :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+          class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
+        >
+          {{$t('navbar.yelpProfessional')}}
+          <i class="fa fa-chevron-down text-xs ml-1 text-white"></i>
         </button>
-        <div class="flex flex-col space-y-6 mt-10">
-          <router-link
-            to="/home"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Accueil</router-link>
-          
-            <div class="relative group">
-              <button
-                @click="isDropdownVisible = !isDropdownVisible"
-                class="text-gray-900 hover:text-gray-900 px-4 py-2 rounded-sm font-medium font-poppins"
-              >
-                Coins
-                <i class="fa fa-chevron-down text-xs ml-1" :class="{ 'text-customRed': isDropdownVisible, 'text-gray-700': !isDropdownVisible }"></i>
-              </button>
 
-              <!-- Contenu du menu déroulant  mobile -->
-              <div v-if="isDropdownVisible" class="absolute scroll-m-5 z-50 bg-white shadow-xl w-[250px] mt-2 rounded-lg p-5">
-                <div class="grid grid-cols-1 gap-4">
-                  <div v-for="category in menuData" :key="category.route" class="space-y-1">
-                    <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="category.route" class="block text-sm text-customRed hover:text-gray-900">
-                        {{ category.label }}
-                      </router-link>
-                    </h3>
-                    <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.route">
-                        <router-link :to="subItem.route" class="block text-xs text-gray-700 hover:bg-gray-500">
-                          {{ subItem.label }}
-                        </router-link>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          
-          <router-link
-            to="/comunity"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Application Mobile</router-link>
-          
-          <router-link
-            to="/comunity"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Contact</router-link>
-        </div>
-      </div>
-    </div>
-
-    <!-- MidleBar (menu défilant horizontal) -->
-    <div id="midleBar" class="container mx-auto">
-      <div class="w-full flex items-center p-4">
-        <div class="container mx-auto">
-          <div class="flex flex-wrap items-center relative">
-            <!-- Menu principal avec défilement horizontal -->
-            <ul ref="scrollMenu" class="flex overflow-x-auto whitespace-nowrap w-full space-x-6 scrollbar-hide transition-transform duration-200 ease-in-out">
-              <li v-for="(menuItem, index) in menuItems" :key="index" class="menu-item">
-                <router-link :to="menuItem.route" class="flex items-center text-xs text-white hover:text-gray-900 rounded-full hover:bg-customNeutreColor px-3 py-2 hover:transition-transform duration-200 hover:text-sm">
-                  <!-- <i :class="menuItem.icon" class="text-xs hover:text-xs"></i> -->
-                  <BaseIcon :name="menuItem.icon" size="12" stroke-width="2" class="text-xs hover:text-xs"/> 
-
-                  <span class="ml-2">{{ menuItem.label }}</span>
+        <!-- Contenu du menu déroulant -->
+        <div v-if="isDropdownVisible" class="absolute left-0 transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
+            <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
+              <h3 class="text-lg font-semibold text-gray-800 mt-2">
+                <router-link :to="itemY.route" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                  <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                  <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{ itemY.label }}</span>
                 </router-link>
-              </li>
-            </ul>
+              </h3>
+            </div>
+            <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
 
-            <!-- Boutons de défilement -->
-            <button v-if="showLeftButton" @click="scrollLeft" class="absolute left-0 p-2 bg-gray-900 w-10 text-white rounded-full ">
-              <i class="fa fa-chevron-left"></i>
-            </button>
-            <button v-if="showRightButton" @click="scrollRight" class="absolute right-0 p-2 w-10 bg-gray-900 text-white rounded-full ">
-              <i class="fa fa-chevron-right"></i>
-            </button>
+            <h3 class="text-lg font-semibold text-gray-800 mt-3">
+              <router-link to="" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
+                <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{$t('navbar.yelpExploreBusiness')}}</span>
+              </router-link>
+            </h3>
           </div>
         </div>
       </div>
+
+      <router-link
+        to="/comunity"
+        class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+        active-class="border-b-2 border-indigo-400">
+        {{$t('navbar.writeReview')}}
+      </router-link>
+
+      <router-link
+        to="/comunity"
+        class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+        active-class="border-b-2 border-indigo-400">
+        {{$t('navbar.startProject')}}
+      </router-link>
+    </div>
+  </div>
+</div>
+
+    <div id="menuToggle" class="container relative block md:hidden">
+
+      <button @click="resetSearchBar" class="relative block md:hidden">
+          <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
+      </button>
+      <div class="w-full max-w-sm min-w-[200px] relative ml-4">
+        <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
+          <input 
+            v-model="leftValue"
+            @click="activeInput = 'left'"
+            placeholder="Restaurant" 
+            class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+          />
+          <div class="h-6 border-l border-slate-200 ml-1"></div>
+          <input 
+            v-model="rightValue"
+            @click="activeInput = 'right'"
+            placeholder="Yaoun" 
+            class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+          />
+          <router-link to="/recherche">
+        <button class="bg-customRed px-4 py-3 text-white ml-2">
+          <BaseIcon name="Search" size="20" stroke-width="2" />
+        </button>
+      </router-link>
+        </div>
+
+        <ul v-if="activeInput === 'left'" @click="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto  ">
+          <li v-for="item in menuItems" :key="item" @click="leftValue = item.label ; selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+            <BaseIcon :name="item.icon" size="18" customColor="text-gray-700" stroke-width="2"></BaseIcon>
+            <span class="ml-2">
+              {{ item.label }} 
+            </span>
+          </li>
+        </ul>
+        <ul v-if="activeInput === 'right'" @click="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto  ">
+          <li class="flex justify-center items-center mt-3">
+            <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
+            <span class="text-sm text-blue-400"> {{$t('navbar.space')}} </span> 
+          </li>
+          <li v-for="item in menuData" :key="item" @click="rightValue = item.label ; selectItem('right', item.label)"  class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+            {{ item.label }}
+          </li>
+        </ul>
+      </div>
+
     </div>
 
-    <!-- SearchBar -->
-    <div id="searchBar" class="container mx-auto px-4">
-      <p class="text-white text-xl font-bold font-poppins">ENJOY ,</p>
-      <p class="text-white text-lg font-bold font-poppins">Te trouve les coins de qualités !</p>
-      <div class="flex flex-wrap gap-1 p-4 items-center justify-center">
-        <!-- Inputs de recherche -->
-        <FloatingInput ph="Nom du coin ou type de coin" icon="fa fa-search" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[250px]" />
-        <FloatingInput ph="Ville ou région" icon="fa fa-location-dot" class="text-sm w-[250px] max-w-[350px] sm:max-w-[200px] md:max-w-[150px]" />
-        <FloatingInput ph="Quartier ou adresse" icon="fa fa-location-arrow" class="text-sm w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px]" />
-        <Button variant="danger" size="md" class="w-[250px] max-w-[300px] sm:max-w-[250px] md:max-w-[200px] font-poppins px-6 py-2">
-          Recherche
-        </Button>
+    
+    
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
+      <div class="flex flex-wrap justify-center gap-4">
+        <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
+        <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
+        <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
+        <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
       </div>
     </div>
+
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
+      <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
+      <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
+
+    </div>
+
+
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-40">
+      <h class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart1')}}</h>
+      <p class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart2')}}</p>
+
+    </div>
+
+
+
   </div>
 </template>
   
   <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { ref, onMounted, onUnmounted, computed } from 'vue';
   import Button from '@/components/buttons/Button.vue';
-  import FloatingInput from '../input/FloatingInput.vue';
+  // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
+  import DropDown from '../dropDown/DropDown.vue';
+  import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
+  import { useI18n } from 'vue-i18n';
+
+// Utilisation de useI18n pour accéder aux traductions
 
 
   const isDropdownVisible = ref(false) ;
@@ -214,21 +298,81 @@ const checkScrollButtonsVisibility = () => {
 
 };
 
-const scrollLeft = () => {
-  scrollMenu.value.scrollLeft -= 100;
-  checkScrollButtonsVisibility(); 
-};
+// const scrollLeft = () => {
+//   scrollMenu.value.scrollLeft -= 100;
+//   checkScrollButtonsVisibility(); 
+// };
 
-const scrollRight = () => {
-  scrollMenu.value.scrollLeft += 100;
-  checkScrollButtonsVisibility(); // Update visibility after scrolling
-};
+// const scrollRight = () => {
+//   scrollMenu.value.scrollLeft += 100;
+//   checkScrollButtonsVisibility(); // Update visibility after scrolling
+// };
 
 const handleClickOutside = (event) => {
   if (!event.target.closest('.group')) {
     isDropdownVisible.value = false;
   }
 };
+
+const leftValue = ref('');
+const rightValue = ref('');
+const activeInput = ref(null);
+
+const resetSearchBar =()=>{
+  leftValue.value = '';
+  rightValue.value = '';
+  activeInput.value = null;
+ }
+
+let leftSelected = false; // Track if a selection is made for left field
+let rightSelected = false; // Track if a selection is made for right field
+
+const selectItem = (side, item) => {
+  if (side === 'left') {
+    leftValue.value = item;
+    leftSelected = true; // Mark as selected
+  } else if (side === 'right') {
+    rightValue.value = item;
+    rightSelected = true; // Mark as selected
+  }
+  activeInput.value = null; // Hide the list when an item is selected
+};
+
+const handleMouseLeave = (input) => {
+  if (input === 'left' && !leftSelected) {
+    leftValue.value = ''; // Reset if no selection made
+  }
+  if (input === 'right' && !rightSelected) {
+    rightValue.value = ''; // Reset if no selection made
+  }
+  // Reset selected flags for future checks
+  if (input === 'left') {
+    leftSelected = false;
+  } else if (input === 'right') {
+    rightSelected = false;
+  }
+  activeInput.value = null; // Hide the list when an item is selected
+};
+
+// const showLeft = ref(false);
+// const showRight = ref(false);
+
+// const hide = (side) => {
+//   setTimeout(() => {
+//     if (side === 'left') showLeft.value = false;
+//     if (side === 'right') showRight.value = false;
+//   }, 200);
+// };
+
+// const select = (side, item) => {
+//   if (side === 'left') {
+//     leftValue.value = item;
+//     showLeft.value = false;
+//   } else {
+//     rightValue.value = item;
+//     showRight.value = false;
+//   }
+// };
 
 onMounted(() => {
   checkScrollButtonsVisibility(); // Initial check after component is mounted
@@ -240,222 +384,86 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
-  const menuItems = [
-  { route: "/fr/categorie/11/restauration", label: "Restauration", icon: "Utensils" },
-  { route: "/fr/categorie/12/hotels-et-hebergements", label: "Hotels Et Hébergements", icon: "Hotel" },
-  { route: "/fr/categorie/13/divertissements", label: "Divertissements", icon: "Gamepad2" },
-  { route: "/fr/categorie/14/sites-touristiques", label: "Sites Touristiques", icon: "Camera" },
-  { route: "/fr/categorie/15/modes-et-beaute", label: "Modes Et Beauté", icon: "Scissors" },
-  { route: "/fr/categorie/16/transports", label: "Transports", icon: "BusFront" },
-  { route: "/fr/categorie/17/commerces", label: "Commerces", icon: "ShoppingBag" },
-  { route: "/fr/categorie/18/sports", label: "Sports", icon: "Dumbbell" },
-  { route: "/fr/categorie/19/secours", label: "Secours", icon: "Ambulance" },
-  { route: "/fr/categorie/20/administrations", label: "Administrations", icon: "Building2" },
-];
+const { t } = useI18n();
 
-const menuData = [
-  {
-    route: "/fr/categorie/11/restauration",
-    label: "Restauration",
-    subCategories: [
-      { route: "/fr/categorie/21/restaurant", label: "Restaurant" },
-      { route: "/fr/categorie/22/restaurant-dhotel", label: "Restaurant d'hôtel" },
-      { route: "/fr/categorie/25/fast-food", label: "Fast food" },
-      { route: "/fr/categorie/26/restaurant-livreur", label: "Restaurant livreur" },
-      { route: "/fr/categorie/27/cuisine-a-la-commande", label: "Cuisine à la commande" },
-      { route: "/fr/categorie/28/traiteur", label: "Traiteur" },
-      { route: "/fr/categorie/642/restaurant-lounge", label: "RESTORANT LOUNGE" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTORANT PLEIN AIR" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Restaurant-Glacier" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTAURANT/CAV" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "RESTAURANT/GRILL" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "LOUNGE/RESTAURANT" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Creperie/Pizzaria/Patisserie" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Restaurant en ligne" },
-      { route: "/fr/categorie/643/restaurant-plein-air", label: "Café" },
+  const menuItems = computed(() =>[
+  {  label: t('navbar.restaurant'), icon: "Utensils" },
+  {  label: t('navbar.delivery'), icon: "Package" },
+  {  label: t('navbar.takeAway'), icon: "ShoppingBasket" },
+  {  label: t('navbar.accountants'), icon: "Calculator" },
+  {  label: t('navbar.plumbers'), icon: "Droplets" },
+  {  label: t('navbar.autoRepair'), icon: "Wrench" },
+  
+]);
 
-    ],
-  },
-  {
-    route: "/fr/categorie/12/hotels-et-hebergements",
-    label: "Hôtels et Hébergements",
-    subCategories: [
-      { route: "/fr/categorie/56/hotel", label: "Hôtel" },
-      { route: "/fr/categorie/57/centre-climatique", label: "Centre climatique" },
-      { route: "/fr/categorie/58/58-appartements-studios-meubles", label: "Appartements/Studios meublés" },
-      { route: "/fr/categorie/59/auberge-habitat-maison-d-hote", label: "Auberge/Maison d'hôte" },
-      { route: "/fr/categorie/890/villa", label: "Site touristique avec hébergements" },
-      { route: "/fr/categorie/890/villa", label: "Villa" },
-      { route: "/fr/categorie/890/villa", label: "Complexe Hôtelier" },
-      { route: "/fr/categorie/890/villa", label: "Motel" },
 
-    ],
-  },
-  {
-    route: "/fr/categorie/13/divertissements",
-    label: "Divertissements",
-    subCategories: [
-      { route: "/fr/categorie/29/manege", label: "Manège" },
-      { route: "/fr/categorie/30/cinema", label: "Cinéma" },
-      { route: "/fr/categorie/31/salle-de-theatre", label: "Salle de théâtre" },
-      { route: "/fr/categorie/32/snack-club-bar-boite", label: "Snack/Club/Bar/Boîte de nuit" },
-      { route: "/fr/categorie/33/salle-de-concert", label: "Salle de concert" },
-      { route: "/fr/categorie/35/parc-dattraction", label: "Parc d'attraction" },
-      { route: "/fr/categorie/37/cabaret-lounge-cafe", label: "Cabaret/Lounge/Cafe" },
-      { route: "/fr/categorie/38/stade-match-competition", label: "Stade/Match/Compétition" },
-      { route: "/fr/categorie/79/centre_de-loisirs", label: "Centre de Loisirs" },
-      { route: "/fr/categorie/88/complexe-sportif", label: "Complexe Sportif" },
-      { route: "/fr/categorie/94/bowling", label: "BOWLING" },
-      { route: "/fr/categorie/96/base-nautique", label: "BASE NAUTIQUE" },
-      { route: "/fr/categorie/101/101-salle-lecture-bibliotheque", label: "SALLE LECTURE/Bibliothèque" },
-      { route: "/fr/categorie/634/gallerie-dart", label: "GALLERIE D'ART" },
-      { route: "/fr/categorie/710/complexe-touristique", label: "Complexe touristique" },
-      { route: "/fr/categorie/881/snack", label: "SNACK" },
-      { route: "/fr/categorie/888/studio-de-danse", label: "Studio de danse" },
-      { route: "/fr/categorie/895/cabaret", label: "Cabaret" },
-      { route: "/fr/categorie/904/snack-1", label: "Snack" },
-      { route: "/fr/categorie/905/bar", label: "Bar" },
-      { route: "/fr/categorie/906/boite-de-nuit-club", label: "Boîte de nuit/Club" },
-      { route: "/fr/categorie/915/915-salle-des-fetes", label: "Salle des fêtes" },
-      { route: "/fr/categorie/879/piscine", label: "Piscine" }
-    ]
-  },
-  {
-    route: '/fr/categorie/14/sites-touristiques',
-    label: 'Sites Touristiques',
-    subCategories: [
-      { route: "/fr/categorie/34/plage", label: "Plage" },
-      { route: "/fr/categorie/47/zoo-parcs-musee", label: "Monument/Zoo/Parcs/Musée" },
-      { route: "/fr/categorie/50/habitat-construction-historique", label: "Habitat/construction historique" },
-      { route: "/fr/categorie/52/chefferie-royaume", label: "Chefferie/Royaume" },
-      { route: "/fr/categorie/53/53-fleuve", label: "Fleuve" },
-      { route: "/fr/categorie/54/mont", label: "Mont" },
-      { route: "/fr/categorie/55/pont", label: "Pont" },
-      { route: "/fr/categorie/81/lac", label: "LAC" },
-      { route: "/fr/categorie/82/ile", label: "ILE" },
-      { route: "/fr/categorie/97/agence-decotourisme", label: "Agence d'écotourisme" },
-      { route: "/fr/categorie/102/rocher", label: "ROCHER" },
-      { route: "/fr/categorie/104/agence-de-tourisme", label: "Agence De Tourisme" },
-      { route: "/fr/categorie/635/chutte-deau", label: "CHUTTE D'EAU" },
-      { route: "/fr/categorie/761/761-port-barrage", label: "Port/Barrage" },
-      { route: "/fr/categorie/887/centre-culturel-1", label: "Centre culturel" },
-      { route: "/fr/categorie/896/zoo", label: "Zoo" },
-      { route: "/fr/categorie/897/musee", label: "Musée" },
-      { route: "/fr/categorie/898/parcs", label: "Parcs" },
-      { route: "/fr/categorie/899/monument", label: "Monument" },
-      { route: "/fr/categorie/900/chutes", label: "Chutes" },
-      { route: "/fr/categorie/901/grottes", label: "Grottes" },
-      { route: "/fr/categorie/902/gallerie-dart-1", label: "Gallérie d'art" },
-      { route: "/fr/categorie/903/falaise", label: "Falaise" }
-    ]
-  },
-  {
-    route: '/fr/categorie/15/modes-et-beaute',
-    label: 'Modes Et Beauté',
-    subCategories: [
-      { route: "/fr/categorie/61/instituts-de-beaute", label: "Instituts de beauté" },
-      { route: "/fr/categorie/62/salon-de-coiffure", label: "Salon de coiffure" },
-      { route: "/fr/categorie/63/shop-de-vetements", label: "Shop de vêtements" },
-      { route: "/fr/categorie/64/stylistes-modelistes", label: "Stylistes-modélistes" },
-      { route: "/fr/categorie/621/maison-de-couture", label: "MAISON DE COUTURE" },
-      { route: "/fr/categorie/651/haute-couture", label: "Haute couture" },
-      { route: "/fr/categorie/878/878-body-care-consulting", label: "Body care consulting" },
-      { route: "/fr/categorie/883/883-salon-donglerie", label: "Salon d'onglerie" },
-      { route: "/fr/categorie/886/salon-de-beaute", label: "Salon de beauté" },
-      { route: "/fr/categorie/891/beaute-a-domicile", label: "Beauté à domicile" }
-    ]
-  },
-  {
-    route: '/fr/categorie/16/transports',
-    label: 'Transports',
-    subCategories: [
-      { route: "/fr/categorie/39/agence-de-transport-aerien", label: "Agence de transport aérien" },
-      { route: "/fr/categorie/40/agence-de-transport-maritime", label: "Agence de transport maritime" },
-      { route: "/fr/categorie/41/agence-de-transport-ferroviaire", label: "Agence de transport ferroviaire" },
-      { route: "/fr/categorie/43/agence-de-moto-taxi", label: "Agence de moto-taxi" },
-      { route: "/fr/categorie/44/agence-de-location-de-vehicule", label: "Agence de location de véhicule" },
-      { route: "/fr/categorie/45/agence-de-transport-pour-tourisme", label: "Agence de transport pour tourisme" },
-      { route: "/fr/categorie/46/aeroport-port-gare-ferroviaire-gare-routiere", label: "Aéroport/Port/Gare ferroviaire/Gare routière" },
-      { route: "/fr/categorie/108/agence-de-voyage", label: "Agence de voyage" },
-      { route: "/fr/categorie/685/centre-d%C3%A9co-tourisme", label: "Centre d'éco-tourisme" }
-    ]
-  },
-  {
-    route: '/fr/categorie/17/commerces',
-    label: 'Commerces',
-    subCategories: [
-      { route: "/fr/categorie/75/marche", label: "Marché" },
-      { route: "/fr/categorie/76/supermarche", label: "Supermarché" },
-      { route: "/fr/categorie/77/centre-commercial", label: "Centre commercial" },
-      { route: "/fr/categorie/80/boulangerie", label: "BOULANGERIE" },
-      { route: "/fr/categorie/87/decoration-interieure", label: "Décoration intérieure" },
-      { route: "/fr/categorie/95/boutique", label: "BOUTIQUE" },
-      { route: "/fr/categorie/98/shop-de-friandises", label: "SHOP DE FRIANDISES" },
-      { route: "/fr/categorie/99/magasin-electro-menage", label: "MAGASIN ELECTRO-MENAGE" },
-      { route: "/fr/categorie/100/magasin-deco", label: "MAGASIN DECO" },
-      { route: "/fr/categorie/106/boutique-en-ligne", label: "Boutique en ligne" },
-      { route: "/fr/categorie/633/magasin", label: "Magasin" },
-      { route: "/fr/categorie/703/alimentation", label: "ALIMENTATION" },
-      { route: "/fr/categorie/704/magasin-de-d%C3%A9co", label: "Magasin de déco" },
-      { route: "/fr/categorie/749/decoration-interieure-boutique-en-ligne", label: "Decoration Interieure( Boutique en Ligne)" },
-      { route: "/fr/categorie/777/services-%C3%A9v%C3%A8nementiels", label: "Services évènementiels" },
-      { route: "/fr/categorie/798/shop", label: "Shop" },
-      { route: "/fr/categorie/805/hypermarch%C3%A9", label: "Hypermarché" },
-      { route: "/fr/categorie/876/livreur", label: "Livreur" },
-      { route: "/fr/categorie/880/pressing", label: "Pressing" },
-      { route: "/fr/categorie/884/cave-a-vins", label: "Cave à vins" },
-      { route: "/fr/categorie/908/construction-btp", label: "Construction (BTP)" },
-      { route: "/fr/categorie/913/service-de-nettoyage", label: "Service de Nettoyage" }
-    ]
-  },
-  {
-    route: '/fr/categorie/18/sports',
-    label: 'Sports',
-    subCategories: [
-      { route: "/fr/categorie/78/salle-de-sport-fitness", label: "Salle de sport/Fitness" },
-      { route: "/fr/categorie/664/salle-de-sports", label: "Salle de sports" }
-    ]
-  },
-  {
-    route: '/fr/categorie/19/secours',
-    label: 'Secours',
-    subCategories: [
-      { route: "/fr/categorie/65/urgences", label: "Urgences" },
-      { route: "/fr/categorie/66/pompier", label: "Pompier" },
-      { route: "/fr/categorie/67/hopital-centre-de-sante", label: "Hôpital/Centre de santé" },
-      { route: "/fr/categorie/68/police-gendarmerie", label: "Police/gendarmerie" },
-      { route: "/fr/categorie/91/centre-ophtamologie", label: "CENTRE OPHTAMOLOGIE" },
-      { route: "/fr/categorie/650/hopital", label: "Hopital" },
-      { route: "/fr/categorie/652/centre-de-sant%C3%A9", label: "Centre de santé" },
-      { route: "/fr/categorie/661/pompiers", label: "Pompiers" },
-      { route: "/fr/categorie/758/centre-m%C3%A9dical-ophtalmologique", label: "Centre médical Ophtalmologique" },
-      { route: "/fr/categorie/877/cabinet-dentaire", label: "Cabinet Dentaire" },
-      { route: "/fr/categorie/889/opticien", label: "Opticien" },
-      { route: "/fr/categorie/907/pharmacie", label: "Pharmacie" },
-      { route: "/fr/categorie/909/laboratoire-danalyse", label: "Laboratoire d'Analyse" },
-      { route: "/fr/categorie/107/clinique", label: "Clinique" },
-      { route: "/fr/categorie/893/centre-medical", label: "Centre Médical" }
-    ]
-  },
-  {
-    route: '/fr/categorie/20/administrations',
-    label: 'Administrations',
-    subCategories: [
-      { route: "/fr/categorie/69/ministere", label: "Ministère" },
-      { route: "/fr/categorie/70/delegation-regionale_departementale_communale", label: "Délégation Régionale/Départementale/Communale" },
-      { route: "/fr/categorie/71/mairie", label: "Mairie" },
-      { route: "/fr/categorie/72/services-administratif", label: "Services Administratif" },
-      { route: "/fr/categorie/73/office-du-tourisme", label: "Office du tourisme" },
-      { route: "/fr/categorie/74/74-universite-institut-enseignement-superieur", label: "Université/Institut/Enseignement Supérieur" },
-      { route: "/fr/categorie/660/organisation-a-but-non-lucratif", label: "Organisation à but non lucratif" },
-      { route: "/fr/categorie/721/eglise-cathedrale", label: "EGLISE/CATHEDRALE" },
-      { route: "/fr/categorie/885/centre-de-formation", label: "Centre de Formation" },
-      { route: "/fr/categorie/910/creche-halte-garderie", label: "Crèche/Halte garderie" },
-      { route: "/fr/categorie/911/primaire-education-de-base", label: "Primaire/Education de base" },
-      { route: "/fr/categorie/912/college-lycee-enseignement-secondaire", label: "Collège/Lycée/Enseignement secondaire" }
-    ]
-  }
-];
+const menuData  = computed(() =>[
+{ label: "Yaounde, CE,"+ t('navbar.cameroon') },
+  { label: "Douala, LT , "+ t('navbar.cameroon') },
+  { label: "Bamenda, NW, "+ t('navbar.cameroon') },
+  { label: "Garoua, NO, "+ t('navbar.cameroon') },
+  { label: "Bafoussam, OU, "+ t('navbar.cameroon') },
+  { label: "Limbe, SO, "+ t('navbar.cameroon') },
+  { label: "Kribi, SU, "+ t('navbar.cameroon') },
+  { label: "Buea, SW, "+ t('navbar.cameroon') },
+  { label: "Maroua, EN, "+ t('navbar.cameroon') },
+  { label: "Dschang, OU, "+ t('navbar.cameroon') },
+]);
+const menuRestaurants = computed(() =>[
+  { route: "/recherche", label: t('navbar.takeAway'),icon: "ShoppingBag" },
+  { route: "/recherche", label: t('navbar.burgers'),icon: "Pizza" },
+  { route: "/recherche", label: t('navbar.chineseCuisine'),icon: "Soup" },
+  { route: "/recherche", label: t('navbar.italianCuisine'),icon: "Salad" },
+  { route: "/recherche", label: t('navbar.reservations'),icon: "Calendar1" },
+  { route: "/recherche", label: t('navbar.delivery'),icon: "Package2" },
+  { route: "/recherche", label: t('navbar.mexicanCuisine'),icon: "CookingPot" },
+  { route: "/recherche", label: t('navbar.thaiCuisine'),icon: "Fish" },
+
+]);
+
+const menuHouseWork = computed(() => [
+  { route: "/recherche", label: t('navbar.serviceProvider'),icon: "HandCoins" },
+  { route: "/recherche", label: t('navbar.electricians'),icon: "PlugZap" },
+  { route: "/recherche", label: t('navbar.cleaning'),icon: "Recycle" },
+  { route: "/recherche", label: t('navbar.heating'),icon: "ThermometerSun" },
+  { route: "/recherche", label: t('navbar.landscaping'),icon: "Shrub" },
+  { route: "/recherche", label: t('navbar.locksmiths'),icon: "Key" },
+  { route: "/recherche", label: t('navbar.movers'),icon: "BriefcaseConveyorBelt" },
+  { route: "/recherche", label: t('navbar.plumbers'),icon: "Droplets" },
+
+]);
+
+const menuCarService = computed(() => [
+  { route: "/recherche", label: t('navbar.carRepair'),icon: "Bolt" },
+  { route: "/recherche", label: t('navbar.precisionCarCleaning'),icon: "SprayCan" },
+  { route: "/recherche", label: t('navbar.bodywork'),icon: "RectangleHorizontal" },
+  { route: "/recherche", label: t('navbar.carCleaning'),icon: "Sparkles" },
+  { route: "/recherche", label: t('navbar.carDealership'),icon: "KeySquare" },
+  { route: "/recherche", label: t('navbar.oilChange'),icon: "Beaker" },
+  { route: "/recherche", label: t('navbar.parking'),icon: "CircleParking" },
+  { route: "/recherche", label: t('navbar.towing'),icon: "Tangent" },
+
+]);
+
+const menuOthers = computed(() => [
+  { route: "/recherche", label: t('navbar.dryCleaning'),icon: "VenetianMask" },
+  { route: "/recherche", label: t('navbar.phoneRepair'),icon: "Smartphone" },
+  { route: "/recherche", label: t('navbar.bars'),icon: "Beer" },
+  { route: "/recherche", label: t('navbar.nightlife'),icon: "Martini" },
+  { route: "/recherche", label: t('navbar.hairdressersHairSalons'),icon: "SquareScissors" },
+  { route: "/recherche", label: t('navbar.gym'),icon: "Dumbbell" },
+  { route: "/recherche", label: t('navbar.massage'),icon: "MarsStroke" },
+  { route: "/recherche", label: t('navbar.shopping'),icon: "ShoppingCart" },
+
+]);
+
+const menuYelp = computed(() => [
+  { route: "/recherche", label: t('navbar.addABusiness'),icon: "HousePlus" },
+  { route: "/recherche", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
+  { route: "/recherche", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
+
+]);
+
   </script>
   
   <style scoped>
@@ -465,5 +473,14 @@ const menuData = [
 }
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+.menu-item:hover .base-icon {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+.background {
+  background-image: url('@/assets/wp7388245-satisfied-wallpapers.jpg');
+  background-size: cover;
+  background-position: center;
 }
 </style>
