@@ -27,18 +27,18 @@
           <!-- Description en dessous -->
           </div>
     </div>
-    
+
   </template>
-  
+
   <script setup>
   import { computed } from 'vue';
   import BaseIcon from '../icons/BaseIcon.vue';
   import { truncateText } from '@/utils/functions'
   // import BaseIcon from '../icons/BaseIcon.vue';
-  
+
   // Définir l'image par défaut dans un computed
   const defaultImage = new URL('@/assets/koala.png', import.meta.url).href;
-  
+
   const props = defineProps({
     image: {
       type: String,
@@ -66,8 +66,7 @@
     },
     
   });
-  
+
   // Utilisation d'un computed pour obtenir l'image, ou celle par défaut si vide
   const image = computed(() => props.image || defaultImage);
   </script>
-  
