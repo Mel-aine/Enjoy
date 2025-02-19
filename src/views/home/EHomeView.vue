@@ -4,10 +4,10 @@ import { ref } from 'vue';
 import Card from '@/components/card/Card.vue';
 import Category from '@/components/category/Category.vue';
 import Carousel from '@/components/carousel/Carousel.vue';
-import { useI18n } from 'vue-i18n';
+// import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
-const { t } = useI18n();
+// const { t } = useI18n();
 import CategoryView from '@/components/category/CategoryView.vue';
 import { Categories } from '@/mocks/categories';
 import { useFooterStore } from '@/stores/footer';
@@ -20,7 +20,7 @@ import { useFooterStore } from '@/stores/footer';
 // };
 
 
-const showMoreFooter = ref(false);
+// const showMoreFooter = ref(false);
 const showLeftButton = ref(false);
 const showRightButton = ref(true);
 
@@ -189,19 +189,19 @@ const toggleFooter = () => {
 
 <template>
   <div class="p-7">
-    <div class="bg-customWhite px-10 py-5 container mx-auto w-full md:w-[1400px]">
+    <!-- <div class="bg-customWhite px-10 py-5 container mx-auto w-full md:w-[1400px]">
       <p class="text-xl font-poppins">{{$t('home.descriptionHomePart1')}}</p>
       <p class="text-xs font-poppins">{{$t('home.descriptionHomePart2')}} <span class="font-bold"> Enjoy</span> {{$t('home.descriptionHomePart3')}}</p>
 
       <div class="flex flex-col gap-6 p-4">
-        <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">
+        <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative"> -->
           <!-- Catégorie fixe -->
-          <div class="flex-shrink-0 mb-4 md:mb-0">
-            <Category :category="category.label" :icon="category.icon" class="w-[200px]" />
-          </div>
+          <!-- <div class="flex-shrink-0 mb-4 md:mb-0">
+            <Category :category="$t('categories.' + category.label)" :icon="category.icon" class="w-[200px]" />
+          </div> -->
 
           <!-- Cartes scrollables -->
-          <div ref="scrollableList" class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth">
+          <!-- <div ref="scrollableList" class="flex overflow-x-auto flex-nowrap space-x-4 gap-1 scrollbar-hide max-w-full relative scroll-smooth">
             <router-link
               v-for="(card, index) in category.Cards"
               :to="card.route"
@@ -210,9 +210,9 @@ const toggleFooter = () => {
              >
               <Card :title="card.title"  :localisation="card.address" />
             </router-link>
-          </div>
+          </div> -->
             <!-- Bouton suivant -->
-            <button
+            <!-- <button
               class="absolute right-0 -mr-4 z-10 bg-customNeutreColor p-2 w-10 h-10 rounded-full hover:bg-white focus:outline-none"
               @click="scrollRight(index)"
               v-show="showRightButton"
@@ -228,10 +228,10 @@ const toggleFooter = () => {
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Carousel -->
-    <Carousel />
+    <!-- <Carousel /> -->
     <CategoryView @toggle-footer="toggleFooter" />
 
   </div>

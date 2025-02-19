@@ -3,10 +3,10 @@
     <div class="group">
       <button
         type="button"
-        class="inline-flex justify-center items-center w-full px-4 py-2 text-sm text-white hover:bg-transparent focus:outline-none focus:bg-gray-700"
+        class="inline-flex justify-center items-center w-full px-4 py-2 text-md text-white hover:bg-transparent focus:outline-none focus:bg-gray-700"
       >
         <slot></slot>
-        <i class="fa fa-chevron-down text-xs ml-2 text-white"></i>
+        <i class="fa fa-chevron-down text-sm ml-2 text-white"></i>
       </button>
 
       <div
@@ -22,7 +22,7 @@
             >
               <router-link
                 :to="item.route"
-                class="text-xs w-full text-gray-700 hover:bg-gray-300 p-2 flex items-center space-x-2"
+                class="text-md w-full text-gray-700 hover:bg-gray-300 p-2 flex items-center space-x-2"
               >
                 <BaseIcon :name="item.icon" size="20" stroke-width="2" />
                 <span class="whitespace-nowrap">{{ item.label }}</span>
