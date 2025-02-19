@@ -4,7 +4,10 @@ import { ref } from 'vue';
 import Card from '@/components/card/Card.vue';
 import Category from '@/components/category/Category.vue';
 import Carousel from '@/components/carousel/Carousel.vue';
+import { useI18n } from 'vue-i18n';
 
+// Utilisation de useI18n pour accéder aux traductions
+const { t } = useI18n();
 // const { locale } = useI18n();
 // const changeLanguage = (lang) => {
 //   locale.value = lang;
@@ -42,7 +45,7 @@ const scrollRight = () => {
 const menuCategory = [
   {
     route: "/fr/categorie/11/restauration",
-    label: "Restauration",
+    label: t('home.category.catering'),
     icon: "Utensils",
     Cards: [
       { route: "/fr/categorie/21/restaurant", title: "Restaurant", image: new URL('@/assets/koala.jpg', import.meta.url).href },
@@ -53,7 +56,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/12/hotels",
-    label: "Hôtels Et Hebergements",
+    label: t('home.category.hotelsAndAccommodations'),
     icon: "Hotel",
     Cards: [
       { route: "/fr/categorie/31/hotel-luxe", title: "Hôtel de Luxe", image: "https://via.placeholder.com/150" },
@@ -64,7 +67,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/13/divertissements",
-    label: "Divertissements",
+    label: t('home.category.entertainment'),
     icon: "Gamepad2",
     Cards: [
       { route: "/fr/categorie/41/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
@@ -75,7 +78,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/14/sites-touristiques",
-    label: "Sites Touristiques",
+    label: t('home.category.touristAttractions'),
     icon: "Camera",
     Cards: [
       { route: "/fr/categorie/51/musee", title: "Musée", image: "https://via.placeholder.com/150" },
@@ -86,7 +89,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Modes et Beauté",
+    label: t('home.category.fashionAndBeauty'),
     icon: "Scissors",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -97,7 +100,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Transports",
+    label: t('home.category.transportation'),
     icon: "BusFront",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -108,7 +111,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Commerces",
+    label: t('home.category.businesses'),
     icon: "ShoppingBag",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -119,7 +122,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Sports",
+    label: t('home.category.sports'),
     icon: "Dumbbell",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -132,7 +135,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Secours",
+    label: t('home.category.emergencyServices'),
     icon: "Ambulance",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -143,7 +146,7 @@ const menuCategory = [
   },
   {
     route: "/fr/categorie/15/modes-et-beaute",
-    label: "Administrations",
+    label: t('home.category.administrations'),
     icon: "Building2",
     Cards: [
       { route: "/fr/categorie/61/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
@@ -159,8 +162,8 @@ const menuCategory = [
 <template>
   <div class="p-7">
     <div class="bg-customWhite px-10 py-5 container mx-auto w-full md:w-[1400px]">
-      <p class="text-xl font-poppins">Découvrez des bons plans et amusez-vous sans effort.</p>
-      <p class="text-xs font-poppins">Que vous voyagiez seul, en famille, entre amis ou avec des collègues, <span class="font-bold"> Enjoy</span> vous guide vers les meilleurs snacks, restaurants, attractions, piscines, hôtels et sites touristiques, avec des informations en temps réel !</p>
+      <p class="text-xl font-poppins">{{$t('home.descriptionHomePart1')}}</p>
+      <p class="text-xs font-poppins">{{$t('home.descriptionHomePart2')}} <span class="font-bold"> Enjoy</span> {{$t('home.descriptionHomePart3')}}</p>
 
       <div class="flex flex-col gap-6 p-4">
         <div v-for="(category, index) in menuCategory" :key="index" class="flex flex-col md:flex-row items-center space-x-0 md:space-x-6 mt-2 relative">

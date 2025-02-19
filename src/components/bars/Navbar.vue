@@ -26,14 +26,14 @@
     <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
       <input 
         v-model="leftValue"
-        @click="activeInput = 'left'"
+        @mouseenter="activeInput = 'left'"
         placeholder="Restaurant" 
         class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
       <div class="h-6 border-l border-slate-200 ml-1"></div>
       <input 
         v-model="rightValue"
-        @click="activeInput = 'right'"
+        @mouseenter="activeInput = 'right'"
         placeholder="Yaoun" 
         class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
@@ -54,7 +54,7 @@
     <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
       <li class="flex justify-center items-center mt-3">
         <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
-        <span class="text-sm text-blue-400"> Emplacement actuel </span> 
+        <span class="text-sm text-blue-400"> {{ $t('navbar.space') }} </span> 
       </li>
       <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
         {{ item.label }}
@@ -71,8 +71,8 @@
                 :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
                 class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-              Yelp pour les professionnels
-                <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
+              {{ $t('navbar.yelpProfessional') }}                
+              <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
               </button>
 
               <!-- Contenu du menu déroulant -->
@@ -103,14 +103,14 @@
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Ecrire un avis
+              {{ $t('navbar.writeReview') }}
             </router-link>
 
             <router-link
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
-              Commence le projet
+              {{ $t('navbar.startProject') }}
             </router-link>
             
           </div>
@@ -122,74 +122,75 @@
         <button>
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
-        <Button variant="ligth" class="font-poppins">Se connecter</Button>
-        <Button variant="danger" class="font-poppins">S'inscrire</Button>
+        <Button variant="ligth" class="font-poppins">{{$t('login')}}</Button>
+        <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button>
       </div>
     </div>
 
     <!-- Sidebar Menu (Mobile) -->
     <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-40 md:hidden" @click.self="toggleSidebar">
-      <div class="absolute left-0 top-0 w-3/4 h-full bg-customBlue shadow-lg p-4 transform transition-transform duration-300"
-           :class="{'translate-x-0 ': isSidebarOpen, '-translate-x-full': !isSidebarOpen}">
-        <button @click="toggleSidebar" class="absolute top-4 right-4 text-xl text-gray-600">
-          <i class="fa fa-times text-gray-700 "></i>
+  <div class="absolute transform h-full bg-customBlue shadow-lg p-4 transition-transform duration-500"
+       :class="{'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen}">
+    <button @click="toggleSidebar" class="absolute top-4 right-4 text-xl text-gray-600">
+      <BaseIcon name="ChevronsLeft" customColor="text-gray-800" size="25" stroke-width="2" />
+    </button>
+    <div class="flex flex-col space-y-6 mt-10">
+      <!-- Dropdown Menu -->
+      <div class="relative group">
+        <button
+          @click="isDropdownVisible = !isDropdownVisible"
+          :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+          class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
+        >
+          {{$t('navbar.yelpProfessional')}}
+          <i class="fa fa-chevron-down text-xs ml-1 text-white"></i>
         </button>
-        <div class="flex flex-col space-y-6 mt-10">
-            <!-- Dropdown Menu -->
-            <div class="relative group">
-              <button
-                @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
-                class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
-              >
-              Yelp pour les professionnels
-                <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
-              </button>
 
-              <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute left-0 transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1  md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
-                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
-                    <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
-                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
-                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
-                      </router-link>
-                    </h3>
-                    
-                   
-                  </div>
-                  <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
-
-                    <h3 class="text-lg font-semibold text-gray-800 mt-3">
-                      <router-link to="" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
-                        <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
-                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> Explorez Yelp pour votre Business</span>
-                      </router-link>
-                    </h3>
-                </div>
-              </div>
+        <!-- Contenu du menu déroulant -->
+        <div v-if="isDropdownVisible" class="absolute left-0 transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+          <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
+            <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
+              <h3 class="text-lg font-semibold text-gray-800 mt-2">
+                <router-link :to="itemY.route" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                  <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                  <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{ itemY.label }}</span>
+                </router-link>
+              </h3>
             </div>
+            <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
 
-            <router-link
-              to="/comunity"
-              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-              active-class="border-b-2 border-indigo-400">
-              Ecrire un avis
-            </router-link>
-
-            <router-link
-              to="/comunity"
-              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-              active-class="border-b-2 border-indigo-400">
-              Commence le projet
-            </router-link>
-
+            <h3 class="text-lg font-semibold text-gray-800 mt-3">
+              <router-link to="" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
+                <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{$t('navbar.yelpExploreBusiness')}}</span>
+              </router-link>
+            </h3>
+          </div>
         </div>
       </div>
+
+      <router-link
+        to="/comunity"
+        class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+        active-class="border-b-2 border-indigo-400">
+        {{$t('navbar.writeReview')}}
+      </router-link>
+
+      <router-link
+        to="/comunity"
+        class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+        active-class="border-b-2 border-indigo-400">
+        {{$t('navbar.startProject')}}
+      </router-link>
     </div>
+  </div>
+</div>
 
     <div id="menuToggle" class="container relative block md:hidden">
+
+      <button @click="resetSearchBar" class="relative block md:hidden">
+          <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
+      </button>
       <div class="w-full max-w-sm min-w-[200px] relative ml-4">
         <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
           <input 
@@ -206,14 +207,11 @@
             class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
           />
           <button class="bg-customRed px-4 py-2 text-white ml-2">
-            <BaseIcon name="Search" size="20" stroke-width="2" />
+            <BaseIcon name="Search" size="20" stroke-width="2" /> 
           </button>
         </div>
 
         <ul v-if="activeInput === 'left'" @click="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto  ">
-          <button @click="resetSearchBar" class="relative block item-center justify-center md:hidden">
-              <BaseIcon  name="CircleX" customColor="text-red-500" size="18" stroke-width="2"></BaseIcon>
-          </button>
           <li v-for="item in menuItems" :key="item" @click="leftValue = item.label ; selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
             <BaseIcon :name="item.icon" size="18" customColor="text-gray-700" stroke-width="2"></BaseIcon>
             <span class="ml-2">
@@ -221,14 +219,10 @@
             </span>
           </li>
         </ul>
-
         <ul v-if="activeInput === 'right'" @click="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto  ">
-          <button @click="resetSearchBar" class="relative block item-center justify-center md:hidden">
-              <BaseIcon  name="CircleX" size="18" customColor="text-red-500" stroke-width="2"></BaseIcon>
-          </button>
           <li class="flex justify-center items-center mt-3">
             <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
-            <span class="text-sm text-blue-400"> Emplacement actuel </span> 
+            <span class="text-sm text-blue-400"> {{$t('navbar.space')}} </span> 
           </li>
           <li v-for="item in menuData" :key="item" @click="rightValue = item.label ; selectItem('right', item.label)"  class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
             {{ item.label }}
@@ -242,23 +236,23 @@
     
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
       <div class="flex flex-wrap justify-center gap-4">
-        <DropDown :menuData="menuRestaurants">Restaurants</DropDown>
-        <DropDown :menuData="menuHouseWork">Maison et travaux</DropDown>
-        <DropDown :menuData="menuCarService">Service auto</DropDown>
-        <DropDown :menuData="menuOthers">Plus</DropDown>
+        <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
+        <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
+        <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
+        <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
       </div>
     </div>
 
     <div id="searchBar" class="relative container justify-center mx-auto px-4 py-30">
-      <h class="text-6xl text-white font-medium font-popins">Entrez en conctact avec les meilleurs</h>
-      <p class="text-6xl text-white font-medium font-popins">endroits pres de chez vous</p>
+      <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
+      <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
 
     </div>
 
 
     <div id="searchBar" class="relative container justify-center mx-auto px-4 py-10">
-      <h class="text-xl text-white font-medium font-popins">vennez decouvrir </h>
-      <p class="text-xl text-white font-medium font-popins">endroits que vous voulez</p>
+      <h class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart1')}}</h>
+      <p class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart2')}}</p>
 
     </div>
 
@@ -274,7 +268,10 @@
   import BaseIcon from '../icons/BaseIcon.vue';
   import DropDown from '../dropDown/DropDown.vue';
   import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
- 
+  import { useI18n } from 'vue-i18n';
+
+// Utilisation de useI18n pour accéder aux traductions
+const { t } = useI18n();
 
 
   const isDropdownVisible = ref(false) ;
@@ -384,81 +381,80 @@ onUnmounted(() => {
 });
 
   const menuItems = ref([
-  {  label: "Restaurant", icon: "Utensils" },
-  {  label: "Livraison", icon: "Package" },
-  {  label: "A emporter", icon: "ShoppingBasket" },
-  {  label: "Accountants", icon: "Calculator" },
-  {  label: "Plumbiers", icon: "Droplets" },
-  {  label: "Reparation auto", icon: "Wrench" },
+  {  label: t('navbar.restaurant'), icon: "Utensils" },
+  {  label: t('navbar.delivery'), icon: "Package" },
+  {  label: t('navbar.takeAway'), icon: "ShoppingBasket" },
+  {  label: t('navbar.accountants'), icon: "Calculator" },
+  {  label: t('navbar.plumbers'), icon: "Droplets" },
+  {  label: t('navbar.autoRepair'), icon: "Wrench" },
   
 ]);
 
 
 const menuData = ref([
-{ label: "Yaounde, CE, Cameroun" },
-  { label: "Douala, LT , Cameroun" },
-  { label: "Bamenda, NW, Cameroun" },
-  { label: "Garoua, NO, Cameroun" },
-  { label: "Bafoussam, OU, Cameroun" },
-  { label: "Limbe, SO, Cameroun" },
-  { label: "Kribi, SU, Cameroun" },
-  { label: "Buea, SW, Cameroun" },
-  { label: "Maroua, EN, Cameroun" },
-  { label: "Dschang, OU, Cameroun" },
+{ label: "Yaounde, CE,"+ t('navbar.cameroon') },
+  { label: "Douala, LT , "+ t('navbar.cameroon') },
+  { label: "Bamenda, NW, "+ t('navbar.cameroon') },
+  { label: "Garoua, NO, "+ t('navbar.cameroon') },
+  { label: "Bafoussam, OU, "+ t('navbar.cameroon') },
+  { label: "Limbe, SO, "+ t('navbar.cameroon') },
+  { label: "Kribi, SU, "+ t('navbar.cameroon') },
+  { label: "Buea, SW, "+ t('navbar.cameroon') },
+  { label: "Maroua, EN, "+ t('navbar.cameroon') },
+  { label: "Dschang, OU, "+ t('navbar.cameroon') },
 ]);
-
 const menuRestaurants = [
-  { route: "/fr/categorie/11/restauration", label: "A emporter",icon: "ShoppingBag" },
-  { route: "/fr/categorie/11/restauration", label: "Burgers",icon: "Pizza" },
-  { route: "/fr/categorie/11/restauration", label: "Cuisine chinoise",icon: "Soup" },
-  { route: "/fr/categorie/11/restauration", label: "Cuisine italienne",icon: "Salad" },
-  { route: "/fr/categorie/11/restauration", label: "Reservations",icon: "Calendar1" },
-  { route: "/fr/categorie/11/restauration", label: "Livraison",icon: "Package2" },
-  { route: "/fr/categorie/11/restauration", label: "Cuisine mexicaine",icon: "CookingPot" },
-  { route: "/fr/categorie/11/restauration", label: "Cuisine Thai",icon: "Fish" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.takeAway'),icon: "ShoppingBag" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.burgers'),icon: "Pizza" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.chineseCuisine'),icon: "Soup" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.italianCuisine'),icon: "Salad" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.reservations'),icon: "Calendar1" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.delivery'),icon: "Package2" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.mexicanCuisine'),icon: "CookingPot" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.thaiCuisine'),icon: "Fish" },
 
 ];
 
 const menuHouseWork = [
-  { route: "/fr/categorie/11/restauration", label: "Prestataire",icon: "HandCoins" },
-  { route: "/fr/categorie/11/restauration", label: "Electreiciens",icon: "PlugZap" },
-  { route: "/fr/categorie/11/restauration", label: "Menage",icon: "Recycle" },
-  { route: "/fr/categorie/11/restauration", label: "Chauffage & air conditionne",icon: "ThermometerSun" },
-  { route: "/fr/categorie/11/restauration", label: "Amenagement paysager",icon: "Shrub" },
-  { route: "/fr/categorie/11/restauration", label: "Serruriers",icon: "Key" },
-  { route: "/fr/categorie/11/restauration", label: "Demenageurs",icon: "BriefcaseConveyorBelt" },
-  { route: "/fr/categorie/11/restauration", label: "Plombiers",icon: "Droplets" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.serviceProvider'),icon: "HandCoins" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.electricians'),icon: "PlugZap" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.cleaning'),icon: "Recycle" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.heating'),icon: "ThermometerSun" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.landscaping'),icon: "Shrub" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.locksmiths'),icon: "Key" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.movers'),icon: "BriefcaseConveyorBelt" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.plumbers'),icon: "Droplets" },
 
 ];
 
 const menuCarService = [
-  { route: "/fr/categorie/11/restauration", label: "Repartion auto",icon: "Bolt" },
-  { route: "/fr/categorie/11/restauration", label: "Nettoyage auto de precision",icon: "SprayCan" },
-  { route: "/fr/categorie/11/restauration", label: "Carrosserie",icon: "RectangleHorizontal" },
-  { route: "/fr/categorie/11/restauration", label: "Nettoyage de voiture",icon: "Sparkles" },
-  { route: "/fr/categorie/11/restauration", label: "Concessionaire auto",icon: "KeySquare" },
-  { route: "/fr/categorie/11/restauration", label: "Vidange d'huile",icon: "Beaker" },
-  { route: "/fr/categorie/11/restauration", label: "Parking",icon: "CircleParking" },
-  { route: "/fr/categorie/11/restauration", label: "Remorquage",icon: "Tangent" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.carRepair'),icon: "Bolt" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.precisionCarCleaning'),icon: "SprayCan" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.bodywork'),icon: "RectangleHorizontal" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.carCleaning'),icon: "Sparkles" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.carDealership'),icon: "KeySquare" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.oilChange'),icon: "Beaker" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.parking'),icon: "CircleParking" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.towing'),icon: "Tangent" },
 
 ];
 
 const menuOthers = [
-  { route: "/fr/categorie/11/restauration", label: "Nettoyage a sec",icon: "VenetianMask" },
-  { route: "/fr/categorie/11/restauration", label: "Reparation des telephones",icon: "Smartphone" },
-  { route: "/fr/categorie/11/restauration", label: "Bars",icon: "Beer" },
-  { route: "/fr/categorie/11/restauration", label: "vie nocturne",icon: "Martini" },
-  { route: "/fr/categorie/11/restauration", label: "Coiffeurs&salons de coiffure",icon: "SquareScissors" },
-  { route: "/fr/categorie/11/restauration", label: "Salle de sport",icon: "Dumbbell" },
-  { route: "/fr/categorie/11/restauration", label: "Massage",icon: "MarsStroke" },
-  { route: "/fr/categorie/11/restauration", label: "Shopping",icon: "ShoppingCart" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.dryCleaning'),icon: "VenetianMask" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.phoneRepair'),icon: "Smartphone" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.bars'),icon: "Beer" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.nightlife'),icon: "Martini" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.hairdressersHairSalons'),icon: "SquareScissors" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.gym'),icon: "Dumbbell" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.massage'),icon: "MarsStroke" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.shopping'),icon: "ShoppingCart" },
 
 ];
 
 const menuYelp = [
-  { route: "/fr/categorie/11/restauration", label: "Ajoutter un commerce",icon: "HousePlus" },
-  { route: "/fr/categorie/11/restauration", label: "Claim your business",icon: "CircleCheck" },
-  { route: "/fr/categorie/11/restauration", label: "Login in to Business Account",icon: "CircleUser" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.addABusiness'),icon: "HousePlus" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
+  { route: "/fr/categorie/11/restauration", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
 
 ];
 
