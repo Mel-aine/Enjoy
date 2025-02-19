@@ -32,10 +32,10 @@
         <!-- Navigation Controls -->
         <button
           @click="prevSlide"
-          class="absolute top-1/2 left-3 transform -translate-y-1/2 bg-gray-200/50 rounded-full p-2 hover:bg-gray-300"
+          class="absolute top-1/2 left-3 transform -translate-y-1/2 bg-gray-200/50 rounded-full p-2 hover:bg-customNeutreColor"
         >
           <svg
-            class="w-5 h-5 text-gray-600"
+            class="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -47,10 +47,10 @@
   
         <button
           @click="nextSlide"
-          class="absolute top-1/2 right-3 transform -translate-y-1/2 bg-gray-200/50 rounded-full p-2 hover:bg-gray-300"
+          class="absolute top-1/2 right-3 transform -translate-y-1/2 bg-gray-200/50 rounded-full p-2 hover:bg-customNeutreColor"
         >
           <svg
-            class="w-5 h-5 text-gray-600"
+            class="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
