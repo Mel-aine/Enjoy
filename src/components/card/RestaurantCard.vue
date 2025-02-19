@@ -34,12 +34,12 @@
 
   <!-- Contenu -->
   <div class="flex flex-col justify-between p-5 w-full md:w-1/2 h-[250px] ">
-    <h5 class="mb-2 text-lg md:text-xl lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
+    <h5 class="mb-1 sm:mb-2 md:mb-1 text-sm md:text-md sm:text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
       {{ title }}
     </h5>
 
     <!-- Étoiles -->
-    <div class="flex items-center mb-2">
+    <div class="flex items-center mb-1 sm:mb-2 md:mb-1 ">
       <span v-for="star in 5" :key="star" class="text-yellow-400">
         <svg v-if="star <= rating" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
           <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z"/>
@@ -51,36 +51,39 @@
     </div>
 
     <!-- Localisation et horaire -->
-    <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-600 dark:text-gray-400 text-sm">
+    <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-600 dark:text-gray-400 text-xs md:text-sm">
       <div class="flex items-center text-purple-500 ">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-purple-500 mr-1" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
         </svg>
-        <span class="text-sm truncate ">{{ localisation }} .</span>
+        <span class="text-xs sm:text-sm truncate md:text-xs ">{{ localisation }} .</span>
       </div>
-      <div class="flex flex-col md:flex-row justify-between items-center w-full gap-2">
-        <span class="text-customBlue font-bold">FCFA</span>
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-2">
+        <div class="flex items-center gap-2">
+          <span class="text-customBlue font-bold text-xs sm:text-sm md:text-xs">FCFA</span>
           <div class="flex items-center text-orange-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-orange-500 mr-1" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-6V7h2v4h4v2z"/>
             </svg>
-            <span class="text-sm truncate"> Open until - </span>
-            <strong class="ml-1">{{ hours }}</strong>
+            <span class="text-xs sm:text-sm truncate md:text-xs">Open until -</span>
+            <strong class="ml-1 md:text-xs">{{ hours }}</strong>
           </div>
-    </div>
+        </div>
+      </div>
+
 
     </div>
 
     <!-- Description -->
-    <div class="flex flex-col my-1 text-sm md:text-base font-normal text-gray-700 dark:text-gray-400">
+    <div class="flex flex-col mb-1 text-sm md:text-base font-normal text-gray-700 dark:text-gray-400">
       <div class="items-start flex" >
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 mr-2 mt-1" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/>
       </svg>
-      <p class="text-sm flex flex-nowrap  text-gray-500">{{ description }}</p>
+      <p class="text-xs flex flex-nowrap md:text-xs text-gray-500 sm:text-sm">{{ description }}</p>
     </div>
       <!-- Bouton -->
-    <div class="flex flex-wrap gap-2 py-5">
+    <div class="flex md:flex-row flex-col lg:flex-wrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5">
       <RoundedButton v-for="item in label" :key="item.id" :label="item" />
     </div>
     </div>
