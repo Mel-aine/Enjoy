@@ -240,7 +240,7 @@
 
     
     
-    <div class="container ml-[375px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
+    <div class="container ml-[370px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
       <div class="flex flex-wrap justify-center gap-4">
         <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
         <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
