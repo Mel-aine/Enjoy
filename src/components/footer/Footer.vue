@@ -78,8 +78,7 @@
 import Button from '../buttons/Button.vue';
 import FloatingInput from '@/components/input/FloatingInput.vue';
 import LanguageButton from '../buttons/LanguageButton.vue';
-import { computed,ref } from "vue";
-import { useI18n } from 'vue-i18n';
+import { computed } from "vue";
 import { Categories } from '@/mocks/categories';
 
   // Catégories cachées (dernières du mock)
@@ -89,14 +88,6 @@ import { Categories } from '@/mocks/categories';
   });
 
 
-
-
-  const { t, locale } = useI18n();
-
-import { useI18n } from 'vue-i18n';
-
-// Utilisation de useI18n pour accéder aux traductions
-const { t } = useI18n();
 
 
   </script>

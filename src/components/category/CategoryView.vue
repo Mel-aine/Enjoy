@@ -3,15 +3,17 @@
     <h1 class="text-4xl font-bold text-gray-900 flex justify-center">{{ $t('category') }}</h1>
     <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 md:space-x-2 max-w-screen-lg mx-auto justify-center ">
 
+        <div v-for="category in mainCategories" >
+          <router-link :to="category.route ">
+            <CategoryCard
+        
+              :key="category.id"
+              :name="$t('categories.' + category.label)"
+              :icon="category.icon"
 
-      <CategoryCard
-        v-for="category in mainCategories"
-        :key="category.id"
-        :name="$t('categories.' + category.label)"
-        :icon="category.icon"
-
-      />
-
+            />
+          </router-link>
+        </div>
       <div
         class="flex flex-col items-center justify-center text-gray-700 hover:bg-orange-200
                h-[180px] min-w-30 w-[250px] p-4 rounded-lg shadow-lg drop-shadow-lg

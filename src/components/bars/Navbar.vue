@@ -28,18 +28,21 @@
         v-model="leftValue"
         @mouseenter="activeInput = 'left'"
         placeholder="Restaurant" 
-        class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
       <div class="h-6 border-l border-slate-200 ml-1"></div>
       <input 
         v-model="rightValue"
         @mouseenter="activeInput = 'right'"
         placeholder="Yaoun" 
-        class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
-      <button class="bg-customRed px-4 py-2 text-white ml-2">
-        <BaseIcon name="Search" size="20" stroke-width="2" />
-      </button>
+      <router-link to="/recherche">
+        <button class="bg-customRed px-4 py-3 text-white ml-2">
+          <BaseIcon name="Search" size="20" stroke-width="2" />
+        </button>
+      </router-link>
+
     </div>
 
     <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
@@ -54,9 +57,9 @@
     <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
       <li class="flex justify-center items-center mt-3">
         <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
-        <span class="text-sm text-blue-400"> {{ $t('navbar.space') }} </span> 
+        <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span> 
       </li>
-      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
         {{ item.label }}
       </li>
     </ul>
@@ -243,14 +246,14 @@
       </div>
     </div>
 
-    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-30">
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
       <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
       <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
 
     </div>
 
 
-    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-10">
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-40">
       <h class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart1')}}</h>
       <p class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart2')}}</p>
 
@@ -262,7 +265,7 @@
 </template>
   
   <script setup>
-  import { ref, onMounted, onUnmounted } from 'vue';
+  import { ref, onMounted, onUnmounted, computed } from 'vue';
   import Button from '@/components/buttons/Button.vue';
   // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
@@ -271,7 +274,6 @@
   import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
-const { t } = useI18n();
 
 
   const isDropdownVisible = ref(false) ;
@@ -380,7 +382,9 @@ onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
 });
 
-  const menuItems = ref([
+const { t } = useI18n();
+
+  const menuItems = computed(() =>[
   {  label: t('navbar.restaurant'), icon: "Utensils" },
   {  label: t('navbar.delivery'), icon: "Package" },
   {  label: t('navbar.takeAway'), icon: "ShoppingBasket" },
@@ -391,7 +395,7 @@ onUnmounted(() => {
 ]);
 
 
-const menuData = ref([
+const menuData  = computed(() =>[
 { label: "Yaounde, CE,"+ t('navbar.cameroon') },
   { label: "Douala, LT , "+ t('navbar.cameroon') },
   { label: "Bamenda, NW, "+ t('navbar.cameroon') },
@@ -403,60 +407,60 @@ const menuData = ref([
   { label: "Maroua, EN, "+ t('navbar.cameroon') },
   { label: "Dschang, OU, "+ t('navbar.cameroon') },
 ]);
-const menuRestaurants = [
-  { route: "/fr/categorie/11/restauration", label: t('navbar.takeAway'),icon: "ShoppingBag" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.burgers'),icon: "Pizza" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.chineseCuisine'),icon: "Soup" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.italianCuisine'),icon: "Salad" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.reservations'),icon: "Calendar1" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.delivery'),icon: "Package2" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.mexicanCuisine'),icon: "CookingPot" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.thaiCuisine'),icon: "Fish" },
+const menuRestaurants = computed(() =>[
+  { route: "/recherche", label: t('navbar.takeAway'),icon: "ShoppingBag" },
+  { route: "/recherche", label: t('navbar.burgers'),icon: "Pizza" },
+  { route: "/recherche", label: t('navbar.chineseCuisine'),icon: "Soup" },
+  { route: "/recherche", label: t('navbar.italianCuisine'),icon: "Salad" },
+  { route: "/recherche", label: t('navbar.reservations'),icon: "Calendar1" },
+  { route: "/recherche", label: t('navbar.delivery'),icon: "Package2" },
+  { route: "/recherche", label: t('navbar.mexicanCuisine'),icon: "CookingPot" },
+  { route: "/recherche", label: t('navbar.thaiCuisine'),icon: "Fish" },
 
-];
+]);
 
-const menuHouseWork = [
-  { route: "/fr/categorie/11/restauration", label: t('navbar.serviceProvider'),icon: "HandCoins" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.electricians'),icon: "PlugZap" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.cleaning'),icon: "Recycle" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.heating'),icon: "ThermometerSun" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.landscaping'),icon: "Shrub" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.locksmiths'),icon: "Key" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.movers'),icon: "BriefcaseConveyorBelt" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.plumbers'),icon: "Droplets" },
+const menuHouseWork = computed(() => [
+  { route: "/recherche", label: t('navbar.serviceProvider'),icon: "HandCoins" },
+  { route: "/recherche", label: t('navbar.electricians'),icon: "PlugZap" },
+  { route: "/recherche", label: t('navbar.cleaning'),icon: "Recycle" },
+  { route: "/recherche", label: t('navbar.heating'),icon: "ThermometerSun" },
+  { route: "/recherche", label: t('navbar.landscaping'),icon: "Shrub" },
+  { route: "/recherche", label: t('navbar.locksmiths'),icon: "Key" },
+  { route: "/recherche", label: t('navbar.movers'),icon: "BriefcaseConveyorBelt" },
+  { route: "/recherche", label: t('navbar.plumbers'),icon: "Droplets" },
 
-];
+]);
 
-const menuCarService = [
-  { route: "/fr/categorie/11/restauration", label: t('navbar.carRepair'),icon: "Bolt" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.precisionCarCleaning'),icon: "SprayCan" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.bodywork'),icon: "RectangleHorizontal" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.carCleaning'),icon: "Sparkles" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.carDealership'),icon: "KeySquare" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.oilChange'),icon: "Beaker" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.parking'),icon: "CircleParking" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.towing'),icon: "Tangent" },
+const menuCarService = computed(() => [
+  { route: "/recherche", label: t('navbar.carRepair'),icon: "Bolt" },
+  { route: "/recherche", label: t('navbar.precisionCarCleaning'),icon: "SprayCan" },
+  { route: "/recherche", label: t('navbar.bodywork'),icon: "RectangleHorizontal" },
+  { route: "/recherche", label: t('navbar.carCleaning'),icon: "Sparkles" },
+  { route: "/recherche", label: t('navbar.carDealership'),icon: "KeySquare" },
+  { route: "/recherche", label: t('navbar.oilChange'),icon: "Beaker" },
+  { route: "/recherche", label: t('navbar.parking'),icon: "CircleParking" },
+  { route: "/recherche", label: t('navbar.towing'),icon: "Tangent" },
 
-];
+]);
 
-const menuOthers = [
-  { route: "/fr/categorie/11/restauration", label: t('navbar.dryCleaning'),icon: "VenetianMask" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.phoneRepair'),icon: "Smartphone" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.bars'),icon: "Beer" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.nightlife'),icon: "Martini" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.hairdressersHairSalons'),icon: "SquareScissors" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.gym'),icon: "Dumbbell" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.massage'),icon: "MarsStroke" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.shopping'),icon: "ShoppingCart" },
+const menuOthers = computed(() => [
+  { route: "/recherche", label: t('navbar.dryCleaning'),icon: "VenetianMask" },
+  { route: "/recherche", label: t('navbar.phoneRepair'),icon: "Smartphone" },
+  { route: "/recherche", label: t('navbar.bars'),icon: "Beer" },
+  { route: "/recherche", label: t('navbar.nightlife'),icon: "Martini" },
+  { route: "/recherche", label: t('navbar.hairdressersHairSalons'),icon: "SquareScissors" },
+  { route: "/recherche", label: t('navbar.gym'),icon: "Dumbbell" },
+  { route: "/recherche", label: t('navbar.massage'),icon: "MarsStroke" },
+  { route: "/recherche", label: t('navbar.shopping'),icon: "ShoppingCart" },
 
-];
+]);
 
-const menuYelp = [
-  { route: "/fr/categorie/11/restauration", label: t('navbar.addABusiness'),icon: "HousePlus" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
-  { route: "/fr/categorie/11/restauration", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
+const menuYelp = computed(() => [
+  { route: "/recherche", label: t('navbar.addABusiness'),icon: "HousePlus" },
+  { route: "/recherche", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
+  { route: "/recherche", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
 
-];
+]);
 
   </script>
   
