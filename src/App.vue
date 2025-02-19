@@ -33,7 +33,7 @@ if (useLanguage.language) {
 
     </div>
     <!-- <Footer /> -->
-     <FilterView/>
+
     <Footer :showMoreFooter="footerStore.getShowMoreFooter" />
   </div>
 

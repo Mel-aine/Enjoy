@@ -74,6 +74,7 @@ export const Categories = [
       id: "VIE-001",
       label: "Vie nocturne",
       icon: "fa fa-glass-cheers",
+      route: "/recherche",
       places: [
         {
           id: "PLACE-VIE-001",
@@ -98,6 +99,7 @@ export const Categories = [
     {
       id: "SPORT-001",
       label: "Sports & Activités de loisirs",
+      route: "/recherche",
       icon: "fa fa-football-ball",
       places: [
         {
