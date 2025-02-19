@@ -238,16 +238,13 @@
 
     </div>
 
-    
-    
-    <div class="container ml-[370px] grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
-      <div class="flex flex-wrap justify-center gap-4">
-        <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
-        <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
-        <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
-        <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
-      </div>
+    <div class="relative container mx-auto px-1 py-4 left-40">
+      <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
+      <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
+      <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
+      <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
     </div>
+    
 
     <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
       <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
