@@ -1,8 +1,8 @@
 <template>
   <div>
     <transition name="fade">
-      <div v-if="isOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-        <div class="bg-white rounded-lg shadow-lg w-[400px] max-w-full p-6 relative" @click.stop>
+      <div v-if="isOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="bg-white rounded-lg shadow-lg sm:w-[400px] w-[300px] max-w-full p-6 relative" @click.stop>
           <!-- Bouton de fermeture -->
           <button class="absolute top-2 right-4 pt-2 text-customBlueVariant hover:text-customRed" @click="closeModal">✖</button>
 

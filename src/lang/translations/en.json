@@ -116,33 +116,8 @@
     "full_bar": "Full Bar",
     "good_for_brunch": "Good for Brunch",
     "takes_reservations": "Take Reservations",
-    "les_meilleurs_burgers":"The Best Burgers",
-    "restaurant": {
-    "le_safoutier": {
-      "nom": "The Safoutier",
-      "adresse": "Hilton Hotel, Yaoundé",
-      "heureFermeture": "11:00 PM",
-      "description": "High-end restaurant offering refined international cuisine in an elegant setting."
-    },
-    "cosy_pool": {
-      "nom": "Cosy Pool",
-      "adresse": "Bastos Quarter, Yaoundé",
-      "heureFermeture": "11:30 PM",
-      "description": "A peaceful spot around a pool offering light meals and live concerts."
-    },
-    "l_hybride": {
-      "nom": "L’Hybride",
-      "adresse": "Bastos Quarter, Yaoundé",
-      "heureFermeture": "10:00 PM",
-      "description": "Modern restaurant with tropical decor, offering a fusion of flavors and various artistic activities."
-    },
-    "le_club_yannick_noah": {
-      "nom": "Yannick Noah Club",
-      "adresse": "Etoudi Quarter, Yaoundé",
-      "heureFermeture": "10:00 PM",
-      "description": "A club combining sports facilities and an elegant restaurant, ideal for a sophisticated lunch."
-    }
-  }
+    "les_meilleurs_burgers":"The Best Burgers"
+  
   
     
   

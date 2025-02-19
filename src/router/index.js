@@ -22,6 +22,11 @@ const router = createRouter({
       name: 'DetailService',
       component: () => import('../views/EDetailServices.vue'),
     },
+    {
+      path: '/recherche',
+      name: 'recherche',
+      component: () => import('../components/restaurants/FilterView.vue'),
+    },
 
   ],
 })

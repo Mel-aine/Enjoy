@@ -37,7 +37,7 @@
       @close="isModalOpen = false"
     >
     <div >
-      <CheckboxGroup :items="Category" class="grid grid-cols-2 gap-2 mx-2" />
+      <CheckboxGroup :items="Category" class="grid grid-cols-2  gap-2 mx-2" />
     </div>
     </ModalCategory>
   </div>
