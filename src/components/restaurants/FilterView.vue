@@ -1,65 +1,4 @@
 <template>
-<!-- <div class=" flex"> -->
-
-    <!-- <div class="flex w-full h-full bg-white">
-         category
-        <div class="w-1/7 min-w-[200px] text-white p-6 ">
-            <Filter/>
-        </div>
-         Menu
-        <div class="flex-1 flex flex-col p-6 items-start">
-          <div class="text-gray-700 text text-sm">
-            <span v-for="(tab, i) in pathSegments" :key="i">
-              {{ tab }} <span v-if="i !== pathSegments.length - 1"> >
-              </span>
-            </span>
-            <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
-          </div>
-          <div class="mt-7">
-            <RestaurantView />
-          </div>
-        </div>
-
-         carte
-        <div class="w-[550px] min-w-[250px] text-white  flex items-center justify-center">
-            <MapView />
-        </div>
-    </div>-->
-    <!-- <div class="flex w-full min-h-screen flex-col lg:flex-row bg-white relative">
-    Bouton Hamburger
-    <button
-      @click="toggleMenu"
-      class="md:block absolute top-4 right-2 z-50 p-2 bg-gray-200 rounded lg:hidden "
-    >
-      ☰
-    </button>
-
-    category (filtre)
-    <div :class="['lg:w-1/7 lg:min-w-[200px] p-6 bg-white text-white transition-all',
-         showMenu ? 'block absolute top-0 left-0 w-[90%] h-full z-40' : 'hidden lg:block']">
-      <Filter />
-    </div>
-
-    Contenu principal
-    <div class="flex-1 flex flex-col p-6 items-start">
-      <div class="text-gray-700 text-sm">
-        <span v-for="(tab, i) in pathSegments" :key="i">
-          {{ tab }} <span v-if="i !== pathSegments.length - 1"> > </span>
-        </span>
-        <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
-      </div>
-      <div class="mt-7">
-        <RestaurantView />
-      </div>
-    </div>
-
-    Carte (map)
-    <div  class="lg:w-[550px] lg:min-w-[250px] md:mt-5 md:w-full text-white flex items-center justify-center lg:relative md:relative absolute bottom-0 w-full">
-      <MapView />
-    </div>
-  </div> -->
-<!-- </div> -->
-
 <div class="flex flex-col lg:flex-row w-full min-h-screen bg-white relative">
   <!-- Bouton Hamburger -->
   <button
@@ -81,7 +20,9 @@
       <span v-for="(tab, i) in pathSegments" :key="i">
         {{ tab }} <span v-if="i !== pathSegments.length - 1"> > </span>
       </span>
-      <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
+      <div class="">
+         <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
+      </div>
     </div>
     <div class="mt-7">
       <RestaurantView />
