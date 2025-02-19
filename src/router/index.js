@@ -27,6 +27,11 @@ const router = createRouter({
       name: 'recherche',
       component: () => import('../components/restaurants/FilterView.vue'),
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/user/ELogin.vue'),
+    },
 
   ],
 })

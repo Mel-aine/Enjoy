@@ -21,20 +21,20 @@
         <nav>
           <div class="flex justify-center space-x-4">
 
-    
+
             <div class="w-full max-w-sm min-w-[200px] relative ml-2">
     <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-      <input 
+      <input
         v-model="leftValue"
         @mouseenter="activeInput = 'left'"
-        placeholder="Restaurant" 
+        placeholder="Restaurant"
         class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
       <div class="h-6 border-l border-slate-200 ml-1"></div>
-      <input 
+      <input
         v-model="rightValue"
         @mouseenter="activeInput = 'right'"
-        placeholder="Yaoun" 
+        placeholder="Yaoun"
         class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
       <router-link to="/recherche">
@@ -49,15 +49,15 @@
       <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
         <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
         <span class="ml-2">
-          {{ item.label }} 
+          {{ item.label }}
         </span>
       </li>
     </ul>
 
     <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
       <li class="flex justify-center items-center mt-3">
-        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
-        <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span> 
+        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/>
+        <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span>
       </li>
       <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
         {{ item.label }}
@@ -65,7 +65,7 @@
     </ul>
   </div>
 
-    
+
 
             <!-- Dropdown Menu -->
             <div class="relative group">
@@ -74,7 +74,7 @@
                 :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
                 class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-              {{ $t('navbar.yelpProfessional') }}                
+              {{ $t('navbar.yelpProfessional') }}
               <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
               </button>
 
@@ -88,8 +88,8 @@
                         <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
                       </router-link>
                     </h3>
-                    
-                   
+
+
                   </div>
                   <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
                     <h3 class="text-lg font-semibold text-gray-800 mt-3">
@@ -115,7 +115,7 @@
               active-class="border-b-2 border-indigo-400">
               {{ $t('navbar.startProject') }}
             </router-link>
-            
+
           </div>
         </nav>
       </div>
@@ -196,17 +196,17 @@
       </button>
       <div class="w-full max-w-sm min-w-[200px] relative ml-4">
         <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-          <input 
+          <input
             v-model="leftValue"
             @click="activeInput = 'left'"
-            placeholder="Restaurant" 
+            placeholder="Restaurant"
             class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
           />
           <div class="h-6 border-l border-slate-200 ml-1"></div>
-          <input 
+          <input
             v-model="rightValue"
             @click="activeInput = 'right'"
-            placeholder="Yaoun" 
+            placeholder="Yaoun"
             class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
           />
           <router-link to="/recherche">
@@ -220,14 +220,14 @@
           <li v-for="item in menuItems" :key="item" @click="leftValue = item.label ; selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
             <BaseIcon :name="item.icon" size="18" customColor="text-gray-700" stroke-width="2"></BaseIcon>
             <span class="ml-2">
-              {{ item.label }} 
+              {{ item.label }}
             </span>
           </li>
         </ul>
         <ul v-if="activeInput === 'right'" @click="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto  ">
           <li class="flex justify-center items-center mt-3">
-            <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
-            <span class="text-sm text-blue-400"> {{$t('navbar.space')}} </span> 
+            <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/>
+            <span class="text-sm text-blue-400"> {{$t('navbar.space')}} </span>
           </li>
           <li v-for="item in menuData" :key="item" @click="rightValue = item.label ; selectItem('right', item.label)"  class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
             {{ item.label }}
@@ -237,8 +237,8 @@
 
     </div>
 
-    
-    
+
+
     <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
       <div class="flex flex-wrap justify-center gap-4">
         <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
@@ -265,12 +265,13 @@
 
   </div>
 </template>
-  
+
   <script setup>
   import { ref, onMounted, onUnmounted, computed } from 'vue';
   import Button from '@/components/buttons/Button.vue';
   // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
+  import { useRouter } from 'vue-router';
   import DropDown from '../dropDown/DropDown.vue';
   import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
   import { useI18n } from 'vue-i18n';
@@ -282,8 +283,8 @@
   const scrollMenu = ref(null);
 const showLeftButton = ref(false);
 const showRightButton = ref(false);
-
-const isSidebarOpen = ref(false); 
+const router = useRouter();
+const isSidebarOpen = ref(false);
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -300,7 +301,7 @@ const checkScrollButtonsVisibility = () => {
 
 // const scrollLeft = () => {
 //   scrollMenu.value.scrollLeft -= 100;
-//   checkScrollButtonsVisibility(); 
+//   checkScrollButtonsVisibility();
 // };
 
 // const scrollRight = () => {
@@ -393,7 +394,7 @@ const { t } = useI18n();
   {  label: t('navbar.accountants'), icon: "Calculator" },
   {  label: t('navbar.plumbers'), icon: "Droplets" },
   {  label: t('navbar.autoRepair'), icon: "Wrench" },
-  
+
 ]);
 
 
@@ -460,12 +461,17 @@ const menuOthers = computed(() => [
 const menuYelp = computed(() => [
   { route: "/recherche", label: t('navbar.addABusiness'),icon: "HousePlus" },
   { route: "/recherche", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
-  { route: "/recherche", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
+  { route: "/login", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
 
 ]);
 
+const connexion = () =>{
+  // Redirect to login page
+  router.push('/login');
+}
+
   </script>
-  
+
   <style scoped>
 .scrollbar-hide {
   -ms-overflow-style: none;
