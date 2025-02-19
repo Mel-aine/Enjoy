@@ -1,42 +1,39 @@
 <template>
-  <div class="bg-customBlue">
-    <!-- Top Bar -->
+  <div class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
+    <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Superposition sombre -->
+        <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
       <!-- Logo -->
-      <div id="logo" class="rounded-full flex-shrink-0">
+      <div id="logo" class="relative rounded-full flex-shrink-0">
         <img class="rounded-full" src="@/assets/logo2.png" width="50" alt="Logo">
       </div>
 
       <!-- Menu Mobile: Bouton avec icône "fa-bars" -->
-      <div id="menuToggle" class="block md:hidden">
+      <div id="menuToggle" class="relative block md:hidden">
         <button @click="toggleSidebar" class="text-white text-2xl">
           <i class="fa fa-bars"></i>
         </button>
       </div>
+
 
       <!-- Menu Principal (Desktop) -->
       <div id="mainMenu" class="relative w-full hidden md:block">
         <nav>
           <div class="flex justify-center space-x-4">
 
-            
-
-
-
-
-
-    <div class="w-full max-w-sm min-w-[200px] relative ml-2">
+    
+            <div class="w-full max-w-sm min-w-[200px] relative ml-2">
     <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
       <input 
         v-model="leftValue"
-        @mouseenter="activeInput = 'left'"
+        @click="activeInput = 'left'"
         placeholder="Restaurant" 
         class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
       <div class="h-6 border-l border-slate-200 ml-1"></div>
       <input 
         v-model="rightValue"
-        @mouseenter="activeInput = 'right'"
+        @click="activeInput = 'right'"
         placeholder="Yaoun" 
         class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
       />
@@ -45,8 +42,8 @@
       </button>
     </div>
 
-    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-50 border rounded shadow-lg mt-1 overflow-auto ">
-      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-50 px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
+      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
         <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
         <span class="ml-2">
           {{ item.label }} 
@@ -54,29 +51,18 @@
       </li>
     </ul>
 
-    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-50 rounded shadow-lg mt-1 overflow-auto">
+    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
       <li class="flex justify-center items-center mt-3">
         <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
         <span class="text-sm text-blue-400"> Emplacement actuel </span> 
       </li>
-      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-sm z-50 hover:bg-gray-100 cursor-pointer mx-2">
+      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
         {{ item.label }}
       </li>
     </ul>
   </div>
 
-      
-
-
-
-
-            
-            <!-- <imageUrlr-link
-              to="/"
-              class="text-white hover:text-customRed px-4 py-2 rounded-sm font-medium font-poppins"
-              >
-              Accueil
-            </imageUrlr-link> -->
+    
 
             <!-- Dropdown Menu -->
             <div class="relative group">
@@ -90,46 +76,49 @@
               </button>
 
               <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1/3 z-50 bg-white shadow-xl w-[2000px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1  md:grid-cols-3 lg:grid-cols-4 gap-10 px-10 py-2">
-                  <div v-for="category in menuData" :key="category.imageUrl" class="space-y-1">
+              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+                <div class="grid grid-cols-1  md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
+                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <imageUrlr-link :to="category.imageUrl" class="block text-sm text-customRed hover:text-gray-900">
-                        {{ category.label }}
-                      </imageUrlr-link>
+                      <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
+                      </router-link>
                     </h3>
-                    <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.imageUrl">
-                        <imageUrlr-link :to="subItem.imageUrl" class="block text-xs text-gray-700 hover:bg-gray-500">
-                          {{ subItem.label }}
-                        </imageUrlr-link>
-                      </li>
-                    </ul>
+                    
+                   
                   </div>
+                  <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
+                    <h3 class="text-lg font-semibold text-gray-800 mt-3">
+                      <router-link to="" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> Explorez Yelp pour votre Business</span>
+                      </router-link>
+                    </h3>
                 </div>
               </div>
             </div>
 
-            <imageUrlr-link
+            <router-link
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Ecrire un avis
-            </imageUrlr-link>
+            </router-link>
 
-            <imageUrlr-link
+            <router-link
               to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               Commence le projet
-            </imageUrlr-link>
+            </router-link>
             
           </div>
         </nav>
       </div>
 
       <!-- User Management (à droite) -->
-      <div id="userManage" class="flex items-center space-x-4">
+      <div id="userManage" class="relative flex items-center space-x-4">
         <button>
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
@@ -146,64 +135,132 @@
           <i class="fa fa-times text-gray-700 "></i>
         </button>
         <div class="flex flex-col space-y-6 mt-10">
-          <imageUrlr-link
-            to="/home"
-            class="text-lg text-white  px-4 py-2 rounded-md"
-            @click="toggleSidebar">Accueil</imageUrlr-link>
-          
+            <!-- Dropdown Menu -->
             <div class="relative group">
               <button
                 @click="isDropdownVisible = !isDropdownVisible"
-                class="text-white  px-4 py-2 rounded-sm font-medium font-poppins"
+                :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+                class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
               >
-                Coins
-                <i class="fa fa-chevron-down text-xs ml-1" :class="{ 'text-customRed': isDropdownVisible, 'text-customRed': !isDropdownVisible }"></i>
+              Yelp pour les professionnels
+                <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
               </button>
 
-              <!-- Contenu du menu déroulant  mobile -->
-              <div v-if="isDropdownVisible" class="absolute scroll-m-5 z-50 bg-white shadow-xl w-[250px] mt-2 rounded-lg p-5">
-                <div class="grid grid-cols-1 gap-4">
-                  <div v-for="category in menuData" :key="category.imageUrl" class="space-y-1">
+              <!-- Contenu du menu déroulant -->
+              <div v-if="isDropdownVisible" class="absolute left-0 transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
+                <div class="grid grid-cols-1  md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
+                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
                     <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <imageUrlr-link :to="category.imageUrl" class="block text-sm text-customRed ">
-                        {{ category.label }}
-                      </imageUrlr-link>
+                      <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
+                      </router-link>
                     </h3>
-                    <ul class="space-y-1">
-                      <li v-for="subItem in category.subCategories" :key="subItem.imageUrl">
-                        <imageUrlr-link :to="subItem.imageUrl" class="block text-xs text-gray-700 hover:bg-customDarkVariant2">
-                          {{ subItem.label }}
-                        </imageUrlr-link>
-                      </li>
-                    </ul>
+                    
+                   
                   </div>
+                  <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
+
+                    <h3 class="text-lg font-semibold text-gray-800 mt-3">
+                      <router-link to="" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> Explorez Yelp pour votre Business</span>
+                      </router-link>
+                    </h3>
                 </div>
               </div>
             </div>
-          
-          <imageUrlr-link
-            to="/comunity"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Application Mobile</imageUrlr-link>
-          
-          <imageUrlr-link
-            to="/comunity"
-            class="text-lg text-gray-800 hover:bg-gray-200 px-4 py-2 rounded-md"
-            @click="toggleSidebar">Contact</imageUrlr-link>
+
+            <router-link
+              to="/comunity"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+              active-class="border-b-2 border-indigo-400">
+              Ecrire un avis
+            </router-link>
+
+            <router-link
+              to="/comunity"
+              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+              active-class="border-b-2 border-indigo-400">
+              Commence le projet
+            </router-link>
+
         </div>
       </div>
     </div>
 
-    
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4">
-    <div class="container mx-auto px-4 flex flex-wrap justify-center md:justify-start items-center gap-4">
-      <DropDown :menuData="menuRestaurants">Restaurants</DropDown>
-      <DropDown :menuData="menuHouseWork">Maison et travaux</DropDown>
-      <DropDown :menuData="menuCarService">Service auto</DropDown>
-      <DropDown :menuData="menuOthers">Plus</DropDown>
+    <div id="menuToggle" class="container relative block md:hidden">
+      <div class="w-full max-w-sm min-w-[200px] relative ml-4">
+        <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
+          <input 
+            v-model="leftValue"
+            @click="activeInput = 'left'"
+            placeholder="Restaurant" 
+            class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+          />
+          <div class="h-6 border-l border-slate-200 ml-1"></div>
+          <input 
+            v-model="rightValue"
+            @click="activeInput = 'right'"
+            placeholder="Yaoun" 
+            class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
+          />
+          <button class="bg-customRed px-4 py-2 text-white ml-2">
+            <BaseIcon name="Search" size="20" stroke-width="2" />
+          </button>
+        </div>
+
+        <ul v-if="activeInput === 'left'" @click="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto  ">
+          <button @click="resetSearchBar" class="relative block item-center justify-center md:hidden">
+              <BaseIcon  name="CircleX" customColor="text-red-500" size="18" stroke-width="2"></BaseIcon>
+          </button>
+          <li v-for="item in menuItems" :key="item" @click="leftValue = item.label ; selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+            <BaseIcon :name="item.icon" size="18" customColor="text-gray-700" stroke-width="2"></BaseIcon>
+            <span class="ml-2">
+              {{ item.label }} 
+            </span>
+          </li>
+        </ul>
+
+        <ul v-if="activeInput === 'right'" @click="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto  ">
+          <button @click="resetSearchBar" class="relative block item-center justify-center md:hidden">
+              <BaseIcon  name="CircleX" size="18" customColor="text-red-500" stroke-width="2"></BaseIcon>
+          </button>
+          <li class="flex justify-center items-center mt-3">
+            <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/> 
+            <span class="text-sm text-blue-400"> Emplacement actuel </span> 
+          </li>
+          <li v-for="item in menuData" :key="item" @click="rightValue = item.label ; selectItem('right', item.label)"  class="px-3 py-2 text-sm z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+            {{ item.label }}
+          </li>
+        </ul>
+      </div>
+
     </div>
-  </div>
+
+    
+    
+    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
+      <div class="flex flex-wrap justify-center gap-4">
+        <DropDown :menuData="menuRestaurants">Restaurants</DropDown>
+        <DropDown :menuData="menuHouseWork">Maison et travaux</DropDown>
+        <DropDown :menuData="menuCarService">Service auto</DropDown>
+        <DropDown :menuData="menuOthers">Plus</DropDown>
+      </div>
+    </div>
+
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-30">
+      <h class="text-6xl text-white font-medium font-popins">Entrez en conctact avec les meilleurs</h>
+      <p class="text-6xl text-white font-medium font-popins">endroits pres de chez vous</p>
+
+    </div>
+
+
+    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-10">
+      <h class="text-xl text-white font-medium font-popins">vennez decouvrir </h>
+      <p class="text-xl text-white font-medium font-popins">endroits que vous voulez</p>
+
+    </div>
 
 
 
@@ -215,7 +272,8 @@
   import Button from '@/components/buttons/Button.vue';
   // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
-  import DropDown from '../dropDown/DropDown.vue'
+  import DropDown from '../dropDown/DropDown.vue';
+  import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
  
 
 
@@ -258,6 +316,12 @@ const handleClickOutside = (event) => {
 const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
+
+const resetSearchBar =()=>{
+  leftValue.value = '';
+  rightValue.value = '';
+  activeInput.value = null;
+ }
 
 let leftSelected = false; // Track if a selection is made for left field
 let rightSelected = false; // Track if a selection is made for right field
@@ -391,6 +455,13 @@ const menuOthers = [
 
 ];
 
+const menuYelp = [
+  { route: "/fr/categorie/11/restauration", label: "Ajoutter un commerce",icon: "HousePlus" },
+  { route: "/fr/categorie/11/restauration", label: "Claim your business",icon: "CircleCheck" },
+  { route: "/fr/categorie/11/restauration", label: "Login in to Business Account",icon: "CircleUser" },
+
+];
+
   </script>
   
   <style scoped>
@@ -404,5 +475,10 @@ const menuOthers = [
 .menu-item:hover .base-icon {
   opacity: 1 !important;
   transform: translateY(0) !important;
+}
+.background {
+  background-image: url('@/assets/wp7388245-satisfied-wallpapers.jpg');
+  background-size: cover;
+  background-position: center;
 }
 </style>
