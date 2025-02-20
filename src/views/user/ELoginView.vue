@@ -27,9 +27,7 @@ const togglePasswordVisibility = () => {
           <div class="mb-4 text-center text-3xl font-bold">
             <h2 class="uppercase">{{ $t('welcome')}}</h2>
           </div>
-          <div class="flex justify-center items-center mb-5">
-             <i class="fa-solid fa-circle-user text-6xl text-customBlueVariant"></i>
-          </div>
+
           <div class="mb-8 flex flex-row flex-nowrap space-x-2">
             <input type="checkbox" class="w-8"/>
             <p class="translate-y-4"> {{$t('by_continuing_you_agree_to_Enjoy')}} <span class="text-customBlueVariant text-md font-semibold">{{$t('Terms_of_Service')}}</span> {{$t('and_acknowledge_our')}} <span class="text-customBlueVariant text-md font-semibold">{{$t('Privacy_Policy')}}</span> </p>
