@@ -15,7 +15,7 @@
   </div>
 
   <!-- Contenu principal -->
-  <div class="flex-1 flex flex-col p-6 items-start">
+  <div class="flex-1 flex flex-col p-5 items-start">
 
     <div class="text-gray-700 text-sm">
       <span v-for="(tab, i) in pathSegments" :key="i">
@@ -24,12 +24,8 @@
          <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
     </div>
 
-    <div class="mt-7">
-      <RestaurantView />
-    </div>
-
-  </div>
-  <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2 top-12 right-8 w-full md:w-auto">
+    <div class="">
+      <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2  right-8 w-full md:w-auto">
         <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">
         {{$t('trie')}} :
         <button class="text-xs md:text-sm font-semibold flex items-center">
@@ -43,12 +39,19 @@
         </svg>
     </span>
 
-      </div>
+  </div>
+  <div class="mt-7">
+      <RestaurantView />
+  </div>
+    </div>
+
+  </div>
+
 
   <!-- Carte (map) -->
   <div  class="lg:w-[550px] lg:min-w-[250px] text-black flex items-center justify-center lg:relative lg:mt-0 md:mt-5 md:w-full md:min-h-[500px]">
   <MapView />
-</div>
+  </div>
 
 </div>
 

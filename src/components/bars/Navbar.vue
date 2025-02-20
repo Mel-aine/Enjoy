@@ -459,7 +459,7 @@ const menuOthers = computed(() => [
 ]);
 
 const menuYelp = computed(() => [
-  { route: "/recherche", label: t('navbar.addABusiness'),icon: "HousePlus" },
+  { route: "/addBusiness", label: t('navbar.addABusiness'),icon: "HousePlus" },
   { route: "/recherche", label: t('navbar.claimYourBusiness'),icon: "CircleCheck" },
   { route: "/login", label: t('navbar.loginInToBusiness'),icon: "CircleUser" },
 
