@@ -8,6 +8,7 @@ export const useFooterStore = defineStore('footer', {
   }),
   actions: {
     updateFooter(value) {
+      console.log(('LOCATION', window.location))
       this.showMoreFooter = value;
       console.log('updateFooter', this.showMoreFooter);
     }

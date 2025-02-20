@@ -24,7 +24,7 @@ const props = defineProps({
     },
     forLabel: String,
     id: String,
-        
+
 });
 // Emit input event to update the v-model value
 const emit = defineEmits(['update:modelValue'])
@@ -54,7 +54,7 @@ const handleInput = (event) => {
                     :value="modelValue"
                     :required="isRequired"
                     @input="handleInput"
-                    class="block w-full px-4 py-2 text-sm bg-White border-2 border-customWhite rounded-sm focus:border-customRed focus:outline-none pr-10"
+                    class="block w-full px-4 py-2 text-sm bg-White border-2 border-orange-200 rounded-sm focus:border-customRed focus:outline-none pr-10"
                 />
 
                 <!-- Icône -->
