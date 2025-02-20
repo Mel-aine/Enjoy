@@ -179,7 +179,7 @@ console.log('category',menuCategory[0].Cards)
 // ];
 
 
-const footerStore = useFooterStore();
+// const footerStore = useFooterStore();
 
 const toggleFooter = () => {
       const newValue = !footerStore.getShowMoreFooter;  // On inverse la valeur
@@ -233,6 +233,9 @@ const toggleFooter = () => {
     <!-- Carousel -->
     <!-- <Carousel /> -->
     <CategoryView @toggle-footer="toggleFooter" />
+
+
+
 
   </div>
 </template>
