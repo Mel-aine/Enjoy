@@ -73,6 +73,7 @@ export const Categories = [
     {
       id: "VIE-001",
       label: "Vie nocturne",
+      route: "/recherche",
       icon: "fa fa-glass-cheers",
       route: "/recherche",
       places: [

@@ -189,11 +189,12 @@
   </div>
 </div>
 
+<div id="menuToggle" class="container relative block md:hidden">
+  <button @click="resetSearchBar" class="relative block md:hidden">
+      <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
+  </button>
+</div>
     <div id="menuToggle" class="container relative block md:hidden">
-
-      <button @click="resetSearchBar" class="relative block md:hidden">
-          <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
-      </button>
       <div class="w-full max-w-sm min-w-[200px] relative ml-4">
         <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
           <input
@@ -210,7 +211,7 @@
             class="w-1/2 px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none"
           />
           <router-link to="/recherche">
-        <button class="bg-customRed px-4 py-3 text-white ml-2">
+        <button class="bg-customRed px-4 py-3 text-white ">
           <BaseIcon name="Search" size="20" stroke-width="2" />
         </button>
       </router-link>
@@ -237,16 +238,13 @@
 
     </div>
 
-
-
-    <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 px-4 py-4 items-center justify-center">
-      <div class="flex flex-wrap justify-center gap-4">
-        <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
-        <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
-        <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
-        <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
-      </div>
+    <div class="relative container mx-auto px-1 py-4 left-40">
+      <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
+      <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
+      <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
+      <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
     </div>
+
 
     <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
       <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
