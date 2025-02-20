@@ -13,7 +13,7 @@ const app = createApp(App)
 const pinia = createPinia()
 const i18n = createI18n({
     legacy: false,
-    locale: 'fr',
+    locale: 'en',
     fallbackLocale: 'en',
     messages,
 })
