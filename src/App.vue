@@ -3,15 +3,16 @@
 //import { ref } from 'vue'
 import { useI18n } from "vue-i18n";
 import { useLanguageStore } from './lang/language';
+import DefaultLayout from './components/layout/DefaultLayout.vue';
 const useLanguage = useLanguageStore();
 const t = useI18n({ useScope: "global" });
-import Navbar from '@/components/bars/Navbar.vue';
-import Footer from '@/components/footer/Footer.vue'
-import { useFooterStore } from '@/stores/footer';
+// import Navbar from '@/components/bars/Navbar.vue';
+// import Footer from '@/components/footer/Footer.vue'
+// import { useFooterStore } from '@/stores/footer';
 
 //import FilterView from '@/components/restaurants/FilterView.vue'
 
-const footerStore = useFooterStore();
+// const footerStore = useFooterStore();
 
 
 if (useLanguage.language) {
@@ -19,27 +20,25 @@ if (useLanguage.language) {
 } else {
   useLanguage.set(t.locale.value)
 }
-
+const isLogin = true;
 
 </script>
 
+
+
 <template>
-
-<div class="min-h-screen flex flex-col">
-    <Navbar :showNavbar="footerStore.getShowNavbar"/>
-
-    <div class="flex-1 bg-customWhite">
-      <router-view />
-
-    </div>
-    <!-- <Footer /> -->
-
-    <Footer :showMoreFooter="footerStore.getShowMoreFooter" />
-  </div>
-
-
-
+  <template v-if="isLogin">
+    <DefaultLayout>
+      <RouterView />
+    </DefaultLayout>
+  </template>
+  <template v-else>
+    <DefaultLayout>
+      <RouterView />
+    </DefaultLayout>
+  </template>
 </template>
+
 
 <style scoped>
 
