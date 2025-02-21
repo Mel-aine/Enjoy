@@ -1,6 +1,6 @@
 <script setup>
 //import { RouterLink, RouterView } from 'vue-router'
-import { ref } from 'vue'
+//import { ref } from 'vue'
 import { useI18n } from "vue-i18n";
 import { useLanguageStore } from './lang/language';
 const useLanguage = useLanguageStore();
@@ -9,7 +9,7 @@ import Navbar from '@/components/bars/Navbar.vue';
 import Footer from '@/components/footer/Footer.vue'
 import { useFooterStore } from '@/stores/footer';
 
-import FilterView from '@/components/restaurants/FilterView.vue'
+//import FilterView from '@/components/restaurants/FilterView.vue'
 
 const footerStore = useFooterStore();
 
@@ -26,7 +26,7 @@ if (useLanguage.language) {
 <template>
 
 <div class="min-h-screen flex flex-col">
-    <Navbar />
+    <Navbar :showNavbar="footerStore.getShowNavbar"/>
 
     <div class="flex-1 bg-customWhite">
       <router-view />

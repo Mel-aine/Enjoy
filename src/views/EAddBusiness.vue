@@ -41,10 +41,10 @@ import FloatingInput from "@/components/input/FloatingInput.vue"
 import FloatingSelect from "@/components/input/FloatingSelect.vue"
 import Button from "@/components/buttons/Button.vue"
 import { useI18n } from "vue-i18n";
-import {ref} from "vue"
+import {ref,computed} from "vue"
 
 const { t } = useI18n();
-const Jours = [
+const Jours = computed(()=>[
   {value: 'monday', label: t('monday')},
   {value: 'tuesday', label: t('tuesday')},
   {value: 'wednesday', label: t('wednesday')},
@@ -52,7 +52,7 @@ const Jours = [
   {value: 'friday', label: t('friday')},
   {value: 'saturday', label: t('saturday')},
   {value: 'sunday', label: t('sunday')},
-]
+])
 
 const HDebut = Array.from({length: 24}, (_, i) => ({ value: i + 1, label: `${i + 1}h` })).reverse()
 
