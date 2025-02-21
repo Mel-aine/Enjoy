@@ -49,11 +49,7 @@ router.beforeEach((to, from, next) => {
     footerStore.updateFooter(false)
     console.log('to.fullPath', to.fullPath)
   }
-  if (to.fullPath == '/login') {
-    footerStore.updateNavbar(false)
-    console.log('to.fullPath2', to.fullPath)
-    next()
-  }
+
   next()
 })
 export default router
