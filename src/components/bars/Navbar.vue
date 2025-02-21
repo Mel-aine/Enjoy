@@ -1,5 +1,5 @@
 <template>
-  <div class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
+  <div v-if="showNavbar" class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
     <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Superposition sombre -->
         <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
@@ -276,7 +276,11 @@
 
 // Utilisation de useI18n pour accéder aux traductions
 
+ defineProps({
+    showNavbar : Boolean,
+  });
 
+  
   const isDropdownVisible = ref(false) ;
   const scrollMenu = ref(null);
 const showLeftButton = ref(false);
