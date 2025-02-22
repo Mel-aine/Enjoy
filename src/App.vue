@@ -20,23 +20,17 @@ if (useLanguage.language) {
 } else {
   useLanguage.set(t.locale.value)
 }
-const isLogin = true;
+
 
 </script>
 
 
 
 <template>
-  <template v-if="isLogin">
     <DefaultLayout>
       <RouterView />
     </DefaultLayout>
-  </template>
-  <template v-else>
-    <DefaultLayout>
-      <RouterView />
-    </DefaultLayout>
-  </template>
+  
 </template>
 
 
