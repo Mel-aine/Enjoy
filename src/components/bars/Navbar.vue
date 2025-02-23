@@ -255,24 +255,26 @@
     </div>
 
     <div class="relative container mx-auto px-1 py-4 left-40">
-
-
-  <div class="p-5">
-    <CustomDropdownD :menuData="menuRestaurants" :columns="1">
-      <!-- Bouton du dropdown -->
-      <template #button>
-        <span class="text-white">Options</span>
-      </template>
-
-    </CustomDropdownD>
-  </div>
-
-
-
-      <DropDown :menuData="menuRestaurants">{{$t('navbar.restaurant')}}</DropDown>
-      <DropDown :menuData="menuHouseWork">{{$t('navbar.homeAndWork')}}</DropDown>
-      <DropDown :menuData="menuCarService">{{$t('navbar.serviceRepaire')}}</DropDown>
-      <DropDown :menuData="menuOthers">{{$t('navbar.otherCategory')}}</DropDown>
+      <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
+        <template #button>
+          <span class="text-white">{{$t('navbar.restaurant')}}</span>
+        </template>
+      </CustomDropdownD>
+      <CustomDropdownD :menuData="menuHouseWork" columnClass="grid-cols-2">
+        <template #button>
+          <span class="text-white">{{$t('navbar.homeAndWork')}}</span>
+        </template>
+      </CustomDropdownD>
+      <CustomDropdownD :menuData="menuCarService" columnClass="grid-cols-2">
+        <template #button>
+          <span class="text-white">{{$t('navbar.homeAndWork')}}</span>
+        </template>
+      </CustomDropdownD>
+      <CustomDropdownD :menuData="menuOthers" columnClass="grid-cols-2">
+        <template #button>
+          <span class="text-white">{{$t('navbar.otherCategory')}}</span>
+        </template>
+      </CustomDropdownD>
     </div>
 
 
@@ -294,8 +296,8 @@
   <script setup>
   import { ref, onMounted, onUnmounted, computed } from 'vue';
   import Button from '@/components/buttons/Button.vue';
-  import CustomDropdown from '@/components/test/dropdownPerso.vue';
-  import CustomDropdownD from '@/components/test/dropdownPersoDown.vue';
+  import CustomDropdown from '@/components/dropDown/dropdownContentP.vue';
+  import CustomDropdownD from '@/components/dropDown/dropdownColumnsP.vue';
 
 
   // import FloatingInput from '../input/FloatingInput.vue';
