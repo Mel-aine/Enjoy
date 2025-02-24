@@ -1,6 +1,6 @@
 <template>
   <div  class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
-    <div class="absolute inset-0 bg-black opacity-50"></div> <!-- Superposition sombre -->
+    <!-- <div class="absolute inset-0 bg-black opacity-50"></div> Superposition sombre -->
         <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
       <!-- Logo -->
@@ -22,7 +22,7 @@
           <div class="flex justify-center space-x-4">
 
 
-            <div class="w-full max-w-sm min-w-[200px] relative ml-2">
+            <div class="w-full max-w-sm min-w-[200px] relative ml-1">
     <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
       <input
         v-model="leftValue"
@@ -67,43 +67,25 @@
 
 
 
-            <!-- Dropdown Menu -->
-            <div class="relative group">
-              <button
-                @click="isDropdownVisible = !isDropdownVisible"
-                :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
-                class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins"
-              >
-              {{ $t('navbar.yelpProfessional') }}
-              <i class="fa fa-chevron-down text-xs ml-1 text-white "></i>
-              </button>
 
-              <!-- Contenu du menu déroulant -->
-              <div v-if="isDropdownVisible" class="absolute transform -translate-x-1 z-[100] bg-white shadow-xl w-[300px] sm:max-w-[650px] md:max-w-[850px] lg:max-w-[1100px] mt-2 rounded-lg">
-                <div class="grid grid-cols-1  md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
-                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
-                    <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                      <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
-                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
-                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
-                      </router-link>
-                    </h3>
+  <CustomDropdown :footerDropdown="false"> 
+    <template #button>
+    <span> {{ $t('navbar.yelpProfessional') }} </span>
+    </template>
+    <template #content>
+      <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
+        <h3 class="text-lg font-semibold text-gray-800 mt-2">
+          <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+            <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+            <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
+          </router-link>
+        </h3>
+      </div>
+    </template>
+  </CustomDropdown>
 
 
-                  </div>
-                  <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
-                    <h3 class="text-lg font-semibold text-gray-800 mt-3">
-                      <router-link to="" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
-                        <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
-                        <span class="whitespace-nowrap"> {{ $t('navbar.yelpExploreBusiness') }} </span>
-                      </router-link>
-                    </h3>
-                  </div>
-              <!-- </CustomDropdown> -->
-            </div>
-            </div>
 
-            <!-- Dropdown Menu ENd -->
 
 
             <router-link to="/comunity"
@@ -240,7 +222,7 @@
       </div>
     </div>
 
-    <div class="relative container mx-auto px-1 py-4 left-40">
+    <div class="relative container mx-auto left-40 translate-x-12 px-1 py-4 ">
       <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
         <template #button>
           <span class="text-white">{{$t('navbar.restaurant')}}</span>
@@ -253,7 +235,7 @@
       </CustomDropdownD>
       <CustomDropdownD :menuData="menuCarService" columnClass="grid-cols-2">
         <template #button>
-          <span class="text-white">{{$t('navbar.homeAndWork')}}</span>
+          <span class="text-white">{{$t('navbar.serviceRepaire')}}</span>
         </template>
       </CustomDropdownD>
       <CustomDropdownD :menuData="menuOthers" columnClass="grid-cols-2">
@@ -264,7 +246,7 @@
     </div>
 
 
-    <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
+    <div id="searchBar" class=" z-10 container justify-center mx-auto px-4 py-50 mt-20">
       <h1 class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h1>
       <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
     </div>

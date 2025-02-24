@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-left p-2" ref="dropdownRef">
+  <div class="relative inline-block text-left p-3" ref="dropdownRef">
     <div @mouseenter="openDropdown" @mouseleave="closeDropdown">
       <button
         :class="buttonClasses"
@@ -13,14 +13,14 @@
     <div
       v-show="isOpen"
       ref="dropdownContentRef"
-      class="absolute transform -translate-x-1 z-[100] shadow-xl mt-2 transition duration-300 overflow-x-auto max-h-40 scrollbar-hide"
+      class="absolute transform -translate-x-1 z-[99] shadow-xl mt-2 transition duration-300 overflow-x-auto max-h-40 scrollbar-hide"
       :style="dropdownStyle"
       @mouseenter="cancelClose"
       @mouseleave="closeDropdown"
     >
     <div v-show="isOpen" class="border-b-4 border-customRed w-[110px]"></div>
-    <div class="bg-white left-0 z-[1000] transform w-auto origin-top rounded-lg rounded-tl-none shadow-lg transition-opacity duration-300 p-3 min-w-max ">
-        <ul :class="['grid', props.columnClass, 'gap-x-3 gap-y-2']">
+    <div class="bg-white left-0  transform w-auto origin-top rounded-lg rounded-tl-none shadow-lg transition-opacity duration-300 p-3 min-w-max ">
+        <ul :class="['grid', props.columnClass, 'gap-x-3 gap-y-2 ']">
           <li v-for="item in props.menuData.slice(0, 8)" :key="item.route" class="flex items-center">
             <router-link
               :to="item.route"
@@ -91,7 +91,7 @@ onMounted(() => {
 });
 
 const dropdownStyle = computed(() => ({
-  minWidth: '200px',
+  minWidth: 'auto',
   width: dropdownWidth.value,
 }));
 
