@@ -9,10 +9,10 @@ import { useRoute } from 'vue-router'; // Importer useRoute pour accéder à la 
 
 const route = useRoute();
 
-const isExcludedPage = computed(() => route.path === '/login' || route.path === '/addBusiness');
+const isExcludedPage = computed(() => route.path === '/login');
 
 
-   
+
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const isExcludedPage = computed(() => route.path === '/login' || route.path === 
       <Navbar />
     </div>
     <!-- ===== Header End ===== -->
-    
+
         <!-- ===== Main Content Start ===== -->
         <main>
           <div class=" ">
