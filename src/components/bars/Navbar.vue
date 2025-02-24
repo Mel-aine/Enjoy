@@ -98,8 +98,8 @@
                         <span class="whitespace-nowrap"> {{ $t('navbar.yelpExploreBusiness') }} </span>
                       </router-link>
                     </h3>
-                </template>
-              </CustomDropdown>
+                  </div>
+              <!-- </CustomDropdown> -->
             </div>
             </div>
 
@@ -265,7 +265,7 @@
 
 
     <div id="searchBar" class="relative container justify-center mx-auto px-4 py-50 mt-20">
-      <h class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h>
+      <h1 class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h1>
       <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
     </div>
 
