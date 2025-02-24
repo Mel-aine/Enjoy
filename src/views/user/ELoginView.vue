@@ -16,7 +16,7 @@ const togglePasswordVisibility = () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-center min-h-full py-10 ">
+  <div class="flex items-center justify-center min-h-screen ">
     <!-- Conteneur principal -->
     <div
       class="flex flex-col md:flex-row  bg-white w-full max-w-md sm:max-w-lg md:max-w-5xl p-6 md:p-8 shadow-2xl rounded-lg"
