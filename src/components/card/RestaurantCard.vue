@@ -1,6 +1,6 @@
 
 <template>
-  <div class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden w-full max-w-4xl mx-auto">
+  <div class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden w-full max-w-4xl mx-auto md:w-[550px]">
   <!-- Image / Carousel -->
   <div class="relative w-full md:w-1/2 lg:w-1/3 ">
     <!-- Carousel wrapper -->
@@ -51,15 +51,15 @@
     </div>
 
     <!-- Localisation et horaire -->
-    <div class="flex flex-col sm:flex-row sm:items-center gap-2 text-gray-600 dark:text-gray-400 text-xs md:text-sm">
+    <div class="flex flex-col  sm:flex-row sm:items-center gap-2 text-gray-600 dark:text-gray-400 text-xs md:text-sm">
       <div class="flex items-center text-purple-500 ">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-purple-500 mr-1" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
         </svg>
         <span class="text-xs sm:text-sm truncate md:text-xs ">{{ localisation }} .</span>
       </div>
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between w-full gap-2">
-        <div class="flex items-center gap-2">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between  w-full gap-2">
+        <div class="flex items-center gap-2 ">
           <span class="text-customBlue font-bold text-xs sm:text-sm md:text-xs">FCFA</span>
           <div class="flex items-center text-orange-500">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-orange-500 mr-1" viewBox="0 0 24 24" fill="currentColor">
@@ -80,10 +80,10 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500 mr-2 mt-1" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/>
       </svg>
-      <p class="text-xs flex flex-nowrap md:text-xs text-gray-500 sm:text-sm">{{ description }}</p>
+      <p class="text-xs flex flex-nowrap  md:text-xs text-gray-500 sm:text-sm">{{ description }}</p>
     </div>
       <!-- Bouton -->
-    <div class="flex md:flex-row flex-col lg:flex-wrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5">
+    <div class="flex md:flex-row flex-col md:flex-wrap lg:flex-wrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5">
       <RoundedButton v-for="item in label" :key="item.id" :label="item" />
     </div>
     </div>
