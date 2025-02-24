@@ -18,7 +18,7 @@
 
     <!-- Categories -->
     <FilterSection :title="$t('categorie')">
-      <div class="grid grid-cols-2 gap-2">
+      <div class="grid grid-cols-2 gap-2 space-x-2">
         <RoundedButton v-for="item in mainCategory" :key="item.id" :label="item" />
         <button type="button" @click="isModalOpen = true" class="text-customBlueVariant font-bold hover:underline">{{ $t('see') }}</button>
       </div>
