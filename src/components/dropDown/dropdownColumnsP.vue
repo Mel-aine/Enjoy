@@ -3,7 +3,7 @@
     <div @mouseenter="openDropdown" @mouseleave="closeDropdown">
       <button
         :class="buttonClasses"
-        class="px-4 py-2 rounded-sm"
+        class="px-4 py-2 rounded-sm" 
       >
         <slot name="button">Menu</slot>
         <i class="fa fa-chevron-down text-xs ml-1"></i>
