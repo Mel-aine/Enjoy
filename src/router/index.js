@@ -32,11 +32,20 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: () => import('../views/user/ELoginView.vue'),
+      meta: { hideComponent: true }, 
+
     },
     {
       path: '/addBusiness',
       name: 'addBusiness',
       component: () => import('../views/EAddBusiness.vue'),
+    },
+    {
+      path: '/agency',
+      name: 'agency',
+      component: () => import('../views/services/EAgencyView.vue'),
+      meta: { hideComponent: true },
+
     },
 
   ],

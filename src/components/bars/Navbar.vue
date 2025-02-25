@@ -68,6 +68,8 @@
 
 
 
+
+
   <CustomDropdown :footerDropdown="false"> 
     <template #button>
     <span> {{ $t('navbar.yelpProfessional') }} </span>
@@ -265,50 +267,7 @@
 
 
 
-  <div class="w-full max-w-sm min-w-[800px] relative ml-1">
-    <div class="flex relative justify-start space-x-[383px] mt-2">
-      <span class="ml-1">De</span>
-      <span>À</span>
-    </div>
-    <div class="flex items-center rounded shadow-sm overflow-hidden bg-white p-2 border-2">
-      
-      <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="ml-2 text-gray-500" />
-      <input
-        v-model="leftValue"
-        @mouseenter="activeInput = 'left'"
-        placeholder="Restaurant"
-        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
-      />
-      <div class="relative mx-2 flex items-center justify-center">
-        <div class="h-14 border-l border-slate-300 absolute left-1/2 transform -translate-x-1/2"></div>
-        <BaseIcon name="ArrowLeftRight" size="35" stroke-width="1.7" class="text-gray-600 h-15 bg-white border-2 border-slate-300 rounded-full relative border-l-customRed border-r-customRed z-10 p-1" />
-      </div>
-      <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="text-gray-500 ml-1" />
-      <input
-        v-model="rightValue"
-        @mouseenter="activeInput = 'right'"
-        placeholder="Yaoun"
-        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
-      />
-    </div>
 
-    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class="flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-        <BaseIcon :name="item.icon" size="18" stroke-width="2" />
-        <span class="ml-2">{{ item.label }}</span>
-      </li>
-    </ul>
-
-    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
-      <li class="flex justify-center items-center mt-3">
-        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3" />
-        <span class="text-md text-blue-400">{{ $t('navbar.space') }}</span>
-      </li>
-      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
-        {{ item.label }}
-      </li>
-    </ul>
-  </div>
 
 
 
@@ -335,6 +294,7 @@
   import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
+
 
   const isDropdownVisible = ref(false) ;
   const scrollMenu = ref(null);
@@ -412,6 +372,7 @@ const handleMouseLeave = (input) => {
   activeInput.value = null; // Hide the list when an item is selected
 };
 
+
 // const showLeft = ref(false);
 // const showRight = ref(false);
 
@@ -426,7 +387,7 @@ const handleMouseLeave = (input) => {
 //   if (side === 'left') {
 //     leftValue.value = item;
 //     showLeft.value = false;
-//   } else {
+//   } else 
 //     rightValue.value = item;
 //     showRight.value = false;
 //   }
@@ -545,5 +506,13 @@ const connexion = () =>{
   background-image: url('@/assets/wp7388245-satisfied-wallpapers.jpg');
   background-size: cover;
   background-position: center;
+}
+@keyframes fast-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(-360deg); } /* Une rotation */
+}
+
+.fast-spin {
+  animation: fast-spin 0.4s ease-in-out;
 }
 </style>

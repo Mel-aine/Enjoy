@@ -179,7 +179,7 @@ console.log('category',menuCategory[0].Cards)
 // ];
 
 
-// const footerStore = useFooterStore();
+const footerStore = useFooterStore();
 
 const toggleFooter = () => {
       const newValue = !footerStore.getShowMoreFooter;  // On inverse la valeur
