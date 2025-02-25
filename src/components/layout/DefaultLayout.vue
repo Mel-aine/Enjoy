@@ -2,14 +2,16 @@
 import Navbar from '../bars/Navbar.vue';
 import Footer from '../footer/Footer.vue';
 import { useFooterStore } from '@/stores/footer';
-import {computed} from 'vue'
 const footerStore = useFooterStore();
 
 import { useRoute } from 'vue-router'; // Importer useRoute pour accéder à la route actuelle
+import { computed } from 'vue';
 
-const route = useRoute();
+const $route = useRoute();
+const showNavbar = computed(() => $route.meta.hideComponent);
+const showFooter = computed(() => $route.meta.hideComponent);
 
-const isExcludedPage = computed(() => route.path === '/login');
+
 
 
 
@@ -19,7 +21,8 @@ const isExcludedPage = computed(() => route.path === '/login');
   <!-- ===== Page Wrapper Start ===== -->
   <!-- ===== Header Start ===== -->
   <div class="bg- customNeutreColor">
-    <div v-if="!isExcludedPage">
+    <div v-if="!showNavbar" > <!-- Cache la Navbar sur les routes définies -->
+    >
       <Navbar />
     </div>
     <!-- ===== Header End ===== -->
@@ -33,7 +36,7 @@ const isExcludedPage = computed(() => route.path === '/login');
         <!-- ===== Main Content End ===== -->
   </div>
   <!-- ===== Page Wrapper End ===== -->
-  <div v-if="!isExcludedPage">
+  <div v-if="!showFooter">
    <Footer :showMoreFooter =footerStore.getShowMoreFooter />
   </div>
 </template>
