@@ -237,6 +237,26 @@
   "by_continuing_you_agree_to_Enjoy":" By continuing , you agree to Enjoy",
   "Terms_of_Service": "Terms of Service",	
   "and_acknowledge_our":"and acknowledge our",
-  "Privacy_Policy": "Privacy Policy"
+  "Privacy_Policy": "Privacy Policy",
+  "appServices": {
+    "agency": {
+        "organizeYourTrip":  "Organize your trip",
+        "services":  "Services",
+        "trackATrip":  "Track a trip",
+        "help":  "Help",
+        "busTravel":  "Bus travel at low prices from 3000 FCFA",
+        "manageMyBooking":  "Manage my booking",
+        "followATrip":  "Follow a trip",
+        "oneWay": "One way",
+        "roundTrip": "Round trip",
+        "from": "From",
+        "to": "To",
+        "departure": "Departure",
+        "passengers": "Passengers",
+        "oneAdult": "1 adult",
+        "search": "Search",
+        "today": "Today"
+    }
+  }
 
 }

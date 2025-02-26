@@ -237,5 +237,25 @@
   "by_continuing_you_agree_to_Enjoy":" En continuant, vous acceptez Enjoy",
   "Terms_of_Service": "Des Conditions d'Utilisation",	
   "and_acknowledge_our":"et reconnaissez notre",
-  "Privacy_Policy": "Politique de Confidentialité."
+  "Privacy_Policy": "Politique de Confidentialité.",
+  "appServices": {
+    "agency": {
+        "organizeYourTrip": "Organisez votre voyage",
+        "services": "Services",
+        "trackATrip":  "Suivez un trajet",
+        "help": "Aide",
+        "busTravel":  "Voyage en bus à petit prix à partir de 3000 FCFA",
+        "manageMyBooking":  "Gérer ma réservation",
+        "followATrip":  "Suivre un trajet",
+        "oneWay": "Aller simple",
+        "roundTrip": "Aller et retour",
+        "from": "De",
+        "to": "À",
+        "departure": "Départ",
+        "passengers": "Passagers",
+        "oneAdult": "1 adulte",
+        "search": "Chercher",
+        "today": "Aujourd’hui"
+    }
+  }
 }

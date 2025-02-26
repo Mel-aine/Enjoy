@@ -38,12 +38,16 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, defineEmits } from 'vue'
 import sw from '@/assets/images/united-kingdom_551844.png'
 import cm from '@/assets/images/Flag_of_France.png'
 import { useI18n } from 'vue-i18n'
 import { useLanguageStore } from '@/lang/language'
 const t = useI18n({ useScope: 'global' })
+const emit = defineEmits();
+
+
+
 
 const languages = [
   {
@@ -67,6 +71,7 @@ const setLanguage = (lg) => {
   show.value = !show
   if (lg.code !== t.locale.value) {
     t.locale.value = lg.code
+    emit('changeLang', lg.code);
     useLanguage.set(t.locale.value)
   }
   console.log('useLanguage', useLanguage.locale)
