@@ -54,7 +54,7 @@
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Agency Bus</span>
         </div>
         <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button>
+            <LanguageButton @changeLang="langChanged"/>
             <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
               <span class="sr-only">Open main menu</span>
               <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
@@ -66,19 +66,19 @@
           <ul class="flex flex-col p-3 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
               <template #button>
-                <span class="text-white">{{$t('navbar.restaurant')}}</span>
+                <span class="text-white">{{ $t('appServices.agency.organizeYourTrip') }} </span>
               </template>
             </CustomDropdownD>
             <CustomDropdownD :menuData="menuHouseWork" columnClass="grid-cols-2">
               <template #button>
-                <span class="text-white">{{$t('navbar.homeAndWork')}}</span>
+                <span class="text-white">{{ $t('appServices.agency.services') }}</span>
               </template>
             </CustomDropdownD>
             <router-link class="px-3 py-5">
-              <span class="block text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</span>
+              <span class="block text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{ $t('appServices.agency.trackATrip') }}</span>
             </router-link>
             <router-link class="px-3 py-5">
-              <span class="block  text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</span>
+              <span class="block  text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{ $t('appServices.agency.help') }}</span>
             </router-link>
           </ul>
         </div>
@@ -87,154 +87,179 @@
 
     </div>
     <div class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
+      <!-- ✅ Checkbox caché pour gérer l'affichage -->
+      <input type="checkbox" id="toggle-passager" class="peer hidden">
+
+      <!-- ✅ Overlay sombre qui met en avant la div principale et la modale -->
+      <label for="toggle-passager" class="fixed inset-0 bg-black opacity-50 hidden peer-checked:block"></label>
+
+      <!-- ✅ Modale pour configurer les passagers -->
+      <div id="modalPassager" class="absolute left-[1115px] top-[495px] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-96 hidden peer-checked:block">
+          <Counter>Adulte(s)</Counter>
+          <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+          <Counter>Nombre d'enfant(s)</Counter>
+          <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+      </div>
+
+<!-- ✅ Ton code existant SANS MODIFICATION -->
       <div class="absolute inset-0 bg-black opacity-50"></div> 
 
-      <!-- Div centrée et superposée à moitié sur l'image -->
-      <div class="absolute -top-8 transform translate-x-60 translate-y-40 max-w-screen-lg p-4">
-      <span class="text-4xl text-white font-medium"> Voyage en bus à petit prix à partir de 3000 FCFA.</span>
-    </div>
-  <div class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-lg p-4 shadow-lg">
-    <div class="flex space-x-4 mx-auto px-4 py-4 rounded-md">
-      <label
-        for="aller-simple"
-        class="font-medium relative hover:bg-zinc-100 flex items-center px-3 gap-2 rounded-lg has-[:checked]:text-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-blue-300 has-[:checked]:ring-1 select-none"
-      >
-        <input
-          type="radio"
-          name="status"
-          id="aller-simple"
-          checked
-          class="w-4 h-4 accent-blue-500"
-        />
-        Aller simple
-      </label>
-
-      <label
-        for="aller-retour"
-        class="font-medium relative hover:bg-zinc-100 flex items-center px-3 gap-2 rounded-lg has-[:checked]:text-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-blue-300 has-[:checked]:ring-1 select-none"
-      >
-        <input
-          type="radio"
-          name="status"
-          id="aller-retour"
-          class="w-4 h-4 accent-blue-500"
-        />
-        Aller et retour
-      </label>
-    </div>
-
-    <div class="flex items-center justify-between w-full"> <!-- Aligns search and date horizontally -->
-
-    <!-- Search Section -->
-    <div id="search" class="w-full max-w-sm min-w-[440px] relative ">
-      <div class="flex relative justify-start space-x-[201px] mt-2">
-        <span class="ml-1 font-medium ">De</span>
-        <span class="font-medium">À</span>
+<!-- Div centrée et superposée à moitié sur l'image -->
+      <div class="absolute top-[100px] left-1/2 transform -translate-x-1/2 translate-y-1/3 rounded-sm max-w-screen-lg mt-6 w-full">
+        <span class="text-4xl text-white font-medium">{{ $t('appServices.agency.busTravel') }}</span>
       </div>
 
-      <div class="flex items-center rounded overflow-hidden bg-white p-1 border-2">
-        <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="ml-2 text-gray-500" />
-        <input
-          v-model="leftValue"
-          @mouseenter="activeInput = 'left'"
-          class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none "
-        />
-        <div class="relative mx-2 flex items-center justify-center">
-          <div class="h-14 border-l border-slate-300 absolute left-1/2 transform -translate-x-1/2"></div>
-          <button @click="switchData" class="transition-transform duration-500 ease-in-out" :class="{'fast-spin': isSwitching}">
-            <BaseIcon name="ArrowLeftRight" size="35" stroke-width="1.7" class="text-gray-600 h-15 bg-white border-2 border-slate-300 rounded-full relative border-l-customRed border-r-customRed z-10 p-1" />
-          </button>
-        </div>
-        <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="text-gray-500 ml-1" />
-        <input
-          v-model="rightValue"
-          @mouseenter="activeInput = 'right'"
-          class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
-        />
-      </div>
+      <!-- ✅ Ajout de la classe peer-checked pour mettre en avant la div -->
+      <div id="maDivPrincipale" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-lg p-4 shadow-lg 
+                  transition-all peer-checked:shadow-2xl peer-checked:scale-105 peer-checked:bg-white">
 
-      <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-        <li v-for="item in menuData" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class="flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
-          <span class="ml-2">{{ item.label }}</span>
-        </li>
-      </ul>
-
-      <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
-        <li class="flex justify-center items-center mt-3"></li>
-        <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
-          {{ item.label }}
-        </li>
-      </ul>
-    </div>
-
-    <!-- Date Section -->
-    <div id="date" class="flex flex-col p-1 ml-1">
-      <label class="font-semibold py-1">Départ</label>
-      <div class="relative">
-        <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-        <input
-          ref="datepicker"
-          v-model="formattedDate"
-          class="border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500"
-          type="text"
-          placeholder="Sélectionner une date"
-        />
-      </div>
-    </div>
-    <div id="date" class="flex flex-col p-1"> <!-- Added margin-left to create space between search and date -->
-      <label class="font-semibold py-1">Passagers</label>
-      <input
-        class="border-2 border-gray-300 rounded px-3 py-3 w-56 focus:ring-2 focus:ring-blue-500"
-        type="text"
-        placeholder="1 adulte"
-      />
-    </div>
-    <div class="p-1">
-      <button class="bg-customRed text-white  h-[50px] py-2 px-2 rounded mt-8">Chercher</button>
-
-    </div>
-
+                  <div class="flex space-x-4 mx-auto px-4 py-4 rounded-md w-full">
+          <label
+            for="aller-simple"
+            class="font-medium relative hover:bg-zinc-100 flex items-center px-3 gap-2 rounded-lg has-[:checked]:text-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-blue-300 has-[:checked]:ring-1 select-none"
+          >
+            <input
+              type="radio"
+              name="status"
+              id="aller-simple"
+              checked
+              class="w-4 h-4 accent-blue-500"
+            />
+            {{ $t('appServices.agency.oneWay') }}         
+           </label>
     
+          <label
+            for="aller-retour"
+            class="font-medium relative hover:bg-zinc-100 flex items-center px-3 gap-2 rounded-lg has-[:checked]:text-blue-500 has-[:checked]:bg-blue-50 has-[:checked]:ring-blue-300 has-[:checked]:ring-1 select-none"
+          >
+            <input
+              type="radio"
+              name="status"
+              id="aller-retour"
+              class="w-4 h-4 accent-blue-500"
+            />
+            {{ $t('appServices.agency.roundTrip') }}          </label>
+        </div>
+
+        <div class="flex items-center justify-between " :class="lChange ? 'px-2' : ''"> <!-- Aligns search and date horizontally -->
+   
+        <!-- Search Section -->
+        <div id="search" class="w-full max-w-sm min-w-[440px] relative ">
+          <div class="flex relative justify-start space-x-[201px] mt-2">
+            <span class="ml-1 font-medium ">{{ $t('appServices.agency.from') }}</span>
+            <span class="font-medium">{{ $t('appServices.agency.to') }}</span>
+          </div>
+    
+          <div class="flex items-center rounded overflow-hidden bg-white p-1 border-2">
+            <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="ml-2 text-gray-500" />
+            <input
+              v-model="leftValue"
+              @mouseenter="activeInput = 'left'"
+              class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none "
+            />
+            <div class="relative mx-2 flex items-center justify-center">
+              <div class="h-14 border-l border-slate-300 absolute left-1/2 transform -translate-x-1/2"></div>
+              <button @click="switchData" class="transition-transform duration-500 ease-in-out" :class="{'fast-spin': isSwitching}">
+                <BaseIcon name="ArrowLeftRight" size="35" stroke-width="1.7" class="text-gray-600 h-15 bg-white border-2 border-slate-300 rounded-full relative border-l-customRed border-r-customRed z-10 p-1" />
+              </button>
+            </div>
+            <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="text-gray-500 ml-1" />
+            <input
+              v-model="rightValue"
+              @mouseenter="activeInput = 'right'"
+              class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+            />
+          </div>
+    
+          <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+            <li v-for="item in menuData" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class="flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+              <span class="ml-2">{{ item.label }}</span>
+            </li>
+          </ul>
+    
+          <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
+            <li class="flex justify-center items-center mt-3"></li>
+            <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+              {{ item.label }}
+            </li>
+          </ul>
+        </div>
+
+
+          <div id="date" class="flex flex-col p-1 ml-1">
+          <label class="font-semibold py-1">{{ $t('appServices.agency.departure') }}</label>
+          <div class="relative">
+            <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <input
+              ref="datepicker"
+              v-model="formattedDate"
+              class="border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500"
+              type="text"
+              placeholder="Sélectionner une date"
+            />
+          </div>
+        </div>                  
+        <div class="flex items-center justify-between w-full">
+          <div id="date" class="flex flex-col p-1 relative">
+            
+            <label class="font-semibold py-1">{{ $t('appServices.agency.passengers') }}</label>
+            <label for="toggle-passager" class="border-2 border-gray-300 rounded px-3 py-3 w-56 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between">
+              <span class="text-gray-600">{{ $t('appServices.agency.oneAdult') }}</span>
+              <!-- Chevron down icon added here -->
+              <svg class="w-4 h-4 text-gray-600 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </label>
+          </div>
+          <div class="p-1">
+            <button class="bg-customRed text-white h-[50px] py-2 px-2 rounded mt-8">{{ $t('appServices.agency.search') }}</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    </div>
 
-      <div class="p-40"></div>
+    <div class="p-40"></div>
       
     </div>
     <div class="p-7 ">
     </div>
-    <div class="absolute z-0 left-1/2 transform -translate-x-1/2 translate-y-1/3 rounded-sm max-w-screen-lg mt-6 w-full">
-      <div class="flex justify-between space-x-4 w-full z-0">
-        <button class="flex items-center justify-center w-full max-w-xs py-3 z-0 bg-white text-gray-500 border border-gray-300 rounded  ">
+    <div class="absolute  left-1/2 transform -translate-x-1/2 translate-y-1/3 rounded-sm max-w-screen-lg mt-6 w-full">
+      <div class="flex justify-between space-x-4 w-full ">
+        <button class="flex items-center justify-center w-full max-w-xs py-3  bg-white text-gray-500 border border-gray-300 rounded  ">
           <BaseIcon name="TicketCheck" size="20" stroke-width="1.7" class="mr-2" />
-          Gérer ma réservation
+          {{ $t('appServices.agency.manageMyBooking') }}
         </button>
         
-        <button class="flex items-center justify-center w-full max-w-xs px-5 py-3 z-0 bg-white text-gray-500 border-gray-300 border rounded  ">
+        <button class="flex items-center justify-center w-full max-w-xs px-5 py-3  bg-white text-gray-500 border-gray-300 border rounded  ">
           <BaseIcon name="Bus" size="20" stroke-width="1.7" class="mr-2" />
-          Suivre un trajet
+          {{ $t('appServices.agency.followATrip') }}
         </button>
         
-        <button class="flex items-center justify-center w-full max-w-xs px-5 py-3 z-0 bg-white text-gray-500 border-gray-300 border rounded  ">
+        <button class="flex items-center justify-center w-full max-w-xs px-5 py-3  bg-white text-gray-500 border-gray-300 border rounded  ">
           <BaseIcon name="HelpCircle" size="20" stroke-width="1.7" class="mr-2" />
-          Aide
+          {{ $t('appServices.agency.help') }}
         </button>
       </div>
     </div>
-
-
 
     <div >
 
     </div>
 
+<div class="w-[800px]">
+
+</div>
 
 
 
 
 
-  
+
+
+<div>
+</div>
+
 
 
 
@@ -249,9 +274,12 @@
   <script setup>
   import { ref, onMounted, onUnmounted, computed } from 'vue';
   import backgroundImage from '@/assets/bg-bus.jpg';
+  import LanguageButton from '@/components/buttons/LanguageButton.vue';
   import flatpickr from 'flatpickr';
   import 'flatpickr/dist/flatpickr.min.css';
-  import { French } from 'flatpickr/dist/l10n/fr.js';
+  import { French,English } from 'flatpickr/dist/l10n/fr.js';
+  import Counter from '@/components/counter/Counter.vue'
+
 
 
 
@@ -265,33 +293,46 @@
   import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
-
+const lChange = ref(false);
 const isSwitching = ref(false);
-const formattedDate = ref("");
-  const isDropdownVisible = ref(false) ;
-  const scrollMenu = ref(null);
+const isDropdownVisible = ref(false) ;
+const scrollMenu = ref(null);
 const showLeftButton = ref(false);
 const showRightButton = ref(false);
+
 const datepicker = ref(null);
+const formattedDate = ref('');
+const currentLanguage = ref('en');
 
-onMounted(() => {
-  const today = new Date();
-  formattedDate.value = formatDate(today); // Définit la date du jour au format souhaité
 
+
+const formatDate = (date) => {
+  const options = { day: '2-digit', month: 'short' };
+  return `${t('appServices.agency.today')}, ${new Intl.DateTimeFormat(currentLanguage.value, options).format(date)}`;
+};
+
+const langChanged = (lang) => {
+  currentLanguage.value = lang;
+  lChange.value = !lChange.value;
+  // Mettre à jour la locale de Flatpickr
   flatpickr(datepicker.value, {
-    locale: French,
+    locale: lang === 'en' ?  English : French,
     dateFormat: "d M Y",
     minDate: "today",
     onChange: (selectedDates) => {
       formattedDate.value = formatDate(selectedDates[0]);
     },
   });
+
+  // Mettre à jour la date formatée pour aujourd'hui
+  const today = new Date();
+  formattedDate.value = formatDate(today);
+};
+
+onMounted(() => {
+  langChanged('en'); // Initialiser avec le français au premier chargement
 });
 
-const formatDate = (date) => {
-  const options = { day: '2-digit', month: 'short' };
-  return `Aujourd’hui, ${new Intl.DateTimeFormat('fr-FR', options).format(date)}`;
-};
 
 const checkScrollButtonsVisibility = () => {
   if (!scrollMenu.value) return;
@@ -432,5 +473,11 @@ const menuData  = computed(() =>[
 
 .fast-spin {
   animation: fast-spin 0.4s ease-in-out;
+}
+
+/* ✅ Met les deux divs au premier plan */
+#maDivPrincipale, #modalPassager {
+  z-index: 50 !important; /* Passe au-dessus de tout */
+
 }
 </style>
