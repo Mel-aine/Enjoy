@@ -42,7 +42,7 @@ const seats = ref({
         { id: 3, number: '31', type: 'seat', available: true },
         { id: 4, number: '32', type: 'seat', available: true },
         { id: 5, number: '33', type: 'seat', available: false },
-        { id: 2, number: 'Couloir', type: 'Couloir', available: false, size: 7 },
+        { id: 2, number: 'Couloir', type: 'Couloir', available: false, size: 6 },
         { id: 6, number: '34', type: 'seat', available: true },
         { id: 3, number: '35', type: 'seat', available: true },
         { id: 7, number: '36', type: 'seat', available: true },
