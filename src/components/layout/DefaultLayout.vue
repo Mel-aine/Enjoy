@@ -22,7 +22,6 @@ const showFooter = computed(() => $route.meta.hideComponent);
   <!-- ===== Header Start ===== -->
   <div class="bg- customNeutreColor">
     <div v-if="!showNavbar" > <!-- Cache la Navbar sur les routes définies -->
-    >
       <Navbar />
     </div>
     <!-- ===== Header End ===== -->

@@ -258,7 +258,64 @@
       
     
     
+
+
+
+
+      <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-40 md:hidden" @click.self="toggleSidebar">
+        <div class="absolute transform h-full bg-customBlue shadow-lg p-4 transition-transform "
+            :class="{'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen}">
+
+          <div class="flex flex-col space-y-6 mt-10">
+            
+          </div>
+        </div>
+      </div>
     
+
+
+
+
+      <div id="search" class="w-full max-w-sm sm:min-w-[240px] md:min-w-[340px] lg:min-w-[440px] relative ">
+            <div :class="langChange ? 'flex relative justify-start  space-x-[112px] lg:space-x-[180px] mt-2 px-2' : 'flex relative justify-start  space-x-[140px] lg:space-x-[202px] mt-2'">
+              <span class="ml-1 font-medium ">{{ $t('appServices.agency.from') }}</span>
+              <span class="font-medium">{{ $t('appServices.agency.to') }}</span>
+            </div>
+      
+            <div class="flex items-center rounded overflow-hidden bg-white p-1 border-2">
+              <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="ml-2 text-gray-500" />
+              <input
+                v-model="leftValue"
+                @mouseenter="activeInput = 'left'"
+                class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none "
+              />
+              <div class="relative mx-2 flex items-center justify-center">
+                <div class="h-14 border-l border-slate-300 absolute left-1/2 transform -translate-x-1/2"></div>
+                <button @click="switchData" class="transition-transform duration-500 ease-in-out" :class="{'fast-spin': isSwitching}">
+                  <BaseIcon name="ArrowLeftRight" size="35" stroke-width="1.7" class="text-gray-600 h-15 bg-white border-2 border-slate-300 rounded-full relative border-l-customRed border-r-customRed z-10 p-1" />
+                </button>
+              </div>
+              <BaseIcon name="MapPin" size="30" stroke-width="1.7" class="text-gray-500 ml-1" />
+              <input
+                v-model="rightValue"
+                @mouseenter="activeInput = 'right'"
+                class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+              />
+            </div>
+      
+            <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+              <li v-for="item in menuData" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class="flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+                <span class="ml-2">{{ item.label }}</span>
+              </li>
+            </ul>
+      
+            <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
+              <li class="flex justify-center items-center mt-3"></li>
+              <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+                {{ item.label }}
+              </li>
+            </ul>
+          </div>
     
     
     
