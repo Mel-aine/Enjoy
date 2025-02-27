@@ -9,7 +9,7 @@ import { useRoute } from 'vue-router'; // Importer useRoute pour accéder à la 
 
 const route = useRoute();
 
-const isExcludedPage = computed(() => route.path === '/login');
+const isExcludedPage = computed(() => route.path === '/login' );
 
 
 
