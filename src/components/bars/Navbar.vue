@@ -23,72 +23,63 @@
 
 
             <div class="w-full max-w-sm min-w-[200px] relative ml-1">
-    <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-      <input
-        v-model="leftValue"
-        @mouseenter="activeInput = 'left'"
-        placeholder="Restaurant"
-        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
-      />
-      <div class="h-6 border-l border-slate-200 ml-1"></div>
-      <input
-        v-model="rightValue"
-        @mouseenter="activeInput = 'right'"
-        placeholder="Yaoun"
-        class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
-      />
-      <router-link to="/recherche">
-        <button class="bg-customRed px-4 py-3 text-white ml-2">
-          <BaseIcon name="Search" size="20" stroke-width="2" />
-        </button>
-      </router-link>
+              <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
+                <input
+                  v-model="leftValue"
+                  @mouseenter="activeInput = 'left'"
+                  placeholder="Restaurant"
+                  class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+                />
+                <div class="h-6 border-l border-slate-200 ml-1"></div>
+                <input
+                  v-model="rightValue"
+                  @mouseenter="activeInput = 'right'"
+                  placeholder="Yaoun"
+                  class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
+                />
+                <router-link to="/recherche">
+                  <button class="bg-customRed px-4 py-3 text-white ml-2">
+                    <BaseIcon name="Search" size="20" stroke-width="2" />
+                  </button>
+                </router-link>
 
               </div>
 
-    <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
-      <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
-        <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
-        <span class="ml-2">
-          {{ item.label }}
-        </span>
-      </li>
-    </ul>
+                <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
+                  <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
+                    <BaseIcon  :name="item.icon" size="18" stroke-width="2"></BaseIcon>
+                    <span class="ml-2">
+                      {{ item.label }}
+                    </span>
+                  </li>
+                </ul>
 
-    <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
-      <li class="flex justify-center items-center mt-3">
-        <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/>
-        <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span>
-      </li>
-      <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
-        {{ item.label }}
-      </li>
-    </ul>
-  </div>
+                <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
+                  <li class="flex justify-center items-center mt-3">
+                    <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3"/>
+                    <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span>
+                  </li>
+                  <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
+                    {{ item.label }}
+                  </li>
+                </ul>
+              </div>
 
-
-
-
-
-
-  <CustomDropdown :footerDropdown="false"> 
-    <template #button>
-    <span> {{ $t('navbar.yelpProfessional') }} </span>
-    </template>
-    <template #content>
-      <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
-        <h3 class="text-lg font-semibold text-gray-800 mt-2">
-          <router-link :to="itemY.route" class=" flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
-            <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
-            <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
-          </router-link>
-        </h3>
-      </div>
-    </template>
-  </CustomDropdown>
-
-
-
-
+              <CustomDropdown :footerDropdown="false"> 
+                <template #button>
+                <span> {{ $t('navbar.yelpProfessional') }} </span>
+                </template>
+                <template #content>
+                  <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
+                    <h3 class="text-lg font-semibold text-gray-800 mt-2">
+                      <router-link :to="itemY.route" class=" flex justify-start item-center text-sm text-customRed hover:text-gray-900">
+                        <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                        <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap"> {{ itemY.label }}</span>
+                      </router-link>
+                    </h3>
+                  </div>
+                </template>
+              </CustomDropdown>
 
             <router-link to="/comunity"
               class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
@@ -141,7 +132,7 @@
               <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-x-2 gap-y-2 p-3">
                 <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
                   <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                    <router-link :to="itemY.route" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+                    <router-link :to="itemY.route" class="flex justify-start item-center text-sm text-customRed hover:text-gray-900">
                       <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
                       <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{ itemY.label }}</span>
                     </router-link>
@@ -150,7 +141,7 @@
                 <div class="border-b-2 rounded-full border-gray-300 w-full"></div>
 
             <h3 class="text-lg font-semibold text-gray-800 mt-3">
-              <router-link to="" class="flex justify-start item-center block text-sm text-customRed hover:text-gray-900">
+              <router-link to="" class="flex justify-start item-center text-sm text-customRed hover:text-gray-900">
                 <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
                 <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{$t('navbar.yelpExploreBusiness')}}</span>
               </router-link>
@@ -176,11 +167,11 @@
       </div>
     </div>
 
-<div id="menuToggle" class="container relative block md:hidden">
-  <button @click="resetSearchBar" class="relative block md:hidden">
-      <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
-  </button>
-</div>
+    <div id="menuToggle" class="container relative block md:hidden">
+      <button @click="resetSearchBar" class="relative block md:hidden">
+          <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
+      </button>
+    </div>
     <div id="menuToggle" class="container relative block md:hidden">
       <div class="w-full max-w-sm min-w-[200px] relative ml-4">
         <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
@@ -247,7 +238,6 @@
       </CustomDropdownD>
     </div>
 
-
     <div id="searchBar" class=" z-10 container justify-center mx-auto px-4 py-50 mt-20">
       <h1 class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart1')}}</h1>
       <p class="text-6xl text-white font-medium font-popins">{{$t('navbar.descriptionStartPart2')}}</p>
@@ -258,24 +248,6 @@
       <p class="text-xl text-white font-medium font-popins">{{$t('navbar.descriptionEndPart2')}}</p>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </template>
 
@@ -288,8 +260,7 @@
 
   // import FloatingInput from '../input/FloatingInput.vue';
   import BaseIcon from '../icons/BaseIcon.vue';
-  import { useRouter } from 'vue-router';
-  import DropDown from '../dropDown/DropDown.vue';
+  // import { useRouter } from 'vue-router';
   import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
   import { useI18n } from 'vue-i18n';
 
@@ -300,7 +271,7 @@
   const scrollMenu = ref(null);
 const showLeftButton = ref(false);
 const showRightButton = ref(false);
-const router = useRouter();
+// const router = useRouter();
 const isSidebarOpen = ref(false);
 
 const toggleSidebar = () => {
@@ -483,10 +454,10 @@ const menuYelp = computed(() => [
 
 ]);
 
-const connexion = () =>{
+// const connexion = () =>{
   // Redirect to login page
-  router.push('/login');
-}
+//   router.push('/login');
+// }
 
   </script>
 
