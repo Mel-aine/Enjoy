@@ -62,15 +62,56 @@
           <!-- sidebar mobile start -->
 
 
-          <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-99 md:hidden" @click.self="toggleSidebar">
-            <div class="absolute transform h-full bg-customBlue shadow-lg p-4 transition-transform "
+          <div v-if="isSidebarOpen" class="absolute inset-0 space-x-10 bg-black bg-opacity-50 z-[999] md:hidden" @click.self="toggleSidebar">
+            <div class="absolute transform h-full bg-customBlue shadow-lg p-4 transition-transform w-[66.666%]" 
                 :class="{'translate-x-0': isSidebarOpen, 'translate-x-full': !isSidebarOpen}">
 
               <div class="flex flex-col space-y-6 mt-10">
-                
+                <!-- Contenu de la sidebar -->
+
+                <div class="flex flex-col items-center justify-between w-full md:w-auto md:order-1" id="navbar-sticky">
+                  <ul class="flex flex-col p-1 md:p-0 mt-4 font-medium  
+                            md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  
+                            dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+
+                    <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
+                      <template #button>
+                        <span class="text-white">{{ $t('appServices.agency.organizeYourTrip') }} </span>
+                      </template>
+                    </CustomDropdownD>
+
+                    <CustomDropdownD :menuData="menuHouseWork" columnClass="grid-cols-2">
+                      <template #button>
+                        <span class="text-white">{{ $t('appServices.agency.services') }}</span>
+                      </template>
+                    </CustomDropdownD>
+
+                    <router-link class="px-5 py-5">
+                      <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
+                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:dark:hover:bg-transparent dark:border-gray-700">
+                        {{ $t('appServices.agency.trackATrip') }}
+                      </span>
+                    </router-link>
+
+                    <router-link class="px-6 py-5">
+                      <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
+                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:dark:hover:bg-transparent dark:border-gray-700">
+                        {{ $t('appServices.agency.help') }}
+                      </span>
+                    </router-link>
+
+                  </ul>
+                </div>
+
               </div>
             </div>
           </div>
+
+
 
 
           <!-- sidebar mobile start -->
@@ -87,7 +128,7 @@
           <ul class="flex flex-col p-3 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
               <template #button>
-                <span class="text-white">{{ $t('appServices.agency.organizeYourTrip') }} </span>
+                <span class="text-white">{{ $t('appServices.agency.organizeYourTrip') }}</span>
               </template>
             </CustomDropdownD>
             <CustomDropdownD :menuData="menuHouseWork" columnClass="grid-cols-2">
@@ -115,12 +156,27 @@
       <label for="toggle-passager" class="fixed inset-0 bg-black opacity-50 z-50 hidden peer-checked:block"></label>
 
       <!-- ✅ Modale pour configurer les passagers -->
-      <div id="modalPassager" class="absolute left-[1115px] top-[495px] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-96 hidden peer-checked:block">
-          <Counter>Adulte(s)</Counter>
+      <div v-if="!isSmallScreen" id="modalPassager" class="absolute left-[1250px] top-[495px] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-96 hidden peer-checked:block">
+          <Counter v-model="adults">{{ $t('appServices.agency.oneAdult')}}</Counter>
           <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
-          <Counter>Nombre d'enfant(s)</Counter>
+          <Counter v-model="children">{{ $t('appServices.agency.children') }}</Counter>
           <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
       </div>
+
+    <!-- ✅ Modale pour configurer les passagers end -->
+
+      <!-- Modale pour configurer les passagers mobile start -->
+
+      <div v-if="isSmallScreen" id="modalPassager" class="absolute left-[208px] top-[600px] transform -translate-x-1/2 -translate-y-1/3 bg-white rounded-lg shadow-xl p-6 w-screen-sm hidden peer-checked:block">
+          <Counter v-model="adults" >{{ $t('appServices.agency.oneAdult') }}</Counter>
+          <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+          <Counter v-model="children">{{ $t('appServices.agency.children') }}</Counter>
+          <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+      </div>
+
+      <!-- Modale pour configurer les passagers mobile end -->
+
+
 
 <!-- ✅ Ton code existant SANS MODIFICATION -->
       <div class="absolute inset-0 bg-black opacity-50"></div> 
@@ -196,13 +252,13 @@
               />
             </div>
       
-            <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+            <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'" @mouseleave="handleMouseLeave('left')" class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 h-64 overflow-x-auto scrollbar-hide">
               <li v-for="item in menuData" :key="item" @mouseenter="leftValue = item.label" @click="selectItem('left', item.label)" class="flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
                 <span class="ml-2">{{ item.label }}</span>
               </li>
             </ul>
       
-            <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
+            <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'" @mouseleave="handleMouseLeave('right')" class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 h-64 overflow-x-auto scrollbar-hide">
               <li class="flex justify-center items-center mt-3"></li>
               <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label" @click="selectItem('right', item.label)" class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
                 {{ item.label }}
@@ -210,28 +266,31 @@
             </ul>
           </div>
           <div :class="picked === 'aller-retour' ? 'lg:flex justify-center' : ''">
-            <div id="date" class="flex flex-col p-1 ml-1">
+            <div class="flex flex-col p-1 ml-1">
             <label class="font-semibold py-1">{{ $t('appServices.agency.departure') }}</label>
             <div class="relative ">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input
-                ref="datepicker"
-                v-model="formattedDate"
-                :class="picked === 'aller-retour' ? 'border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500' : 'border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-[450px] focus:ring-2 focus:ring-blue-500'"
+              ref="datepickerAller"
+              id="dateAller"
+              v-model="formattedDateAller"
+                :class="picked === 'aller-retour' ? 'datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500  md:min-w-56 lg:w-56' : 'datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 md:min-w-56 lg:w-[445px] focus:ring-2 focus:ring-blue-500'"
                 type="text"
                 placeholder="Sélectionner une date"
               />
             </div>
           </div>     
           
-          <div v-if="picked=='aller-retour'" id="date" class="flex flex-col p-1">
-            <label class="font-semibold py-1">Arriver</label>
+          <div :class="picked === 'aller-retour' ? '' : 'hidden'"
+          class="flex flex-col p-1">
+            <label class="font-semibold py-1">{{ $t('appServices.agency.return')  }}</label>
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input
-                ref="datepicker"
-                v-model="formattedDate"
-                class="border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500"
+                ref="datepickerRetour"
+                id="dateRetour"
+                v-model="formattedDateRetour"
+                class="datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-60 focus:ring-2 focus:ring-blue-500  md:w-56 xl:w-56"
                 type="text"
                 placeholder="Sélectionner une date"
               />
@@ -239,13 +298,14 @@
           </div> 
         </div>
         <div class="flex items-center justify-between w-full">
-          <div id="date" class="flex flex-col p-1 relative">
+          <div class="flex flex-col p-1 relative"             :class="picked === 'aller-retour' ? '' : 'm:ml-1'"
+          >
             
             <label class="font-semibold py-1">{{ $t('appServices.agency.passengers') }}</label>
             <label for="toggle-passager" 
-            :class="picked === 'aller-retour' ? 'border-2 border-gray-300 rounded px-3 py-3 w-56 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between' : 'border-2 border-gray-300 rounded px-3 py-3 w-60 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between'"
+            :class="picked === 'aller-retour' ? 'border-2 border-gray-300 rounded px-3 py-3 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between w-60 md:min-w-56 lg:w-56' : 'border-2 border-gray-300 rounded px-3 py-3 w-60 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between'"
               >
-              <span class="text-gray-600">{{ $t('appServices.agency.oneAdult') }}</span>
+              <span class="text-gray-600">{{ adults }}{{ $t('appServices.agency.oneAdult') }} , {{ children }} {{ $t('appServices.agency.children')  }} </span>
               <!-- Chevron down icon added here -->
               <svg class="w-4 h-4 text-gray-600 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -255,7 +315,7 @@
         </div>
         <div class="p-1">
             <button
-            :class="picked === 'aller-retour' ? 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8' : 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8'"
+            :class="picked === 'aller-retour' ? 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8 ' : 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8'"
             >{{ $t('appServices.agency.search') }}</button>
           </div>
 
@@ -319,11 +379,14 @@ const scrollMenu = ref(null);
 const showLeftButton = ref(false);
 const showRightButton = ref(false);
 
-const datepicker = ref(null);
-const formattedDate = ref('');
+const formattedDateAller = ref('');
+const formattedDateRetour = ref('');
+
 const currentLanguage = ref('en');
 const isSidebarOpen = ref(false);
 const picked = ref('aller-simple');
+const adults = ref(1);
+const children = ref(0);
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -334,33 +397,28 @@ const formatDate = (date) => {
   return `${t('appServices.agency.today')}, ${new Intl.DateTimeFormat(currentLanguage.value, options).format(date)}`;
 };
 
+
 const langChanged = (lang) => {
   currentLanguage.value = lang;
   langChange.value = !langChange.value;
   // Mettre à jour la locale de Flatpickr
-  flatpickr(datepicker.value, {
+  flatpickr(".datepicker", {
     locale: lang === 'en' ?  English : French,
     dateFormat: "d M Y",
     minDate: "today",
     onChange: (selectedDates) => {
-      formattedDate.value = formatDate(selectedDates[0]);
+      formattedDateAller.value = formatDate(selectedDates[0]);
     },
   });
-  // flatpickr(datepicker.value, {
-  //   locale: lang === 'en' ?  English : French,
-  //   dateFormat: "d M Y",
-  //   minDate: "today",
-  //   onChange: (selectedDates) => {
-  //     formattedDate.value = formatDate(selectedDates[0]);
-  //   },
-  // });
-
-  // Mettre à jour la date formatée pour aujourd'hui
+  
   const today = new Date();
-  formattedDate.value = formatDate(today);
+  formattedDateAller.value = formatDate(today);
+  formattedDateRetour.value = formatDate(today);
+
 };
 
 onMounted(() => {
+  
   langChanged('en'); // Initialiser avec le français au premier chargement
 });
 
@@ -429,7 +487,13 @@ const switchData = () => {
   setTimeout(() => {
     [leftValue.value, rightValue.value] = [rightValue.value, leftValue.value];
     isSwitching.value = false;
-  }, 400);}
+  }, 400);
+}
+const isSmallScreen = ref(window.innerWidth < 1024);
+
+const updateScreenSize = () => {
+  isSmallScreen.value = window.innerWidth < 1024;
+};
 // const showLeft = ref(false);
 // const showRight = ref(false);
 
@@ -455,10 +519,15 @@ onMounted(() => {
   document.addEventListener('click', handleClickOutside);
   // Re-check when the window resizes (for responsiveness)
   window.addEventListener('resize', checkScrollButtonsVisibility);
+  window.addEventListener('resize', updateScreenSize);
+
 });
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside);
+  window.removeEventListener('resize', updateScreenSize);
+
 });
+
 
 const { t } = useI18n();
 
