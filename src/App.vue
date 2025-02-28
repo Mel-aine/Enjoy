@@ -4,6 +4,7 @@
 import { useI18n } from "vue-i18n";
 import { useLanguageStore } from './lang/language';
 import DefaultLayout from './components/layout/DefaultLayout.vue';
+import HomeTravel from "./components/Travels/HomeTravel.vue";
 const useLanguage = useLanguageStore();
 const t = useI18n({ useScope: "global" });
 // import Navbar from '@/components/bars/Navbar.vue';
@@ -30,7 +31,7 @@ if (useLanguage.language) {
     <DefaultLayout>
       <RouterView />
     </DefaultLayout>
-  
+  <HomeTravel />
 </template>
 
 
