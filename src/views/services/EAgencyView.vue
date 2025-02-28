@@ -226,7 +226,7 @@
    
         <!-- Search Section -->
           <div id="search" :class="picked === 'aller-retour' ? 'w-full max-w-sm sm:min-w-[240px] md:min-w-[340px] lg:min-w-[460px] relative' : 'w-full max-w-sm sm:min-w-[240px] md:min-w-[340px] lg:min-w-[460px] relative '">
-            <div :class="langChange ? 'flex relative justify-start  space-x-[112px] lg:space-x-[180px] mt-2 px-2' : 'flex relative justify-start  space-x-[140px] lg:space-x-[202px] mt-2'">
+            <div :class="langChange ? 'flex relative justify-start  space-x-[80px] lg:space-x-[180px] mt-2 px-2' : 'flex relative justify-start  space-x-[80px] lg:space-x-[202px] mt-2'">
               <span class="ml-1 font-medium ">{{ $t('appServices.agency.from') }}</span>
               <span class="font-medium">{{ $t('appServices.agency.to') }}</span>
             </div>
