@@ -6,10 +6,12 @@ const footerStore = useFooterStore();
 
 import { useRoute } from 'vue-router'; // Importer useRoute pour accéder à la route actuelle
 import { computed } from 'vue';
+import EHHeaderView from '@/views/home/EHHeaderView.vue';
 
 const $route = useRoute();
 const showNavbar = computed(() => $route.meta.hideComponent);
 const showFooter = computed(() => $route.meta.hideComponent);
+const showHeader2 = computed(() => $route.meta.showHeader2);
 
 
 
@@ -24,6 +26,7 @@ const showFooter = computed(() => $route.meta.hideComponent);
     <div v-if="!showNavbar" > <!-- Cache la Navbar sur les routes définies -->
       <Navbar />
     </div>
+    <EHHeaderView v-if="showHeader2"/>
     <!-- ===== Header End ===== -->
 
         <!-- ===== Main Content Start ===== -->

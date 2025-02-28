@@ -34,9 +34,9 @@
 
   <!-- Contenu -->
   <div class="flex flex-col justify-between p-5 w-full md:w-1/2 h-[250px] ">
-    <h5 class="mb-1 sm:mb-2 md:mb-1 text-sm md:text-md sm:text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
+    <a href="/agency" class="mb-1 sm:mb-2 md:mb-1 text-sm md:text-md sm:text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white ">
       {{ title }}
-    </h5>
+    </a>
 
     <!-- Étoiles -->
     <div class="flex items-center mb-1 sm:mb-2 md:mb-1 ">

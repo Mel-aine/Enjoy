@@ -27,6 +27,7 @@ const router = createRouter({
       path: '/recherche',
       name: 'recherche',
       component: () => import('../components/restaurants/FilterView.vue'),
+      meta: { hideComponent: true , showHeader2:true}, 
     },
     {
       path: '/login',
@@ -44,10 +45,11 @@ const router = createRouter({
       path: '/checkout',
       name: 'checkout',
       component: () => import('../views/travels/ECheckingView.vue'),
+      meta: { hideComponent: true , showHeader2:false}, 
     },    {
       path: '/agency',
       name: 'agency',
-      component: () => import('../views/services/EAgencyView.vue'),
+      component: () => import('../views/travels/EAgencyView.vue'),
       meta: { hideComponent: true },
 
     },
