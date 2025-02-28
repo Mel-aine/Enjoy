@@ -252,8 +252,10 @@
         "from": "From",
         "to": "To",
         "departure": "Departure",
+        "return": "Return",
         "passengers": "Passengers",
-        "oneAdult": "1 adult",
+        "oneAdult": " Adult(s)",
+        "children": "Children(s)",
         "search": "Search",
         "today": "Today"
     }
