@@ -38,11 +38,11 @@ const router = createRouter({
       name: 'addBusiness',
       component: () => import('../views/EAddBusiness.vue'),
     },
-    // {
-    //   path: '/checkout',
-    //   name: 'checkout',
-    //   component: () => import('../views/travel/ECheckingView.vue'),
-    // },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('../views/travels/ECheckingView.vue'),
+    },
   ],
 })
 

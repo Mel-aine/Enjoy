@@ -8,7 +8,7 @@
     <!-- Main -->
     <main class="flex-1 p-6 bg-gray-50">
       <FilterTravel />
-       <CheckingView/>
+       <!-- <CheckingView/> -->
 
     </main>
 
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import CheckingView from './CheckingView.vue';
+// import CheckingView from '../../views/travels/ECheckingView.vue';
 import FilterTravel from './FilterTravel.vue';
 </script>
 
