@@ -1,5 +1,5 @@
 <template>
-<div class="flex flex-col lg:flex-row w-full min-h-screen bg-white relative">
+<div class="flex flex-col z-0 lg:flex-row w-full min-h-screen bg-white ">
   <!-- Bouton Hamburger -->
   <button
     @click="toggleMenu"
@@ -63,20 +63,15 @@ import Filter from './Filter.vue'
 import  RestaurantView from './RestaurantView.vue'
 import MapView from './MapView.vue'
 import { computed,ref } from 'vue';
-import { useRoute } from 'vue-router';
 import { useI18n } from "vue-i18n";
 
-const route = useRoute();
 const { t } = useI18n();
 const showMenu = ref(false)
 
 function toggleMenu() {
   showMenu.value =!showMenu.value;
 }
-
-// const pathSegments = computed(() =>
-//   route.path.split('/').filter(segment => segment.trim() !== '')
-// );
+ 
 const path = '/Restaurants /Burger'
 const pathSegments = computed(() =>
   path.split('/').filter(segment => segment.trim() !== '')
