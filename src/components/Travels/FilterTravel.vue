@@ -17,15 +17,15 @@
 <div class="flex items-center justify-between gap-4 space-x-1 flex-col md:flex-row sm:gap-40">
   <div class="border rounded-full h-8 w-32 pl-2 space-x-1 border-gray-300 flex items-center justify-start text-gray-800 hover:bg-gray-200 cursor-pointer">
     <svg class="h-6 w-6 text-slate-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="14" cy="6" r="2" />  <line x1="4" y1="6" x2="12" y2="6" />  <line x1="16" y1="6" x2="20" y2="6" />  <circle cx="8" cy="12" r="2" />  <line x1="4" y1="12" x2="6" y2="12" />  <line x1="10" y1="12" x2="20" y2="12" />  <circle cx="17" cy="18" r="2" />  <line x1="4" y1="18" x2="15" y2="18" />  <line x1="19" y1="18" x2="20" y2="18" /></svg>
-    <span class=" text-gray-900 text-lg font-semibold ">Filters</span>
+    <span class=" text-gray-900 text-lg font-semibold ">{{$t('filters')}}</span>
   </div>
   <div class="flex items-center hover:bg-gray-200 rounded-md p-1 ">
     <input type="checkbox" class="w-4 h-4 text-purple-600 bg-gray-100 border-gray-300 rounded-sm">
-    <label class="ml-2 text-md font-normal text-gray-700">Direct uniquement</label>
+    <label class="ml-2 text-md font-normal text-gray-700">{{ $t('direct_only') }}</label>
   </div>
   <div class="text-md font-normal text-gray-700 flex justify-between item-start ">
     <span class="w-12 text-center overflow-hidden text-ellipsis whitespace-nowrap">10</span>
-     Résultats
+     {{$t('resultat')}}
   </div>
 </div>
 
@@ -38,7 +38,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-blue-400 mr-3 mt-1 transform rotate-180" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/>
         </svg>
-        <p class="text-xs text-gray-700 sm:text-lg">Des frais de service seront ajoutés à chaque réservation.</p>
+        <p class="text-xs text-gray-700 sm:text-lg">{{ $t('phrase') }}.</p>
       </div>
       <div>
         <span class="sm:text-xl font-semibold text-gray-950 text-sm">1000 FCFA</span>
@@ -72,6 +72,12 @@
 <script setup>
 import { ref } from 'vue';
 import CardView from './CardView.vue';
+import { useRouter } from 'vue-router';
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
+
+const router = useRouter();
 
 // Fonction pour formater la date au format "dim, 23 févr."
 const formatDate = (date) => {
@@ -133,6 +139,9 @@ const busInformation = ref([
 ]);
 
 const handle = () =>{
+
+  router.push('/checkout');
+
   console.log('clicked');
 }
 </script>

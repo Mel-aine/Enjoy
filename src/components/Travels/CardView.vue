@@ -66,7 +66,7 @@
               </svg>
               <span class="sr-only">Loading...</span>
             </div> -->
-            Continuer
+            {{ $t('continuer') }}
               <svg class="h-6 w-6 text-gray-800" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="9 18 15 12 9 6" />
               </svg>
@@ -80,8 +80,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-const router = useRouter();
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 
 const tooltip = ref(false);
@@ -95,9 +95,7 @@ const hideTooltip = () => {
 };
 
 
-const goToAnotherPage = () => {
-  router.push('/checkout');
-};
+
 defineProps({
   travelTime : String,
   nbre : Number,

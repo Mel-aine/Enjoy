@@ -1,33 +1,33 @@
 <template>
-  <div class="flex flex-row justify-center gap-4">
+  <div class="flex flex-col  md:flex-row  justify-center gap-4">
     <div class="min-h-screen flex flex-col  p-4">
       <button @click="back" class="flex flex-row items-center mb-2 hover:bg-gray-100 px-1 py-1 w-[100px] rounded-lg">
         <svg class="h-6 w-6 text-slate-500 mr-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="15 18 9 12 15 6" />
         </svg>
-        <span class="text-lg font-semibold">Retour</span>
+        <span class="text-lg font-semibold">{{ $t('retour')}}</span>
       </button>
 
     <div class="w-full md:w-[650px] sm:w[650px] p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:border-gray-700 mb-4">
         <div class="mb-4">
-          <span class="font-bold text-xl"><span class="rounded-md bg-purple-100 px-2">1</span> Passagers</span>
+          <span class="font-bold text-xl"><span class="rounded-md bg-purple-100 px-2">1</span> {{$t('passenger')}}</span>
         </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <div class="mb-4">
-          <label for="prenom" class="block font-normal text-ellipsis text-gray-500">Prénom</label>
-          <input type="text" id="prenom" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" placeholder="Entrez votre prénom" />
+          <label for="prenom" class="block font-normal text-ellipsis text-gray-500">{{$t('first_name')}}</label>
+          <input type="text" id="prenom" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" :placeholder="$t('entrez_votre_prenom')" />
         </div>
 
         <div>
-          <label for="nom" class="block  font-normal text-ellipsis text-gray-500">Nom</label>
-          <input type="text" id="nom" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" placeholder="Entrez votre nom" />
+          <label for="nom" class="block  font-normal text-ellipsis text-gray-500">{{$t('name')}}</label>
+          <input type="text" id="nom" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" :placeholder="$t('entrez_votre_nom')" />
         </div>
       </div>
     </div>
 
     <div class="w-full md:w-[650px] p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:border-gray-700 mb-4">
         <div class="mb-4">
-          <span class="font-bold text-xl"><span class="rounded-md bg-purple-100 px-2">2</span> Reservation de Siege</span>
+          <span class="font-bold text-xl"><span class="rounded-md bg-purple-100 px-2">2</span> {{$t('reservation_siege')}}</span>
         </div>
         <div class="flex flex-col gap-4 items-center">
           <div class="w-full max-w-2xl p-6 bg-white border border-gray-200 rounded-lg flex justify-between items-center shadow-md dark:border-gray-700">
@@ -64,13 +64,13 @@
               </div>
               </div>
               <div v-if=" reservedSeats.length == 0">
-                <h1 class="text-lg font-semibold">Choisir un siège</h1>
-                <span class="text-gray-500">À partir de 1000 FCFA</span>
+                <h1 class="text-lg font-semibold">{{$t('choisir_siege')}}</h1>
+                <span class="text-gray-500">{{$t('from')}} 1000 FCFA</span>
               </div>
               <div v-else>
-                <h1 class="text-lg font-semibold">Sièges réservés</h1>
-                <p class="text-gray-500 font-light ">Nombre de sièges réservés : <span class="text-gray-600 font-bold">{{ reservedSeats.length }}</span> </p>
-                <p class="text-gray-500 font-thin ">Sièges sélectionnés :  <span class="text-gray-600 font-bold">{{ reservedSeats.map(seat => seat.number).join(', ') }}</span></p>
+                <h1 class="text-lg font-semibold">{{$t('siege_reserve')}}</h1>
+                <p class="text-gray-500 font-light ">{{$t('nbre_siege')}} : <span class="text-gray-600 font-bold">{{ reservedSeats.length }}</span> </p>
+                <p class="text-gray-500 font-thin ">{{$t('siege_select')}}:  <span class="text-gray-600 font-bold">{{ reservedSeats.map(seat => seat.number).join(', ') }}</span></p>
               </div>
             </div>
             <div>
@@ -109,8 +109,8 @@
 
               </div>
               <div>
-                <h1 class="text-lg font-semibold">Voyager Sans Voisins</h1>
-                <span class="text-gray-500">À partir de 1000 FCFA</span>
+                <h1 class="text-lg font-semibold">{{$t('voyager_sans')}}</h1>
+                <span class="text-gray-500">{{$t('from')}} 1000 FCFA</span>
               </div>
             </div>
             <div>
@@ -128,22 +128,22 @@
         <div class="mb-4">
           <span class="font-bold text-xl"><span class="rounded-md bg-purple-100 px-2">3</span> Contact</span>
         </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
         <div class="mb-4">
-          <label for="prenom" class="block font-normal text-ellipsis text-gray-500">E-mail</label>
-          <input type="email" id="email" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" placeholder="Entrez votre email" />
+          <label for="email" class="block font-normal text-ellipsis text-gray-500">{{$t('email')}}</label>
+          <input type="email" id="email" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" :placeholder="$t('entrez_votre_email', 'Entrez votre email')" />
         </div>
 
         <div>
-          <label for="nom" class="block  font-normal text-ellipsis text-gray-500">Numero de telephone (facultatif)</label>
-          <input type="phone" id="numero" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" placeholder="Entrez votre numero de telephone" />
+          <label for="numero" class="block  font-normal text-ellipsis text-gray-500">{{$t('phone')}} ({{$t('facultatif')}})</label>
+          <input type="phone" id="numero" class="mt-1 block w-full p-2 border hover:bg-gray-200 border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-purple-500" :placeholder="$t('entrez_votre_numero_de_telephone')" />
         </div>
       </div>
     </div>
     <div class="w-full md:w-[650px] p-6 bg-white border border-gray-200 rounded-lg shadow-lg dark:border-gray-700 mb-4">
     <div class="mb-4">
       <span class="font-bold text-xl">
-        <span class="rounded-md bg-purple-100 px-2">4</span> Paiement
+        <span class="rounded-md bg-purple-100 px-2">4</span> {{$t('payment')}}
       </span>
     </div>
     <div class="space-y-4 ">
@@ -169,7 +169,7 @@
       <li class="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
           <div class="flex items-center ps-3">
               <input id="list-radio-military" type="radio" value="" name="list-radio" class="w-4 h-4 text-purple-500 bg-gray-100 border-gray-300  dark:bg-gray-600 dark:border-gray-500">
-              <label for="list-radio-military" class="w-full py-3 ms-2 font-normal text-ellipsis text-gray-500 dark:text-gray-300">Carte Bancaire</label>
+              <label for="list-radio-military" class="w-full py-3 ms-2 font-normal text-ellipsis text-gray-500 dark:text-gray-300">{{$t('card')}}</label>
           </div>
       </li>
   </ul>
@@ -186,9 +186,11 @@
   </div>
 </template>
 <script setup>
-import DetailCommand from './DetailCommand.vue';
-import SeatReservation from './SeatReservation.vue';
+import DetailCommand from '../../components/Travels/DetailCommand.vue';
+import SeatReservation from '../../components/Travels/SeatReservation.vue';
 import {ref} from 'vue';
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
 
 
 const isSidebarOpen = ref(false);

@@ -237,6 +237,36 @@
   "by_continuing_you_agree_to_Enjoy":" By continuing , you agree to Enjoy",
   "Terms_of_Service": "Terms of Service",	
   "and_acknowledge_our":"and acknowledge our",
-  "Privacy_Policy": "Privacy Policy"
+  "Privacy_Policy": "Privacy Policy",
+  "retour":"Back",
+  "passenger":"Passengers",
+  "reservation_siege": "Seat Reservation",
+  "choisir_siege":"Choose a seat",
+  "from":"From",
+  "siege_reserve":"Reserved seats",
+  "nbre_siege": "Number of reserved seats",
+  "siege_select":"Selected seats",
+  "voyager_sans":"Traveling Without a Neighbor",
+  "payment":"Payment",
+  "card":"Bank Card",
+  "facultatif":"optional",
+  "entrez_votre_email": "Enter your email",
+  "entrez_votre_numero_de_telephone": "Enter your telephone number",
+  "entrez_votre_nom": "Enter your name",
+  "entrez_votre_prenom": "Enter your first name",
+  "your_order":"Your Order",
+  "valider":"Pay now",
+  "direct":"Direct Route",
+  "confirm":"Confirm",
+  "aucun_siege":"No reserved seats",
+  "seat":"seat",
+  "reserve":"reserved",
+  "continuer":"Continue",
+  "filters":"Filters",
+  "direct_only":"Direct only",
+  "resultat":"Resultat",
+  "phrase":"A service fee will be added to each reservation"
+ 
+  
 
 }

@@ -1,5 +1,8 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
+import { useI18n } from "vue-i18n";
+const { t } = useI18n();
+
 
 const totalTime = 600; // 10 minutes (600 secondes)
 const time = ref(totalTime);
@@ -69,7 +72,7 @@ onUnmounted(() => {
   <div class="">
     <div class="flex flex-col items-start justify-center p-1 space-y-1 mb-4">
     <div class="flex justify-between items-center w-full max-w-sm space-x-14">
-      <h1 class="text-xl font-semibold text-gray-950">Votre Commande</h1>
+      <h1 class="text-xl font-semibold text-gray-950">{{ $t('your_order') }}</h1>
       <div class="flex items-center  bg-white border border-gray-300 rounded-lg px-1 shadow-lg">
         <!-- Cercle de progression -->
         <div class="relative w-10 h-10">
@@ -111,7 +114,7 @@ onUnmounted(() => {
     <span>12:00</span>
   </div>
   <div class="mt-2">
-    <span class="text-bold text-lg text-ellipsis text-purple-500">Trajet Direct</span>
+    <span class="text-bold text-lg text-ellipsis text-purple-500">{{$t('direct')}}</span>
   </div>
 
 
@@ -125,7 +128,7 @@ onUnmounted(() => {
 </div>
 
 </div>
-<button class="w-full max-w-sm rounded-lg bg-purple-400 items-center p-2 mt-4" >Payer maintenant</button>
+<button class="w-full max-w-sm rounded-lg bg-purple-400 items-center p-2 mt-4" >{{ $t('valider') }}</button>
 </div>
 
 </template>
