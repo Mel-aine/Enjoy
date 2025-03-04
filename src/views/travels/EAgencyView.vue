@@ -143,12 +143,12 @@
                 <span class="text-white">{{ $t('appServices.agency.services') }}</span>
               </template>
             </CustomDropdownD>
-            <router-link class="px-3 py-5">
+            <router-link to="/recherche" class="px-3 py-5">
               <span
                 class="block text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
                   $t('appServices.agency.trackATrip') }}</span>
             </router-link>
-            <router-link class="px-3 py-5">
+            <router-link to="/recherche" class="px-3 py-5">
               <span
                 class="block  text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
                   $t('appServices.agency.help') }}</span>
@@ -274,7 +274,7 @@
             <div class="relative ">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
-                :class="picked === 'aller-retour' ? 'datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500  md:min-w-56 lg:w-56' : 'datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 md:min-w-56 lg:w-[445px] focus:ring-2 focus:ring-blue-500'"
+                :class="picked === 'aller-retour' ? 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 focus:ring-2 focus:ring-blue-500  md:min-w-56 lg:w-56' : 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-56 md:min-w-56 lg:w-[445px] focus:ring-2 focus:ring-blue-500'"
                 type="text" placeholder="Sélectionner une date" />
             </div>
           </div>
@@ -284,7 +284,7 @@
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
-                class="datepicker border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-60 focus:ring-2 focus:ring-blue-500  md:w-56 xl:w-56"
+                class="datepicker retour border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-60 focus:ring-2 focus:ring-blue-500  md:w-56 xl:w-56"
                 type="text" placeholder="Sélectionner une date" />
             </div>
           </div>
@@ -306,8 +306,7 @@
           </div>
         </div>
         <div class="p-1">
-          <button
-          @click="handleSearch"
+          <button @click="handleSearch"
             :class="picked === 'aller-retour' ? 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8 ' : 'bg-customRed text-white w-full h-[50px] py-2 px-2 rounded mt-8'">{{
               $t('appServices.agency.search') }}</button>
         </div>
@@ -323,7 +322,8 @@
   </div>
   <div class="p-7 ">
   </div>
-  <div v-if="!showFilter" class="absolute  left-1/2 transform -translate-x-1/2 translate-y-1/3 rounded-sm max-w-screen-xl mt-6 w-full">
+  <div v-if="!showFilter"
+    class="absolute  left-1/2 transform -translate-x-1/2 translate-y-1/3 rounded-sm max-w-screen-xl mt-6 w-full">
     <div class="flex flex-col sm:flex-row sm:justify-between items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full">
 
       <button
@@ -347,7 +347,7 @@
   </div>
 
   <div v-else class="mt-10">
-    <FilterTravel ></FilterTravel>
+    <FilterTravel></FilterTravel>
   </div>
 
   <div>
@@ -405,24 +405,39 @@ const formatDate = (date) => {
   const options = { day: '2-digit', month: 'short' };
   return `${t('appServices.agency.today')}, ${new Intl.DateTimeFormat(currentLanguage.value, options).format(date)}`;
 };
-
+const _formatDate = (date) => {
+  const options = { weekday: 'long', day: '2-digit', month: 'short', year: 'numeric' };
+  return new Intl.DateTimeFormat(currentLanguage.value, options).format(date);
+};
 
 const langChanged = (lang) => {
   currentLanguage.value = lang;
   langChange.value = !langChange.value;
   // Mettre à jour la locale de Flatpickr
   flatpickr(".datepicker", {
-    locale: lang === 'en' ? English : French,
-    dateFormat: "d M Y",
-    minDate: "today",
-    onChange: (selectedDates) => {
-      formattedDateAller.value = formatDate(selectedDates[0]);
-    },
-  });
+  locale: lang === 'en' ? English : French,
+  dateFormat: "d M Y",
+  minDate: "today",
+  onChange: (selectedDates, dateStr, instance) => {
+    const inputElement = instance.input; // instance.input au lieu de fp.input
+
+    if (inputElement?.classList.contains('aller')) {
+      formattedDateAller.value = _formatDate(selectedDates[0]);
+      console.log('formattedDateAller.value', formattedDateAller.value);
+    } else if (inputElement?.classList.contains('retour')) {
+      formattedDateRetour.value = _formatDate(selectedDates[0]);
+      console.log('formattedDateRetour.value', formattedDateRetour.value);
+
+    }
+  },
+});
 
   const today = new Date();
   formattedDateAller.value = formatDate(today);
   formattedDateRetour.value = formatDate(today);
+  
+  console.log('formattedDateAller.value' , formattedDateAller.value);
+
 
 };
 
