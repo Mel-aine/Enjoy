@@ -24,6 +24,12 @@ const router = createRouter({
       component: () => import('../views/EDetailServices.vue'),
     },
     {
+      path: '/hotel',
+      name: 'hotel',
+      component: () => import('../views/hotel/EHotelView.vue'),
+      meta: { hideComponent: true },
+    },
+    {
       path: '/recherche',
       name: 'recherche',
       component: () => import('../components/restaurants/FilterView.vue'),

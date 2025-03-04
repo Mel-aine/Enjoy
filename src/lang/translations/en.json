@@ -288,6 +288,12 @@
         "children": "Children(s)",
         "search": "Search",
         "today": "Today"
+    },
+    "hotel": {
+      "hotelAnnouncement": "Make your reservation now and pay at the hotel. Cancellation is free.",
+      "arrival": "Arrival",
+      "departure": "Departure",
+      "travelers": "Travelers"
     }
   }
 
