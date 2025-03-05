@@ -346,7 +346,7 @@
     </div>
   </div>
 
-  <div v-else class="mt-10">
+  <div v-else class="mt-28 md:mt-10">
     <FilterTravel ></FilterTravel>
   </div>
 

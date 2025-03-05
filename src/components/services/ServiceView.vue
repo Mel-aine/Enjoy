@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4"  >
     <div  v-for =" item in restaurants" :key="item.nom">
-    <RestaurantCard
+    <ServiceCard
       :title=item.nom
       :description=item.description
       :rating="4"
@@ -19,7 +19,7 @@
 
 <script setup>
 import {ref} from 'vue'
-import RestaurantCard from '@/components/card/RestaurantCard.vue' ;
+import ServiceCard from '@/components/card/ServiceCard.vue' ;
 
 const supplement = ref(['viande','riz'])
 const restaurants = [

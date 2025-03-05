@@ -3,11 +3,9 @@
     <h1 class="text-4xl font-bold text-gray-900 flex justify-center">{{ $t('category') }}</h1>
     <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 md:space-x-2 max-w-screen-lg mx-auto justify-center ">
 
-        <div v-for="category in mainCategories" >
+        <div v-for="category in mainCategories" :key="category.id" >
           <router-link :to="category.route ">
             <CategoryCard
-        
-              :key="category.id"
               :name="$t('categories.' + category.label)"
               :icon="category.icon"
 
@@ -42,7 +40,7 @@
 
   const toggleShowMore = () => {
     showMore.value = !showMore.value;
-    emit("toggle-footer", showMore.value);
+    emit("toggle-category", showMore.value);
   };
 
   // Séparer les catégories en principales et cachées
