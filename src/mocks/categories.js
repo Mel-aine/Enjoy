@@ -625,7 +625,7 @@ export const Categories = [
     },
     {
       id: "COUL-001",
-      label: "travel",
+      label: "Voyage",
       route: "/recherche",
       icon: "fa fa-tree",
       places: [

@@ -1,5 +1,5 @@
 <script setup>
-import { ref ,computed } from 'vue';
+import { ref } from 'vue';
 import SeatRow from "./SeatRow.vue";
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();

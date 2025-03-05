@@ -1,30 +1,21 @@
 <script setup>
-import { ref } from 'vue';
-// import { useI18n } from 'vue-i18n';
-import Card from '@/components/card/Card.vue';
-import Category from '@/components/category/Category.vue';
-import Carousel from '@/components/carousel/Carousel.vue';
-// import { useI18n } from 'vue-i18n';
-
-// Utilisation de useI18n pour accéder aux traductions
-// const { t } = useI18n();
+import { ref,computed } from 'vue';
+// import Card from '@/components/card/Card.vue';
+// import Category from '@/components/category/Category.vue';
+// import Carousel from '@/components/carousel/Carousel.vue';
 import CategoryView from '@/components/category/CategoryView.vue';
 import { Categories } from '@/mocks/categories';
-import { useFooterStore } from '@/stores/footer';
 
 
-// const { locale } = useI18n();
-// const changeLanguage = (lang) => {
-//   locale.value = lang;
-//   console.log('locale.value', locale.value)
-// };
 
 
-// const showMoreFooter = ref(false);
 const showLeftButton = ref(false);
 const showRightButton = ref(true);
+const showCategory = ref(false);
 
 const scrollableList = ref([]);
+const hiddenCategories = computed(() => Categories.slice(7));
+ 
 
 const checkScrollButtonsVisibility = () => {
   if (!scrollableList.value || scrollableList.value.length === 0) return;
@@ -48,8 +39,6 @@ const scrollRight = () => {
   }
 };
 
-
-// route: `/fr/categorie/hotel/${hotel.id}`,
 const menuCategory = Categories.map((category) => ({
   route: `/fr/categorie/${category.id}`,
   label: category.label,
@@ -63,127 +52,11 @@ const menuCategory = Categories.map((category) => ({
 
 }));
 console.log('category',menuCategory[0].Cards)
-// const menuCategory = [
-//   {
-//     route: "/fr/categorie/11/restauration",
-//     label: "Restauration",
-//     icon: "fa fa-utensils",
-//     Cards: [
-//       { route: "/fr/categorie/restaurant", title: "restaurants", image: new URL('@/assets/koala.jpg', import.meta.url).href },
-//       { route: "/fr/categorie/restaurant-dhotel", title: "Restaurant d'hôtel", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/12/hotels",
-//     label: "Hôtels Et Hebergements",
-//     icon: "fa fa-hotel",
-//     Cards: [
-//       { route: "/fr/categorie/hotel-luxe", title: "Hôtel de Luxe", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/hotel-budget", title: "Hôtel Budget", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/13/divertissements",
-//     label: "Divertissements",
-//     icon: "Gamepad2",
-//     Cards: [
-//       { route: "/fr/categorie/cinema", title: "Cinéma", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/parc-loisir", title: "Parc de Loisirs", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/14/sites-touristiques",
-//     label: "Sites Touristiques",
-//     icon: "Camera",
-//     Cards: [
-//       { route: "/fr/categorie/musee", title: "Musée", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/monuments", title: "Monuments Historiques", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Modes et Beauté",
-//     icon: "Scissors",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Transports",
-//     icon: "BusFront",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Commerces",
-//     icon: "ShoppingBag",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Sports",
-//     icon: "Dumbbell",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Secours",
-//     icon: "Ambulance",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-//   {
-//     route: "/fr/categorie/15/modes-et-beaute",
-//     label: "Administrations",
-//     icon: "Building2",
-//     Cards: [
-//       { route: "/fr/categorie/coiffure", title: "Coiffure", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/soins-visage", title: "Soins du Visage", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/fast-food", title: "Fast Food", image: "https://via.placeholder.com/150" },
-//       { route: "/fr/categorie/restaurant-livreur", title: "Restaurant Livreur", image: "https://via.placeholder.com/150" },
-//     ],
-//   },
-// ];
 
 
-const footerStore = useFooterStore();
-
-const toggleFooter = () => {
-      const newValue = !footerStore.getShowMoreFooter;  // On inverse la valeur
-      footerStore.updateFooter(newValue);  // Mettre à jour l'état
+const toggleCategory = () => {
+  showCategory.value = !showCategory.value
+    
     };
 </script>
 
@@ -232,7 +105,18 @@ const toggleFooter = () => {
 
     <!-- Carousel -->
     <!-- <Carousel /> -->
-    <CategoryView @toggle-footer="toggleFooter" />
+    <CategoryView @toggle-category="toggleCategory" />
+             <!-- Section cachée affichée avec animation -->
+    <div v-if="showCategory"  class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 md:space-x-2 max-w-screen-lg mx-auto justify-center my-6  transition-opacity duration-700 ease-in-out">
+        <div v-for="category in hiddenCategories" :key="category.id" class="flex flex-row items-center  gap-2 p-2 rounded-lg  transition-all cursor-pointer">
+          <i :class="`${category.icon} text-2xl text-customRed`"></i>
+          <a class="text-sm md:text-md sm:text-sm lg:text-lg font-semibold text-gray-700 hover:text-customBlue hover:underline truncate"
+          
+          :href="category.route">
+            {{ $t('categories.' + category.label) }}
+          </a>
+        </div>
+    </div>
 
 
 

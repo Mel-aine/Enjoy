@@ -222,7 +222,7 @@
             </div>
         </div>
 
-        <div class="relative container mx-auto left-40 translate-x-12 px-1 py-4 mb-12">
+        <div class="relative container mx-auto left-40 translate-x-12 px-1 py-4 z-50">
             <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
                 <template #button>
                     <span class="text-black">{{ $t('navbar.restaurant') }}</span>

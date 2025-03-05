@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/home/EHomeView.vue'
-import { useFooterStore } from '@/stores/footer'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,6 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      meta: { showFooter2:true}, 
     },
     {
       path: '/about',
@@ -26,20 +26,21 @@ const router = createRouter({
     {
       path: '/recherche',
       name: 'recherche',
-      component: () => import('../components/restaurants/FilterView.vue'),
-      meta: { hideComponent: true , showHeader2:true}, 
+      component: () => import('../components/services/FilterView.vue'),
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true}, 
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('../views/user/ELoginView.vue'),
-      meta: { hideComponent: true }, 
+      meta: { hideComponent: true, }, 
 
     },
     {
       path: '/addBusiness',
       name: 'addBusiness',
       component: () => import('../views/EAddBusiness.vue'),
+      meta: { showFooter2:true}, 
     },
     {
       path: '/checkout',
@@ -53,18 +54,24 @@ const router = createRouter({
       meta: { hideComponent: true },
 
     },
+    {
+      path: '/all_service',
+      name: 'all_service',
+      component: () => import('@/views/allServices/EServiceDetailView.vue'),
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true}, 
+    },
 
   ],
 })
 
-router.beforeEach((to, from, next) => {
-  const footerStore = useFooterStore()
+// router.beforeEach((to, from, next) => {
+//   const footerStore = useFooterStore()
 
-  if (to.fullPath != '/') {
-    footerStore.updateFooter(false)
-    console.log('to.fullPath', to.fullPath)
-  }
+//   if (to.fullPath != '/') {
+//     footerStore.updateFooter(false)
+//     console.log('to.fullPath', to.fullPath)
+//   }
 
-  next()
-})
+//   next()
+// })
 export default router

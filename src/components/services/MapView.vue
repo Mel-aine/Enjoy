@@ -25,8 +25,5 @@ onMounted(() => {
 
 
 <style scoped>
-/* Assurez-vous que la carte a une hauteur définie */
-/* #cameroun-map {
-  height: 100%;
-} */
+
 </style>
