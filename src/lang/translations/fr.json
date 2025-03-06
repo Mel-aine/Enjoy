@@ -285,13 +285,16 @@
         "oneAdult": " Adulte(s)",
         "children": "Enfant(s)",
         "search": "Chercher",
-        "today": "Aujourd’hui",
+        "today": "Aujourd’hui"
+        },
         "hotel": {
           "hotelAnnouncement": "Effectuez votre réservation maintenant et réglez à l'hôtel. L'annulation est gratuite.",
-          "arrival": "Arrival",
+          "arrival": "Arrivee",
           "departure": "Depart",
+          "destination": "Destination",
+          "persons": "Personne(s)",
+          "rooms": "Chambre(s)",
           "travelers": "Voyageurs"
         }
-    }
   }
 }
