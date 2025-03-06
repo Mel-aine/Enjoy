@@ -1,7 +1,7 @@
 <template>
- <div class="flex flex-col sm:flex-row items-center  justify-center sm:gap-20 gap-3 ml-8  p-8 max-w-screen mx-auto">
+ <div class="flex flex-col sm:flex-row lg:items-center items-start justify-center sm:gap-20 gap-3   p-8 max-w-screen mx-auto">
   <div class="mb-4 sm:mb-0">
-    <span class=" text-md font-semibold text-black">Overall rating</span>
+    <span class=" text-md font-semibold text-black">{{$t('overall_rate')}}</span>
     <div class="flex items-center  my-2 sm:my-1 md:my-1 space-x-1 ">
         <span v-for="star in 5" :key="star" class=" ">
           <svg v-if="star <= rating" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-white rounded-md bg-orange-500 p-1" viewBox="0 0 24 24">
@@ -11,48 +11,48 @@
             <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z" />
           </svg>
         </span>
-      </div> 
-    <p class="text-lg font-normal text-gray-500 dark:text-gray-400">1,745 reviews</p>
+      </div>
+    <p class="text-lg font-normal text-gray-500 dark:text-gray-400">1,745 {{$t('review')}}</p>
   </div>
 
   <!-- Rating Distribution -->
-  <div class="w-full sm:w-2/3 ml-8 ">
+  <div class="w-full sm:w-2/3 ">
     <div class="flex flex-col space-y-4">
       <!-- Star Ratings Progress Bars -->
       <div class="flex items-center ">
-        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">5 stars</a>
-        <div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-full ">
+        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">5 {{ $t('stars') }}</a>
+        <div class="w-2/4 h-3 lg:mx-4 mx-1 bg-gray-200 rounded-full ">
           <div class="h-3 bg-gradient-to-r from-yellow-300 to-orange-500 rounded-full" style="width: 100%"></div>
         </div>
       </div>
       <div class="flex items-center">
-        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">4 stars</a>
-        <div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-full ">
+        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">4 {{ $t('stars') }}</a>
+        <div class="w-2/4 h-3 lg:mx-4 mx-1 bg-gray-200 rounded-full ">
           <div class="h-3 bg-yellow-300 rounded-full" style="width: 70%"></div>
         </div>
       </div>
       <div class="flex items-center ">
-        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">3 stars</a>
-        <div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-full dark:bg-gray-700">
+        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">3 {{ $t('stars') }}</a>
+        <div class="w-2/4 h-3 lg:mx-4 mx-1 bg-gray-200 rounded-full dark:bg-gray-700">
           <div class="h-3 bg-yellow-300 rounded-full" style="width: 30%"></div>
         </div>
       </div>
       <div class="flex items-center ">
-        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">2 stars</a>
-        <div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-full dark:bg-gray-700">
+        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">2 {{ $t('stars') }}</a>
+        <div class="w-2/4 h-3 lg:mx-4 mx-1 bg-gray-200 rounded-full dark:bg-gray-700">
           <div class="h-3 bg-yellow-300 rounded-full" style="width: 10%"></div>
         </div>
       </div>
       <div class="flex items-center ">
-        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">1 star</a>
-        <div class="w-2/4 h-3 mx-4 bg-gray-200 rounded-full dark:bg-gray-700">
+        <a href="#" class="text-sm font-normal text-gray-950  hover:underline">1 {{ $t('star') }}</a>
+        <div class="w-2/4 h-3 lg:mx-4 mx-1 bg-gray-200 rounded-full dark:bg-gray-700">
           <div class="h-3 bg-yellow-300 rounded-full" style="width: 4%"></div>
         </div>
       </div>
     </div>
   </div>
   </div>
-  <div class="flex sm:flex-row flex-col sm:gap-40 gap-2 items-center ml-8 lg:ml-36 md:ml-8  p-8 max-w-screen mx-auto ">
+  <div class="flex sm:flex-row flex-col sm:gap-40 gap-2 lg:items-center items-start p-8 max-w-full mx-8 ">
     <div class="flex  flex-row gap-2">
         <div class="relative">
         <button @click="toggleDropdown(1)" class="sm:px-4 py-1 px-2  rounded-full text-sm border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50 hover:bg-gray-100" >
@@ -70,7 +70,7 @@
         </div>
         </div>
 
-        
+
         <div class="relative">
         <button  @click="toggleDropdown(2)"  class="sm:px-4 px-2 py-1 rounded-full text-sm border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50 hover:bg-gray-100">
             {{ selectedOption2 ? selectedOption2 : "" }}
@@ -80,14 +80,14 @@
         </button>
         <div   v-if="openDropdown === 2" class="absolute mt-2 w-full items-center bg-white border border-gray-300 rounded-xl shadow-lg z-10">
             <ul>
-            <li  v-for="option in options2"  :key="option"  @click="selectOption(2, option)"  class="px-6 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer" >
+            <li  v-for="option in options2"  :key="option"  @click="selectOption(2, option)"  class="px-4 py-2  text-gray-700 hover:bg-gray-100 cursor-pointer" >
                 {{ option }}
             </li>
             </ul>
         </div>
         </div>
 
-        
+
         <div class="relative">
         <button  @click="toggleDropdown(3)"  class="sm:px-4 px-2 py-1 rounded-full text-sm border border-gray-300 text-gray-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-opacity-50 hover:bg-gray-100" >
             {{ selectedOption3 ? selectedOption3 : "" }}
@@ -104,7 +104,7 @@
         </div>
         </div>
     </div>
-    
+
     <div class="relative flex items-center w-full max-w-[250px]   ">
       <input type="search" id="exampleFormControlInput"  class="block px-2 pb-2 pt-3 w-full text-sm text-gray-900 bg-transparent rounded-md border  border-gray-400 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-violet-500 focus:outline-none focus:ring-0 focus:border-violet-600 peer" />
       <label for="exampleFormControlInput" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-violet-600 peer-focus:dark:text-violet-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1">
@@ -118,7 +118,7 @@
     </div>
   </div>
   <!-- md:ml-16 lg:ml-24 xl:ml-32  -->
-  <div class="w-full bg-white p-5 rounded-lg shadow-md max-w-screen-md mx-auto ml-1 lg:ml-44 md:ml-16 mb-10 sm:px-8" v-for="(reviewer,index) in reviewers" :key="index">
+  <div class="sm:w-full w-[350px]  bg-white p-5 rounded-lg shadow-md max-w-screen-md lg:mx-16 mx-0 mb-10 " v-for="(reviewer,index) in reviewers" :key="index">
     <div class="flex flex-col md:flex-row md:items-start md:justify-between">
       <div class="flex items-center mb-4 md:mb-0">
         <img :src="reviewer.profilePicture" alt="Reviewer Profile Picture" class="w-16 h-16 rounded-full mr-4 border border-gray-300" />
@@ -167,7 +167,7 @@
         </ul>
       </div>
         </div>
-        
+
     </div>
 
     <div class="flex items-center gap-2 mt-4">
@@ -199,30 +199,30 @@
 
     <div class="flex items-center gap-8 mt-4">
         <button class="text-gray-500 text-sm font-normal " >
-                <img src="@/assets/help.svg" class="rounded-full p-2 border border-gray-500 hover:bg-gray-200"/> 
-                Helpful<span class="font-semibold"> 0</span>
-           
+                <img src="@/assets/help.svg" class="rounded-full p-2 border border-gray-500 hover:bg-gray-200"/>
+                {{$t('hepful')}}<span class="font-semibold"> 0</span>
+
         </button>
         <button class="text-gray-500 text-sm font-normal" >
             <img src="@/assets/thank.svg" class="rounded-full p-2 border border-gray-500 hover:bg-gray-200"/>
-            Thanks <span class="font-semibold"> 1</span>
+            {{$t('thanks')}} <span class="font-semibold"> 1</span>
         </button>
         <button class="text-gray-500 text-sm font-normal">
             <img src="@/assets/like.svg" class="rounded-full p-2 border border-gray-500 hover:bg-gray-200"/>
-            Love this<span class="font-semibold"> 2</span>
+           {{$t('lovethis')}}<span class="font-semibold"> 2</span>
         </button>
         <button class="text-gray-500 text-sm font-normal">
             <img src="@/assets/ohno.svg" class="rounded-full p-2 border border-gray-500 hover:bg-gray-200"/>
-            Oh no <span class="font-semibold"> 0</span>
+            {{$t('ohno')}} <span class="font-semibold"> 0</span>
         </button>
     </div>
   </div>
-  
+
 
 </template>
 
 <script setup>
-import {ref,} from 'vue'
+import {ref,computed} from 'vue'
 import { useI18n } from "vue-i18n";
 import img from '@/assets/img.jpg';
 import bgBus from '@/assets/bg-bus.jpg';
@@ -231,23 +231,23 @@ import tour from '@/assets/tour.jpg';
 const { t } = useI18n();
 
 
-const rating = ref(4) 
+const rating = ref(4)
 const openDropdown = ref(null)
 const selectedOption3 = ref('Filter by rating')
 const selectedOption1 = ref('Tri Enjoy')
 const selectedOption2 = ref('English(52)')
-const options = ref(['partager l avis','intergrer l avis'])
-const options1 = ref(['Tri Enjoy', 'Les plus recents', 'Avis anciens', 'Avis positifs', 'Avis negatifs', 'Avis d elites']);
-const options2 = ref(['English(52)', 'German(42)', 'Spanish(10)']);
-const options3 = ref(['5 stars', '4 stars', '3 stars', '2 stars','1 star','All rating']);
+const options = computed(()=>[t('share_opinion'),t('integre_opinion')])
+const options1 = computed(()=>[t('sort_Enjoy'), t('most_recent'), t('old_review'), t('positive_review'), t('negative_review'), t('review_elite')]);
+const options2 = computed(()=>[t('English(52)'), t('German(42)'), t('Spanish(10)')]);
+const options3 = computed(()=>[t('5stars'), t('4stars'), t('3stars'),t('2stars'),t('1star'),t('All_rating')]);
 
 
 
 const toggleDropdown = (index) => {
   if (openDropdown.value === index) {
-    openDropdown.value = null; 
+    openDropdown.value = null;
   } else {
-    openDropdown.value = index; 
+    openDropdown.value = index;
   }
 };
 
@@ -259,16 +259,16 @@ const selectOption = (index, option) => {
   }else if( index === 3 ){
     selectedOption3.value = option;
   }
-  openDropdown.value = null; 
+  openDropdown.value = null;
 }
 
 
 
-const dropdownStates = ref([]); 
+const dropdownStates = ref([]);
 
 const toggleDropdown2 = (index) => {
   if (dropdownStates.value[index] === undefined) {
-    dropdownStates.value[index] = false; 
+    dropdownStates.value[index] = false;
   }
   dropdownStates.value[index] = !dropdownStates.value[index];
 };
@@ -288,7 +288,7 @@ const reviewers = ref([
     photosCount: '20',
     rating: 5,
     comment: "Séjour exceptionnel à l'Hôtel Le Paradis ! L'emplacement est idéal, en plein cœur de la ville. La chambre était spacieuse et très bien équipée, avec une vue magnifique sur la mer. Le personnel a été d'une grande gentillesse et disponible tout au long de mon séjour. Le petit-déjeuner, servi sous forme de buffet, était copieux et délicieux.",
-    profilePicture: '@/assets/marie.jpg', 
+    profilePicture: '@/assets/marie.jpg',
     pictures:[
         { image: img },
         { image: bgBus },
@@ -304,7 +304,7 @@ const reviewers = ref([
     photosCount: '30',
     rating: 4,
     comment: "L'Hôtel Le Paradis est un bon hôtel. La chambre était propre et confortable. Le personnel était serviable. Le petit-déjeuner était correct, mais j'aurais aimé plus de choix. L'emplacement est un peu bruyant, mais pratique pour visiter la ville.",
-    profilePicture: '@/assets/jean.jpg', 
+    profilePicture: '@/assets/jean.jpg',
     pictures:[
         { image: img },
         { image: bgBus },
@@ -319,7 +319,7 @@ const reviewers = ref([
     photosCount: '15',
     rating: 3,
     comment: "Mon séjour à l'Hôtel Le Paradis a été mitigé. La chambre était petite et sombre. Le personnel était distant. Le petit-déjeuner était décevant. L'emplacement est bien situé, mais l'hôtel ne vaut pas son prix.",
-    profilePicture: '@/assets/sophie.jpg', 
+    profilePicture: '@/assets/sophie.jpg',
     pictures:[ ]
   },
   {
@@ -331,7 +331,7 @@ const reviewers = ref([
     photosCount: '40',
     rating: 5,
     comment: "J'ai passé un excellent séjour à l'Hôtel Le Paradis. La chambre était luxueuse et spacieuse, avec une vue imprenable sur la ville. Le personnel était aux petits soins. Le petit-déjeuner était un festin. L'emplacement est idéal pour découvrir la ville.",
-    profilePicture: '@/assets/pierre.jpg', 
+    profilePicture: '@/assets/pierre.jpg',
     pictures:[ ]
   },
 ]);
