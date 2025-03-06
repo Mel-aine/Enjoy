@@ -39,11 +39,15 @@
     
 
     </div>
+    <div class="">
+        <RewiewView/>
+    </div>
   </div>
 </template>
 
 <script setup>
 import {ref} from 'vue'
+import RewiewView from '@/components/review/RewiewView.vue';
 const rating = ref(4)
 
 </script>
