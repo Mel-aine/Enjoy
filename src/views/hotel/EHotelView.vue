@@ -161,8 +161,51 @@ zz
         <div v-if="!isSmallScreen" id="modalPassager"
             class="h-64 overflow-x-auto absolute left-[1250px] top-[495px] transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-lg shadow-xl p-6 w-96 lg:w-[500px] hidden peer-checked:block">
 
+            <div id="modalVoyageur" class="bg-white p-6 rounded-lg w-full lg:w-[500px]">
+                <div v-for="(room, index) in rooms" :key="room.id" class="mb-4">
+                <h3 class="font-bold text-lg">{{$t("appServices.hotel.room")}} {{ index + 1 }}</h3>
+                <Counter v-model="room.adults">{{$t("appServices.agency.oneAdult")}}</Counter>
+                <Counter class="mt-2" v-model="room.childrens">{{$t("appServices.agency.children")}}</Counter>
+                <div class="w-full h-[2px] bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+                <div class="flex justify-between">
+                <button
+                    @click="removeRoom(index)"
+                    class="px-4 py-2 ml-auto font-medium rounded-full text-red-600 hover:bg-red-200"
+                    v-if="rooms.length > 1"
+                >
+                    Supprimer une chambre
+                </button>
 
-            <div v-for="room in rooms" :key="room" class="">
+                <!-- <button
+                    @click="addRoom"
+                    class="px-4 py-2 ml-auto rounded-full text-blue-600 hover:bg-blue-200"
+                >
+                    Ajouter une chambre
+                </button> -->
+                </div>
+                </div>
+
+                <!-- Boutons Ajouter/Supprimer une chambre -->
+                <div class="flex justify-between">
+                <!-- <button
+                    @click="removeRoom"
+                    class="px-4 py-2 ml-auto  rounded-full text-red-600 hover:bg-red-200"
+                    v-if="rooms.length > 1"
+                >
+                    Supprimer une chambre
+                </button> -->
+
+                <button
+                    @click="addRoom"
+                    class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 hover:bg-blue-200"
+                >
+                    Ajouter une chambre
+                </button>
+                </div>
+            </div>
+
+
+            <!-- <div v-for="room in rooms" :key="room" class="">
                 <Counter v-model="adults">{{
                 $t("appServices.agency.oneAdult")
             }}</Counter>
@@ -183,7 +226,7 @@ zz
             <div class="flex">
                 <button @click="addElement" class="ml-auto px-4 py-2 font-medium rounded-full text-blue-600 flex-wrap  hover:bg-blue-200">
                     Ajouter une chambre                </button>
-            </div>
+            </div> -->
         </div>
 
         <!-- ✅ Modale pour configurer les passagers end -->
@@ -192,15 +235,47 @@ zz
 
         <div v-if="isSmallScreen" id="modalPassager"
             class="absolute left-[208px] top-[600px] transform -translate-x-1/2 -translate-y-1/3 bg-white rounded-lg shadow-xl p-6 w-screen-sm hidden peer-checked:block">
-            <Counter v-model="persons">{{
-                $t("appServices.hotel.persons")
-            }}</Counter>
-            <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4">
-            </div>
-            <Counter v-model="rooms">{{
-                $t("appServices.hotel.rooms")
-            }}</Counter>
-            <div class="w-full h-[2px] rounded-full bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4">
+            <div id="modalVoyageur" class="bg-white p-6 rounded-lg w-96 lg:w-[500px]">
+                <div v-for="(room, index) in rooms" :key="room.id" class="mb-4">
+                <h3 class="font-bold text-lg">{{$t("appServices.hotel.room")}} {{ index + 1 }}</h3>
+                <Counter v-model="room.adults">{{$t("appServices.agency.oneAdult")}}</Counter>
+                <Counter class="mt-2" v-model="room.childrens">{{$t("appServices.agency.children")}}</Counter>
+                <div class="w-full h-[2px] bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
+                <div class="flex justify-between">
+                <button
+                    @click="removeRoom(index)"
+                    class="px-4 py-2 ml-auto font-medium rounded-full text-red-600 hover:bg-red-200"
+                    v-if="rooms.length > 1"
+                >
+                    Supprimer une chambre
+                </button>
+
+                <!-- <button
+                    @click="addRoom"
+                    class="px-4 py-2 ml-auto rounded-full text-blue-600 hover:bg-blue-200"
+                >
+                    Ajouter une chambre
+                </button> -->
+                </div>
+                </div>
+
+                <!-- Boutons Ajouter/Supprimer une chambre -->
+                <div class="flex justify-between">
+                <!-- <button
+                    @click="removeRoom"
+                    class="px-4 py-2 ml-auto  rounded-full text-red-600 hover:bg-red-200"
+                    v-if="rooms.length > 1"
+                >
+                    Supprimer une chambre
+                </button> -->
+
+                <button
+                    @click="addRoom"
+                    class="px-4 py-2 ml-auto font-medium rounded-full text-blue-600 hover:bg-blue-200"
+                >
+                    Ajouter une chambre
+                </button>
+                </div>
             </div>
         </div>
 
@@ -239,20 +314,20 @@ zz
                 class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
                 <!-- Search Section -->
                 <div class="lg:flex justify-center">
-                    <div class="bg-transparent mt-4 rounded-sm cursor-pointer" @click="toggleDropdown">
+                    <div class="bg-transparent mt-4 rounded-lg cursor-pointer" @click="toggleDropdown">
                         <div @click="toggleDropdown"
-                            class="relative bg-inherit border-2 border-gray-500 rounded px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-96">
+                            class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-96">
                             <i
-                                class="fas fa-location-dot absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                class="fas fa-location-dot absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                             <input type="text" id="destination" @click="toggleDropdown" v-model="destination"
-                                class="opacity-0 peer bg-transparent h-14 rounded text-gray-200 pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                                class="opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                                 placeholder="Type inside me" />
                             <label for="destination"
-                                class="absolute left-8 top-6 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                                {{ destination }}</label>
+                                class="absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                               <span class="text-black"> {{ destination }} </span> </label>
                             <label for="destination"
-                                class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                                {{ $t("appServices.hotel.destination") }}</label>
+                                class="absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                                <span class="text-black">{{ $t("appServices.hotel.destination") }}</span></label>
                         </div>
                     </div>
                     <div v-show="isOpen"
@@ -294,68 +369,63 @@ zz
                 </div>
                 <div class=" bg-transparent p-4 mt-4 rounded-sm cursor-pointer">
                     <div
-                        class="datepicker aller relative bg-inherit border-2 border-gray-500 rounded px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
+                        class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
                         <i
-                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                         <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
-                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-gray-200 pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
                         <label for="dateAller"
-                            class="absolute left-8 top-6 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            {{ formattedDateAller }}</label>
+                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            <span class="text-black font-medium">{{ formattedDateAller }}</span></label>
                         <label for="dateAller"
-                            class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            {{ $t("appServices.hotel.arrival") }}</label>
+                            class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            <span class="text-black font-medium">{{ $t("appServices.hotel.arrival") }}</span></label>
                     </div>
                 </div>
 
                 <div class="datepicker retour bg-transparent mt-4 rounded-sm cursor-pointer">
                     <div
-                        class="relative bg-inherit border-2 border-gray-500 rounded px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
+                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
                         <i
-                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                         <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
-                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-gray-200 pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
                         <label for="dateRetour"
-                            class="absolute left-8 top-6 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            {{ formattedDateRetour }}</label>
+                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            <span class="text-black">{{ formattedDateRetour }}</span></label>
                         <label for="deteRetour"
-                            class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            {{ $t("appServices.hotel.departure") }}</label>
+                            class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            <span class="text-black">{{ $t("appServices.hotel.departure") }}</span></label>
                     </div>
                 </div>
 
                 <div class="bg-transparent p-4 mt-4 rounded-sm">
                     <label for="toggle-passager"></label>
                     <div
-                        class="relative bg-inherit border-2 border-gray-500 rounded px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
-                        <i class="fas fa-users absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
+                        <i class="fas fa-users absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                         <input type="text" id="travelers" name="travelers" v-model="formattedDateAller"
-                            class="opacity-0 peer bg-transparent h-14 w-56 rounded text-gray-200 pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                            class="opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
                         <label for="toggle-passager"
-                            class="absolute left-8 top-6 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <div class="flex items-center justify-center">
-                                <span class="text-gray-600">{{ adults+childrens }}{{ $t("appServices.hotel.persons") }} ,
-                                    {{ rooms }} {{ $t("appServices.hotel.rooms") }}
+                                <span class="text-black"><span class="text-lg">{{ totalPersons }}</span> <span class="text-sm font-medium">{{ $t("appServices.hotel.persons") }}</span> ,
+                                <span class="text-lg">{{ rooms.length }} </span> <span class="text-sm font-medium">{{ $t("appServices.hotel.rooms") }}</span>
                                 </span>
                                 <!-- Chevron down icon added here -->
-                                <svg class="w-4 h-4 text-gray-600 ml-4" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M19 9l-7 7-7-7">
-                                    </path>
-                                </svg>
+
                             </div>
                         </label>
                         <label for="travelers"
                             class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            {{ $t("appServices.hotel.travelers") }}</label>
+                            <span class="text-black">{{ $t("appServices.hotel.travelers") }}</span></label>
                     </div>
                 </div>
                 <div class="">
-                    <button @click="handleSearch" class="bg-customRed text-white w-full h-14 py-2 px-2 rounded mt-3">
+                    <button @click="handleSearch" class="bg-customRed text-white w-full h-14 py-2 px-2 rounded-lg mt-3">
                         {{ $t("appServices.agency.search") }}
                     </button>
                 </div>
@@ -427,7 +497,7 @@ zz
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
 import backgroundImage from "@/assets/bg-hotel.jpg";
 import LanguageButton from "@/components/buttons/LanguageButton.vue";
 import flatpickr from "flatpickr";
@@ -464,9 +534,9 @@ const formattedDateRetour = ref("");
 
 const currentLanguage = ref("en");
 const isSidebarOpen = ref(false);
-const adults = ref(1);
-const childrens = ref(0);
-const rooms = ref(1);
+// const adults = ref(1);
+// const childrens = ref(0);
+// const rooms = ref(1);
 
 
 const showFilter = ref(false);
@@ -482,14 +552,29 @@ const toggleDropdown = async () => {
     });
 };
 
-const addElement = () => {
-    rooms.value++;
+const rooms = ref([
+  { id: 1, adults: 1, childrens: 0 } // Une chambre par défaut
+]);
+
+// Ajouter une nouvelle chambre avec des valeurs indépendantes
+const addRoom = () => {
+  rooms.value.push({
+    id: rooms.value.length + 1, // ID unique
+    adults: 1, // Valeur par défaut
+    childrens: 0
+  });
 };
- const deleteElement = () => {
-    if (rooms.value > 1) {
-        rooms.value--;
-    }
+
+// Supprimer la dernière chambre (uniquement si > 1 chambre)
+const removeRoom = (index) => {
+  if (rooms.value.length > 1) {
+    rooms.value.splice(index, 1);
+  }
 };
+
+const totalPersons = computed(() => {
+  return rooms.value.reduce((total, room) => total + room.adults + room.childrens, 0);
+});
 
 const handleSearch = () => {
     showFilter.value = true;
@@ -509,7 +594,7 @@ const formatDate = (date) => {
 
 const _formatDate = (date) => {
     const options = {
-        weekday: "long",
+        weekday: "short",
         day: "2-digit",
         month: "short",
         year: "numeric",
@@ -551,7 +636,7 @@ const langChanged = (lang) => {
 //   };
 
 onMounted(() => {
-    rooms.value = 1;
+    // rooms.value = 1;
     isLoading.value = true;
     setTimeout(() => {
         isLoading.value = false;

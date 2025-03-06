@@ -295,6 +295,7 @@
       "departure": "Departure",
       "destination": "Destination",
       "persons": "Person(s)",
+      "room": "Room",
       "rooms": "Room(s)",
       "travelers": "Travelers"
     }
