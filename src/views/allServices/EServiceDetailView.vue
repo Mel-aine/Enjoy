@@ -54,9 +54,9 @@
 
   <div class="flex lg:flex-row justify-between flex-col mx-auto px-8">
     <div class="mx-auto">
-      <div class="flex md:flex-row flex-col md:space-y-0 space-y-4  mt-10 mb-7 space-x-2 items-center px-8 mx-8 ">
+      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-10 mb-7 space-x-2 items-center sm:px-8 mx-8 ">
       <!-- ajout button -->
-        <div class="border border-gray-200 bg-orange-500 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
+        <div class="border border-gray-200 bg-orange-500 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md ">
           <button class="flex flex-row items-center space-x-2 text-white hover:text-orange-600">
             <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z"/>
