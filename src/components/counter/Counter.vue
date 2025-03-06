@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-between w-full">
+    <div class="flex items-center justify-between mt-3 w-full">
       <!-- Texte -->
       <span class="whitespace-nowrap justify-start"><slot></slot></span>
   

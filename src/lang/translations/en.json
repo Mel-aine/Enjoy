@@ -293,6 +293,9 @@
       "hotelAnnouncement": "Make your reservation now and pay at the hotel. Cancellation is free.",
       "arrival": "Arrival",
       "departure": "Departure",
+      "destination": "Destination",
+      "persons": "Person(s)",
+      "rooms": "Room(s)",
       "travelers": "Travelers"
     }
   }
