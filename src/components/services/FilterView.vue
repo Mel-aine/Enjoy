@@ -29,7 +29,7 @@
         <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">
         {{$t('trie')}} :
         <button @click="showDropDown = !showDropDown" class="text-xs md:text-sm font-semibold flex items-center gap-1">
-            {{$t('recommand')}}
+             {{ selectedOption ? selectedOption : $t('recommand') }}
             <svg data-accordion-icon class="w-3 h-3  rotate-180 shrink-0 inline-flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
             </svg>
@@ -40,11 +40,8 @@
     </span>
     <ul v-if="showDropDown"
         class="custom-scrollbar text-lg sm:text-base absolute top-full   bg-white border border-purple-500 shadow-lg border-t-0 rounded-b-lg max-h-40 overflow-y-auto z-50 mt-1">
-        <li  class="px-5 py-2 cursor-pointer hover:bg-gray-200">
-          lllllllllllllllllllllllllll
-        </li>
-        <li  class="px-5 py-2 cursor-pointer hover:bg-gray-200">
-          lllllllllllllllllllllllllll
+        <li v-for="option in options" :key="option" @click="selectOption(option)" class="px-6 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"  >
+          {{ option }}
         </li>
       </ul>
   </div>
@@ -77,7 +74,14 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const showMenu = ref(false)
 const showDropDown = ref(false)
+const selectedOption = ref(null);
 
+function selectOption(option) {
+  selectedOption.value = option;
+  showDropDown.value = false;
+}
+
+const options = ['Recommanded', 'Discovered']
 function toggleMenu() {
   showMenu.value =!showMenu.value;
 }
