@@ -1,5 +1,5 @@
 <template>
-  <div class="p-5 space-y-5">
+  <div class="p-5 space-y-5  bg-white">
     <!-- Filtres -->
     <FilterSection :title="$t('filter')">
       <h2 class="text-gray-950 text-md mt-2">{{ $t('price') }}</h2>

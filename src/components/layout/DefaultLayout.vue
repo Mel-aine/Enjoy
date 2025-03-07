@@ -1,8 +1,6 @@
 <script setup>
 import Navbar from '../bars/Navbar.vue';
 import Footer from '../footer/Footer.vue';
-import { useFooterStore } from '@/stores/footer';
-const footerStore = useFooterStore();
 
 import { useRoute } from 'vue-router'; // Importer useRoute pour accéder à la route actuelle
 import { computed } from 'vue';
@@ -10,7 +8,8 @@ import EHHeaderView from '@/views/home/EHHeaderView.vue';
 
 const $route = useRoute();
 const showNavbar = computed(() => $route.meta.hideComponent);
-const showFooter = computed(() => $route.meta.hideComponent);
+//const showFooter = computed(() => $route.meta.hideComponent);
+const showFooter2 = computed(() => $route.meta.showFooter2);
 const showHeader2 = computed(() => $route.meta.showHeader2);
 
 
@@ -38,8 +37,8 @@ const showHeader2 = computed(() => $route.meta.showHeader2);
         <!-- ===== Main Content End ===== -->
   </div>
   <!-- ===== Page Wrapper End ===== -->
-  <div v-if="!showFooter">
-   <Footer :showMoreFooter =footerStore.getShowMoreFooter />
+  <div v-if="showFooter2">
+   <Footer />
   </div>
 </template>
 
