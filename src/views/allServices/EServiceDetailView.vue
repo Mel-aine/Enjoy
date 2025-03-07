@@ -54,10 +54,7 @@
   </div>
   <SearchHotel class="relative"></SearchHotel>
 
-
-  kkkkkk ici la modif
-
-  <div class="flex lg:flex-row justify-between flex-col mx-auto px-8 mt-10">
+  <div class="flex lg:flex-row justify-between flex-col mx-auto px-8 mt-20">
     <div class="mx-auto">
       <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-10 mb-7 space-x-2 items-center sm:px-8 mx-8 ">
       <!-- ajout button -->
