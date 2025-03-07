@@ -7,13 +7,13 @@
       <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
         <div class="flex w-full h-[420px]">
           <div class="flex-1 h-[420px]">
-            <img src="@/assets/bg-bus.jpg" class="w-full h-full object-cover" alt="">
+            <img src="@/assets/burger1.jpg" class="w-full h-full object-cover" alt="">
           </div>
           <div class="flex-1 h-[420px]">
-            <img src="@/assets/bg-bus.jpg" class="w-full h-full object-cover" alt="">
+            <img src="@/assets/burger3.jpg" class="w-full h-full object-cover" alt="">
           </div>
           <div class="flex-1 h-[420px]">
-            <img src="@/assets/bg-bus.jpg" class="w-full h-full object-cover" alt="">
+            <img src="@/assets/burger2.jpg" class="w-full h-full object-cover" alt="">
           </div>
         </div>
 
@@ -367,6 +367,11 @@ import InfoService from "@/components/review/InfoService.vue";
 import { ref, onUnmounted } from "vue";
 import ModalCategory from "@/components/modals/ModalCategory.vue";
 import { useI18n } from "vue-i18n";
+import inside1 from '@/assets/inside1.jpg';
+import inside2 from '@/assets/inside2.jpg';
+import outside2 from '@/assets/outside2.jpg';
+import outside1 from '@/assets/outside1.jpg';
+
 const { t } = useI18n();
 
 
@@ -389,20 +394,25 @@ defineProps({
     default: "",
   },
 });
-const images = ref([
-  "https://wallpaperaccess.com/full/1546182.jpg",
-  "https://wallpaperaccess.com/full/1546181.jpg",
-]);
+// const images = ref([
+//   "https://wallpaperaccess.com/full/1546182.jpg",
+//   "https://wallpaperaccess.com/full/1546181.jpg",
+// ]);
+
+const images = ref([inside1, inside2, outside1, outside2]);
+const images1 = ref([inside1, inside2]);
+const images2 = ref([outside1, outside2]);
+
 const currentIndex = ref(0);
 const currentIndex1 = ref(0);
 const currentIndex2 = ref(0);
 let interval = null;
 
 const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % images.value.length;
+  currentIndex.value = (currentIndex.value + 1) % images2.value.length;
 };
 const nextSlide2 = () => {
-  currentIndex2.value = (currentIndex2.value + 1) % images.value.length;
+  currentIndex2.value = (currentIndex2.value + 1) % images1.value.length;
 };
 
 const nextSlide1 = () => {
@@ -411,7 +421,7 @@ const nextSlide1 = () => {
 
 const prevSlide = () => {
   currentIndex.value =
-    (currentIndex.value - 1 + images.value.length) % images.value.length;
+    (currentIndex.value - 1 + images2.value.length) % images2.value.length;
 };
 const prevSlide1 = () => {
   currentIndex1.value =
@@ -419,7 +429,7 @@ const prevSlide1 = () => {
 };
 const prevSlide2 = () => {
   currentIndex2.value =
-    (currentIndex2.value - 1 + images.value.length) % images.value.length;
+    (currentIndex2.value - 1 + images1.value.length) % images1.value.length;
 };
 
 // Auto-play carousel
