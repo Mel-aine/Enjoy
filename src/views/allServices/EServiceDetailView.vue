@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="absolute top-[72%] left-[25%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
+    <div class="absolute top-[72%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
       <h1 class="mb-4 text-5xl font-extrabold text-white">Burgermeister</h1>
       <div class="flex items-center mb-4 sm:mb-3 md:mb-4 space-x-1">
         <span v-for="star in 5" :key="star" class="">
@@ -62,7 +62,7 @@
               <path stroke="none" d="M0 0h24v24H0z"/>
               <path d="M12 17.75l-6.172 3.245 1.179-6.873-4.993-4.867 6.9-1.002L12 2l3.086 6.253 6.9 1.002-4.993 4.867 1.179 6.873z" />
             </svg>
-            <span>{{$t('write_review')}}</span>
+            <span class=" font-normal text-md">{{$t('write_review')}}</span>
           </button>
         </div>
         <div class="border border-gray-200 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
@@ -73,7 +73,7 @@
               <path d="M5 7h1a2 2 0 0 0 2 -2a1 1 0 0 1 1 -1h3m9 6v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-9a2 2 0 0 1 2 -2" />
               <line x1="15" y1="6" x2="21" y2="6" />
             </svg>
-            <span>{{ $t('add_photo') }}</span>
+            <span class=" font-normal text-md">{{ $t('add_photo') }}</span>
           </button>
         </div>
         <div class="border border-gray-200 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
@@ -83,15 +83,15 @@
               <polyline points="16 6 12 2 8 6" />
               <line x1="12" y1="2" x2="12" y2="15" />
             </svg>
-            <span>{{$t('share')}}</span>
+            <span class=" font-normal text-md" >{{$t('share')}}</span>
           </button>
         </div>
-        <div class="border border-gray-200 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
+        <div class="border border-gray-200 py-2 lg:px-8 px-4 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
           <button class="flex flex-row items-center space-x-2 text-gray-950 hover:text-purple-600">
             <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
             </svg>
-            <span>{{$t('save')}}</span>
+            <span class=" font-normal text-md">{{$t('save')}}</span>
           </button>
         </div>
 
@@ -307,7 +307,7 @@
       </div>
 
       <div>
-            <div class="p-3 bg-white " v-if="opening_hours">
+            <div class="p-3 bg-white px-8 " v-if="opening_hours">
                 <table class="min-w-full table-auto border-collapse ">
                   <thead>
                     <tr class="bg-gray-100 ">
@@ -317,7 +317,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(schedule, index) in opening_hours" :key="index" class="border-b hover:bg-gray-50">
+                    <tr v-for="(schedule, index) in opening_hours" :key="index" class="border-b hover:bg-purple-50">
                       <td class="py-2 px-3 text-gray-800">{{ schedule.day }}</td>
                       <td class="py-2 px-3 text-gray-500">{{ schedule.open }}</td>
                       <td class="py-2 px-3 text-gray-500">{{ schedule.close }}</td>
