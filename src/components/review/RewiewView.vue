@@ -288,7 +288,7 @@ const reviewers = ref([
     photosCount: '20',
     rating: 5,
     comment: "Séjour exceptionnel à l'Hôtel Le Paradis ! L'emplacement est idéal, en plein cœur de la ville. La chambre était spacieuse et très bien équipée, avec une vue magnifique sur la mer. Le personnel a été d'une grande gentillesse et disponible tout au long de mon séjour. Le petit-déjeuner, servi sous forme de buffet, était copieux et délicieux.",
-    profilePicture: '@/assets/marie.jpg',
+    profilePicture: img,
     pictures:[
         { image: img },
         { image: bgBus },
@@ -304,7 +304,7 @@ const reviewers = ref([
     photosCount: '30',
     rating: 4,
     comment: "L'Hôtel Le Paradis est un bon hôtel. La chambre était propre et confortable. Le personnel était serviable. Le petit-déjeuner était correct, mais j'aurais aimé plus de choix. L'emplacement est un peu bruyant, mais pratique pour visiter la ville.",
-    profilePicture: '@/assets/jean.jpg',
+    profilePicture: img,
     pictures:[
         { image: img },
         { image: bgBus },
@@ -319,7 +319,7 @@ const reviewers = ref([
     photosCount: '15',
     rating: 3,
     comment: "Mon séjour à l'Hôtel Le Paradis a été mitigé. La chambre était petite et sombre. Le personnel était distant. Le petit-déjeuner était décevant. L'emplacement est bien situé, mais l'hôtel ne vaut pas son prix.",
-    profilePicture: '@/assets/sophie.jpg',
+    profilePicture: bgBus,
     pictures:[ ]
   },
   {
@@ -331,7 +331,7 @@ const reviewers = ref([
     photosCount: '40',
     rating: 5,
     comment: "J'ai passé un excellent séjour à l'Hôtel Le Paradis. La chambre était luxueuse et spacieuse, avec une vue imprenable sur la ville. Le personnel était aux petits soins. Le petit-déjeuner était un festin. L'emplacement est idéal pour découvrir la ville.",
-    profilePicture: '@/assets/pierre.jpg',
+    profilePicture: tour,
     pictures:[ ]
   },
 ]);
