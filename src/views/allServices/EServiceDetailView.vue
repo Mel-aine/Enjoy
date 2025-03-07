@@ -2,23 +2,24 @@
 
  <div class="min-h-screen bg-white">
   <!-- image -->
-  <div class="relative w-full h-[420px] top-0 overflow-hidden ">
+  <div class="relative w-full h-[620px] top-0 overflow-hidden ">
     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out flex">
       <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
-        <div class="flex w-full h-[420px]">
-          <div class="flex-1 h-[420px]">
+        <div class="flex w-full h-[720px]">
+          <div class="flex-1 h-[720px]">
             <img src="@/assets/burger1.jpg" class="w-full h-full object-cover" alt="">
           </div>
-          <div class="flex-1 h-[420px]">
+          <div class="flex-1 h-[720px]">
             <img src="@/assets/burger3.jpg" class="w-full h-full object-cover" alt="">
           </div>
-          <div class="flex-1 h-[420px]">
+          <div class="flex-1 h-[720px]">
             <img src="@/assets/burger2.jpg" class="w-full h-full object-cover" alt="">
           </div>
         </div>
 
       </div>
     </div>
+
 
     <div class="absolute top-[72%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
       <h1 class="mb-4 text-5xl font-extrabold text-white">Burgermeister</h1>
@@ -51,8 +52,9 @@
     </div>
 
   </div>
+  <SearchHotel class="relative"></SearchHotel>
 
-  <div class="flex lg:flex-row justify-between flex-col mx-auto px-8">
+  <div class="flex lg:flex-row justify-between flex-col mx-auto px-8 mt-20">
     <div class="mx-auto">
       <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-10 mb-7 space-x-2 items-center sm:px-8 mx-8 ">
       <!-- ajout button -->
@@ -366,6 +368,7 @@ import RewiewView from "@/components/review/RewiewView.vue";
 import InfoService from "@/components/review/InfoService.vue";
 import { ref, onUnmounted } from "vue";
 import ModalCategory from "@/components/modals/ModalCategory.vue";
+import SearchHotel from "@/components/search/SearchHotel.vue";
 import { useI18n } from "vue-i18n";
 import inside1 from '@/assets/inside1.jpg';
 import inside2 from '@/assets/inside2.jpg';

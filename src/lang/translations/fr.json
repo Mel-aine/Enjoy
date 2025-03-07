@@ -286,6 +286,20 @@
         "children": "Enfant(s)",
         "search": "Chercher",
         "today": "Aujourd’hui"
+    },
+    "hotel": {
+      "hotelAnnouncement": "Effectuez votre réservation maintenant et réglez à l'hôtel. L'annulation est gratuite.",
+      "arrival": "Arrivee",
+      "departure": "Depart",
+      "destination": "Destination",
+      "persons": "Personne(s)",
+      "room": "Chambre",
+      "question": "OU ALLEZ VOUS ?",
+      "info": "Aucune Recherche Recente",
+      "rooms": "Chambre(s)",
+      "addRoom": "Ajouter une chambre",
+      "deleteRoom" : "Supprimer une chambre",
+      "travelers": "Voyageurs"
     }
   },
   "open": "Ouvert",
@@ -338,24 +352,6 @@
   "thanks":"Merci",
   "lovethis" : "J'adore ça",
   "ohno" : "oh non"
-  
-
-  
-
-        },
-        "hotel": {
-          "hotelAnnouncement": "Effectuez votre réservation maintenant et réglez à l'hôtel. L'annulation est gratuite.",
-          "arrival": "Arrivee",
-          "departure": "Depart",
-          "destination": "Destination",
-          "persons": "Personne(s)",
-          "room": "Chambre",
-          "question": "OU ALLEZ VOUS ?",
-          "info": "Aucune Recherche Recente",
-          "rooms": "Chambre(s)",
-          "addRoom": "Ajouter une chambre",
-          "deleteRoom" : "Supprimer une chambre",
-          "travelers": "Voyageurs"
-        }
   }
-}
+
+  
