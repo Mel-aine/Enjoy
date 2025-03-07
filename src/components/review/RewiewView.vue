@@ -224,9 +224,12 @@
 <script setup>
 import {ref,computed} from 'vue'
 import { useI18n } from "vue-i18n";
-import img from '@/assets/img.jpg';
-import bgBus from '@/assets/bg-bus.jpg';
-import tour from '@/assets/tour.jpg';
+import burger1 from '@/assets/burger1.jpg';
+import burger2 from '@/assets/burger2.jpg';
+import burger4 from '@/assets/burger4.jpg';
+import profil1 from '@/assets/profil1.jpg';
+import profil2 from '@/assets/profil2.jpg';
+
 
 const { t } = useI18n();
 
@@ -287,12 +290,12 @@ const reviewers = ref([
     reviewsCount: '10',
     photosCount: '20',
     rating: 5,
-    comment: "Séjour exceptionnel à l'Hôtel Le Paradis ! L'emplacement est idéal, en plein cœur de la ville. La chambre était spacieuse et très bien équipée, avec une vue magnifique sur la mer. Le personnel a été d'une grande gentillesse et disponible tout au long de mon séjour. Le petit-déjeuner, servi sous forme de buffet, était copieux et délicieux.",
-    profilePicture: img,
+    comment: "Faites-le, vous ne serez pas déçu. Burger cuit à la perfection dans un quartier branché de la ville.",
+    profilePicture: profil1,
     pictures:[
-        { image: img },
-        { image: bgBus },
-        { image: tour },
+        { image: burger4 },
+        { image: burger1 },
+        { image: burger2 },
     ]
   },
   {
@@ -303,11 +306,11 @@ const reviewers = ref([
     reviewsCount: '15',
     photosCount: '30',
     rating: 4,
-    comment: "L'Hôtel Le Paradis est un bon hôtel. La chambre était propre et confortable. Le personnel était serviable. Le petit-déjeuner était correct, mais j'aurais aimé plus de choix. L'emplacement est un peu bruyant, mais pratique pour visiter la ville.",
-    profilePicture: img,
+    comment: "J'ai absolument adoré mon burger au bacon, au fromage et aux jalapeños. Les frites au bacon étaient très délicieuses ! Le personnel était agréable et serviable. J'ai pu m'asseoir dehors et profiter du paysage.",
+    profilePicture: profil2,
     pictures:[
-        { image: img },
-        { image: bgBus },
+        { image: burger2 },
+        { image: burger4 },
     ]
   },
   {
@@ -318,8 +321,8 @@ const reviewers = ref([
     reviewsCount: '8',
     photosCount: '15',
     rating: 3,
-    comment: "Mon séjour à l'Hôtel Le Paradis a été mitigé. La chambre était petite et sombre. Le personnel était distant. Le petit-déjeuner était décevant. L'emplacement est bien situé, mais l'hôtel ne vaut pas son prix.",
-    profilePicture: bgBus,
+    comment: "INCROYABLE. Le meilleur hamburger de restauration rapide que j'ai jamais mangé de ma vie. Ce hamburger va me manquer en Amérique mdr",
+    profilePicture: profil1,
     pictures:[ ]
   },
   {
@@ -330,8 +333,8 @@ const reviewers = ref([
     reviewsCount: '25',
     photosCount: '40',
     rating: 5,
-    comment: "J'ai passé un excellent séjour à l'Hôtel Le Paradis. La chambre était luxueuse et spacieuse, avec une vue imprenable sur la ville. Le personnel était aux petits soins. Le petit-déjeuner était un festin. L'emplacement est idéal pour découvrir la ville.",
-    profilePicture: tour,
+    comment: "Burger Meister avec frites et les 3 sauces. Le burger était juste correct. Il ne m'a pas fait aimer et savourer chaque bouchée, loin de là. Les frites étaient bonnes.",
+    profilePicture: profil2,
     pictures:[ ]
   },
 ]);
