@@ -296,7 +296,11 @@
       "destination": "Destination",
       "persons": "Person(s)",
       "room": "Room",
+      "question": "WHERE ARE YOU GOING ?",
       "rooms": "Room(s)",
+      "info": "No recent search",
+      "addRoom": "Add room",
+      "deleteRoom" : "Delete room",
       "travelers": "Travelers"
     }
   }

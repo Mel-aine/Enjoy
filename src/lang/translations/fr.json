@@ -294,7 +294,11 @@
           "destination": "Destination",
           "persons": "Personne(s)",
           "room": "Chambre",
+          "question": "OU ALLEZ VOUS ?",
+          "info": "Aucune Recherche Recente",
           "rooms": "Chambre(s)",
+          "addRoom": "Ajouter une chambre",
+          "deleteRoom" : "Supprimer une chambre",
           "travelers": "Voyageurs"
         }
   }
