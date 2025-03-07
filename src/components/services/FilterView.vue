@@ -3,14 +3,14 @@
   <!-- Bouton Hamburger -->
   <button
     @click="toggleMenu"
-    class="md:block absolute top-4 right-2 z-50 p-2 bg-gray-200 rounded lg:hidden"
+    class="md:block absolute  right-2  p-2 bg-gray-200 rounded lg:hidden"
   >
     ☰
   </button>
 
   <!-- category (filtre) -->
   <div :class="['lg:w-1/7 lg:min-w-[200px] p-6 bg-white text-white transition-all',
-       showMenu ? 'block absolute top-0 left-0 w-[90%] h-full z-40' : 'hidden lg:block']">
+       showMenu ? 'block absolute  left-0 w-[90%] h-full z-50' : 'hidden lg:block']">
     <Filter />
   </div>
 
@@ -24,13 +24,13 @@
          <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
     </div>
 
-    <div class="">
+    <div class="z-0">
       <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2  right-8 w-full md:w-auto">
         <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">
         {{$t('trie')}} :
-        <button class="text-xs md:text-sm font-semibold flex items-center">
-            {{$t('recommand')}}
-            <svg data-accordion-icon class="w-3 h-3 md:w-2 md:h-2 rotate-180 shrink-0 inline-flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+        <button @click="showDropDown = !showDropDown" class="text-xs md:text-sm font-semibold flex items-center gap-1">
+             {{ selectedOption ? selectedOption : $t('recommand') }}
+            <svg data-accordion-icon class="w-3 h-3  rotate-180 shrink-0 inline-flex" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
             </svg>
         </button>
@@ -38,10 +38,15 @@
             <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"/>
         </svg>
     </span>
-
+    <ul v-if="showDropDown"
+        class="custom-scrollbar text-lg sm:text-base absolute top-full   bg-white border border-purple-500 shadow-lg border-t-0 rounded-b-lg max-h-40 overflow-y-auto z-50 mt-1">
+        <li v-for="option in options" :key="option" @click="selectOption(option)" class="px-6 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer"  >
+          {{ option }}
+        </li>
+      </ul>
   </div>
   <div class="mt-7">
-      <RestaurantView />
+      <ServiceView />
   </div>
     </div>
 
@@ -49,7 +54,7 @@
 
 
   <!-- Carte (map) -->
-  <div  class="lg:w-[550px] lg:min-w-[250px] text-black flex items-center justify-center lg:relative lg:mt-0 md:mt-5 md:w-full md:min-h-[500px]">
+  <div  class="lg:w-[500px] lg:min-w-[250px] z-0 text-black flex items-center justify-center lg:relative lg:mt-0 md:mt-5 md:w-full md:min-h-[500px]">
   <MapView />
   </div>
 
@@ -60,14 +65,23 @@
 
 <script setup>
 import Filter from './Filter.vue'
-import  RestaurantView from './RestaurantView.vue'
+import  ServiceView from './ServiceView.vue'
 import MapView from './MapView.vue'
 import { computed,ref } from 'vue';
 import { useI18n } from "vue-i18n";
 
+
 const { t } = useI18n();
 const showMenu = ref(false)
+const showDropDown = ref(false)
+const selectedOption = ref(null);
 
+function selectOption(option) {
+  selectedOption.value = option;
+  showDropDown.value = false;
+}
+
+const options = ['Recommanded', 'Discovered']
 function toggleMenu() {
   showMenu.value =!showMenu.value;
 }

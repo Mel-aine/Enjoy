@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="flex flex-col  md:flex-row  justify-center gap-4">
     <div class="min-h-screen flex flex-col  p-4">
       <button @click="back" class="flex flex-row items-center mb-2 hover:bg-gray-100 px-1 py-1 w-[100px] rounded-lg">
@@ -178,12 +179,21 @@
 
 
     </div>
-    <div class="mt-10">
+    <div class="mt-10 px-8">
       <DetailCommand/>
     </div>
     <!-- Sidebar -->
       <SeatReservation :isSidebarOpen="isSidebarOpen" @close="closeSidebar" @update:selectedSeats="handleSeatUpdate" />
+      
   </div>
+  <footer class="bg-white text-gray-800 p-4 text-center ">
+        <img
+          src="@/assets/voy.png"
+          alt="Logo Flixbus"
+          class="mx-auto mb-2 w-full h-[300px]"
+        />
+      </footer>
+</div>
 </template>
 <script setup>
 import DetailCommand from '../../components/Travels/DetailCommand.vue';
