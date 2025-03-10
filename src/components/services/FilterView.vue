@@ -9,7 +9,7 @@
   </button>
 
   <!-- category (filtre) -->
-  <div :class="['lg:w-1/7 lg:min-w-[200px] p-6 bg-white text-white transition-all',
+  <div :class="['lg:w-[300px] lg:min-w-[200px] p-4 bg-white text-white transition-all',
        showMenu ? 'block absolute  left-0 w-[90%] h-full z-50' : 'hidden lg:block']">
     <Filter />
   </div>
@@ -18,10 +18,13 @@
   <div class="flex-1 flex flex-col p-5 items-start">
 
     <div class="text-gray-700 text-sm">
-      <span v-for="(tab, i) in pathSegments" :key="i">
+      <!-- <span v-for="(tab, i) in pathSegments" :key="i">
         {{ tab }} <span v-if="i !== pathSegments.length - 1"> > </span>
+      </span> -->
+      <span >
+        {{ $t('categories.' + textSearch) }}
       </span>
-         <h1 class="text-gray-950 font-bold text-xl"> {{ textSearch }} </h1>
+         <h1 class="text-gray-950 font-bold text-xl"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} </h1>
     </div>
 
     <div class="z-0">
@@ -45,8 +48,20 @@
         </li>
       </ul>
   </div>
-  <div class="mt-7">
-      <ServiceView />
+  <div class="mt-7 translate-x-8 space-y-4">
+      <!-- <ServiceView /> -->
+    <div  v-for =" item in filteredPlaces" :key="item.id">
+    <ServiceCard
+      :title=item.name
+      :description=item.description
+      :rating="item.rating"
+      :localisation = item.address
+      :hours=item.open_until
+      :category="item.category"
+      :image="item.images"
+      :search="item.route"
+    />
+  </div>
   </div>
     </div>
 
@@ -65,9 +80,11 @@
 
 <script setup>
 import Filter from './Filter.vue'
-import  ServiceView from './ServiceView.vue'
+import { Categories } from '@/mocks/categories';
+import ServiceCard from '@/components/card/ServiceCard.vue' ;
 import MapView from './MapView.vue'
-import { computed,ref } from 'vue';
+import { useRoute } from 'vue-router';
+import { computed,ref,onMounted } from 'vue';
 import { useI18n } from "vue-i18n";
 
 
@@ -75,22 +92,47 @@ const { t } = useI18n();
 const showMenu = ref(false)
 const showDropDown = ref(false)
 const selectedOption = ref(null);
+const route = useRoute();
+const category = ref('');
+const filteredPlaces = ref([]);
+const textSearch = ref('');
+
+
+
 
 function selectOption(option) {
   selectedOption.value = option;
   showDropDown.value = false;
 }
 
-const options = ['Recommanded', 'Discovered']
+const options = ['Recommanded', 'Nombre d avis','Avis positifs']
 function toggleMenu() {
   showMenu.value =!showMenu.value;
 }
- 
-const path = '/Restaurants /Burger'
-const pathSegments = computed(() =>
-  path.split('/').filter(segment => segment.trim() !== '')
-);
-const textSearch = computed(() => t('les_meilleurs_burgers'));
+
+// const path = route.params.id
+// const pathSegments = computed(() =>
+//   path.split('/').filter(segment => segment.trim() !== '')
+// );
+//const textSearch = computed(() => t('les_meilleurs_burgers'));
+
+onMounted(() => {
+  category.value = route.params.id;
+  console.log(category.value);
+  const selectedCategory = Categories.find(cat => cat.id === category.value);
+  textSearch.value = selectedCategory.label
+  console.log(textSearch.value)
+  console.log("selectedCategory", selectedCategory);
+  if (selectedCategory) {
+    filteredPlaces.value = selectedCategory.places;
+
+  }
+
+  console.log("filteredPlaces.value", filteredPlaces.value);
+
+});
+
+
 </script>
 <style scoped>
 

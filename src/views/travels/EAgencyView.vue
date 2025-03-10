@@ -76,8 +76,8 @@
               <!-- Contenu de la sidebar -->
 
               <div class="flex flex-col items-center justify-between w-full md:w-auto md:order-1" id="navbar-sticky">
-                <ul class="flex flex-col p-1 md:p-0 mt-4 font-medium  
-                            md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0  
+                <ul class="flex flex-col p-1 md:p-0 mt-4 font-medium
+                            md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0
                             dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
 
                   <CustomDropdownD :menuData="menuRestaurants" columnClass="grid-cols-2">
@@ -94,8 +94,8 @@
 
                   <router-link class="px-5 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
-                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.trackATrip') }}
                     </span>
@@ -103,8 +103,8 @@
 
                   <router-link class="px-6 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
-                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.help') }}
                     </span>
@@ -201,7 +201,7 @@
     </div>
 
     <!-- ✅ Ajout de la classe peer-checked pour mettre en avant la div -->
-    <div id="maDivPrincipale" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-xl min-w-screen-sm p-4 shadow-lg 
+    <div id="maDivPrincipale" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-xl min-w-screen-sm p-4 shadow-lg
                   transition-all peer-checked:shadow-2xl peer-checked:scale-105 peer-checked:bg-white">
 
       <div class="flex space-x-4 mx-auto px-4 py-4 rounded-md w-full">
@@ -368,6 +368,27 @@ import 'flatpickr/dist/flatpickr.min.css';
 import { French, English } from 'flatpickr/dist/l10n/fr.js';
 import Counter from '@/components/counter/Counter.vue';
 import FilterTravel from '@/components/Travels/FilterTravel.vue';
+import { Categories } from '@/mocks/categories';
+import { useRoute } from 'vue-router';
+const route = useRoute();
+const place = ref('')
+const filteredPlaces = ref([]);
+const places = ref('Travel');
+
+onMounted(() => {
+  place.value = route.params.id;
+  console.log(place.value);
+
+  // Récupération des données des lieux et filtrage
+  selectedPlace.value = Categories.filter((place) => place.label === places.value);
+  if (selectedPlace) {
+    filteredPlaces.value = selectedCategory.places;
+
+  }
+
+  console.log(filteredPlaces.value);
+
+});
 
 // import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '@/components/icons/BaseIcon.vue';
@@ -437,7 +458,7 @@ const langChanged = (lang) => {
   const today = new Date();
   formattedDateAller.value = formatDate(today);
   formattedDateRetour.value = formatDate(today);
-  
+
   console.log('formattedDateAller.value' , formattedDateAller.value);
 
 

@@ -184,11 +184,11 @@
     </div>
     <!-- Sidebar -->
       <SeatReservation :isSidebarOpen="isSidebarOpen" @close="closeSidebar" @update:selectedSeats="handleSeatUpdate" />
-      
+
   </div>
   <footer class="bg-white text-gray-800 p-4 text-center ">
         <img
-          src="@/assets/voy.png"
+          src="@/assets/bus3.png"
           alt="Logo Flixbus"
           class="mx-auto mb-2 w-full h-[300px]"
         />

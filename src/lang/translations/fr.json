@@ -119,7 +119,7 @@
 
   "category": "Catégories",
   "categories": {
-    "Restauration": "Restauration",
+    "Restaurants": "Restaurants",
     "Vie nocturne": "Vie nocturne",
     "Shopping": "Shopping",
     "Sports & Activités de loisirs": "Sports & activités de loisirs",
@@ -139,7 +139,7 @@
     "Services financiers": "Services financiers",
     "Formation & Enseignement": "Formation & enseignement",
     "Organisation religieuse": "Organisation religieuse",
-    "Voyage": "Voyage",
+    "Travel": "Voyage",
     "Média": "Média",
     "Cafés & Thés": "Cafés & thés"
   },
@@ -206,7 +206,7 @@
   "full_bar": "Bar complet",
   "good_for_brunch": "Bon pour le brunch",
   "takes_reservations": "Prend des réservations",
-  "les_meilleurs_burgers": "Les meilleurs burgers",
+  "les_meilleurs": "Les meilleurs",
   "recommand":"Recommandé",
   "trie": "Trié",
   "monday": "Lundi",
@@ -351,7 +351,8 @@
   "hepful":"Utile",
   "thanks":"Merci",
   "lovethis" : "J'adore ça",
-  "ohno" : "oh non"
+  "ohno" : "oh non",
+  "open_until" : "Ouvert jusqu'à"
   }
 
   

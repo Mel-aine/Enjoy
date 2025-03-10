@@ -8,7 +8,7 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      meta: { showFooter2:true}, 
+      meta: { showFooter2:true},
     },
     {
       path: '/about',
@@ -30,31 +30,31 @@ const router = createRouter({
       meta: { hideComponent: true },
     },
     {
-      path: '/recherche',
+      path: '/recherche/:id',
       name: 'recherche',
       component: () => import('../components/services/FilterView.vue'),
-      meta: { hideComponent: true , showHeader2:true ,showFooter2:true}, 
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('../views/user/ELoginView.vue'),
-      meta: { hideComponent: true, }, 
+      meta: { hideComponent: true, },
 
     },
     {
       path: '/addBusiness',
       name: 'addBusiness',
       component: () => import('../views/EAddBusiness.vue'),
-      meta: { showFooter2:true}, 
+      meta: { showFooter2:true},
     },
     {
       path: '/checkout',
       name: 'checkout',
       component: () => import('../views/travels/ECheckingView.vue'),
-      meta: { hideComponent: true , showHeader2:false}, 
+      meta: { hideComponent: true , showHeader2:false},
     },    {
-      path: '/agency',
+      path: '/travel/:id',
       name: 'agency',
       component: () => import('../views/travels/EAgencyView.vue'),
       meta: { hideComponent: true },
@@ -64,7 +64,7 @@ const router = createRouter({
       path: '/all_service',
       name: 'all_service',
       component: () => import('@/views/allServices/EServiceDetailView.vue'),
-      meta: { hideComponent: true , showHeader2:true ,showFooter2:true}, 
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
 
   ],

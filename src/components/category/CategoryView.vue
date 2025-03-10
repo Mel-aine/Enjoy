@@ -4,7 +4,7 @@
     <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 md:space-x-2 max-w-screen-lg mx-auto justify-center ">
 
         <div v-for="category in mainCategories" :key="category.id" >
-          <router-link :to="category.route ">
+          <router-link :to="'/recherche/' + category.id">
             <CategoryCard
               :name="$t('categories.' + category.label)"
               :icon="category.icon"
