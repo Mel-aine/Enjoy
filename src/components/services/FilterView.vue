@@ -93,11 +93,9 @@ import { Categories } from '@/mocks/categories';
 import ServiceCard from '@/components/card/ServiceCard.vue' ;
 import MapView from './MapView.vue'
 import { useRoute } from 'vue-router';
-import { computed,ref,onMounted } from 'vue';
-import { useI18n } from "vue-i18n";
+import { ref,onMounted } from 'vue';
 
 
-const { t } = useI18n();
 const showMenu = ref(false)
 const showDropDown = ref(false)
 const selectedOption = ref(null);
