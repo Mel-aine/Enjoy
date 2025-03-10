@@ -15,7 +15,7 @@
       </button>
     </div>
   <!-- Bouton de filtre -->
-  
+
   <div class="flex items-center justify-between gap-3  flex-col md:flex-row sm:gap-2 w-full max-w-[740px] mx-8 ">
     <div class="border rounded-full px-2 pl-2 space-x-1 border-gray-300 flex items-center justify-start text-gray-800 hover:bg-gray-200 cursor-pointer">
       <svg class="h-5 w-5 text-slate-500"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="14" cy="6" r="2" />  <line x1="4" y1="6" x2="12" y2="6" />  <line x1="16" y1="6" x2="20" y2="6" />  <circle cx="8" cy="12" r="2" />  <line x1="4" y1="12" x2="6" y2="12" />  <line x1="10" y1="12" x2="20" y2="12" />  <circle cx="17" cy="18" r="2" />  <line x1="4" y1="18" x2="15" y2="18" />  <line x1="19" y1="18" x2="20" y2="18" /></svg>
@@ -67,13 +67,14 @@
 
   </div>
   </div>
-  <footer class="bg-white text-gray-800 p-4 text-center ">
-        <img
-          src="@/assets/voy.png"
-          alt="image"
-          class="mx-auto mb-2 w-full h-[300px]"
-        />
+  <footer class="bg-white text-gray-800 p-4 text-center">
+  <img
+    src="@/assets/bus3.png"
+    alt="image"
+    class="mb-2 h-[300px] mx-auto  w-full"
+  />
   </footer>
+
 </div>
 </template>
 
@@ -82,7 +83,7 @@ import { ref } from 'vue';
 import CardView from './CardView.vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from "vue-i18n";
-const { t, locale } = useI18n();  
+const { t, locale } = useI18n();
 
 
 const router = useRouter();

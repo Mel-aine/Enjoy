@@ -3,7 +3,7 @@
     <!-- Filtres -->
     <FilterSection :title="$t('filter')">
       <h2 class="text-gray-950 text-md mt-2">{{ $t('price') }}</h2>
-      <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between px-3 w-full max-w-xs mt-2">
+      <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between md:px-1 px-3 w-full md:w-[160px] mt-2">
         <span v-for="(symbol, index) in priceOptions" :key="index"
               class="text-gray-800 px-2 text-sm font-medium" :class="{ 'border-l': index > 0, 'border-gray-300': index > 0 }">
           {{ symbol }}
@@ -18,7 +18,7 @@
 
     <!-- Categories -->
     <FilterSection :title="$t('categorie')">
-      <div class="grid grid-cols-2 gap-2 space-x-2">
+      <div class="flex flex-row flex-wrap gap-2 w-[200px]">
         <RoundedButton v-for="item in mainCategory" :key="item.id" :label="item" />
         <button type="button" @click="isModalOpen = true" class="text-customBlueVariant font-bold hover:underline">{{ $t('see') }}</button>
       </div>

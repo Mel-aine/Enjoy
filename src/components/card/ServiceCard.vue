@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden w-full max-w-4xl mx-auto md:w-[650px]"
+    class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden w-full max-w-4xl mx-auto md:w-[800px]  transition-transform transform hover:scale-105 "
   >
     <!-- Image / Carousel -->
     <div class="relative w-full md:w-1/2 lg:w-1/3">
@@ -11,7 +11,7 @@
           :style="{ transform: 'translateX(' + -currentIndex * 100 + '%)' }"
         >
           <div
-            v-for="(img, index) in images"
+            v-for="(img, index) in image"
             :key="index"
             class="w-full flex-shrink-0"
           >
@@ -27,9 +27,11 @@
       <!-- Slider controls -->
       <button
         @click="prevSlide"
+        :disabled="currentIndex === 0"
         type="button"
         class="absolute top-1/2 left-0 z-30 flex items-center justify-center h-10 w-10 transform -translate-y-1/2 px-4 cursor-pointer group focus:outline-none"
-      >
+        :class="{'opacity-30 cursor-not-allowed': currentIndex === 0}"
+        >
         <span
           class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
         >
@@ -54,9 +56,11 @@
 
       <button
         @click="nextSlide"
+        :disabled="currentIndex === props.image.length - 1"
         type="button"
         class="absolute top-1/2 right-0 z-30 flex items-center justify-center h-10 w-10 transform -translate-y-1/2 px-4 cursor-pointer group focus:outline-none"
-      >
+        :class="{'opacity-30 cursor-not-allowed': currentIndex === props.image.length - 1 }"
+        >
         <span
           class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none"
         >
@@ -82,12 +86,12 @@
 
     <!-- Contenu -->
     <div class="flex flex-col justify-between p-5 w-full md:w-1/2 h-[250px]">
-      <a
-        href="/agency"
+      <router-link
+      :to="search"
         class="mb-1 sm:mb-2 md:mb-1 text-sm md:text-md sm:text-lg lg:text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
       >
         {{ title }}
-      </a>
+      </router-link>
 
       <!-- Étoiles -->
       <div class="flex items-center mb-1 sm:mb-2 md:mb-1">
@@ -154,7 +158,7 @@
                 />
               </svg>
               <span class="text-xs sm:text-sm truncate md:text-md"
-                >Open until -</span
+                >{{$t('open_until')}}-</span
               >
               <strong class="ml-1 md:text-sm">{{ hours }}</strong>
             </div>
@@ -164,12 +168,13 @@
 
       <!-- Description -->
       <div
-        class=" mb-1 text-sm md:text-base font-normal text-gray-700 dark:text-gray-400"
+        class=" mb-1 text-sm md:text-base font-normal text-gray-700 dark:text-gray-400 "
       >
-        <div class="items-start flex">
+        <div class="items-start flex  w-[450px] ">
+          <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-10 h-10 text-gray-500 mr-2 mt-1"
+            class="w-4 h-4 text-gray-500 mr-2 mt-1 "
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -177,17 +182,27 @@
               d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 15h-2v-2h2zm0-4h-2V7h2z"
             />
           </svg>
-          <p
-            class="text-sm  md:text-sm text-gray-500 sm:text-sm"
+        </div>
+          <!-- <p
+            class="text-sm  md:text-sm text-gray-500 sm:text-sm truncate w-[900px]"
           >
             {{ description }}
-          </p>
+          </p> -->
+
+            <!-- Afficher uniquement une partie du texte avec une condition -->
+            <p class="text-sm md:text-sm text-gray-500 sm:text-sm ">
+              {{ truncatedText }}
+            </p>
+            <button v-if="isTruncated" @click="showMore = !showMore" class="text-purple-500 mt-1 hover:underline">
+              {{ showMore ? $t('Moins') : $t('continuer') }}
+            </button>
+
         </div>
         <!-- Bouton -->
         <div
-          class="flex md:flex-row flex-col md:flex-wrap lg:flex-wrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5"
+          class="flex md:flex-row flex-col md:flex-nowrap lg:flex-nowrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5"
         >
-          <RoundedButton v-for="item in label" :key="item.id" :label="item" />
+          <RoundedButton v-for="item in category" :key="item.id" :label="item" />
         </div>
       </div>
     </div>
@@ -195,35 +210,32 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted,computed } from "vue";
 import RoundedButton from "../filter/RoundedButton.vue";
-defineProps({
+const props = defineProps({
   title: String,
-  image: {
-    type: String,
-    required: true,
-    default: "",
-  },
+  image: String,
   description: String,
   rating: Number,
   localisation: String,
   hours: String,
-  label: Array,
+  category: Array,
+  search: String,
 });
-const images = ref([
-  "https://wallpaperaccess.com/full/1546182.jpg",
-  "https://wallpaperaccess.com/full/1546181.jpg",
-]);
+// const images = ref([
+//   "https://wallpaperaccess.com/full/1546182.jpg",
+//   "https://wallpaperaccess.com/full/1546181.jpg",
+// ]);
 const currentIndex = ref(0);
 let interval = null;
 
 const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % images.value.length;
+  currentIndex.value = (currentIndex.value + 1) % props.image.length;
 };
 
 const prevSlide = () => {
   currentIndex.value =
-    (currentIndex.value - 1 + images.value.length) % images.value.length;
+    (currentIndex.value - 1 + props.image.length) % props.image.length;
 };
 
 // Auto-play carousel
@@ -233,5 +245,24 @@ const prevSlide = () => {
 
 onUnmounted(() => {
   clearInterval(interval);
+});
+
+
+
+
+const maxSentences = 1;
+const showMore = ref(false); // Pour gérer l'affichage du texte complet
+const isTruncated = ref(true); // Pour savoir si le texte est tronqué
+
+// Fonction pour récupérer les 2 premières phrases ou tout le texte
+const truncatedText = computed(() => {
+  const sentences = props.description.split('. ');
+  const visibleText = sentences.slice(0, showMore.value ? sentences.length : maxSentences).join('. ');
+  if (sentences.length > maxSentences) {
+    isTruncated.value = true;
+  } else {
+    isTruncated.value = false;
+  }
+  return visibleText + (isTruncated.value ? '...' : '');
 });
 </script>

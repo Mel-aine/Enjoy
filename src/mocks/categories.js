@@ -1,53 +1,93 @@
+import image1 from '@/assets/imagesRestaurants/osan/image1.jpg';
+import image2 from '@/assets/imagesRestaurants/osan/image2.jpg';
+import image3 from '@/assets/imagesRestaurants/osan/image3.jpg';
+import image4 from '@/assets/imagesRestaurants/osan/image4.jpg';
+import vin from '@/assets/imagesRestaurants/osan/vin.jpg';
+import grill from '@/assets/imagesRestaurants/grill/grill.jpg';
+import grill1 from '@/assets/imagesRestaurants/grill/grill1.jpg';
+import grill2 from '@/assets/imagesRestaurants/grill/grill2.jpg';
+import grill3 from '@/assets/imagesRestaurants/grill/grill3.jpg';
+import african from '@/assets/imagesRestaurants/african/african.jpg';
+import africain1 from '@/assets/imagesRestaurants/african/african1.jpg';
+import cerise from '@/assets/imageTravel/cerise/cerise.jpg';
+import cerise1 from '@/assets/imageTravel/cerise/cerise1.jpg';
+import men1 from '@/assets/imageTravel/agence/men1.jpg';
+import buca1 from '@/assets/imageTravel/agence/buca1.jpg';
+import men from '@/assets/imageTravel/agence/men.jpg';
+import buca from '@/assets/imageTravel/agence/buca.jpg';
+import mont from '@/assets/hotel/mont.jpg';
+import mont1 from '@/assets/hotel/mont1.jpg';
+import djeuga from '@/assets/hotel/djeuga.jpg';
+
 
 export const Categories = [
     {
-      id: "REST-001",
-      label: "Restauration",
-      route: "/recherche",
+      id: "restaurant",
+      label: "Restaurants",
+      //route: "/recherche/restaurants",
       icon: "fa fa-utensils",
       places: [
         {
           id: "PLACE-REST-001",
-          name: "Le Gourmet",
-          description: "Restaurant gastronomique proposant des plats raffinés.",
-          address: "Bastos, Yaoundé",
-          location: "3.8700° N, 11.5001° E",
+          name: "O'san",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating : "4",
+          location: "Bloc SONEL",
           phone: "+237690111222",
-          email: "contact@legourmet.cm",
           opening_hours: [
             { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
             { day: "Samedi", open: "14h00", close: "00h00" },
             { day: "Dimanche", open: "Fermé", close: "Fermé" }
           ],
-          min_price: "10,000 FCFA",
-          status: "active",
-          logo: "logo",
-          images: []
+          open_until: "01h00 ",
+          category: ["Restauration", "Restaurant", "Cave à vins", "Bar"],
+          images: [image1, image2, image3, image4, vin]
         },
         {
           id: "PLACE-REST-002",
-          name: "Chez Tantie",
-          description: "Restaurant populaire offrant des plats camerounais traditionnels.",
-          address: "Mvog-Mbi, Yaoundé",
-          location: "3.8550° N, 11.5050° E",
+          name: "Grill And Garden Artisan Barbecue",
+          description: " Grill and Garden Artisan Barbecue est un restaurant qui se distingue par son ambiance conviviale et ses délicieuses grillades",
+          address: "Yassa, Douala, CM",
+          location: "Yassa face ancien pesage, derriere Foka Construction",
           phone: "+237690333444",
           email: "contact@cheztantie.cm",
+          rating : "4",
           opening_hours: [
             { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
             { day: "Samedi", open: "14h00", close: "00h00" },
             { day: "Dimanche", open: "Fermé", close: "Fermé" }
           ],
           min_price: "3,500 FCFA",
-          status: "active",
-          logo: "logo",
-          images: []
+          open_until: "01h00 ",
+          category: ["Restauration", "Restaurant"],
+          images: [grill, grill1, grill2, grill3]
+        },
+        {
+          id: "PLACE-REST-003",
+          name: "African Food By Emy ",
+          description: " African Food by Emy est un véritable joyau culinaire qui célèbre les saveurs authentiques de la cuisine camerounaise.",
+          address: "Nlongkak, YAOUNDE, CM",
+          location: " Feu vallée nlongkak",
+          phone: "+237690333444",
+          email: "contact@cheztantie.cm",
+          rating : "4",
+          opening_hours: [
+            { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+            { day: "Samedi", open: "14h00", close: "00h00" },
+            { day: "Dimanche", open: "Fermé", close: "Fermé" }
+          ],
+          min_price: "3,500 FCFA",
+          open_until: "01h00 ",
+          category: ["Restauration", "Restaurant"],
+          images: [african, africain1]
         }
       ]
     },
     {
-      id: "SHOP-001",
+      id: "shopping",
       label: "Shopping",
-      route: "/recherche",
+     // route: "/recherche/shopping",
       icon: "fa fa-shopping-bag",
       places: [
         {
@@ -66,14 +106,13 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         },
       ]
     },
     {
-      id: "VIE-001",
+      id: "vie nocturne",
       label: "Vie nocturne",
-      route: "/recherche",
       icon: "fa fa-glass-cheers",
       places: [
         {
@@ -92,14 +131,13 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         },
       ]
     },
     {
-      id: "SPORT-001",
+      id: "sport",
       label: "Sports & Activités de loisirs",
-      route: "/recherche",
       icon: "fa fa-football-ball",
       places: [
         {
@@ -118,13 +156,12 @@ export const Categories = [
           min_price: "15,000 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "FASH-001",
+      id: "salon",
       label: "Salons de beauté & Spas",
-      route: "/recherche",
       icon: "fa fa-spa",
       places: [
         {
@@ -143,7 +180,7 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         },
 
 
@@ -164,14 +201,13 @@ export const Categories = [
           min_price: "Variable",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         }
       ]
     },
     {
-      id: "TRAN-001",
+      id: "automobile",
       label: "Automobile",
-      route: "/recherche",
       icon: "fa fa-bus",
       places: [
         {
@@ -190,7 +226,7 @@ export const Categories = [
           min_price: "7,500 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         },
         {
           id: "PLACE-TRAN-002",
@@ -208,15 +244,14 @@ export const Categories = [
           min_price: "2,000 FCFA",
           status: "active",
           logo: "logo",
-          images: []
+          images: [image1]
         }
       ]
     },
 
     {
-      id: "MAIS-001",
+      id: "maison",
       label: "Maisons & Travaux",
-      route: "/recherche",
       icon: "fa fa-home",
       places: [
         {
@@ -234,15 +269,13 @@ export const Categories = [
           ],
           min_price: "7,500 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         },
       ]
     },
     {
-      id: "COF-001",
+      id: "cafe",
       label: "Cafés & Thés",
-      route: "/recherche",
       icon: "fa fa-coffee",
       places: [
         {
@@ -260,14 +293,12 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "ALI-001",
+      id: "alimentation",
       label: "Alimentations",
-      route: "/recherche",
       icon: "fa fa-apple-alt",
       places: [
         {
@@ -285,14 +316,12 @@ export const Categories = [
           ],
           min_price: " 5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "LOI-001",
+      id: "art",
       label: "Art & Loisirs",
-      route: "/recherche",
       icon: "fa fa-palette",
       places: [
         {
@@ -310,14 +339,12 @@ export const Categories = [
           ],
           min_price: "Consultation: 5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "SEC-001",
+      id: "sante",
       label: "Santé & Médical",
-      route: "/recherche",
       icon: "fa fa-briefcase-medical",
       places: [
         {
@@ -335,14 +362,12 @@ export const Categories = [
           ],
           min_price: "Consultation: 5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "SERV-001",
+      id: "services",
       label: "Services destiné aux prof",
-      route: "/recherche",
       icon: "fa fa-shield-alt",
       places: [
         {
@@ -360,14 +385,12 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "ANI-001",
+      id: "animaux",
       label: "Animaux de companie",
-      route: "/recherche",
       icon: "fa fa-paw",
       places: [
         {
@@ -385,14 +408,12 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
        },]
     },
     {
-      id: "IMM-001",
+      id: "immobilier",
       label: "Immobilier",
-      route: "/recherche",
       icon: "fa fa-home",
       places: [
         {
@@ -410,23 +431,23 @@ export const Categories = [
           ],
           min_price: "7,500 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         },
       ]
     },
 
     {
-      id: "HOTEL-001",
+      id: "hotel",
       label: "Hôtels & Séjours",
-      route: "/recherche",
       icon: "fa fa-hotel",
       places: [
         {
           id: "PLACE-HOTEL-001",
           name: "Hôtel Mont Fébé",
+          route : "/all_service",
           description: "Un hôtel luxueux avec une vue panoramique sur Yaoundé.",
           address: "Mont Fébé, Yaoundé",
+          rating : 4,
           location: "3.8869° N, 11.5021° E",
           phone: "+237690987654",
           email: "contact@montfebe.cm",
@@ -436,15 +457,17 @@ export const Categories = [
             { day: "Dimanche", open: "Fermé", close: "Fermé" }
           ],
           min_price: "50,000 FCFA",
-          status: "active",
-          logo: "logo",
-          images: []
+          open_until: "01h00 ",
+          category: ["Sites Touristiques", "Habitat"],
+          images: [mont, mont1]
         },
         {
             id: "PLACE-HOTEL-002",
             name: "Hilton Yaoundé",
+            route : "/all_service",
             description: "Hôtel 5 étoiles avec restaurants raffinés, piscine et centre de remise en forme.",
             address: "Centre-ville, Yaoundé",
+            rating : 5,
             location: "3.8640° N, 11.5174° E",
             phone: "+237677654321",
             email: "contact@hiltonyaounde.cm",
@@ -454,10 +477,30 @@ export const Categories = [
               { day: "Dimanche", open: "Fermé", close: "Fermé" }
             ],
             min_price: "80,000 FCFA",
-            status: "active",
-            logo: "logo",
-            images: [ ]
+            open_until: "01h00 ",
+            category: ["Hotels Et Hebergements"],
+            images: [ mont1]
         },
+        {
+          id: "PLACE-HOTEL-003",
+          name: "Djeuga Palace Hotel",
+          route : "/all_service",
+          description: "Situé au Quartier Warda à Yaoundé à environ 21 km de l'aéroport international de Yaoundé Nsimalen, avec un service de navette aéroport disponible sur demande pour plus de commodité",
+          address: "Warda, Yaoundé, CM",
+          rating : 5,
+          location: "AVENUE NARVICK",
+          phone: "+237677654321",
+          email: "contact@hiltonyaounde.cm",
+          opening_hours: [
+            { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+            { day: "Samedi", open: "14h00", close: "00h00" },
+            { day: "Dimanche", open: "Fermé", close: "Fermé" }
+          ],
+          min_price: "80,000 FCFA",
+          open_until: "01h00 ",
+          category: ["Hotels Et Hebergements", "Hôtel"],
+          images: [ djeuga]
+      },
 
     ]
 
@@ -465,7 +508,6 @@ export const Categories = [
     {
       id: "ENT-001",
       label: "Services Locaux",
-      route: "/recherche",
       icon: "fa fa-map-marker-alt",
       places: [
         {
@@ -483,15 +525,13 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         },
       ]
     },
     {
       id: "TOUR-001",
       label: "Organisation d événements",
-      route: "/recherche",
       icon: "fa fa-calendar-alt",
       places: [
         {
@@ -509,8 +549,7 @@ export const Categories = [
           ],
           min_price: "2,000 FCFA",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         },
 
       ]
@@ -519,7 +558,6 @@ export const Categories = [
     {
       id: "ADMIN-001",
       label: "Services publics & gouvernement",
-      route: "/recherche",
       icon: "fa fa-landmark",
       places: [
         {
@@ -537,8 +575,7 @@ export const Categories = [
             ],
             min_price: "Variable",
             status: "active",
-            logo: "logo",
-            images: []
+            images: [image1]
         },
 
         ]
@@ -548,7 +585,6 @@ export const Categories = [
     {
         id: "FIN-001",
         label: "Services financiers",
-        route: "/recherche",
         icon: "fa fa-chart-line",
         places: [
           {
@@ -566,15 +602,13 @@ export const Categories = [
             ],
             min_price: "N/A",
             status: "active",
-            logo: "logo",
-            images: []
+            images: [image1]
           }
          ]
     },
     {
       id: "FORM-001",
       label: "Formation & Enseignement",
-      route: "/recherche",
       icon: "fa fa-pencil-alt",
       places: [
         {
@@ -592,15 +626,13 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         }
        ]
     },
     {
       id: "RELI-001",
       label: "Organisation religieuse",
-      route: "/recherche",
       icon: "fa fa-church",
       places: [
         {
@@ -618,23 +650,23 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         }
        ]
     },
     {
-      id: "COUL-001",
-      label: "Voyage",
-      route: "/recherche",
+      id: "travel",
+      label: "Travel",
       icon: "fa fa-bus",
       places: [
         {
-          id: "PLACE-COUL-001",
-          name: "Services",
-          description: "description",
-          address: "Hôtel de Ville, Yaoundé",
-          location: "3.8767° N, 11.5198° E",
+          id: "PLACE-TRAV-001",
+          name: "Cerise Express Vip Yaoundé",
+          route : "/travel/PLACE-TRAV-001",
+          description: "Agence de transport interurbain haut de gamme au Cameroun, CERISES EXPRESS VIP, c'est la classe !!!",
+          address: "Tsinga, Carrefour Fecafoo, Yaoundé, CM",
+          location: "Tsinga, Carrefour Fecafoo",
+          rating: 2,
           phone: "+237696789012",
           email: "contact@mairieyaounde.cm",
           opening_hours: [
@@ -642,17 +674,56 @@ export const Categories = [
             { day: "Samedi", open: "14h00", close: "00h00" },
             { day: "Dimanche", open: "Fermé", close: "Fermé" }
           ],
-          min_price: "N/A",
-          status: "active",
-          logo: "logo",
-          images: []
+          open_until: "01h00 ",
+          category: ["Transport", "Agence de voyage"],
+          images: [cerise1, cerise]
+
+        },
+        {
+          id: "PLACE-TRAV-002",
+          name: "Men Travel Yaoundé",
+          route : "/travel/PLACE-TRAV-002",
+          description: "MEN TRAVEL est une agence de voyage, qui vous offre une autre vision du voyage. Le numéro mobile de paiement est donné via un appel standard et il s'agit en effet d'un code marchand avec pour identifiant MEN TRAVEL. Soyez vigilants",
+          address: " Nylon bastos, Yaoundé, CM",
+          location: "Nylon bastos face l’agence d’électrification rurale",
+          phone: "+237696789012",
+          rating: 2,
+          email: "contact@mairieyaounde.cm",
+          opening_hours: [
+            { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+            { day: "Samedi", open: "14h00", close: "00h00" },
+            { day: "Dimanche", open: "Fermé", close: "Fermé" }
+          ],
+          open_until: "01h00 ",
+          category: ["Transport", "Agence de voyage"],
+          images: [men1, men]
+
+        },
+        {
+          id: "PLACE-TRAV-003",
+          name: "Buca Voyages Yaoundé",
+          route : "/travel/PLACE-TRAV-003",
+          description: "Buca Voyages propose des services de transport entre les principales villes du Cameroun, notamment Yaoundé, Douala, Ebolowa. Elle met l'accent sur la sécurité, le confort et la ponctualité.",
+          address: "Mvan, YAOUNDE, CM",
+          rating: 1,
+          location: "Mvan",
+          phone: "+237696789012",
+          email: "contact@mairieyaounde.cm",
+          opening_hours: [
+            { day: "Lundi - Vendredi", open: "12h00", close: "23h00" },
+            { day: "Samedi", open: "14h00", close: "00h00" },
+            { day: "Dimanche", open: "Fermé", close: "Fermé" }
+          ],
+          open_until: "01h00 ",
+          category: ["Transport", "Agence de voyage"],
+          images: [buca1, buca]
+
         }
       ]
     },
     {
       id: "MEDI-001",
       label: "Média",
-      route: "/recherche",
       icon: "fa fa-newspaper",
       places: [
         {
@@ -670,8 +741,7 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
-          logo: "logo",
-          images: []
+          images: [image1]
         }
       ]
     },

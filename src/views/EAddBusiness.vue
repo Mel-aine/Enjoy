@@ -14,14 +14,26 @@
 
         <div>
           <span class="block text-sm text-gray-950 font-semibold mb-1">{{ $t('horaires') }}</span>
-          <div class="flex flex-col md:flex-row gap-4 w-full pb-2">
+          <div v-for="time in Info.schedules" :key="time" class="space-x-2">
+            <span class="text-sm text-customBlue font-semibold">{{ time.jours }}</span>
+            <span class="text-sm text-gray-950 font-semibold">{{ time.hdebut }} - {{ time.hfin }}</span>
+            <button class=" text-customRed  hover:underline" @click="removeSchedule(time)">{{ $t('supprimer') }}</button>
+
+          </div>
+          <div class="flex flex-col md:flex-row gap-4 w-full justify-center items-center pb-2">
             <FloatingSelect :options="Jours" class="w-full md:w-[500px]" v-model="schedules.jours"/>
-            <FloatingSelect :options="HDebut" class="w-full md:w-[500px]" v-model="schedules.hdebut" />
-            <FloatingSelect :options="HFin" class="w-full md:w-[500px]" v-model="schedules.hfin"/>
+            <!-- <FloatingSelect :options="HDebut" class="w-full md:w-[500px]" v-model="schedules.hdebut" />
+            <FloatingSelect :options="HFin" class="w-full md:w-[500px]" v-model="schedules.hfin"/> -->
+
+            <FloatingInput :inputType="'time'" class="-translate-y-0.5"  v-model="schedules.hdebut"/>
+            <FloatingInput :inputType="'time'" class="-translate-y-0.5" v-model="schedules.hfin"/>
+
             <!-- <button class="bg-customRed text-white px-4 py-2 rounded-lg hover:bg-customBlue">Ajouter</button> -->
             <Button @click ="addSchedule" variant="danger" class="py-2"> {{ $t('ajouter') }}</Button>
           </div>
         </div>
+
+
 
         <FloatingInput :lb="$t('category')" v-model="Info.category"/>
         <FloatingInput :inputType="email" :lb="$t('adress_email')" v-model="Info.email"/>
@@ -52,15 +64,16 @@ const Jours = computed(()=>[
   {value: 'sunday', label: t('sunday')},
 ])
 
-const HDebut = Array.from({length: 24}, (_, i) => ({ value: i + 1, label: `${i + 1}h` })).reverse()
+// const HDebut = Array.from({length: 24}, (_, i) => ({ value: i + 1, label: `${i + 1}h` })).reverse()
 
-const HFin = Array.from({length: 24}, (_, i) => ({ value: i + 1, label: `${i + 1}h` }))
+// const HFin = Array.from({length: 24}, (_, i) => ({ value: i + 1, label: `${i + 1}h` }))
 const Business = ref([])
 const schedules = ref({
   jours : '',
   hdebut : '',
   hfin : '',
 })
+
 const Info = ref({
   address1 : '',
   address2 : '',
@@ -96,5 +109,9 @@ const addBusiness = () =>{
   schedules : [],
 })
   console.log("00000",Business.value)
+}
+
+const removeSchedule = (schedule) => {
+  Info.value.schedules = Info.value.schedules.filter(item => item!== schedule)
 }
 </script>
