@@ -3,14 +3,21 @@
   <!-- Bouton Hamburger -->
   <button
     @click="toggleMenu"
-    class="md:block absolute  right-2  p-2 bg-gray-200 rounded lg:hidden"
+    class="md:block absolute  right-auto  p-2 bg-gray-200 rounded lg:hidden"
   >
     ☰
   </button>
 
   <!-- category (filtre) -->
-  <div :class="['lg:w-[300px] lg:min-w-[200px] p-4 bg-white text-white transition-all',
-       showMenu ? 'block absolute  left-0 w-[90%] h-full z-50' : 'hidden lg:block']">
+  <div :class="['lg:w-1/7 lg:min-w-[200px] p-6 bg-white text-white transition-all',
+       showMenu ? 'block absolute  left-0 w-full h-full z-50' : 'hidden lg:block']">
+       <!-- <span class="text-gray-950">oiuiu</span> -->
+       <button
+          @click="toggleMenu"
+          class="md:block absolute text-black right-auto bg-gray-200 rounded lg:hidden"
+        >
+          ☰
+        </button> 
     <Filter />
   </div>
 
@@ -19,6 +26,8 @@
 
     <div class="text-gray-700 text-sm">
       <!-- <span v-for="(tab, i) in pathSegments" :key="i">
+    <div class="text-gray-700 text-sm ml-5">
+      <span v-for="(tab, i) in pathSegments" :key="i">
         {{ tab }} <span v-if="i !== pathSegments.length - 1"> > </span>
       </span> -->
       <span >

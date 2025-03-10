@@ -3,7 +3,7 @@
     <div>
       <button @click="toggleDropdown" :class="buttonClasses" class="px-4 py-2 rounded-sm">
         <slot name="button">Menu</slot>
-        <i class="fa fa-chevron-down text-xs ml-1"></i>
+        <i class="fa fa-chevron-down text-xs ml-1" :class="props.iconColor"></i>
       </button>
     </div>
 
@@ -29,6 +29,10 @@ const props = defineProps({
   footerDropdown: {
     type: Boolean,
     default: false
+  },
+  iconColor: {
+    type: String,
+    default: "text-white" 
   }
 });
 
