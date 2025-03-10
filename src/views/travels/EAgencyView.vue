@@ -94,7 +94,7 @@
 
                   <router-link class="px-5 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
+                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500 
                                   dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.trackATrip') }}
@@ -103,7 +103,7 @@
 
                   <router-link class="px-6 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 
+                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500 
                                   dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.help') }}
@@ -124,11 +124,10 @@
 
 
         <div class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Agency Bus</span>
+          <span class="self-center text-white text-2xl font-semibold whitespace-nowrap dark:text-white">Agency Bus</span>
         </div>
-        <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse mr-7">
+        <div class="flex text-white md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse mr-7">
           <LanguageButton @changeLang="langChanged" />
-
         </div>
         <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
           <ul
@@ -145,12 +144,12 @@
             </CustomDropdownD>
             <router-link to="/recherche" class="px-3 py-5">
               <span
-                class="block text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
+                class="block text-white rounded-sm hover:bg-customRed md:hover:bg-transparent md:hover:text-customRed md:p-0 md:dark:hover:text-customRed dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
                   $t('appServices.agency.trackATrip') }}</span>
             </router-link>
             <router-link to="/recherche" class="px-3 py-5">
               <span
-                class="block  text-white rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
+                class="block  text-white rounded-sm hover:bg-customRed md:hover:bg-transparent md:hover:text-customRed md:p-0 md:dark:hover:text-customRed dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">{{
                   $t('appServices.agency.help') }}</span>
             </router-link>
           </ul>
