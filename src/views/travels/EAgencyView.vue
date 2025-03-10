@@ -380,9 +380,9 @@ onMounted(() => {
   console.log(place.value);
 
   // Récupération des données des lieux et filtrage
-  selectedPlace.value = Categories.filter((place) => place.label === places.value);
+ const selectedPlace = Categories.filter((place) => place.label === places.value);
   if (selectedPlace) {
-    filteredPlaces.value = selectedCategory.places;
+    filteredPlaces.value = selectedPlace.places;
 
   }
 
