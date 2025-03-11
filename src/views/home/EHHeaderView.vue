@@ -78,7 +78,7 @@
           </ul>
         </div>
       </div>
-  <!-- search bar for mobile end -->
+      <!-- search bar for mobile end -->
   
   
         <!-- Menu Principal (Desktop) -->
@@ -239,15 +239,15 @@
         </div>
       </div>
   
-      <div id="menuToggle" class="container relative block md:hidden">
+      <!-- <div id="menuToggle" class="container relative block md:hidden"> -->
         <!-- <button @click="resetSearchBar" class="relative block md:hidden">
             <BaseIcon  name="CircleX" customColor="text-customRed" size="18" stroke-width="2"></BaseIcon>
         </button> -->
-      </div>
+      <!-- </div> -->
   
   <!-- div masquer sur les mobiles start -->
-      <div class="hidden md:block ml-[10.5%] px-1 py-4 flex flex-col lg:flex-row text-black">
-        <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
+  <div class="hidden md:block container mx-auto px-[172px] py-4 flex flex-col lg:flex-row">
+    <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
           <template #button>
             <span class="text-black">{{$t('navbar.restaurant')}}</span>
             <!-- <i class="fa fa-chevron-down text-xs ml-1 text-black"></i> -->
