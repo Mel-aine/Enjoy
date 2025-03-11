@@ -13,7 +13,7 @@
       <div v-show="isOpen" class="border-b-4 border-customRed w-[110px]"></div>
       <div
         class="bg-white left-0  transform w-auto origin-top rounded-lg rounded-tl-none shadow-lg transition-opacity duration-300 p-3 min-w-max ">
-        <ul :class="['grid', props.columnClass, 'gap-x-3 gap-y-2', 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3']">
+        <ul :class="['grid', props.columnClass, 'gap-x-3 gap-y-2', 'grid-cols-1 md:grid-cols-2 ']">
           <li v-for="item in props.menuData.slice(0, 8)" :key="item.route" class="flex items-center">
             <router-link :to="item.route"
               class="text-md w-full text-gray-700 hover:bg-gray-300 p-2 flex items-center space-x-2 min-w-max">

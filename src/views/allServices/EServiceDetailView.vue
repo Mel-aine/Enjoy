@@ -2,17 +2,17 @@
 
  <div class="min-h-screen bg-white">
   <!-- image -->
-  <div class="relative w-full h-[620px] top-0 overflow-hidden ">
+  <div class="relative w-full h-[470px] top-0 overflow-hidden ">
     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out flex">
       <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
-        <div class="flex w-full h-[720px]">
-          <div class="flex-1 h-[720px]">
+        <div class="flex w-full h-[470px]">
+          <div class="flex-1 h-[470px]">
             <img src="@/assets/burger1.jpg" class="w-full h-full object-cover" alt="">
           </div>
-          <div class="flex-1 h-[720px]">
+          <div class="flex-1 h-[470px]">
             <img src="@/assets/burger3.jpg" class="w-full h-full object-cover" alt="">
           </div>
-          <div class="flex-1 h-[720px]">
+          <div class="flex-1 h-[470px]">
             <img src="@/assets/burger2.jpg" class="w-full h-full object-cover" alt="">
           </div>
         </div>
@@ -21,7 +21,7 @@
     </div>
 
 
-    <div class="absolute top-[72%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
+    <div class="absolute top-[52%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
       <h1 class="mb-4 text-5xl font-extrabold text-white">Burgermeister</h1>
       <div class="flex items-center mb-4 sm:mb-3 md:mb-4 space-x-1">
         <span v-for="star in 5" :key="star" class="">
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="absolute lg:top-[85%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-0 lg:py-2 py-0 rounded-md hover:bg-white/15">
+    <div class="absolute lg:top-[45%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-0 lg:py-2 py-0 rounded-md hover:bg-white/15">
       <button @click="isModalOpen = true" class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-white transition-transform duration-300 hover:scale-110">
         {{ $t('see_photo') }}
       </button>
@@ -56,7 +56,7 @@
 
   <div class="flex lg:flex-row justify-between flex-col mx-auto px-8 mt-20">
     <div class="mx-auto">
-      <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-10 mb-7 space-x-2 items-center sm:px-8 mx-8 ">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-40 mb-7 space-x-2 items-center sm:px-8 mx-8 md:mt-10 lg:mt-10 ">
       <!-- ajout button -->
         <div class="border border-gray-200 bg-orange-500 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md ">
           <button class="flex flex-row items-center space-x-2 text-white hover:text-orange-600">
@@ -105,15 +105,15 @@
           <span class="text-gray-950  font-semibold text-xl">{{ $t('whats') }}</span>
         </div>
       </div>
-      <div class="w-full md:flex md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 mx-8">
-        <div class="flex flex-col items-center w-[200px] bg-white ">
+      <div class="w-full md:flex md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 md:mx-8 lg:mx-8 ">
+        <div class="flex flex-col items-center w-[300px] md:w-[200px] bg-white ">
         <!-- Image / Carousel -->
         <div class="relative w-full">
           <!-- Carousel wrapper -->
           <div class="relative h-[150px] overflow-hidden rounded-t-lg">
             <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: 'translateX(' + -currentIndex * 100 + '%)' }" >
               <div v-for="(img, index) in images" :key="index" class="w-full flex-shrink-0">
-                <img :src="img" alt="Menu Item" class="object-cover w-full h-48 md:h-40 lg:h-48 rounded-t-lg transform hover:scale-105 transition-transform duration-300" />
+                <img :src="img" alt="Menu Item" class="object-cover w-full  h-48 md:h-40 lg:h-48 rounded-t-lg transform hover:scale-105 transition-transform duration-300" />
               </div>
             </div>
           </div>
@@ -161,7 +161,7 @@
           </div>
         </div>
         </div>
-        <div class="flex flex-col items-center w-[200px] bg-white ">
+        <div class="flex flex-col items-center w-[300px] md:w-[200px] bg-white ">
         <!-- Image / Carousel -->
         <div class="relative w-full">
           <!-- Carousel wrapper -->
@@ -216,7 +216,7 @@
           </div>
         </div>
         </div>
-        <div class="flex flex-col items-center w-[200px] bg-white ">
+        <div class="flex flex-col items-center w-[300px] md:w-[200px] bg-white ">
         <!-- Image / Carousel -->
         <div class="relative w-full">
           <!-- Carousel wrapper -->
@@ -277,7 +277,7 @@
         <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
       </div>
       <!-- Horaires et emplacement -->
-        <div class="flex flex-row items-center gap-4 px-8 mx-8 justify-between">
+        <div class="flex flex-row items-center gap-4 px-8 md:mx-8 lg:mx-8 justify-between">
           <span class="text-gray-950  font-semibold text-xl">{{ $t('location_schedule') }}</span>
           <div class="">
             <button @click="isModalOpen=true" class="text-black font-medium text-lg hover:underline inline-flex gap-2 ">{{ $t('suggest_edit') }}
@@ -289,7 +289,7 @@
         </div>
         <div class="flex sm:flex-row flex-col">
           <div>
-        <div class=" px-8 mx-8 my-7">
+        <div class=" px-8 md:mx-8 lg:mx-8 my-7">
           <a href="">
             <img src="@/assets/staticmap.png" />
           </a>
