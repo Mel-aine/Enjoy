@@ -67,13 +67,13 @@
 
   </div>
   </div>
-  <footer class="bg-white text-gray-800 p-4 text-center">
+  <!-- <footer class="bg-white text-gray-800 p-4 text-center">
   <img
     src="@/assets/bus3.png"
     alt="image"
     class="mb-2 h-[300px] mx-auto  w-full"
   />
-  </footer>
+  </footer> -->
 
 </div>
 </template>

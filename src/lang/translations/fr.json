@@ -353,7 +353,25 @@
   "thanks":"Merci",
   "lovethis" : "J'adore ça",
   "ohno" : "oh non",
-  "open_until" : "Ouvert jusqu'à"
-  }
+  "open_until" : "Ouvert jusqu'à",
+  "recommanded" : "Recommandé",
+  "numberReview" : "Nombre d'avis",
+  "schedule": {
+    "monday": "Lundi",
+    "tuesday": "Mardi",
+    "wednesday": "Mercredi",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "saturday": "Samedi",
+    "sunday": "Dimanche"
+  },
+  "restaurantMenu":"Menu du Restaurant",
+  "seeMore": "Voir Plus" ,
+  "addToCard" : "Ajouter au panier",
+  "totalDish" : "Plats totaux",
+  "totalAmount" : "Montant total",
+  "placeOrder": "Passer la commande"
+  
+}
 
   

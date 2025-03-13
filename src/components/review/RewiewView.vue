@@ -3,7 +3,7 @@
   <div class="mb-4 sm:mb-0">
     <span class=" text-md font-semibold text-black">{{$t('overall_rate')}}</span>
     <div class="flex items-center  my-2 sm:my-1 md:my-1 space-x-1 ">
-        <span v-for="star in 5" :key="star" class=" ">
+        <span v-for="star in rating" :key="star" class=" ">
           <svg v-if="star <= rating" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-white rounded-md bg-orange-500 p-1" viewBox="0 0 24 24">
             <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z" />
           </svg>
@@ -224,11 +224,12 @@
 <script setup>
 import {ref,computed} from 'vue'
 import { useI18n } from "vue-i18n";
-import burger1 from '@/assets/burger1.jpg';
-import burger2 from '@/assets/burger2.jpg';
-import burger4 from '@/assets/burger4.jpg';
-import profil1 from '@/assets/profil1.jpg';
-import profil2 from '@/assets/profil2.jpg';
+import burger1 from '@/assets/hotel/mont2.jpg';
+import burger2 from '@/assets/hotel/mont1.jpg';
+import burger4 from '@/assets/hotel/djeuga.jpg';
+import profil1 from '@/assets/hotel/djeuga.jpg';
+import profil2 from '@/assets/hotel/mont2.jpg';
+
 
 
 const { t } = useI18n();
@@ -245,7 +246,9 @@ const options2 = computed(()=>[t('English(52)'), t('German(42)'), t('Spanish(10)
 const options3 = computed(()=>[t('5stars'), t('4stars'), t('3stars'),t('2stars'),t('1star'),t('All_rating')]);
 
 
-
+defineProps({
+  rating : Number
+})
 const toggleDropdown = (index) => {
   if (openDropdown.value === index) {
     openDropdown.value = null;
@@ -290,7 +293,7 @@ const reviewers = ref([
     reviewsCount: '10',
     photosCount: '20',
     rating: 5,
-    comment: "Faites-le, vous ne serez pas déçu. Burger cuit à la perfection dans un quartier branché de la ville.",
+    comment: "Hôtel fantastique. Personnel fantastique. Mention spéciale à l'incroyable personnel de sécurité. Lors de notre séjour avec des invités de marque, nous avons pu nous déplacer facilement dans l'établissement. Un merci spécial à Ugur Aktepe pour son aide. Un bel exemple de sécurité avec grâce et professionnalisme !! Merci encore.",
     profilePicture: profil1,
     pictures:[
         { image: burger4 },
@@ -306,7 +309,7 @@ const reviewers = ref([
     reviewsCount: '15',
     photosCount: '30',
     rating: 4,
-    comment: "J'ai absolument adoré mon burger au bacon, au fromage et aux jalapeños. Les frites au bacon étaient très délicieuses ! Le personnel était agréable et serviable. J'ai pu m'asseoir dehors et profiter du paysage.",
+    comment: "Excellent emplacement, chambres magnifiquement conçues et l'hospitalité exceptionnelle qui fait la renommée . Fortement recommandé pour votre prochain séjour .",
     profilePicture: profil2,
     pictures:[
         { image: burger2 },
@@ -321,7 +324,7 @@ const reviewers = ref([
     reviewsCount: '8',
     photosCount: '15',
     rating: 3,
-    comment: "INCROYABLE. Le meilleur hamburger de restauration rapide que j'ai jamais mangé de ma vie. Ce hamburger va me manquer en Amérique mdr",
+    comment: "J'ai passé un très bon séjour dans cet hôtel. Le service de chambre était très aimable et professionnel et j'ai trouvé l'emplacement idéal. La chambre était spacieuse et je n'ai eu aucun problème de bruit. J'ai hâte d'y retourner. Cordialement,",
     profilePicture: profil1,
     pictures:[ ]
   },
@@ -333,7 +336,7 @@ const reviewers = ref([
     reviewsCount: '25',
     photosCount: '40',
     rating: 5,
-    comment: "Burger Meister avec frites et les 3 sauces. Le burger était juste correct. Il ne m'a pas fait aimer et savourer chaque bouchée, loin de là. Les frites étaient bonnes.",
+    comment: "Toujours le meilleur service, la nourriture, les chambres. Du personnel d'accueil au concierge, c'est ma maison , je n'essaierai jamais autre chose.",
     profilePicture: profil2,
     pictures:[ ]
   },

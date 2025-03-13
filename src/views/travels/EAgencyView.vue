@@ -94,8 +94,8 @@
 
                   <router-link class="px-5 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500 
-                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.trackATrip') }}
                     </span>
@@ -103,8 +103,8 @@
 
                   <router-link class="px-6 py-5">
                     <span class="block text-white rounded-sm hover:bg-white/50 md:hover:bg-transparent px-2
-                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500 
-                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white 
+                                  md:hover:text-customRed md:p-0 md:dark:hover:text-blue-500
+                                  dark:text-white dark:hover:bg-gray-700 dark:hover:text-white
                                   md:dark:hover:bg-transparent dark:border-gray-700">
                       {{ $t('appServices.agency.help') }}
                     </span>
@@ -123,8 +123,8 @@
         <!-- sidebar mobile start -->
 
 
-        <div class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span class="self-center text-white text-2xl font-semibold whitespace-nowrap dark:text-white">Agency Bus</span>
+        <div  v-if="filteredPlace" class="flex items-center space-x-3 rtl:space-x-reverse">
+          <span class="self-center text-white text-2xl font-semibold whitespace-nowrap dark:text-white"> {{ filteredPlace }}</span>
         </div>
         <div class="flex text-white md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse mr-7">
           <LanguageButton @changeLang="langChanged" />
@@ -369,25 +369,6 @@ import Counter from '@/components/counter/Counter.vue';
 import FilterTravel from '@/components/Travels/FilterTravel.vue';
 import { Categories } from '@/mocks/categories';
 import { useRoute } from 'vue-router';
-const route = useRoute();
-const place = ref('')
-const filteredPlaces = ref([]);
-const places = ref('Travel');
-
-onMounted(() => {
-  place.value = route.params.id;
-  console.log(place.value);
-
-  // Récupération des données des lieux et filtrage
- const selectedPlace = Categories.filter((place) => place.label === places.value);
-  if (selectedPlace) {
-    filteredPlaces.value = selectedPlace.places;
-
-  }
-
-  console.log(filteredPlaces.value);
-
-});
 
 // import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '@/components/icons/BaseIcon.vue';
@@ -413,6 +394,25 @@ const picked = ref('aller-simple');
 const adults = ref(1);
 const children = ref(0);
 const showFilter = ref(false);
+const route = useRoute();
+const filteredPlaces = ref([]);
+const filteredPlace = ref("");
+const travelId = route.params.id;
+
+onMounted(() => {
+const selectedCategory = Categories.find(category => category.label === "Travel");
+
+if (selectedCategory) {
+    filteredPlaces.value = selectedCategory.places
+      const place = selectedCategory.places.find(place => place.id === travelId);
+      filteredPlace.value = place ? place.name : null;
+      console.log("filteredPlaces", filteredPlaces.value);
+
+}
+
+
+});
+
 
 const handleSearch = () => {
   showFilter.value = true;
