@@ -3,26 +3,31 @@
   <!-- Bouton Hamburger -->
   <button
     @click="toggleMenu"
-    class="md:block absolute  right-auto  p-2 bg-gray-200 rounded lg:hidden"
+    class="md:block absolute  right-5 px-2 items-center p-1 bg-gray-200 rounded-full mt-2 lg:hidden space-x-1"
   >
-    ☰
+  <BaseIcon name="Filter" size="20" stroke-width="2" class="text-black inline-flex" />
+  <span class="text-sm font-medium">{{ $t('filter') }}</span>
   </button>
 
   <!-- category (filtre) -->
-  <div :class="['lg:w-1/7 lg:min-w-[200px] p-6 bg-white text-white transition-all',
-       showMenu ? 'block absolute  left-0 w-full h-full z-50' : 'hidden lg:block']">
+
+  <div :class="['lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white',
+       showMenu ? 'block absolute  left-0 w-full h-screen z-50 ' : 'hidden lg:block  ']">
        <!-- <span class="text-gray-950">oiuiu</span> -->
+
        <button
-          @click="toggleMenu"
-          class="md:block absolute text-black right-auto bg-gray-200 rounded lg:hidden"
+          @click="showMenu = false"
+          class="md:block absolute text-black right-5 bg-gray-200 rounded-full  lg:hidden"
         >
-          ☰
-        </button> 
-    <Filter />
+        <svg class="h-7 w-7 text-gray-900"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="11 7 6 12 11 17" />  <polyline points="17 7 12 12 17 17" /></svg>
+        </button>
+           <Filter />
+
   </div>
 
+
   <!-- Contenu principal -->
-  <div class="flex-1 flex flex-col p-5 items-start">
+  <div class="flex-1 flex flex-col p-5 items-start mx-auto px-2">
 
     <div class="text-gray-700 text-sm">
       <!-- <span v-for="(tab, i) in pathSegments" :key="i">
@@ -57,7 +62,7 @@
         </li>
       </ul>
   </div>
-  <div class="mt-7 translate-x-8 space-y-4">
+  <div class="mt-7 lg:translate-x-8 translate-x-0 space-y-4">
       <!-- <ServiceView /> -->
     <div  v-for =" item in filteredPlaces" :key="item.id">
     <ServiceCard
@@ -91,9 +96,11 @@
 import Filter from './Filter.vue'
 import { Categories } from '@/mocks/categories';
 import ServiceCard from '@/components/card/ServiceCard.vue' ;
+import BaseIcon from '../icons/BaseIcon.vue';
 import MapView from './MapView.vue'
 import { useRoute } from 'vue-router';
-import { ref,onMounted } from 'vue';
+import { ref,onMounted,computed } from 'vue';
+import { useI18n } from "vue-i18n";
 
 
 const showMenu = ref(false)
@@ -103,6 +110,7 @@ const route = useRoute();
 const category = ref('');
 const filteredPlaces = ref([]);
 const textSearch = ref('');
+const { t } = useI18n();
 
 
 
@@ -112,7 +120,7 @@ function selectOption(option) {
   showDropDown.value = false;
 }
 
-const options = ['Recommanded', 'Nombre d avis','Avis positifs']
+const options = computed(()=>[t('recommanded'), t('numberReview'),t('positive_review')])
 function toggleMenu() {
   showMenu.value =!showMenu.value;
 }
@@ -146,4 +154,5 @@ onMounted(() => {
 .transition-all {
   transition: all 0.3s ease-in-out;
 }
+
 </style>

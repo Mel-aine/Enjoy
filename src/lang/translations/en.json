@@ -355,6 +355,23 @@
   "thanks":"Thanks",
   "lovethis" : "Love this",
   "ohno" : "Oh no",
-  "open_until" : "Open until"
+  "open_until" : "Open until",
+  "recommanded" : "Recommended",
+  "numberReview" : "Number of reviews",
+  "schedule": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "restaurantMenu":"Restaurant Menu",
+  "seeMore": "See More",
+  "addToCard" : "Add to Card",
+  "totalDish" : "Total Dishes",
+  "totalAmount" : "Total Amount",
+  "placeOrder" : "Place Order"
 
 }
