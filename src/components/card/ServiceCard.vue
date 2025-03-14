@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden w-full max-w-4xl mx-auto md:w-[800px]  transition-transform transform hover:scale-105 "
+    class="flex flex-col md:flex-row items-center px-8 shadow-sm rounded-lg overflow-hidden sm:w-[800px] max-w-4xl mx-auto w-[390px]  transition-transform transform hover:scale-105 "
   >
     <!-- Image / Carousel -->
     <div class="relative w-full md:w-1/2 lg:w-1/3">
@@ -170,7 +170,7 @@
       <div
         class=" mb-1 text-sm md:text-base font-normal text-gray-700 dark:text-gray-400 "
       >
-        <div class="items-start flex  w-[450px] ">
+        <div class="items-start flex  sm:w-[450px] w-[300px]  ">
           <div>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +190,7 @@
           </p> -->
 
             <!-- Afficher uniquement une partie du texte avec une condition -->
-            <p class="text-sm md:text-sm text-gray-500 sm:text-sm ">
+            <p class="text-xs md:text-sm text-gray-500   ">
               {{ truncatedText }}
             </p>
             <button v-if="isTruncated" @click="showMore = !showMore" class="text-purple-500 mt-1 hover:underline">
@@ -200,9 +200,9 @@
         </div>
         <!-- Bouton -->
         <div
-          class="flex md:flex-row flex-col md:flex-nowrap lg:flex-nowrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5"
+          class="flex flex-row  md:flex-nowrap lg:flex-nowrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5"
         >
-          <RoundedButton v-for="item in category" :key="item.id" :label="item" />
+          <RoundedButton v-for="item in category" :key="item.id" :label="$t('Category.' + item)" />
         </div>
       </div>
     </div>

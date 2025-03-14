@@ -16,11 +16,11 @@ export default {
         customNeutreColor: '#FCEFE3',
         customDark: '#171616',
         customDarkVariant1: '#3e3e3e',
-        customDarkVariant2: '#737373',  
+        customDarkVariant2: '#737373',
         customWhite: '#fff9f9'
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 }
 
