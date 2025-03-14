@@ -269,6 +269,8 @@ zz
 
 <script setup>
 import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
+// import router from "vue-router";
+import router from "@/router";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { French, English } from "flatpickr/dist/l10n/fr.js";
@@ -378,6 +380,7 @@ const totalPersons = computed(() => {
 });
 
 const handleSearch = () => {
+    router.push('/bookingHotel');
     showFilter.value = true;
 };
 

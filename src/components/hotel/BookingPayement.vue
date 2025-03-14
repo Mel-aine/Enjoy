@@ -22,6 +22,21 @@
                 className="h-6" />
             </div>
           </button>
+          <button class="w-full flex items-center justify-between p-4 rounded-lg border"
+            :class="paymentMethod === 'card' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
+            @click="paymentMethod = 'card'">
+            <div class="flex items-center space-x-4">
+              <div class="text-left">
+                <div class="font-medium">Small Pay </div>
+                <div class="text-sm text-gray-500">Pay with Small Pay </div>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"
+                className="h-6" />
+
+            </div>
+          </button>
 
           <button class="w-full flex items-center justify-between p-4 rounded-lg border"
             :class="paymentMethod === 'paypal' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"

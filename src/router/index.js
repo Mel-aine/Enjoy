@@ -83,7 +83,7 @@ const router = createRouter({
       name: 'services',
       component: () => import('@/views/allServices/EServiceView.vue'),
       meta: { hideComponent: true, showHeader2: true, showFooter2: true },
-    }
+    },
     {
       path: '/bookingHotel',
       name: 'booking',
