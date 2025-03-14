@@ -302,7 +302,8 @@
       "info": "No recent search",
       "addRoom": "Add room",
       "deleteRoom" : "Delete room",
-      "travelers": "Travelers"
+      "travelers": "Travelers",
+      "valid": "Validate"
     }
   },
   "open": "Open",

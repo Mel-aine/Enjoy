@@ -1,523 +1,93 @@
-zz
-<template>
-        <!-- ✅ Checkbox caché pour gérer l'affichage -->
-        <input type="checkbox" id="toggle-passager" class="peer hidden" />
-
-        <!-- ✅ Overlay sombre qui met en avant la div principale et la modale -->
-        <label for="toggle-passager" class="fixed inset-0 bg-black opacity-50 z-50 hidden peer-checked:block"></label>
-
-        <!-- ✅ Modale pour configurer les voyageurs -->
-        <div v-if="!isSmallScreen" id="modalPassager"
-            class="h-72 overflow-x-auto absolute left-[900px] top-[325px] bg-white rounded-lg shadow-xl p-3 lg:w-[500px] hidden peer-checked:block">
-            <div id="modalVoyageur" class="bg-white p-6 rounded-lg ">
-                <div v-for="(room, index) in rooms" :key="room.id" class="mb-4">
-                    <h3 class="font-bold text-lg">{{ $t("appServices.hotel.room") }} {{ index + 1 }}</h3>
-                    <Counter v-model="room.adults">{{ $t("appServices.agency.oneAdult") }}</Counter>
-                    <Counter class="mt-2" v-model="room.childrens">{{ $t("appServices.agency.children") }}</Counter>
-                    <div class="w-full h-[2px] bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
-                    <div class="flex justify-between">
-                        <button @click="removeRoom(index)"
-                            class="px-4 py-2 ml-auto font-medium rounded-full text-red-600 hover:bg-red-200"
-                            v-if="rooms.length > 1">
-                            Supprimer une chambre
-                        </button>
-
-                    </div>
-                </div>
-
-                <!-- Boutons Ajouter/Supprimer une chambre -->
-                <div class="flex justify-between">
-
-                    <button @click="addRoom"
-                        class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 hover:bg-blue-200">
-                        Ajouter une chambre
-                    </button>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ✅ Modale pour configurer les passagers end -->
-
-        <!-- Modale pour configurer les passagers mobile start -->
-
-        <div v-if="isSmallScreen" id="modalPassager"
-            class="absolute left-[208px] top-[600px] transform -translate-x-1/2 -translate-y-1/3 bg-white rounded-lg shadow-xl p-3 w-screen-sm hidden peer-checked:block">
-            <div id="modalVoyageur" class="bg-white p-6 rounded-lg w-96 lg:w-[500px]">
-                <div v-for="(room, index) in rooms" :key="room.id" class="mb-4">
-                    <h3 class="font-bold text-lg">{{ $t("appServices.hotel.room") }} {{ index + 1 }}</h3>
-                    <Counter v-model="room.adults">{{ $t("appServices.agency.oneAdult") }}</Counter>
-                    <Counter class="mt-2" v-model="room.childrens">{{ $t("appServices.agency.children") }}</Counter>
-                    <div class="w-full h-[2px] bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
-                    <div class="flex justify-between">
-                        <button @click="removeRoom(index)"
-                            class="px-4 py-2 ml-auto font-medium rounded-full text-red-600 hover:bg-red-200"
-                            v-if="rooms.length > 1">
-                            Supprimer une chambre
-                        </button>
-
-                        <!-- <button
-                    @click="addRoom"
-                    class="px-4 py-2 ml-auto rounded-full text-blue-600 hover:bg-blue-200"
-                >
-                    Ajouter une chambre
-                </button> -->
-                    </div>
-                </div>
-
-                <!-- Boutons Ajouter/Supprimer une chambre -->
-                <div class="flex justify-between">
-                    <!-- <button
-                    @click="removeRoom"
-                    class="px-4 py-2 ml-auto  rounded-full text-red-600 hover:bg-red-200"
-                    v-if="rooms.length > 1"
-                >
-                    Supprimer une chambre
-                </button> -->
-
-                    <button @click="addRoom"
-                        class="px-4 py-2 ml-auto font-medium rounded-full text-blue-600 hover:bg-blue-200">
-                        Ajouter une chambre
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modale pour configurer les passagers mobile end -->
-
-        <!-- ✅ Ajout de la classe peer-checked pour mettre en avant la div -->
-
-
-        <!-- il yavait bottom-0 -->
-
-        <div id="maDivPrincipale"
-            class="absolute left-1/2  transform -translate-x-1/2 translate-y-2/3 bg-white rounded-sm max-w-screen-xl min-w-screen-sm p-4 shadow-lg transition-all peer-checked:shadow-2xl peer-checked:scale-105 peer-checked:bg-white">
-            <div
-                ref="dropdown"
-                class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
-                <!-- Search Section -->
-                <div class="lg:flex justify-center" >
-                    <div class="bg-transparent mt-4 rounded-lg cursor-pointer" @click="toggleDropdown">
-                        <div 
-                            class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-96">
-                            <i 
-                                class="fas fa-location-dot absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                            <input type="text" id="destination"  v-model="destination"
-                                class="cursor-pointer opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
-                                placeholder="Type inside me" />
-                            <label for="destination"
-                                @click="toggleDropdown"
-                                class="cursor-pointer absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                                <span class="text-black font-medium cursor-pointer" > {{ destination }} </span> </label>
-                            <label for="destination"
-                                class=" cursor-pointer  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                                <span class="text-black  cursor-pointer " >{{ $t("appServices.hotel.destination") }}</span></label>
-                        </div>
-                    </div>
-                    <div v-if="isOpen"
-                        class=" absolute z-[99] bg-white border h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:min-w-96 transition duration-300"
-                        >
-                        <div class="p-3">
-                            <div class="search-container relative">
-                                <input ref="searchInput" @input="filterSuggestions" v-model="destination"
-                                    class="text-xl font-medium text-black outline-none h-full w-full placeholder-black text-start resize-none my-2 pr-10"
-                                    :placeholder="$t('appServices.hotel.question')"
-                                    />
-                                <button v-if="destination" @click="clearInput"
-                                    class="absolute right-3 top-1/2 transform -translate-y-1/2 text-black text-xl">
-                                    <BaseIcon name="CircleX" size="20" stroke-width="3" />
-                                </button>
-                            </div>
-
-                            <div class="w-full border-b rounded-full mt-2"></div>
-
-                            <div v-if="isLoading">
-                                <div class="flex justify-start items-center mt-2">
-                                    <Skeletor circle size="30" class="post__avatar" />
-                                    <Skeletor class="ml-3" width="75%" />
-                                </div>
-                                <div class="flex justify-start items-center mt-2">
-                                    <Skeletor circle size="30" class="post__avatar" />
-                                    <Skeletor class="ml-3" width="75%" />
-                                </div>
-                                <div class="flex justify-start items-center mt-2">
-                                    <Skeletor circle size="30" class="post__avatar" />
-                                    <Skeletor class="ml-3" width="75%" />
-                                </div>
-                            </div>
-                            <div v-else @click="toggleDropdown" class="mt-2 ">
-                                <div v-if="!filteredWords.length" class="flex justify-start mt-10">
-                                    <div v-if="!recentSearch.length" class="flex justify-start items-center">
-
-                                        <h1 class="text-2xl ml-2">{{ $t("appServices.hotel.info") }}</h1>
-                                        <BaseIcon class="ml-2 fast-pin" name="Search" size="20" stroke-width="2" />
-
-                                    </div>
-                                    <div v-else>
-                                        <ul class="suggestions">
-                                        <li v-for="item in recentSearch" :key="item.label"
-                                            class="flex justify-start items-center mt-3 cursor-pointer"
-                                            @click="selectSuggestion(item)">
-                                            <BaseIcon name="History" size="20" stroke-width="2" />
-                                            <span class="ml-3 text-2xl">{{ item }}</span>
-                                        </li>
-                                    </ul>
-
-                                    </div>
-
-
-                                </div>
-                                <div class="">
-                                    <ul v-if="filteredWords.length" class="suggestions">
-                                        <li v-for="item in filteredWords" :key="item.label"
-                                            class="flex justify-start items-center mt-3 cursor-pointer"
-                                            @click="selectSuggestion(item.label)">
-                                            <BaseIcon :name="item.icon" size="20" stroke-width="2" class="ml-2" />
-                                            <span class="ml-3 text-2xl">{{ item.label }}</span>
-                                        </li>
-                                    </ul>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-                <div class=" bg-transparent p-4 mt-4 rounded-sm cursor-pointer">
-                    <div
-                        class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
-                        <i
-                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                        <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
-                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
-                            placeholder="Type inside me" />
-                        <label for="dateAller"
-                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black font-medium">{{ formattedDateAller }}</span></label>
-                        <label for="dateAller"
-                            class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black ">{{ $t("appServices.hotel.arrival") }}</span></label>
-                    </div>
-                </div>
-
-                <div class="datepicker retour bg-transparent mt-4 rounded-sm cursor-pointer">
-                    <div
-                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
-                        <i
-                            class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                        <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
-                            class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
-                            placeholder="Type inside me" />
-                        <label for="dateRetour"
-                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black font-medium">{{ formattedDateRetour }}</span></label>
-                        <label for="deteRetour"
-                            class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black">{{ $t("appServices.hotel.departure") }}</span></label>
-                    </div>
-                </div>
-
-                <div class="bg-transparent p-4 mt-4 rounded-sm">
-                    <label for="toggle-passager">
-                    <div
-                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-60 md:min-w-56 lg:w-76">
-                        <i class="fas fa-users absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                        <input type="text" id="travelers" name="travelers" v-model="nothing"
-                            class="opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
-                            placeholder="Type inside me" />
-                        <label for="toggle-passager"
-                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <div class="flex items-center justify-center">
-                                <span class="text-black"><span class="text-lg">{{ totalPersons }}</span> <span
-                                        class="text-sm font-medium">{{ $t("appServices.hotel.persons") }}</span> ,
-                                    <span class="text-lg">{{ rooms.length }} </span> <span
-                                        class="text-sm font-medium">{{
-                                            $t("appServices.hotel.rooms") }}</span>
-                                </span>
-                                <!-- Chevron down icon added here -->
-
-                            </div>
-                        </label>
-                        <label for="toggle-passager"
-                            class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black">{{ $t("appServices.hotel.travelers") }}</span></label>
-                    </div>
-                </label>
-                </div>
-                <div class="">
-                    <button @click="handleSearch" class="bg-customRed text-white w-full h-14 py-2 px-2 rounded-lg mt-3">
-                        {{ $t("appServices.agency.search") }}
-                    </button>
-                </div>
-            </div>
-        </div>
-
-
-</template>
-
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/flatpickr.min.css";
-import { French, English } from "flatpickr/dist/l10n/fr.js";
-import Counter from "@/components/counter/Counter.vue";
-import BaseIcon from '@/components/icons/BaseIcon.vue';
+import { ref } from 'vue'
+import Header from '@/components/HeaderHotel.vue'
+import SearchBar from '@/components/SearchBarHotel.vue'
+import HotelList from '@/components/HotelList.vue'
+import Filters from '@/components/FilterHotel.vue'
 
-// import DropDown from '../dropDown/DropDown.vue';
-import { useI18n } from "vue-i18n";
+// Reactive state
+const searchParams = ref({
+  location: '',
+  checkIn: null,
+  checkOut: null,
+  guests: 1,
+  rooms: 1
+})
 
-import "vue-skeletor/dist/vue-skeletor.css";
-import { Skeletor } from "vue-skeletor";
+const activeFilters = ref({
+  priceRange: [0, 1000],
+  starRating: [],
+  amenities: []
+})
 
-// Utilisation de useI18n pour accéder aux traductions
-const langChange = ref(false);
-const isDropdownVisible = ref(false);
-const scrollMenu = ref(null);
-const showLeftButton = ref(false);
-const showRightButton = ref(false);
-const destination = ref(null);
-const isOpen = ref(false);
-const isLoading = ref(true);
-const nothing = ref('true');
+const sortOption = ref('recommended')
 
+// Event handlers
+const handleSearch = (params) => {
+  searchParams.value = params
+}
 
+const handleFilterChange = (filters) => {
+  activeFilters.value = filters
+}
 
-const datepickerAller = ref(null);
-const datepickerRetour = ref(null);
-const formattedDateAller = ref("");
-const formattedDateRetour = ref("");
-
-const currentLanguage = ref("en");
-const dropdown = ref(null);
-
-const showFilter = ref(false);
-const searchInput = ref(null);
-
-const filteredWords = ref([]);
-const recentSearch = ref([]);
-
-
-const filterSuggestions = () => {
-    if (destination.value.length === 0) {
-        filteredWords.value = [];
-        return;
-    }
-    filteredWords.value = menuData.value.filter(item =>
-        item.label.toLowerCase().includes(destination.value.toLowerCase())
-    );
-};
-
-const selectSuggestion = (label) => {
-    destination.value = label;
-    recentSearch.value.push(label);
-    console.log("recentSearch", recentSearch.value);
-    filteredWords.value = [];
-};
-
-const clearInput = () => {
-  destination.value = "";
-  filteredWords.value = [];
-
-
-};
-
-const toggleDropdown = async () => {
-    if(isOpen.value === true){
-        isOpen.value = false;
-        console.log("isOpen", isOpen.value);
-    }else{
-        isOpen.value = !isOpen.value;
-        console.log("isOpen", isOpen.value);
-
-    }  
-      nextTick(() => {
-        searchInput.value?.focus();
-        searchInput.value.style.caretColor = "#FF5400"; // Appliquer la couleur du curseur
-
-    });
-};
-
-const rooms = ref([
-    { id: 1, adults: 1, childrens: 0 } // Une chambre par défaut
-]);
-
-// Ajouter une nouvelle chambre avec des valeurs indépendantes
-const addRoom = () => {
-    rooms.value.push({
-        id: rooms.value.length + 1, // ID unique
-        adults: 1, // Valeur par défaut
-        childrens: 0
-    });
-};
-
-// Supprimer la dernière chambre (uniquement si > 1 chambre)
-const removeRoom = (index) => {
-    if (rooms.value.length > 1) {
-        rooms.value.splice(index, 1);
-    }
-};
-
-const totalPersons = computed(() => {
-    return rooms.value.reduce((total, room) => total + room.adults + room.childrens, 0);
-});
-
-const handleSearch = () => {
-    showFilter.value = true;
-};
-
-const formatDate = (date) => {
-    const options = { day: "2-digit", month: "short" };
-    return `${t("appServices.agency.today")}, ${new Intl.DateTimeFormat(
-        currentLanguage.value,
-        options
-    ).format(date)}`;
-};
-
-const _formatDate = (date) => {
-    const options = {
-        weekday: "short",
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-    };
-    return new Intl.DateTimeFormat(currentLanguage.value, options).format(date);
-};
-
-const langChanged = (lang) => {
-    currentLanguage.value = lang;
-    langChange.value = !langChange.value;
-
-    // Mettre à jour la locale de Flatpickr
-    flatpickr(".datepicker", {
-        mode: "range",
-        locale: lang === "en" ? English : French,
-        dateFormat: "d M Y",
-        minDate: "today",
-        onChange: (selectedDates) => {
-            if (selectedDates.length > 0) {
-                formattedDateAller.value = _formatDate(selectedDates[0]);
-                datepickerAller.value.value = formattedDateAller.value; // Mettre à jour l'input
-            }
-            if (selectedDates.length > 1) {
-                formattedDateRetour.value = _formatDate(selectedDates[1]);
-                datepickerRetour.value.value = formattedDateRetour.value; // Mettre à jour l'input retour
-            }
-        },
-    });
-
-    const today = new Date();
-    formattedDateAller.value = formatDate(today);
-    formattedDateRetour.value = formatDate(today);
-
-    console.log("formattedDateAller.value", formattedDateAller.value);
-};
-
-// window.onload = function() {
-//     document.getElementById("searchInput").focus();
-//   };
-
-onMounted(() => {
-    isOpen.value = false;
-    isLoading.value = true;
-    setTimeout(() => {
-        isLoading.value = false;
-    }, 5000);
-    langChanged("en"); // Initialiser avec le français au premier chargement
-});
-
-const checkScrollButtonsVisibility = () => {
-    if (!scrollMenu.value) return;
-
-    const element = scrollMenu.value;
-    showLeftButton.value = element.scrollLeft > 0;
-    showRightButton.value =
-        element.scrollWidth > element.clientWidth + element.scrollLeft;
-};
-
-
-const handleClickOutside = (event) => {
-    if (!event.target.closest(".group")) {
-        isDropdownVisible.value = false;
-        // isOpen.value =!isOpen.value ;
-    }
-
-    if (dropdown.value && !dropdown.value.contains(event.target)) {
-            isOpen.value = false;
-
-    }
-};
-
-const isSmallScreen = ref(window.innerWidth < 1024);
-
-const updateScreenSize = () => {
-    isSmallScreen.value = window.innerWidth < 1024;
-};
-
-
-onMounted(() => {
-    document.addEventListener("click", handleClickOutside);
-    checkScrollButtonsVisibility(); // Initial check after component is mounted
-    // Re-check when the window resizes (for responsiveness)
-    window.addEventListener("resize", checkScrollButtonsVisibility);
-    window.addEventListener("resize", updateScreenSize);
-});
-onUnmounted(() => {
-    document.removeEventListener("click", handleClickOutside);
-    window.removeEventListener("resize", updateScreenSize);
-});
-
-const { t } = useI18n();
-
-const menuData = computed(() => [
-    { label: "Yaounde, CE," + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Douala, LT , " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Bamenda, NW, " + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Garoua, NO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Bafoussam, OU, " + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Limbe, SO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Kribi, SU, " + t('navbar.cameroon'), icon: "Ship" },
-    { label: "Buea, SW, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Maroua, EN, " + t('navbar.cameroon'), icon: "Ship" },
-    { label: "Dschang, OU, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-]);
+const handleSortChange = (option) => {
+  sortOption.value = option
+}
 </script>
 
-<style scoped>
-.scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
+<template>
+ <ol class="flex items-center w-full text-xs text-gray-900 font-medium sm:text-base">
+      <li class="flex w-full relative text-indigo-600  after:content-['']  after:w-full after:h-0.5  after:bg-indigo-600 after:inline-block after:absolute lg:after:top-5 after:top-3 after:left-4">
+         <div class="block whitespace-nowrap z-10">
+             <span class="w-6 h-6 bg-indigo-600 border-2 border-transparent rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-white lg:w-10 lg:h-10">1</span> Step 1
+         </div>
+      </li>
+      <li class="flex w-full relative text-gray-900  after:content-['']  after:w-full after:h-0.5  after:bg-gray-200 after:inline-block after:absolute lg:after:top-5 after:top-3 after:left-4">
+         <div class="block whitespace-nowrap z-10">
+             <span class="w-6 h-6 bg-indigo-50 border-2 border-indigo-600 rounded-full flex justify-center items-center mx-auto mb-3 text-sm text-indigo-600 lg:w-10 lg:h-10">2</span> Step 2
+         </div>
+      </li>
+      <li class="flex w-full relative text-gray-900  after:content-['']  after:w-full after:h-0.5  after:bg-gray-200 after:inline-block after:absolute lg:after:top-5  after:top-3 after:left-4">
+         <div class="block whitespace-nowrap z-10">
+             <span class="w-6 h-6 bg-gray-50 border-2 border-gray-200 rounded-full flex justify-center items-center mx-auto mb-3 text-sm  lg:w-10 lg:h-10">3</span> Step 3
+         </div>
+      </li>
+      <li class="flex w-full relative text-gray-900  after:content-['']  after:w-full after:h-0.5  after:bg-gray-200 after:inline-block after:absolute lg:after:top-5 after:top-3 after:left-4">
+         <div class="block whitespace-nowrap z-10">
+             <span class="w-6 h-6 bg-gray-50 border-2 border-gray-200 rounded-full flex justify-center items-center mx-auto mb-3 text-sm  lg:w-10 lg:h-10">4</span> Step 4
+         </div>
+      </li>
+      <li class="flex w-full relative text-gray-900  ">
+         <div class="block whitespace-nowrap z-10">
+             <span class="w-6 h-6 bg-gray-50 border-2 border-gray-200 rounded-full flex justify-center items-center mx-auto mb-3 text-sm  lg:w-10 lg:h-10">5</span> Step 5
+         </div>
+      </li>
+      </ol>
 
-.scrollbar-hide::-webkit-scrollbar {
-    display: none;
-}
+  <div class="min-h-screen bg-gray-50">
+    <Header />
+    <main class="container mx-auto px-4 py-6">
+      <SearchBar @search="handleSearch" />
+      <div class="flex flex-col md:flex-row gap-6 mt-6">
+        <!-- Sidebar Filters -->
+        <div class="w-full md:w-1/4">
+          <Filters
+            @filterChange="handleFilterChange"
+            :activeFilters="activeFilters"
+          />
+        </div>
 
-.menu-item:hover .base-icon {
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-}
-
-@keyframes fast-spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(-360deg);
-    }
-
-    /* Une rotation */
-}
-
-.fast-spin {
-    animation: fast-spin 0.4s ease-in-out;
-}
-
-/* ✅ Met les deux divs au premier plan */
-#maDivPrincipale,
-#modalPassager {
-    z-index: 50 !important;
-    /* Passe au-dessus de tout */
-}
-</style>
+        <!-- Hotel List -->
+        <div class="w-full md:w-3/4">
+          <HotelList
+            :searchParams="searchParams"
+            :filters="activeFilters"
+            :sortOption="sortOption"
+            @sortChange="handleSortChange"
+          />
+        </div>
+      </div>
+    </main>
+  </div>
+</template>

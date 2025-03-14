@@ -54,7 +54,7 @@
   </div>
   <SearchHotel class="relative"></SearchHotel>
 
-  <div class="flex lg:flex-row justify-between flex-col mx-auto px-8 mt-20">
+  <div class="flex lg:flex-row justify-between flex-col mx-auto md:px-4 lg:px-8 mt-20">
     <div class="mx-auto">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-40 mb-7 space-x-2 items-center sm:px-8 mx-8 md:mt-10 lg:mt-10 ">
       <!-- ajout button -->
@@ -67,7 +67,7 @@
             <span class=" font-normal text-md">{{$t('write_review')}}</span>
           </button>
         </div>
-        <div class="border border-gray-200 py-2 px-8 transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
+        <div class="border border-gray-200 py-2 px- transition-transform duration-300 hover:scale-105 hover:bg-gray-100 rounded-md">
           <button class="flex flex-row items-center space-x-2 text-gray-950 hover:text-green-600">
             <svg class="h-8 w-8" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
               <path stroke="none" d="M0 0h24v24H0z"/>
@@ -99,8 +99,8 @@
 
       </div>
       <!-- image inside outside -->
-      <div class="w-full px-8 mx-8  ">
-        <div class="w-[92%] ">
+      <div class="w-full lg:px-8 lg:mx-8  ">
+        <div class="w-[92%] px-5 lg:px-0 mx-auto">
           <hr class="h-px mb-6 bg-gray-200 border-0 dark:bg-gray-700">
           <span class="text-gray-950  font-semibold text-xl">{{ $t('whats') }}</span>
         </div>
@@ -273,7 +273,7 @@
         </div>
 
       </div>
-      <div class="w-[90%] mx-8 px-8 ">
+      <div class="w-[90%] lg:mx-8 px-8 ">
         <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
       </div>
       <!-- Horaires et emplacement -->
@@ -309,7 +309,7 @@
       </div>
 
       <div>
-            <div class="p-3 bg-white px-8 " v-if="opening_hours">
+            <div class="lg:p-3 bg-white lg:px-8 " v-if="opening_hours">
                 <table class="min-w-full table-auto border-collapse ">
                   <thead>
                     <tr class="bg-gray-100 ">
@@ -332,20 +332,20 @@
               </div>
       </div>
     </div>
-      <div class="w-[90%] mx-8 px-8 ">
+      <div class="w-[90%]  ">
         <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
       </div>
       <!-- Avis et commentaires composant -->
-      <RewiewView />
+      <!-- <RewiewView /> -->
     </div>
     <!-- suggestion component -->
-      <InfoService></InfoService>
+      <!-- <InfoService></InfoService> -->
   </div>
 </div>
 <!-- modal -->
 <ModalCategory :isOpen = "isModalOpen" @close="isModalOpen=false" :title="'What’s your relationship to this business?'" :showActionButton="true"
  :actionText="$t('continuer')" >
-  <p class="text-md text-gray-500 font-medium">Any changes to a business page must be verified by Yelp’s moderators.</p>
+  <p class="text-md text-gray-500 font-medium">Any changes to a business page must be verified by Enjoy moderators.</p>
   <div class="mt-5 space-y-4">
     <div class="flex items-center p-3 border-b border-gray-200 me-4">
         <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">

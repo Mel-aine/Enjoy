@@ -200,7 +200,7 @@
     </div>
 
     <!-- ✅ Ajout de la classe peer-checked pour mettre en avant la div -->
-    <div id="maDivPrincipale" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-xl min-w-screen-md p-4 shadow-lg
+    <div id="maDivPrincipale" class="absolute left-1/2 bottom-0 transform -translate-x-1/2 translate-y-1/3 bg-white rounded-sm max-w-screen-xl min-w-screen-md py-4 md:p-2 lg:p-4 shadow-lg
                   transition-all peer-checked:shadow-2xl peer-checked:scale-105 peer-checked:bg-white">
 
       <div class="flex space-x-4 mx-auto px-4 py-4 rounded-md w-full">
@@ -273,7 +273,7 @@
             <div class="relative  ">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 "></i>
               <input ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
-                :class="picked === 'aller-retour' ? 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-96 md:w-56 lg:w-56 focus:ring-2 focus:ring-blue-500  ' : 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-96 md:w-[395px] lg:w-[395px] focus:ring-2 focus:ring-blue-500'"
+                :class="picked === 'aller-retour' ? 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-80 md:w-56 lg:w-56 focus:ring-2 focus:ring-blue-500  ' : 'datepicker aller border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-80 md:w-[395px] lg:w-[457px] focus:ring-2 focus:ring-blue-500'"
                 type="text" placeholder="Sélectionner une date" />
             </div>
           </div>
@@ -283,7 +283,7 @@
             <div class="relative">
               <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
               <input ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
-                class="datepicker retour border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-72 focus:ring-2 focus:ring-blue-500  md:w-56 xl:w-56"
+                class="datepicker retour border-2 border-gray-300 text-gray-400 rounded pl-10 py-3 w-80 focus:ring-2 focus:ring-blue-500  md:w-56 xl:w-56"
                 type="text" placeholder="Sélectionner une date" />
             </div>
           </div>
@@ -293,7 +293,7 @@
 
             <label class="font-semibold py-1">{{ $t('appServices.agency.passengers') }}</label>
             <label for="toggle-passager"
-              :class="picked === 'aller-retour' ? 'border-2 border-gray-300 rounded px-3 py-3 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between w-96 md:w-56 lg:w-56' : 'border-2 border-gray-300 rounded px-3 py-3 w-96 md:w-56 lg:w-56 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between'">
+              :class="picked === 'aller-retour' ? 'border-2 border-gray-300 rounded px-3 py-3 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between w-80 md:w-56 lg:w-56' : 'border-2 border-gray-300 rounded px-3 py-3 w-80 md:w-56 lg:w-56 focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-center justify-between'">
               <span class="text-gray-600">{{ adults }}{{ $t('appServices.agency.oneAdult') }} , {{ children }} {{
                 $t('appServices.agency.children') }} </span>
               <!-- Chevron down icon added here -->
@@ -306,7 +306,7 @@
         </div>
         <div class="lg:p-1">
           <button @click="handleSearch"
-            :class="picked === 'aller-retour' ? 'bg-customRed text-white w-96 h-[50px] py-2 px-2 rounded mt-8 md:w-full lg:w-full' : 'bg-customRed text-white w-96 md:w-full lg:w-full h-[50px] py-2 px-2 rounded mt-8'">{{
+            :class="picked === 'aller-retour' ? 'bg-customRed text-white w-80 h-[50px] py-2 px-2 rounded mt-8 md:w-full lg:w-full' : 'bg-customRed text-white w-80 md:w-full lg:w-full h-[50px] py-2 px-2 rounded mt-8'">{{
               $t('appServices.agency.search') }}</button>
         </div>
 

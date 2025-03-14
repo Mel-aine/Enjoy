@@ -146,15 +146,15 @@
                     </div>
                   </template>
                 </CustomDropdown>
-                <router-link to="/comunity"
+                <router-link to="/recherche/hotel"
                 class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-                active-class="border-b-2 border-indigo-400">
+                active-class="border-b-2 border-customRed">
                 {{ $t('hotel') }}
               </router-link>
   
               <router-link to="/comunity"
                 class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-                active-class="border-b-2 border-indigo-400">
+                active-class="border-b-2 border-customRed">
                 {{ $t('navbar.writeReview') }}
               </router-link>
 
@@ -162,7 +162,7 @@
               <router-link
                 to="/comunity"
                 class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-                active-class="border-b-2 border-indigo-400">
+                active-class="border-b-2 border-customRed">
                 {{ $t('navbar.startProject') }}
               </router-link>
   
