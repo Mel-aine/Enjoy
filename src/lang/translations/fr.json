@@ -370,7 +370,38 @@
   "addToCard" : "Ajouter au panier",
   "totalDish" : "Plats totaux",
   "totalAmount" : "Montant total",
-  "placeOrder": "Passer la commande"
+  "placeOrder": "Passer la commande",
+  "Category":{
+    "Beauty": "Beauté",
+    "Fashion And Beauty":"Modes Et Beauté",
+    "Clothing store":"Shop de vêtements",
+    "club" : "Club",
+    "sports":"Sports",
+    "Automobile":"Automobile",
+    "Building":"Bâtiment",
+    "coffee": "café",
+    "Alimentation": "Alimentation",
+    "Art":"Art",
+    "Health":"Santé",
+    "Services":"Services",
+    "Animals":"Animaux",
+    "Real Estate":"Immobilier",
+    "Tourist Sites":"Sites Touristiques",	
+    "Habitat":"Habitat",
+    "Hotels and Accommodations": "Hotels Et Hebergements",
+    "Hotels":"Hôtels",
+    "Tourism":"Tourisme",
+    "public":"Public",
+    "Church" : "Église",
+    "Transportation":"Transport",
+    "Travel agency" : "Agence de voyage",	
+    "Media":"Médias",
+    "Restoration" :"Restauration",
+    "Restaurant":"Restaurant",
+    "Wine cellar" :"Cave à vins",
+    "Bar": "Bar"
+  
+  }
   
 }
 

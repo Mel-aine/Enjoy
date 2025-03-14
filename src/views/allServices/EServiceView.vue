@@ -50,8 +50,8 @@
             </button>
           </div>
           <div class="flex justify-start items-start mx-auto">
-            <div class="mx-8">
-              <h4 class="mb-3 text-2xl font-bold flex items-center">
+            <div class=" mx-auto mt-10">
+              <h4 class="mb-3 text-4xl font-extrabold flex items-center">
                 {{ item.name }}
                 <span class="text-[#B57EDC] text-2xl ml-2">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check-big"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg>
@@ -60,9 +60,9 @@
               <p class="text-gray-700">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star text-orange-500 inline"><path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/></svg> Categories:
                 <strong>
-                  <template v-for="(cat, index) in categories" :key="index">
-                    <a href="#" class="text-dark hover:underline">{{ cat }}</a>
-                    <span v-if="index < categories.length - 1">, </span>
+                  <template v-for="(cat, index) in item.category" :key="index">
+                    <a href="#" class="text-dark hover:underline">{{ $t('Category.' + cat) }}</a>
+                    <span v-if="index < item.category.length - 1">, </span>
                   </template>
                 </strong>
               </p>
@@ -185,7 +185,7 @@ import inside2 from '@/assets/burger1.jpg';
 import inside3 from '@/assets/burger2.jpg';
 const isModalOpen = ref(false)
 
-const categories = ref(['category','category'])
+
 
 const route = useRoute();
 const serviceId = route.params.serviceId;

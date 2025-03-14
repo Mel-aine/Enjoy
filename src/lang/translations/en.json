@@ -372,6 +372,36 @@
   "addToCard" : "Add to Card",
   "totalDish" : "Total Dishes",
   "totalAmount" : "Total Amount",
-  "placeOrder" : "Place Order"
+  "placeOrder" : "Place Order",
+  "Category":{
+    "Beauty": "Beauty",
+    "Fashion And Beauty":"Fashion And Beauty",
+    "Clothing store":"Clothing store",
+    "club" : "Club",
+    "sports":"Sports",
+    "Automobile":"Automobile",
+    "Building":"Building",
+    "coffee" : "Coffee",
+    "Alimentation": "Food",
+    "Art":"Art",
+    "Health":"Health",
+    "Services":"Services",
+    "Animals":"Animals",
+    "Real Estate":"Real Estate",
+    "Tourist Sites":"Tourist Sites",	
+    "Habitat":"Habitat",
+    "Hotels and Accommodations" : "Hotels and Accommodations",
+    "Hotels": "Hotels",
+    "Tourism": "Tourism",
+    "public":"Public",
+    "Church" : "Church",
+    "Transportation":"Transportation",
+    "Travel agency" : "Travel agency",	
+    "Media":"Media",
+    "Restoration" : "Restoration",
+    "Restaurant":"Restaurant",
+    "Wine cellar" : "Wine cellar",
+    "Bar": "Bar"
+  }
 
 }

@@ -42,7 +42,7 @@ export const Categories = [
             { day: "sunday", open: "01h00", close: "00h00" }
           ],
           open_until: "01h00 ",
-          category: ["Restauration", "Restaurant", "Cave à vins", "Bar"],
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
           images: [image1, image2, image3, image4, vin]
         },
         {
@@ -62,7 +62,7 @@ export const Categories = [
           ],
           min_price: "3,500 FCFA",
           open_until: "01h00 ",
-          category: ["Restauration", "Restaurant"],
+          category: ["Restoration", "Restaurant"],
           images: [grill, grill1, grill2, grill3]
         },
         {
@@ -82,7 +82,7 @@ export const Categories = [
           ],
           min_price: "3,500 FCFA",
           open_until: "01h00 ",
-          category: ["Restauration", "Restaurant"],
+          category: ["Restoration", "Restaurant"],
           images: [african, africain1]
         }
       ]
@@ -110,6 +110,7 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
+          category: ["Fashion And Beauty", "Clothing store"],
           images: [image1,image1,image1]
         },
       ]
@@ -136,6 +137,7 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
+          category: ["club",],
           images: [image1,image1,image1]
         },
       ]
@@ -162,6 +164,7 @@ export const Categories = [
           min_price: "15,000 FCFA",
           status: "active",
           logo: "logo",
+          category: ["sports"],
           images: [image1,image1,image1]
        },]
     },
@@ -187,6 +190,7 @@ export const Categories = [
           min_price: "10,000 FCFA",
           status: "active",
           logo: "logo",
+          category: ["Beauty"],
           images: [image1,image1,image1]
         },
 
@@ -209,6 +213,7 @@ export const Categories = [
           min_price: "Variable",
           status: "active",
           logo: "logo",
+          category: ["Beauty"],
           images: [image1,image1,image1]
         }
       ]
@@ -235,6 +240,7 @@ export const Categories = [
           min_price: "7,500 FCFA",
           status: "active",
           logo: "logo",
+          category: ["Automobile"],
           images: [image1,image1,image1]
         },
         {
@@ -254,6 +260,7 @@ export const Categories = [
           min_price: "2,000 FCFA",
           status: "active",
           logo: "logo",
+          category: ["Automobile"],
           images: [image1,image1,image1]
         }
       ]
@@ -272,7 +279,7 @@ export const Categories = [
           address: "Odza, Yaoundé",
           location: "3.8589° N, 11.5170° E",
           phone: "+237692345678",
-          email: "contact@expressvoyages.cm",
+          email: "contact@express.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -280,6 +287,7 @@ export const Categories = [
           ],
           min_price: "7,500 FCFA",
           status: "active",
+          category: ["Building"],
           images: [image1,image1,image1]
         },
       ]
@@ -297,7 +305,7 @@ export const Categories = [
           address: "Avenue Kennedy, Yaoundé",
           location: "3.8756° N, 11.5189° E",
           phone: "+237695678901",
-          email: "contact@hopitalcentral.cm",
+          email: "contact@maisoncafe.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -305,6 +313,7 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
+          category: ["coffee"],
           images: [image1,image1,image1]
        },]
     },
@@ -321,7 +330,7 @@ export const Categories = [
           address: "Avenue Kennedy, Yaoundé",
           location: "3.8756° N, 11.5189° E",
           phone: "+237695678901",
-          email: "contact@hopitalcentral.cm",
+          email: "contact@alimentation.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -329,6 +338,7 @@ export const Categories = [
           ],
           min_price: " 5,000 FCFA",
           status: "active",
+          category: ["Alimentation"],
           images: [image1,image1,image1]
        },]
     },
@@ -345,7 +355,7 @@ export const Categories = [
           address: "Avenue Kennedy, Yaoundé",
           location: "3.8756° N, 11.5189° E",
           phone: "+237695678901",
-          email: "contact@hopitalcentral.cm",
+          email: "contact@art.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -353,6 +363,7 @@ export const Categories = [
           ],
           min_price: "Consultation: 5,000 FCFA",
           status: "active",
+          category: ["Art"],
           images: [image1,image1,image1]
        },]
     },
@@ -377,6 +388,7 @@ export const Categories = [
           ],
           min_price: "Consultation: 5,000 FCFA",
           status: "active",
+          category: ["Health"],
           images: [image1,image1,image1]
        },]
     },
@@ -393,7 +405,7 @@ export const Categories = [
           address: "Avenue Kennedy, Yaoundé",
           location: "3.8756° N, 11.5189° E",
           phone: "+237695678901",
-          email: "contact@hopitalcentral.cm",
+          email: "contact@services.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -401,6 +413,7 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
+          category: ["Services"],
           images: [image1,image1,image1]
        },]
     },
@@ -417,7 +430,7 @@ export const Categories = [
           address: "Avenue Kennedy, Yaoundé",
           location: "3.8756° N, 11.5189° E",
           phone: "+237695678901",
-          email: "contact@hopitalcentral.cm",
+          email: "contact@animals.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -425,6 +438,7 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
+          category: ["Animals"],
           images: [image1,image1,image1]
        },]
     },
@@ -441,7 +455,7 @@ export const Categories = [
           address: "Odza, Yaoundé",
           location: "3.8589° N, 11.5170° E",
           phone: "+237692345678",
-          email: "contact@expressvoyages.cm",
+          email: "contact@express.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -449,6 +463,7 @@ export const Categories = [
           ],
           min_price: "7,500 FCFA",
           status: "active",
+          category: ["Real Estate"],
           images: [image1,image1,image1]
         },
       ]
@@ -476,7 +491,7 @@ export const Categories = [
           ],
           min_price: "50,000 FCFA",
           open_until: "01h00 ",
-          category: ["Sites Touristiques", "Habitat"],
+          category: ["Tourist Sites", "Habitat"],
           images: [mont1, mont2]
         },
         {
@@ -496,7 +511,7 @@ export const Categories = [
             ],
             min_price: "80,000 FCFA",
             open_until: "01h00 ",
-            category: ["Hotels Et Hebergements"],
+            category: ["Hotels and Accommodations"],
             images: [ mont1]
         },
         {
@@ -516,7 +531,7 @@ export const Categories = [
           ],
           min_price: "80,000 FCFA",
           open_until: "01h00 ",
-          category: ["Hotels Et Hebergements", "Hôtel"],
+          category: ["Hotels and Accommodations", "Hotels"],
           images: [ djeuga]
       },
 
@@ -544,6 +559,7 @@ export const Categories = [
           ],
           min_price: "5,000 FCFA",
           status: "active",
+          category: ["Tourism"],
           images: [image1,image1,image1]
         },
       ]
@@ -569,6 +585,7 @@ export const Categories = [
           ],
           min_price: "2,000 FCFA",
           status: "active",
+          category: ["Tourism"],
           images: [image1,image1,image1]
         },
 
@@ -596,6 +613,7 @@ export const Categories = [
             ],
             min_price: "Variable",
             status: "active",
+            category: ["public"],
             images: [image1,image1,image1]
         },
 
@@ -624,6 +642,7 @@ export const Categories = [
             ],
             min_price: "N/A",
             status: "active",
+            category: ["Tourism"],
             images: [image1,image1,image1]
           }
          ]
@@ -641,7 +660,7 @@ export const Categories = [
           address: "Hôtel de Ville, Yaoundé",
           location: "3.8767° N, 11.5198° E",
           phone: "+237696789012",
-          email: "contact@mairieyaounde.cm",
+          email: "contact@yaounde.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -649,6 +668,7 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
+          category: ["Tourism"],
           images: [image1,image1,image1]
         }
        ]
@@ -666,7 +686,7 @@ export const Categories = [
           address: "Hôtel de Ville, Yaoundé",
           location: "3.8767° N, 11.5198° E",
           phone: "+237696789012",
-          email: "contact@mairieyaounde.cm",
+          email: "contact@yaounde.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -674,6 +694,7 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
+          category: ["Church"],
           images: [image1,image1,image1]
         }
        ]
@@ -699,7 +720,7 @@ export const Categories = [
             { day: "sunday", open: "01h00", close: "00h00" }
           ],
           open_until: "01h00 ",
-          category: ["Transport", "Agence de voyage"],
+          category: ["Transportation", "Travel agency"],
           images: [cerise1, cerise]
 
         },
@@ -719,7 +740,7 @@ export const Categories = [
             { day: "sunday", open: "01h00", close: "00h00" }
           ],
           open_until: "01h00 ",
-          category: ["Transport", "Agence de voyage"],
+          category: ["Transportation", "Travel agency"],
           images: [men1, men]
 
         },
@@ -739,7 +760,7 @@ export const Categories = [
             { day: "sunday", open: "01h00", close: "00h00" }
           ],
           open_until: "01h00 ",
-          category: ["Transport", "Agence de voyage"],
+          category: ["Transportation", "Travel agency"],
           images: [buca1, buca]
 
         }
@@ -758,7 +779,7 @@ export const Categories = [
           address: "Hôtel de Ville, Yaoundé",
           location: "3.8767° N, 11.5198° E",
           phone: "+237696789012",
-          email: "contact@mairieyaounde.cm",
+          email: "contact@yaounde.cm",
           opening_hours: [
             { day: "monday", open: "12h00", close: "23h00" },
             { day: "wednesday", open: "14h00", close: "00h00" },
@@ -766,6 +787,7 @@ export const Categories = [
           ],
           min_price: "N/A",
           status: "active",
+          category: ["Media"],
           images: [image1,image1,image1]
         }
       ]
