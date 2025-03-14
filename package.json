@@ -10,6 +10,7 @@
     "lint": "eslint . --fix"
   },
   "dependencies": {
+    "@vuepic/vue-datepicker": "^11.0.1",
     "flatpickr": "^4.6.13",
     "leaflet": "^1.9.4",
     "lucide-vue-next": "^0.475.0",

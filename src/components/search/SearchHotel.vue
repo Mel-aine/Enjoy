@@ -37,8 +37,7 @@ zz
             <div class="flex justify-between mt-2">
                 <label for="toggle-passager"
                     class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-pointer peer-checked:bg-blue-200">
-                    Valider
-                </label>
+                    {{ $t("appServices.hotel.valid") }}</label>
 
             </div>
         </div>
@@ -91,7 +90,7 @@ zz
             <div class="flex justify-between mt-2">
                 <label for="toggle-passager"
                     class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-pointer peer-checked:bg-blue-200">
-                    Valider
+                    {{ $t("appServices.hotel.valid") }}           
                 </label>
 
             </div>
@@ -106,7 +105,7 @@ zz
     <!-- il yavait bottom-0 -->
 
     <div
-        class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-sm max-w-screen-xl min-w-screen-md p-4 shadow-lg ">
+        class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md max-w-screen-xl min-w-screen-md py-4 md:p-4 lg:p-4 shadow-lg ">
 
         <div ref="dropdown"
             class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
@@ -200,7 +199,7 @@ zz
             <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer">
                 <div
                     class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
-                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
+                    <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                     <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
@@ -216,7 +215,7 @@ zz
             <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-pointer">
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
-                    <i class="fas fa-calendar-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
+                    <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
                     <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />

@@ -30,6 +30,7 @@
   "Plus": "Plus",
   "Moins": "Moins",
   "hotel": "Hôtel",
+
   
   "navbar": {
     "space": "Emplacement actuel",
@@ -300,7 +301,8 @@
       "rooms": "Chambre(s)",
       "addRoom": "Ajouter une chambre",
       "deleteRoom" : "Supprimer une chambre",
-      "travelers": "Voyageurs"
+      "travelers": "Voyageurs",
+      "valid": "Valider"
     }
   },
   "open": "Ouvert",
