@@ -18,11 +18,11 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-    {
-      path: '/fr/categorie/:categoryId',
-      name: 'DetailService',
-      component: () => import('../views/EDetailServices.vue'),
-    },
+    // {
+    //   path: '/fr/categorie/:categoryId',
+    //   name: 'DetailService',
+    //   component: () => import('../views/EDetailServices.vue'),
+    // },
     {
       path: '/hotel',
       name: 'hotel',
@@ -55,17 +55,35 @@ const router = createRouter({
       meta: { hideComponent: true , showHeader2:false},
     },    {
       path: '/travel/:id',
-      name: 'agency',
+      name: 'travel',
       component: () => import('../views/travels/EAgencyView.vue'),
       meta: { hideComponent: true },
 
     },
     {
-      path: '/all_service',
+      path: '/all_service/:id',
       name: 'all_service',
       component: () => import('@/views/allServices/EServiceDetailView.vue'),
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
+    {
+      path: '/restaurant/:id',
+      name: 'restaurant',
+      component: () => import('@/views/restaurant/ERestaurantDetail.vue'),
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
+    },
+    {
+      path: '/menu',
+      name: 'menu',
+      component: () => import('@/views/restaurant/EMenu.vue'),
+      meta: { hideComponent: true },
+    },
+    {
+      path: '/recherche/:serviceId/:placeId',
+      name: 'services',
+      component: () => import('@/views/allServices/EServiceView.vue'),
+      meta: { hideComponent: true, showHeader2: true, showFooter2: true },
+    }
     {
       path: '/bookingHotel',
       name: 'booking',

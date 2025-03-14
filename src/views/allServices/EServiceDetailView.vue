@@ -1,10 +1,14 @@
 <template>
+  <div v-if="filteredPlaces.length > 0" >
 
- <div class="min-h-screen bg-white">
+ <div v-for="item in filteredPlaces" :key="item.id"  class="min-h-screen bg-white">
   <!-- image -->
   <div class="relative w-full h-[470px] top-0 overflow-hidden ">
     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out flex">
       <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
+        <div class="relative sm:flex w-full h-[720px]">
+          <div v-for="(image, index) in item.images" :key="index" class="flex-1 h-[720px]">
+            <img :src="image" class="w-full h-full object-cover" alt="Image Hôtel">
         <div class="flex w-full h-[470px]">
           <div class="flex-1 h-[470px]">
             <img src="@/assets/burger1.jpg" class="w-full h-full object-cover" alt="">
@@ -21,10 +25,10 @@
     </div>
 
 
-    <div class="absolute top-[52%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
+    <div class="absolute top-[72%] left-[22%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:mx-0 mx-24">
       <h1 class="mb-4 text-5xl font-extrabold text-white">Burgermeister</h1>
       <div class="flex items-center mb-4 sm:mb-3 md:mb-4 space-x-1">
-        <span v-for="star in 5" :key="star" class="">
+        <span v-for="star in item.rating" :key="star" class="">
           <svg v-if="star <= rating" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current text-white rounded-md bg-orange-500 p-1" viewBox="0 0 24 24">
             <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z" />
           </svg>
@@ -38,14 +42,14 @@
           <svg viewBox="0 0 50 50" width="15" height="15" xmlns="http://www.w3.org/2000/svg">
             <rect width="50" height="50" rx="30" ry="30" fill="purple"/>
             <polyline points="12,25 20,35 38,15" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg> {{ $t('claimed') }} </span>. FCFA . <a href="#" class="hover:underline font-semibold">Fast Food</a>, <a href="#" class="hover:underline font-semibold">Burger</a>
+          </svg> {{ $t('claimed') }} </span>. FCFA . <a v-for="cat in item.category" :key="cat.id" href="#" class="hover:underline font-semibold">{{ $t('Category.' + cat) }}</a>
       </div>
       <div class="mb-5"><span class="text-green-500">{{ $t('open') }}</span> <span class="font-semibold text-md">11:00 AM - 03:00 AM ({{ $t('next_day') }})</span>
         <button class="ml-2 bg-white/15 rounded-md px-1 py-1 text-sm font-semibold transition-transform duration-300 hover:scale-110">{{ $t('see_hours') }}</button>
       </div>
     </div>
 
-    <div class="absolute lg:top-[45%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-0 lg:py-2 py-0 rounded-md hover:bg-white/15">
+    <div class="absolute lg:top-[85%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-0 lg:py-2 py-0 rounded-md hover:bg-white/15">
       <button @click="isModalOpen = true" class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-white transition-transform duration-300 hover:scale-110">
         {{ $t('see_photo') }}
       </button>
@@ -113,7 +117,7 @@
           <div class="relative h-[150px] overflow-hidden rounded-t-lg">
             <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: 'translateX(' + -currentIndex * 100 + '%)' }" >
               <div v-for="(img, index) in images" :key="index" class="w-full flex-shrink-0">
-                <img :src="img" alt="Menu Item" class="object-cover w-full  h-48 md:h-40 lg:h-48 rounded-t-lg transform hover:scale-105 transition-transform duration-300" />
+                <img :src="img" alt="Menu Item" class="object-cover w-full h-48 md:h-40 lg:h-48 rounded-t-lg transform hover:scale-105 transition-transform duration-300" />
               </div>
             </div>
           </div>
@@ -167,7 +171,7 @@
           <!-- Carousel wrapper -->
           <div class="relative h-[150px] overflow-hidden rounded-t-lg">
             <div class="flex transition-transform duration-500 ease-in-out" :style="{ transform: 'translateX(' + -currentIndex2 * 100 + '%)' }" >
-              <div v-for="(img, index) in images" :key="index" class="w-full flex-shrink-0">
+              <div v-for="(img, index) in images2" :key="index" class="w-full flex-shrink-0">
                 <img :src="img" alt="Menu Item" class="object-cover w-full h-48 md:h-40 lg:h-48 rounded-t-lg transform hover:scale-105 transition-transform duration-300" />
               </div>
             </div>
@@ -295,10 +299,8 @@
           </a>
           <div class="flex flex-row gap-10">
           <div class="flex flex-col mt-5">
-            <a href="" class="text-purple-500 hover:underline text-md font-medium">Oberbaumstr.8</a>
-            <span class="text-gray-950 text-md font-medium">10997 Berlin</span>
-            <span class="text-gray-950 text-md font-medium">Allemage</span>
-            <span class="text-gray-500 text-md font-normal">Kreuzberg</span>
+            <a href="" class="text-purple-500 hover:underline text-md font-medium">{{item.localisation}}</a>
+            <span class="text-gray-950 text-md font-medium">{{item.address}}</span>
           </div>
           <div class=" border rounded-md hover:bg-gray-200 items-center flex px-3 h-10 mt-5 ">
             <a href="" class=" text-md font-normal tracking-tight leading-none text-gray-800 transition-transform duration-300 hover:scale-110"> {{ $t('get_direction') }} </a>
@@ -309,7 +311,7 @@
       </div>
 
       <div>
-            <div class="lg:p-3 bg-white lg:px-8 " v-if="opening_hours">
+            <div class="p-3 bg-white px-8 " v-if="opening_hours">
                 <table class="min-w-full table-auto border-collapse ">
                   <thead>
                     <tr class="bg-gray-100 ">
@@ -319,8 +321,8 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="(schedule, index) in opening_hours" :key="index" class="border-b hover:bg-purple-50">
-                      <td class="py-2 px-3 text-gray-800">{{ schedule.day }}</td>
+                    <tr v-for="(schedule, index) in item.opening_hours" :key="index" class="border-b hover:bg-purple-50">
+                      <td class="py-2 px-3 text-gray-800">{{ $t('schedule.' + schedule.day) }}</td>
                       <td class="py-2 px-3 text-gray-500">{{ schedule.open }}</td>
                       <td class="py-2 px-3 text-gray-500">{{ schedule.close }}</td>
                     </tr>
@@ -336,10 +338,10 @@
         <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
       </div>
       <!-- Avis et commentaires composant -->
-      <!-- <RewiewView /> -->
+      <RewiewView />
     </div>
     <!-- suggestion component -->
-      <!-- <InfoService></InfoService> -->
+      <InfoService></InfoService>
   </div>
 </div>
 <!-- modal -->
@@ -348,12 +350,12 @@
   <p class="text-md text-gray-500 font-medium">Any changes to a business page must be verified by Enjoy moderators.</p>
   <div class="mt-5 space-y-4">
     <div class="flex items-center p-3 border-b border-gray-200 me-4">
-        <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="orange-radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I own this business</label>
+        <input id="radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I own this business</label>
     </div>
     <div class="flex items-center  p-3 border-b border-gray-200 me-4">
-        <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-        <label for="orange-radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I work at this business</label>
+        <input id="radio1" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="radio1" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I work at this business</label>
     </div>
     <div class="flex items-center  p-3 border-b border-gray-200 me-4">
         <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -366,28 +368,48 @@
 <script setup>
 import RewiewView from "@/components/review/RewiewView.vue";
 import InfoService from "@/components/review/InfoService.vue";
-import { ref, onUnmounted } from "vue";
+import { ref, onUnmounted,onMounted } from "vue";
 import ModalCategory from "@/components/modals/ModalCategory.vue";
 import SearchHotel from "@/components/search/SearchHotel.vue";
-import { useI18n } from "vue-i18n";
+import { Categories } from '@/mocks/categories';
+import { useRoute } from 'vue-router';
 import inside1 from '@/assets/inside1.jpg';
 import inside2 from '@/assets/inside2.jpg';
 import outside2 from '@/assets/outside2.jpg';
 import outside1 from '@/assets/outside1.jpg';
 
-const { t } = useI18n();
+
+const route = useRoute();
+const hotelId = route.params.id
+const filteredPlaces = ref([]);
+const filteredPlace = ref([]);
+
+onMounted(() => {
+const selectedCategory = Categories.find(category => category.label === "Hôtels & Séjours");
+
+if (selectedCategory) {
+    filteredPlace.value = selectedCategory.places
+      const place = selectedCategory.places.find(place => place.id === hotelId);
+      filteredPlaces.value = place ? [place] : [];
+      console.log("filteredPlaces", filteredPlaces.value);
+
+}
+
+
+});
+
 
 
 const isModalOpen = ref(false)
-const opening_hours = ref([
-  { day: t('monday'), open: '10h00', close: '22h00' },
-  { day: t('tuesday'), open: '10h00', close: '22h00' },
-  { day: t('wednesday'), open: '10h00', close: '22h00' },
-  { day: t('thursday'), open: '10h00', close: '22h00' },
-  { day: t('friday'), open: '10h00', close: '22h00' },
-  { day: t('sunday'), open: '10h00', close: '22h00' },
-  { day: t('sunday'), open: '10h00', close: '22h00' }
-])
+// const opening_hours = ref([
+//   { day: t('monday'), open: '10h00', close: '22h00' },
+//   { day: t('tuesday'), open: '10h00', close: '22h00' },
+//   { day: t('wednesday'), open: '10h00', close: '22h00' },
+//   { day: t('thursday'), open: '10h00', close: '22h00' },
+//   { day: t('friday'), open: '10h00', close: '22h00' },
+//   { day: t('sunday'), open: '10h00', close: '22h00' },
+//   { day: t('sunday'), open: '10h00', close: '22h00' }
+// ])
 
 defineProps({
   title: String,
