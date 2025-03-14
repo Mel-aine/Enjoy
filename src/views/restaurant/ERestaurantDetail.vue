@@ -6,7 +6,7 @@
  <div class="relative w-full h-[620px] top-0 overflow-hidden ">
    <div class="absolute inset-0 transition-opacity duration-700 ease-in-out flex">
      <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
-       <div class="flex w-full h-[720px]">
+       <div class="relative sm:flex w-full h-[720px]">
          <div v-for="(image, index) in item.images" :key="index" class="flex-1 h-[720px]">
            <img :src="image" class="w-full h-full object-cover" alt="Image Hôtel">
          </div>
@@ -33,7 +33,7 @@
          <svg viewBox="0 0 50 50" width="15" height="15" xmlns="http://www.w3.org/2000/svg">
            <rect width="50" height="50" rx="30" ry="30" fill="purple"/>
            <polyline points="12,25 20,35 38,15" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-         </svg> {{ $t('claimed') }} </span>. FCFA . <a v-for="cat in item.category" :key="cat.id" href="#" class="hover:underline font-semibold truncate"> {{ cat }} </a>
+         </svg> {{ $t('claimed') }} </span>. FCFA . <a v-for="cat in item.category" :key="cat.id" href="#" class="hover:underline font-semibold truncate">{{ $t('Category.' + cat) }} </a>
      </div>
      <!-- , <a href="#" class="hover:underline font-semibold">Burger</a> -->
      <div class="mb-5"><span class="text-green-500">{{ $t('open') }}</span> <span class="font-semibold text-md">11:00 AM - 03:00 AM ({{ $t('next_day') }})</span>
@@ -57,14 +57,14 @@
      <div class="w-full px-8 sm:mx-8 mx-auto  ">
 
          <h2 class="text-3xl font-bold text-gray-900 mb-6">{{ $t('restaurantMenu') }}</h2>
-         <div class="flex sm:justify-end justify-center mb-8">
+         <div class="flex lg:justify-end justify-center mb-8">
           <router-link to="/menu" class="px-6 py-2 bg-purple-200 text-black  rounded-lg transition-transform transform hover:scale-105">
                 {{ $t('seeMore') }}
           </router-link>
         </div>
 
      </div>
-     <div class="w-full md:flex md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 mx-auto">
+     <div class="w-full grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 mx-auto">
         <MenuCard/>
      </div>
      <div class="w-[90%] mx-8 px-8 ">
@@ -129,7 +129,7 @@
        <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
      </div>
      <!-- Avis et commentaires composant -->
-     <div class="flex sm:justify-end justify-center sm:mx-8 mx-auto ">
+     <div class="flex lg:justify-end justify-center sm:mx-8 mx-auto ">
     <button class="px-2 py-2 bg-orange-500 text-black  rounded-lg transition-transform transform hover:scale-105">
           {{ $t('write_review') }}
     </button>
@@ -171,6 +171,7 @@ import ModalCategory from "@/components/modals/ModalCategory.vue";
 import { Categories } from '@/mocks/categories';
 import { useRoute } from 'vue-router';
 import MenuCard from "@/components/card/MenuCard.vue";
+
 
 
 const route = useRoute();

@@ -6,16 +6,7 @@
   <div class="relative w-full h-[620px] top-0 overflow-hidden ">
     <div class="absolute inset-0 transition-opacity duration-700 ease-in-out flex">
       <div class="absolute inset-0  flex justify-center items-center transition-opacity duration-700 ease-in-out">
-        <div class="flex w-full h-[720px]">
-          <!-- <div class="flex-1 h-[720px]">
-            <img src="@/assets/burger1.jpg" class="w-full h-full object-cover" alt="">
-          </div>
-          <div class="flex-1 h-[720px]">
-            <img src="@/assets/burger3.jpg" class="w-full h-full object-cover" alt="">
-          </div>
-          <div class="flex-1 h-[720px]">
-            <img src="@/assets/burger2.jpg" class="w-full h-full object-cover" alt="">
-          </div> -->
+        <div class="relative sm:flex w-full h-[720px]">
           <div v-for="(image, index) in item.images" :key="index" class="flex-1 h-[720px]">
             <img :src="image" class="w-full h-full object-cover" alt="Image Hôtel">
           </div>
@@ -42,7 +33,7 @@
           <svg viewBox="0 0 50 50" width="15" height="15" xmlns="http://www.w3.org/2000/svg">
             <rect width="50" height="50" rx="30" ry="30" fill="purple"/>
             <polyline points="12,25 20,35 38,15" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg> {{ $t('claimed') }} </span>. FCFA . <a v-for="cat in item.category" :key="cat.id" href="#" class="hover:underline font-semibold">{{ cat }}</a>
+          </svg> {{ $t('claimed') }} </span>. FCFA . <a v-for="cat in item.category" :key="cat.id" href="#" class="hover:underline font-semibold">{{ $t('Category.' + cat) }}</a>
       </div>
       <div class="mb-5"><span class="text-green-500">{{ $t('open') }}</span> <span class="font-semibold text-md">11:00 AM - 03:00 AM ({{ $t('next_day') }})</span>
         <button class="ml-2 bg-white/15 rounded-md px-1 py-1 text-sm font-semibold transition-transform duration-300 hover:scale-110">{{ $t('see_hours') }}</button>

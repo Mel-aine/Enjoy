@@ -202,7 +202,7 @@
         <div
           class="flex flex-row  md:flex-nowrap lg:flex-nowrap gap-2 py-1 sm:py-5 md:py-2 lg:py-5"
         >
-          <RoundedButton v-for="item in category" :key="item.id" :label="item" />
+          <RoundedButton v-for="item in category" :key="item.id" :label="$t('Category.' + item)" />
         </div>
       </div>
     </div>
