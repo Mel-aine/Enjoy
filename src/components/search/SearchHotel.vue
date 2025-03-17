@@ -1,4 +1,4 @@
-zz
+
 <template>
     <!-- ✅ Checkbox caché pour gérer l'affichage -->
     <input type="checkbox" id="toggle-passager" class="peer hidden" />
@@ -129,21 +129,21 @@ zz
                     </div>
                 </div>
                 <div v-if="isOpen"
-                    class=" absolute z-[99] bg-white border h-[350px] lg:h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:w-80 transition duration-300">
-                    <div class="p-3">
+                    class=" absolute z-9999 bg-white border h-[350px] lg:h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:w-80 transition duration-300">
+                    <div class="p-3 ">
                         <div class="search-container relative">
                             <input ref="searchInput" @input="filterSuggestions" v-model="destination"
                                 class="text-xl font-medium text-black outline-none h-full w-full placeholder-black text-start resize-none my-2 pr-10"
                                 :placeholder="$t('appServices.hotel.question')" />
                             <button v-if="destination" @click="clearInput"
                                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-black text-xl">
-                                <BaseIcon name="CircleX" size="20" stroke-width="3" />
+                                <BaseIcon name="X" size="20" stroke-width="3" class="bg-red-200 rounded-full p-2 w-8 h-8" />
                             </button>
                         </div>
 
                         <div class="w-full border-b rounded-full mt-2"></div>
 
-                        <div v-if="isLoading">
+                        <div v-if="isLoading" class="z-[999px]">
                             <div class="flex justify-start items-center mt-2">
                                 <Skeletor circle size="30" class="post__avatar" />
                                 <Skeletor class="ml-3" width="75%" />
@@ -157,7 +157,7 @@ zz
                                 <Skeletor class="ml-3" width="75%" />
                             </div>
                         </div>
-                        <div v-else @click="toggleDropdown" class="mt-2 ">
+                        <div v-else @click="toggleDropdown" class="mt-2 z-[999px] ">
                             <div v-if="!filteredWords.length" class="flex justify-start mt-10">
                                 <div v-if="!recentSearch.length" class="flex justify-start items-center">
 
@@ -179,7 +179,7 @@ zz
 
 
                             </div>
-                            <div class="">
+                            <div class="z-50">
                                 <ul v-if="filteredWords.length" class="suggestions">
                                     <li v-for="item in filteredWords" :key="item.label"
                                         class="flex justify-start items-center mt-3 cursor-pointer"
@@ -268,9 +268,9 @@ zz
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick, computed } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, computed,defineEmits } from "vue";
 // import router from "vue-router";
-import router from "@/router";
+// import router from "@/router";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { French, English } from "flatpickr/dist/l10n/fr.js";
@@ -305,11 +305,12 @@ const formattedDateRetour = ref("");
 const currentLanguage = ref("en");
 const dropdown = ref(null);
 
-const showFilter = ref(false);
+// const showFilter = ref(false);
 const searchInput = ref(null);
 
 const filteredWords = ref([]);
 const recentSearch = ref([]);
+const emit = defineEmits(["search"]);
 
 
 const filterSuggestions = () => {
@@ -380,8 +381,8 @@ const totalPersons = computed(() => {
 });
 
 const handleSearch = () => {
-    router.push('/bookingHotel');
-    showFilter.value = true;
+emit('search', { destination: destination.value, dateAller: formattedDateAller.value, dateRetour: formattedDateRetour.value, rooms: rooms.value });
+
 };
 
 const formatDate = (date) => {

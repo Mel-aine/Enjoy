@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import RoomDetails from '@/components/hotel/RoomDetails.vue';
 import BookingSummary from '@/components/hotel/BookingSummary.vue';
 import BookingPayement from '@/components/hotel/BookingPayement.vue';
@@ -52,10 +52,10 @@ const goToStep4 = () => {
 </script>
 
 <template>
-
   <div class="flex flex-col lg:flex-row gap-8">
 
     <div class="flex-1">
+      
       <ProgressSteps :steps="['Dates & Rooms', 'Extras', 'Payment', 'Confirmation']" :currentStep="step" />
 
       <RoomDetails v-if="step2Active && !step3Active && !step4Active" />

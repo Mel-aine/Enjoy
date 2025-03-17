@@ -90,6 +90,12 @@ const router = createRouter({
       component: () => import('@/views/hotel/EBookingHotelView.vue'),
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
+    {
+      path: '/viewInMap',
+      name: 'viewInMap',
+      component: () => import('@/views/hotel/EViewInMapView.vue'),
+      meta: { hideComponent: true},
+    },
 
   ],
 })

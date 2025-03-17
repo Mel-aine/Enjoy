@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, } from 'vue'
 import {
   BedDoubleIcon,
   PlaneIcon,
@@ -10,6 +10,8 @@ import {
   HeartIcon,
   MapPinIcon,
 } from 'lucide-vue-next'
+import { useReservationHotelStore } from '@/stores/reservationHotel';
+
 
 const props = defineProps({
   hotel: Object
@@ -36,13 +38,21 @@ const iconMap = {
 
 const isFavorite = ref(false)
 
-const starsArray = computed(() => {
-  return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
-})
+// const starsArray = computed(() => {
+//   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
+// })
+const hotelStore = useReservationHotelStore();
+
 
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
 }
+const handleViewDeal = () => {
+  hotelStore.setHotel(props.hotel)
+  hotelStore.setViewDeal(true)
+
+}
+
 </script>
 
 <template>
@@ -102,7 +112,7 @@ const toggleFavorite = () => {
             <div class="text-sm text-gray-500">Price per night</div>
             <div class="text-xl font-bold">${{ hotel.price }}</div>
             <div class="text-xs text-gray-500">Includes taxes & fees</div>
-            <button class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 mt-2">
+            <button @click="handleViewDeal" class="bg-customRed text-white px-4 py-2 rounded-md hover:text-black mt-2">
               View Deal
             </button>
           </div>
