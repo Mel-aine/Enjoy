@@ -8,8 +8,13 @@
 
         <!-- Content beside the image -->
         <div class="flex-1">
-          <div class="inline-block px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-md mb-2">
-            Best Choice
+
+          <div class="flex items-start justify-start space-x-3">
+            <span class=" px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-md mb-2">
+              Best Choice
+            </span>
+            <WifiIcon size="18" class="text-gray-600" />
+            <DumbbellIcon size="18" class="text-gray-600" />
           </div>
           <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2">
             King bed stylish Apartment with Loft style family room
@@ -25,7 +30,7 @@
           <!-- Icons section (beds, guests, etc.) - moved inside the flex container -->
           <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-8">
             <div class="flex items-center space-x-2">
-              <BedDoubleIcon size="20" class="text-gray-400" />
+              <BedDoubleIcon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">3</div>
                 <div class="text-xs text-gray-500">Beds</div>
@@ -33,18 +38,18 @@
             </div>
             <div class="flex items-center space-x-2">
               <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
-                stroke="#9CA3AF" stroke-width="2">
+                stroke="#475569" stroke-width="2">
                 <!-- Carré avec coins arrondis -->
-                <rect x="1" y="1" width="18" height="18" rx="3" ry="3" stroke="#9CA3AF" />
+                <rect x="1" y="1" width="18" height="18" rx="3" ry="3" stroke="#475569" />
 
                 <!-- Ligne diagonale -->
-                <line x1="4" y1="16" x2="16" y2="4" stroke="#9CA3AF" />
+                <line x1="4" y1="16" x2="16" y2="4" stroke="#475569" />
 
                 <!-- Pointe de flèche en haut -->
-                <polyline points="16,4 14,4 15,6" fill="none" stroke="#9CA3AF" />
+                <polyline points="16,4 14,4 15,6" fill="none" stroke="#475569" />
 
                 <!-- Pointe de flèche en bas -->
-                <polyline points="4,16 6,16 5,14" fill="none" stroke="#9CA3AF" />
+                <polyline points="4,16 6,16 5,14" fill="none" stroke="#475569" />
               </svg>
               <div>
                 <div class="text-sm font-medium text-gray-900">12 m² </div>
@@ -52,14 +57,14 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <Users2Icon size="20" class="text-gray-400" />
+              <Users2Icon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">6</div>
                 <div class="text-xs text-gray-500">Guests</div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
-              <Bath size="20" class="text-gray-400" />
+              <Bath size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">1</div>
                 <div class="text-xs text-gray-500">Bathroom</div>
@@ -67,7 +72,7 @@
             </div>
             <div class="flex items-center space-x-2">
               <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
-                stroke="#9CA3AF" stroke-width="2">
+                stroke="#475569" stroke-width="2">
                 <path d="M1 16 H6 M6 12 H10 M10 8 H14 M14 4 H18" />
               </svg>
               <div>
@@ -367,6 +372,8 @@
 <script setup>
 import { ref } from 'vue';
 import {
+  DumbbellIcon,
+  WifiIcon,
   BedDoubleIcon,
   Users2Icon,
   Bath,

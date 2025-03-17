@@ -93,7 +93,7 @@ const props = defineProps({
 
     <button @click="nextBook"
     v-if="!props.stepAllCompleted"
-      class="w-full bg-customBlue text-white py-3 rounded-lg mt-4 hover:bg-indigo-700 transition duration-200">
+      class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
 
       <div :class="props.stepAllCompleted ? 'hidden' : ''">
         <span v-if="!props.stepCompleted">Request To Book</span>
@@ -106,7 +106,7 @@ const props = defineProps({
     </button>
     <button @click="nextBook"
     v-if="props.stepAllCompleted"
-      class="w-full bg-green-200 text-white py-3 rounded-lg mt-4 hover:bg-green-400 transition duration-200">
+      class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
        Download Invoice
     </button>
 

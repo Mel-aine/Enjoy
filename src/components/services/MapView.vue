@@ -18,7 +18,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full h-[300px] md:h-[500px] lg:h-full">
+  <div class="w-full h-[900px] md:h-[500px] lg:h-full">
     <div id="cameroun-map" class="w-full h-full"></div>
   </div>
 </template>

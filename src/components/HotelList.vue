@@ -111,7 +111,7 @@ const sortedHotels = computed(() => {
           <select 
             :value="sortOption"
             @change="emit('sortChange', $event.target.value)"
-            class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-customRed focus:border-transparent"
           >
             <option value="recommended">Recommended</option>
             <option value="price-low">Price (low to high)</option>
@@ -120,7 +120,7 @@ const sortedHotels = computed(() => {
           </select>
           <ArrowUpDownIcon 
             size="16"
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none text-gray-500"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none text-customRed"
           />
         </div>
       </div>
