@@ -48,8 +48,6 @@
    </div>
 
  </div>
-
-
  <div class="flex lg:flex-row justify-center flex-col mx-auto px-8 mt-8">
    <div class="mx-auto">
 
@@ -139,6 +137,7 @@
 
  </div>
 </div>
+
 </div>
 <!-- modal -->
 <ModalCategory :isOpen = "isModalOpen" @close="isModalOpen=false" :title="'What’s your relationship to this business?'" :showActionButton="true"
