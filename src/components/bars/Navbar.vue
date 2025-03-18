@@ -243,7 +243,7 @@
     </div>
 
 
-    <div class="hidden md:block container mx-auto px-[212px] py-4 flex flex-col lg:flex-row">
+    <div class="hidden md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
       <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2">
         <template #button>
           <span class="text-white">{{ $t('navbar.restaurant') }}</span>

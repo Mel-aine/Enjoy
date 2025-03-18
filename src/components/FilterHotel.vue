@@ -30,15 +30,22 @@
     <div class="mb-6">
       <h3 class="font-medium mb-2">Star Rating</h3>
       <div class="space-y-2">
-        <div v-for="rating in [5, 4, 3, 2, 1]" :key="rating" class="flex items-center">
-          <input type="checkbox" :id="`star-${rating}`" v-model="starRating" :value="rating" class="mr-2"
-            @change="updateFilters" />
-          <label :for="`star-${rating}`" class="flex items-center cursor-pointer">
-            <StarIcon v-for="i in rating" :key="i" size="16" class="text-customRed fill-customRed" />
-            <StarIcon v-for="i in (5 - rating)" :key="i" size="16" class="text-gray-300" />
-          </label>
-        </div>
-      </div>
+    <div v-for="rating in [5, 4, 3, 2, 1]" :key="rating" class="grid grid-cols-[auto_1fr] gap-2 items-center">
+      <input
+        type="checkbox"
+        :id="`star-${rating}`"
+        v-model="starRating"
+        :value="rating"
+        class="cursor-pointer"
+        @change="updateFilters"
+      />
+      <label :for="`star-${rating}`" class="flex items-center cursor-pointer space-x-1">
+        <template v-for="i in 5" :key="i">
+          <StarIcon size="16" :class="i <= rating ? 'text-customRed fill-customRed' : 'text-gray-300'" />
+        </template>
+      </label>
+    </div>
+  </div>
     </div>
 
     <div>

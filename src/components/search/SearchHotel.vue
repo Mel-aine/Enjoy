@@ -128,8 +128,9 @@
                                 }}</span></label>
                     </div>
                 </div>
+                <!-- <div v-if="isOpen" class="h-[800px]"></div> -->
                 <div v-if="isOpen"
-                    class=" absolute z-9999 bg-white border h-[350px] lg:h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:w-80 transition duration-300">
+                    class=" absolute  z-[9999999px] bg-white border h-[350px] lg:h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:w-80 transition duration-300">
                     <div class="p-3 ">
                         <div class="search-container relative">
                             <input ref="searchInput" @input="filterSuggestions" v-model="destination"
@@ -179,7 +180,7 @@
 
 
                             </div>
-                            <div class="z-50">
+                            <div class="z-[999px]">
                                 <ul v-if="filteredWords.length" class="suggestions">
                                     <li v-for="item in filteredWords" :key="item.label"
                                         class="flex justify-start items-center mt-3 cursor-pointer"

@@ -127,10 +127,10 @@
             <span class="text-gray-950  font-semibold text-xl">{{ $t('whats') }}</span>
           </div>
         </div>
-        <div class="w-full z-0 md:flex md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 md:mx-8 lg:mx-8 ">
+        <div class="w-full md:flex md:space-y-0 space-y-4 mb-14 gap-8 my-8 px-8 md:mx-8 lg:mx-8 ">
           <div class="flex flex-col items-center w-[300px] md:w-[200px] bg-white ">
             <!-- Image / Carousel -->
-            <div class="relative w-full z-0">
+            <div class="relative w-full z-10">
               <!-- Carousel wrapper -->
               <div class="relative h-[150px] overflow-hidden rounded-t-lg z-0">
                 <div class="flex transition-transform duration-500 ease-in-out"
