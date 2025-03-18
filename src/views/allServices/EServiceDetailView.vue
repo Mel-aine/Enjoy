@@ -48,8 +48,7 @@
 
    </div>
    <SearchHotel @search="handleSearch"></SearchHotel>
-
-   <div class="max-w-screen-2xl lg:flex-row justify-between flex-col mx-auto md:px-4 lg:px-16 mt-20" :class="{ 'hidden': search }">
+   <div class=" flex lg:flex-row justify-between flex-col mx-auto md:px-4 lg:px-8 mt-20" :class="{ 'hidden': search }">
     <div class="mx-auto">
        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4  md:space-y-0 space-y-4  mt-40 mb-7 space-x-2 items-center sm:px-8 mx-8 md:mt-10 lg:mt-10 ">
        <!-- ajout button -->
@@ -112,7 +111,6 @@
                </div>
              </div>
            </div>
-
            <!-- Slider controls -->
            <button @click="prevSlide" type="button" class="absolute top-1/2 left-0 z-30 flex items-center justify-center h-10 w-10 transform -translate-y-1/2 px-4 cursor-pointer group focus:outline-none">
              <span  class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
@@ -336,7 +334,7 @@
      <!-- suggestion component -->
        <InfoService :phone = "item.phone" :localisation = "item.localisation" :address = "item.address" :email = "item.email" />
    </div>
-   <div class="mt-44 md:mt-40 lg:mt-12" :class="{ 'hidden': !search }">
+   <div class="mx-auto max-w-screen-xl mt-44 md:mt-40 lg:mt-12" :class="{ 'hidden': !search }">
       <EHotelView :class="{ 'hidden': hotelStore.booking }"></EHotelView>
       <EBookingHotelView :class="{ 'hidden': !hotelStore.booking }" class="mt-20"></EBookingHotelView>
 

@@ -1,55 +1,52 @@
 <template>
   <div class="bg-white rounded-lg shadow-md p-4">
-    <h2 class="font-bold text-lg mb-4">Filter by:</h2>
+    <h2 class="font-bold text-lg mb-4">{{ $t('appServices.hotel.filterBy') }} :</h2>
     <div class="mb-6">
-      <h3 class="font-medium mb-2">Price per night</h3>
+      <h3 class="font-medium mb-2">{{ $t('appServices.hotel.pricePerNight') }} </h3>
       <div class="flex items-center justify-between mb-2">
         <span class="text-sm text-gray-600">{{ priceRange[0] }}</span>
         <span class="text-sm text-gray-600">{{ priceRange[1] }}</span>
       </div>
       <div class="relative h-2 bg-gray-200 rounded-full">
         <div class="absolute h-full bg-customBlue rounded-full" :style="{
-          left: `${(priceRange[0] / 1000) * 100}%`,
-          right: `${100 - (priceRange[1] / 1000) * 100}%`
+          left: `${((priceRange[0] - 20000) / (40000 - 20000)) * 100}%`,
+          right: `${100 - ((priceRange[1] - 20000) / (40000 - 20000)) * 100}%`
         }"></div>
       </div>
       <div class="flex justify-between mt-4">
         <div>
-          <label class="block text-sm text-gray-600 mb-1">Min Price</label>
-          <input type="number" v-model="priceRange[0]" min="0" max="1000"
+          <label class="block text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.min') }} {{
+            $t('appServices.hotel.price') }}</label>
+          <input type="number" v-model="priceRange[0]" min="20000" max="40000"
             class="w-24 border border-gray-300 rounded p-1 text-sm" @input="updateFilters" />
+
         </div>
         <div>
-          <label class="block text-sm text-gray-600 mb-1">Max Price</label>
-          <input type="number" v-model="priceRange[1]" min="0" max="1000"
+          <label class="block text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.max') }} {{
+            $t('appServices.hotel.price') }}</label>
+          <input type="number" v-model="priceRange[1]" min="20000" max="40000"
             class="w-24 border border-gray-300 rounded p-1 text-sm" @input="updateFilters" />
         </div>
       </div>
     </div>
 
     <div class="mb-6">
-      <h3 class="font-medium mb-2">Star Rating</h3>
+      <h3 class="font-medium mb-2">{{ $t('appServices.hotel.starRating') }}</h3>
       <div class="space-y-2">
-    <div v-for="rating in [5, 4, 3, 2, 1]" :key="rating" class="grid grid-cols-[auto_1fr] gap-2 items-center">
-      <input
-        type="checkbox"
-        :id="`star-${rating}`"
-        v-model="starRating"
-        :value="rating"
-        class="cursor-pointer"
-        @change="updateFilters"
-      />
-      <label :for="`star-${rating}`" class="flex items-center cursor-pointer space-x-1">
-        <template v-for="i in 5" :key="i">
-          <StarIcon size="16" :class="i <= rating ? 'text-customRed fill-customRed' : 'text-gray-300'" />
-        </template>
-      </label>
-    </div>
-  </div>
+        <div v-for="rating in [5, 4, 3, 2, 1]" :key="rating" class="grid grid-cols-[auto_1fr] gap-2 items-center">
+          <input type="checkbox" :id="`star-${rating}`" v-model="starRating" :value="rating" class="cursor-pointer"
+            @change="updateFilters" />
+          <label :for="`star-${rating}`" class="flex items-center cursor-pointer space-x-1">
+            <template v-for="i in 5" :key="i">
+              <StarIcon size="16" :class="i <= rating ? 'text-customRed fill-customRed' : 'text-gray-300'" />
+            </template>
+          </label>
+        </div>
+      </div>
     </div>
 
     <div>
-      <h3 class="font-medium mb-2">Amenities</h3>
+      <h3 class="font-medium mb-2">{{ $t('appServices.hotel.amenities') }}</h3>
       <div class="space-y-2">
         <div v-for="amenity in amenitiesList" :key="amenity.id" class="flex items-center">
           <input type="checkbox" :id="amenity.id" v-model="amenities" :value="amenity.id" class="mr-2"
@@ -65,8 +62,11 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue';
+import { ref, defineProps,computed } from 'vue';
 import { StarIcon, WifiIcon, UtensilsIcon, DumbbellIcon } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps({
   activeFilters: Object,
@@ -77,11 +77,11 @@ const priceRange = ref([...props.activeFilters.priceRange]);
 const starRating = ref([...props.activeFilters.starRating]);
 const amenities = ref([...props.activeFilters.amenities]);
 
-const amenitiesList = [
-  { id: 'wifi', label: 'Free WiFi', icon: WifiIcon },
-  { id: 'breakfast', label: 'Breakfast Included', icon: UtensilsIcon },
-  { id: 'gym', label: 'Fitness Center', icon: DumbbellIcon }
-];
+const amenitiesList = computed(() => [
+  { id: "wifi", label: t("appServices.hotel.freeWifi"), icon: WifiIcon },
+  { id: "breakfast", label: t("appServices.hotel.breakfastIncluded"), icon: UtensilsIcon },
+  { id: "gym", label: t("appServices.hotel.fitnessCenter"), icon: DumbbellIcon }
+]);
 
 const updateFilters = () => {
   props.onFilterChange({

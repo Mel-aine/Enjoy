@@ -178,7 +178,6 @@
 
                                 </div>
 
-
                             </div>
                             <div class="z-[999px]">
                                 <ul v-if="filteredWords.length" class="suggestions">

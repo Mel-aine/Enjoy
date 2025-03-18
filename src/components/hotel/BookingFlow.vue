@@ -5,6 +5,8 @@ import BookingSummary from '@/components/hotel/BookingSummary.vue';
 import BookingPayement from '@/components/hotel/BookingPayement.vue';
 import BookingConfirm from '@/components/hotel/BookingConfirm.vue';
 import ProgressSteps from '@/components/hotel/Progress.vue';
+import { useI18n } from 'vue-i18n';
+
 
 
 // Assuming you'll eventually want these to be reactive, I'm making them refs
@@ -14,6 +16,7 @@ const step4Active = ref(false);
 const step2Completed = ref(false);
 const step3Completed = ref(false);
 const step = ref(1);
+const { t } = useI18n();
 // const nextstep = ref(false);
 
 
@@ -56,7 +59,7 @@ const goToStep4 = () => {
 
     <div class="flex-1">
       
-      <ProgressSteps :steps="['Dates & Rooms', 'Extras', 'Payment', 'Confirmation']" :currentStep="step" />
+      <ProgressSteps :steps="[t('appServices.hotel.datesRooms'), t('appServices.hotel.extras'), t('appServices.hotel.payment'), t('appServices.hotel.confirmation')]" :currentStep="step" />
 
       <RoomDetails v-if="step2Active && !step3Active && !step4Active" />
       <BookingPayement v-if="!step3Completed && step3Active" />

@@ -15,7 +15,7 @@ const searchParams = ref({
 })
 
 const activeFilters = ref({
-  priceRange: [0, 1000],
+  priceRange: [20000, 40000],
   starRating: [],
   amenities: []
 })
@@ -42,31 +42,31 @@ const handleSortChange = (option) => {
   <div class="min-h-screen bg-gray-50">
     <!-- <Header /> -->
     <main class="container mx-auto px-4 py-6">
-      <SearchHotel />
+      <!-- <SearchHotel /> -->
       <div class="flex flex-col md:flex-row gap-6 mt-6">
         <!-- Sidebar Filters -->
 
         <div class="w-full md:w-1/4 ">
-          <router-link to="/viewInMap" >
-          <div class="max-w-sm rounded-md mb-4 border bg-white hidden md:block">
-            <div class="w-full h-[200px] md:h-[500px] lg:h-[100px] ">
+          <router-link to="/viewInMap" class="relative hidden md:block">
+          <div class="max-w-sm rounded-md mb-4 border bg-white ">
+            <div class=" w-full h-[200px] md:h-[500px] lg:h-[100px] ">
                 <MapView />
             </div>
             <div class="border-b"></div>
             <div class="px-6 py-4">
-              <div class="font-bold text-center mb-2">Afficher la carte</div>
+              <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
             </div>
           </div>
         </router-link>
 
-        <router-link to="/viewInMap" >
-          <div class="max-w-sm rounded-md mb-4 border bg-white md:hidden">
+        <router-link to="/viewInMap" class="md:hidden">
+          <div class="max-w-sm rounded-md mb-4 border bg-white">
             <!-- <div class="w-full h-[200px] md:h-[500px] lg:h-[100px] ">
                 <MapView />
             </div> -->
             <div class="border-b"></div>
             <div class="px-6 py-4">
-              <div class="font-bold text-center mb-2">Afficher la carte</div>
+              <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
             </div>
           </div>
         </router-link>

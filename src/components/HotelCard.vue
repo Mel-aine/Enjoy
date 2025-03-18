@@ -1,9 +1,9 @@
 <script setup>
 import { ref, computed, } from 'vue'
 import {
-  BedDoubleIcon,
-  PlaneIcon,
-  CarIcon,
+  // BedDoubleIcon,
+  // PlaneIcon,
+  // CarIcon,
   WifiIcon,
   UtensilsIcon,
   DumbbellIcon,
@@ -83,7 +83,7 @@ const handleViewDeal = () => {
                   <StarIcon :size="16" :class="star === 'filled' ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'" />
                 </span>
                 <span class="ml-2 text-sm text-gray-600">
-                  {{ hotel.rating }} ({{ hotel.reviews }} reviews)
+                  {{ hotel.rating }} ({{ hotel.reviews }} {{ $t('appServices.hotel.review') }})
                 </span>
               </div>
             </div>
@@ -106,14 +106,14 @@ const handleViewDeal = () => {
         <!-- Prix et bouton -->
         <div class="w-full md:w-1/3 flex flex-col items-end justify-between p-4">
           <div class="flex items-center bg-green-100 px-2 py-1 rounded text-sm text-green-700">
-            <span>Rating: {{ hotel.rating }} ({{ hotel.reviews }} reviews)</span>
+            <span>{{ $t('appServices.hotel.rating') }}: {{ hotel.rating }} ({{ hotel.reviews }} {{ $t('appServices.hotel.review') }})</span>
           </div>
           <div class="text-right mt-2">
-            <div class="text-sm text-gray-500">Price per night</div>
-            <div class="text-xl font-bold">${{ hotel.price }}</div>
-            <div class="text-xs text-gray-500">Includes taxes & fees</div>
+            <div class="text-sm text-gray-500">{{ $t('appServices.hotel.pricePerNight') }}</div>
+            <div class="text-xl font-bold">FCFA {{ hotel.price }}</div>
+            <div class="text-xs text-gray-500">{{ $t('appServices.hotel.includeTaxesFees') }}</div>
             <button @click="handleViewDeal" class="bg-customRed text-white px-4 py-2 rounded-md hover:text-black mt-2">
-              View Deal
+              {{ $t('appServices.hotel.viewDeal') }}            
             </button>
           </div>
         </div>
