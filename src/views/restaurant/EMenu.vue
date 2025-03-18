@@ -1,5 +1,6 @@
 <template>
    <div class="flex h-screen overflow-y-hidden bg-slate-50">
+
       <!-- ===== Content Area Start ===== -->
       <div class="flex flex-col gap-4 w-full px-4 md:px-6 2xl:px-11 mt-4">
       <!-- Search bar -->
@@ -97,7 +98,7 @@
         </div>
       </div>
 
-      <aside class="fixed h-screen right-0 top-0 z-9999 flex w-75 md:w-2/5 lg:w-1/2  flex-col overflow-y-hidden shadow-2xl duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 bg-white"
+      <aside class="fixed h-screen right-0 top-0 z-9999 flex w-75 md:w-2/5 lg:w-1/2  flex-col overflow-y-hidden shadow-2xl duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 bg-white rounded-sm"
       :class="{
       'translate-x-0': isSidebarOpen,
       'translate-x-full': !isSidebarOpen
@@ -167,7 +168,9 @@
           </nav>
         </div>
       </aside>
+
    </div>
+
    <Modal :isOpen="isModalOpen" @close="isModalOpen = false"/>
 
 </template>
