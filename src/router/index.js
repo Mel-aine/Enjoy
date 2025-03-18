@@ -76,7 +76,7 @@ const router = createRouter({
       path: '/menu',
       name: 'menu',
       component: () => import('@/views/restaurant/EMenu.vue'),
-      meta: { hideComponent: true },
+      meta: { hideComponent: true, showHeader2: true, showFooter2: true },
     },
     {
       path: '/recherche/:serviceId/:placeId',
