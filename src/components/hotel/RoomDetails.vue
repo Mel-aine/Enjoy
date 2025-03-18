@@ -11,8 +11,7 @@
 
           <div class="flex items-start justify-start space-x-3">
             <span class=" px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-md mb-2">
-              Best Choice
-            </span>
+              {{$t('appServices.hotel.bestChoice')}}            </span>
             <WifiIcon size="18" class="text-gray-600" />
             <DumbbellIcon size="18" class="text-gray-600" />
           </div>
@@ -24,7 +23,7 @@
               <StarIcon v-for="star in stars" :key="star" size="16" class="text-yellow-400 fill-yellow-400" />
             </div>
             <span class="font-medium text-gray-900">4.87</span>
-            <span class="text-gray-500">(262 reviews)</span>
+            <span class="text-gray-500">(262 {{$t('appServices.hotel.review')}}s )</span>
           </div>
 
           <!-- Icons section (beds, guests, etc.) - moved inside the flex container -->
@@ -33,7 +32,7 @@
               <BedDoubleIcon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">3</div>
-                <div class="text-xs text-gray-500">Beds</div>
+                <div class="text-xs text-gray-500">{{$t('appServices.hotel.beds')}} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -53,21 +52,21 @@
               </svg>
               <div>
                 <div class="text-sm font-medium text-gray-900">12 m² </div>
-                <div class="text-xs text-gray-500">Area</div>
+                <div class="text-xs text-gray-500">{{$t('appServices.hotel.area')}} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Users2Icon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">6</div>
-                <div class="text-xs text-gray-500">Guests</div>
+                <div class="text-xs text-gray-500">{{$t('appServices.hotel.guests')}} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Bath size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">1</div>
-                <div class="text-xs text-gray-500">Bathroom</div>
+                <div class="text-xs text-gray-500">{{$t('appServices.hotel.bathroom')}} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -77,7 +76,7 @@
               </svg>
               <div>
                 <div class="text-sm font-medium text-gray-900">4</div>
-                <div class="text-xs text-gray-500">Floor</div>
+                <div class="text-xs text-gray-500">{{$t('appServices.hotel.floor')}} </div>
               </div>
             </div>
           </div>
@@ -85,7 +84,7 @@
       </div>
     </div>
     <div class="px-6 py-2">
-      <h2 class="font-semibold text-lg -900 mb-4">Get is strated :</h2>
+      <h2 class="font-semibold text-lg -900 mb-4">{{$t('appServices.hotel.getStarted')}}  :</h2>
       <div class="space-y-3 text-gray-600 text-sm">
         <p>Free cancellation until 11:59 PM on May 21, 2022</p>
         <p>
@@ -105,7 +104,7 @@
         </template>
 
         <button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
-          Read {{ expanded ? 'less' : 'more' }}
+          {{$t('read')}}  {{ expanded ? $t('less') : $t('more') }}
           <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
             :class="{ 'rotate-180': expanded }" />
         </button>
@@ -113,7 +112,7 @@
     </div>
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
-      <h2 class="font-semibold text-lg text-gray-900 mb-4">Enter your details</h2>
+      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{$t('appServices.hotel.enterYourDetails')}}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- First Name -->
         <div>

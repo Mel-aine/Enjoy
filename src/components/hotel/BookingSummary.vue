@@ -5,12 +5,15 @@ import {
   LockIcon,
 
 } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
+
 
 const checkInDate = ref("Sun, 22 May 2022");
 const checkOutDate = ref("Wed, 25 May 2022");
 const stayLength = ref("3 nights");
 const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
 const emit = defineEmits(['nextBook', 'next'])
+const { t } = useI18n();
 
 const nextBook = () => {
   // console.log('step4', props.stepCompleted);
@@ -32,9 +35,9 @@ const nextBook = () => {
 };
 
 const priceDetails = ref([
-  { label: "Rooms and offer:", price: 625.93 },
-  { label: "8 % VAT:", price: 50.03 },
-  { label: "City tax:", price: 16.44 },
+  { label: t('appServices.hotel.RoomsAndOffer:') , price: 625.93 },
+  { label: t('appServices.hotel.8%VAT'), price: 50.03 },
+  { label: t('appServices.hotel.cityTax'), price: 16.44 },
 ]);
 const totalPrice = ref(698.87);
 const props = defineProps({
@@ -47,16 +50,16 @@ const props = defineProps({
 
 <template>
   <div class="bg-white rounded-xl shadow-sm p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">Reservation Summary</h3>
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
 
     <div class="flex justify-between pb-4 border-b">
       <div>
-        <div class="text-sm text-gray-600 mb-1">CHECK-IN</div>
+        <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
         <div class="font-medium">{{ checkInDate }}</div>
         <div class="text-sm text-gray-600">from 16:00</div>
       </div>
       <div class="text-right">
-        <div class="text-sm text-gray-600 mb-1">CHECK-OUT</div>
+        <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkOut')}}</div>
         <div class="font-medium">{{ checkOutDate }}</div>
         <div class="text-sm text-gray-600">by 11:00</div>
       </div>
@@ -72,20 +75,21 @@ const props = defineProps({
     </div>
 
     <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">YOU SELECTED:</div>
+      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.youSelected')}}:</div>
       <div class="font-medium">{{ selectedRoom }}</div>
-      <button class="text-customBlue text-sm mt-1">Change your selection</button>
+      <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button>
     </div>
 
     <div class="py-4">
-      <h4 class="font-medium mb-2">Your price summary</h4>
+      <h4 class="font-medium mb-2">{{$t('appServices.hotel.yourPriceSummary')}}</h4>
       <div class="space-y-2">
         <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
           <span>{{ item.label }}</span>
           <span>${{ item.price.toFixed(2) }}</span>
         </div>
         <div class="flex justify-between font-medium text-customRed pt-2 border-t">
-          <span>Total Price</span>
+          <span>      {{$t('appServices.hotel.total')}} {{$t('appServices.hotel.price')}}
+          </span>
           <span>${{ totalPrice.toFixed(2) }}</span>
         </div>
       </div>
@@ -96,23 +100,23 @@ const props = defineProps({
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
 
       <div :class="props.stepAllCompleted ? 'hidden' : ''">
-        <span v-if="!props.stepCompleted">Request To Book</span>
+        <span v-if="!props.stepCompleted">{{$t('appServices.hotel.requestToBook')}}</span>
         <div v-if="props.stepCompleted" class="flex items-center justify-center">
           <LockIcon size="16" />
-          <span class="ml-2">Pay securely $788.87</span>
+          <span class="ml-2">{{$t('appServices.hotel.paySecurely')}} $788.87</span>
         </div>
       </div>
-      <div v-if="props.stepAllCompleted">Download Invoice</div>
+      <div v-if="props.stepAllCompleted">{{$t('appServices.hotel.downloadInvoice')}}</div>
     </button>
     <button @click="nextBook"
     v-if="props.stepAllCompleted"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
-       Download Invoice
+      {{$t('appServices.hotel.downloadInvoice')}}
     </button>
 
 
     <div class="text-center text-xs text-gray-500 mt-4">
-      We run on Enjoy Inc.
+      {{$t('appServices.hotel.weRunOnEnjoyInc')}}
     </div>
   </div>
 </template>

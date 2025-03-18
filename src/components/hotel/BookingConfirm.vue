@@ -9,7 +9,7 @@
           <CheckIcon class="text-white" size="24" />
         </div>
         <div class="ml-4">
-          <h2 class="text-lg font-semibold text-gray-900 mb-2">Your booking is confirmed</h2>
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">{{$t('appServices.hotel.bookingConfirmed')}}</h2>
           <p class="text-gray-600">
             Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
             Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.
@@ -20,37 +20,37 @@
     </div>
     <!-- Booking Details -->
     <div class="bg-white rounded-xl shadow-sm p-6">
-      <h3 class="text-lg font-semibold text-gray-900 mb-6">Booking details</h3>
+      <h3 class="text-lg font-semibold text-gray-900 mb-6">{{$t('appServices.hotel.bookingDetails')}}</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
-          <div class="text-sm text-gray-500 mb-1">GUEST</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.guest')}}</div>
           <div class="font-medium">{{ guestName }}</div>
         </div>
         <div>
-          <div class="text-sm text-gray-500 mb-1">CHECK-IN</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
           <div class="font-medium">{{ checkIn.date }}</div>
           <div class="text-sm text-gray-500">{{ checkIn.time }}</div>
         </div>
         <div>
-          <div class="text-sm text-gray-500 mb-1">CHECK-OUT</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.checkOut')}}</div>
           <div class="font-medium">{{ checkOut.date }}</div>
           <div class="text-sm text-gray-500">{{ checkOut.time }}</div>
         </div>
         <div>
-          <div class="text-sm text-gray-500 mb-1">YOUR RESERVATION</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.yourReservation')}}</div>
           <div class="font-medium">{{ reservation }}</div>
         </div>
         <div>
-          <div class="text-sm text-gray-500 mb-1">PHONE</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.phone')}}</div>
           <div class="font-medium">{{ phone }}</div>
         </div>
         <div>
-          <div class="text-sm text-gray-500 mb-1">EMAIL</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.email')}}</div>
           <div class="font-medium">{{ email }}</div>
         </div>
       </div>
       <div class="mt-6 pt-6 border-t">
-        <div class="text-sm text-gray-500 mb-1">BOOKING NUMBER</div>
+        <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.bookingNumber')}}</div>
         <div class="font-medium">{{ bookingNumber }}</div>
       </div>
     </div>
@@ -58,22 +58,20 @@
     <!-- Parking Ticket -->
     <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between">
       <div class="flex-col">
-        <h3 class="text-lg font-semibold text-gray-900 mb-4">Parking ticket</h3>
+        <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.parkingTicket')}}</h3>
       <p class="text-gray-500 text-sm mb-6">
-        Entrance to parking area is possible only with parking ticket
-        <br />
-        issued by parking entrance machine.
-      </p>
+        {{$t('appServices.hotel.parkingInfo')}}        <br />
+        {{$t('appServices.hotel.parkingInfo1')}}      </p>
       </div>
 
       <div class="flex items-center space-x-8">
         <img :src="parkingDetails.qrCodeUrl" alt="Parking QR Code" class="w-32 h-32" />
         <div>
-          <div class="text-sm text-gray-500 mb-1">CART PARK</div>
+          <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.carPark')}}</div>
           <div class="font-medium mb-1">{{ parkingDetails.type }}</div>
           <div class="text-sm text-gray-600 mb-4">{{ parkingDetails.place }}</div>
           <button class="inline-flex items-center px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
-            Download parking Ticket
+            {{$t('appServices.hotel.downloadParkingTicket')}}
           </button>
         </div>
       </div>
