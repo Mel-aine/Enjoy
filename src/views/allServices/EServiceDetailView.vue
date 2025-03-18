@@ -41,7 +41,7 @@
      </div>
 
      <div class="absolute lg:top-[45%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-0 lg:py-2 py-0 rounded-md hover:bg-white/15">
-       <button @click="isModalOpen = true" class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-white transition-transform duration-300 hover:scale-110">
+       <button  class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-white transition-transform duration-300 hover:scale-110">
          {{ $t('see_photo') }}
        </button>
      </div>
@@ -348,12 +348,12 @@
          <label for="orange-radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I own this business</label>
      </div>
      <div class="flex items-center  p-3 border-b border-gray-200 me-4">
-         <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-         <label for="orange-radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I work at this business</label>
+         <input id="orange-radio1" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+         <label for="orange-radio1" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I work at this business</label>
      </div>
      <div class="flex items-center  p-3 border-b border-gray-200 me-4">
-         <input id="orange-radio" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-         <label for="orange-radio" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I’m a customer</label>
+         <input id="orange-radio2" type="radio" value="" name="colored-radio" class="w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-500 dark:focus:ring-orange-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+         <label for="orange-radio2" class="ms-2 text-md font-normal text-gray-900 dark:text-gray-300">I’m a customer</label>
      </div>
    </div>
 
