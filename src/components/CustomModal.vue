@@ -1,27 +1,32 @@
-
 <template>
-    <Teleport to="body">
-      <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" @click="closeOnOverlay ? closeModal() : null">
-        <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative" @click.stop>
-          <button class="absolute top-3 right-3 text-gray-500 hover:text-gray-800" @click="closeModal">✖</button>
-          <slot>Contenu de la modal</slot>
-        </div>
+    <div
+      v-if="isOpen"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      @click="closeModal"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-md w-full relative" @click.stop>
+        <span class="absolute top-2 right-2 text-gray-500 cursor-pointer text-2xl" @click="closeModal">
+          &times;
+        </span>
+        <slot></slot> <!-- Contenu dynamique de la modale -->
       </div>
-    </Teleport>
+    </div>
   </template>
   
   <script setup>
-  import { defineProps, defineEmits } from "vue";
-  
-  defineProps({
-    isOpen: Boolean, 
-    closeOnOverlay: { type: Boolean, default: true }
+  // Props
+  const props = defineProps({
+    isOpen: {
+      type: Boolean,
+      required: true,
+    },
   });
   
-  const emit = defineEmits(["close"]);
+  // Événements
+  const emit = defineEmits(['close']);
   
+  // Méthode pour fermer la modale
   const closeModal = () => {
-    emit("close");
+    emit('close');
   };
   </script>
-  
