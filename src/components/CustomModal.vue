@@ -1,33 +1,36 @@
+
 <template>
-    <div
-      v-if="isOpen"
-      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-      @click="closeModal"
-    >
-    
-      <div class="bg-white rounded-lg p-6 max-w-md w-full relative" @click.stop>
-        <span class="absolute top-2 right-2 text-gray-500 cursor-pointer text-2xl" @click="closeModal">
-          &times;
-        </span>
-        <slot></slot> <!-- Contenu dynamique de la modale -->
+    <Teleport to="body">
+      <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="relative  rounded-lg p-6 max-w-screen-lg ">
+          <!-- Bouton placé au-dessus du slot -->
+          <button 
+            class="bg-orange-300 hover:bg-orange-200 rounded-full w-10 h-10 text-black text-lg absolute -top-24 -right-[655px] z-10 shadow-md" 
+            @click="closeModal">
+            <i class="fa fa-times "></i>
+          </button>
+  
+          <!-- Contenu dynamique de la modal -->
+          <slot>Contenu de la modal</slot>
+        </div>
       </div>
-    </div>
+    </Teleport>
   </template>
   
+  
+  
   <script setup>
-  // Props
-  const props = defineProps({
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
+  import { defineProps, defineEmits } from "vue";
+  
+  defineProps({
+    isOpen: Boolean, 
+    closeOnOverlay: { type: Boolean, default: true }
   });
   
-  // Événements
-  const emit = defineEmits(['close']);
+  const emit = defineEmits(["close"]);
   
-  // Méthode pour fermer la modale
   const closeModal = () => {
-    emit('close');
+    emit("close");
   };
   </script>
+  

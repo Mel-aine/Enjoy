@@ -98,11 +98,9 @@
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
                 <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaoun"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                <router-link to="/recherche">
                   <button @click="handleSearch" class="bg-customRed px-4 py-3 text-white ml-2">
                     <BaseIcon name="Search" size="20" stroke-width="2" />
                   </button>
-                </router-link>
 
               </div>
 
@@ -134,7 +132,7 @@
               </ul> -->
             </div>
 
-            <CustomModal :is-open="isModalOpen" @close="toggleModal">
+            <CustomModal :isOpen="isModalOpen" @close="toggleModal">
               <SearchHotel/>
             </CustomModal>
 
@@ -321,10 +319,9 @@ const toggleModal = () => {
 
 
 const handleSearch = () => {
-  if (leftValue.value == 'Hôtels & Séjours') {
-    isModalOpen.value = true;
-
-  }
+  if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+  isModalOpen.value = true;
+}
 }
 
 const toggleSidebar = () => {
