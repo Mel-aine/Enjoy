@@ -113,7 +113,7 @@
                   class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
                   <i :class="item.icon" class="text-gray-700 mr-2"></i>
                   <span class="ml-2">
-                    {{ item.label }}
+                     {{ $t('categories.' + item.label) }}
                   </span>
                 </li>
               </ul>
