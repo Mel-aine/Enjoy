@@ -36,9 +36,9 @@
             <div class="flex items-center justify-between ">
               <input v-model="leftValue" @click="activeInput = 'left'" placeholder="Restaurant"
                 class="w-full px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                <button @click="wantToSearchMobil" class="p-2 w-15">
-                  <BaseIcon name="CircleX" size="20" stroke-width="2" />
-                </button>
+              <button @click="wantToSearchMobil" class="p-2 w-15">
+                <BaseIcon name="CircleX" size="20" stroke-width="2" />
+              </button>
 
             </div>
 
@@ -47,9 +47,9 @@
 
               <input v-model="rightValue" @click="activeInput = 'right'" placeholder="Yaoun"
                 class="w-full px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                <button @click="wantToSearchMobil" class="p-2 w-15">
-                  <BaseIcon name="CircleX" size="20" stroke-width="2" />
-                </button>
+              <button @click="wantToSearchMobil" class="p-2 w-15">
+                <BaseIcon name="CircleX" size="20" stroke-width="2" />
+              </button>
 
             </div>
             <router-link to="/recherche">
@@ -96,10 +96,10 @@
                 <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                <input v-model="rightValue" @mouseenter="activeInput = 'right'" placeholder="Yaoun"
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaoun"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <router-link to="/recherche">
-                  <button class="bg-customRed px-4 py-3 text-white ml-2">
+                  <button @click="handleSearch" class="bg-customRed px-4 py-3 text-white ml-2">
                     <BaseIcon name="Search" size="20" stroke-width="2" />
                   </button>
                 </router-link>
@@ -108,31 +108,37 @@
 
               <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
                 @mouseleave="handleMouseLeave('left')"
-                class="absolute left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto ">
-                <li v-for="item in menuItems" :key="item" @mouseenter="leftValue = item.label"
-                  @click="selectItem('left', item.label)"
-                  class=" flex justify-start items-center z-[100] px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer ">
-                  <BaseIcon :name="item.icon" size="18" stroke-width="2"></BaseIcon>
+                class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+                <li v-for="item in filteredLeftItems" :key="item.label" @click="selectItem('left', item.label)"
+                  class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+                  <i :class="item.icon" class="text-gray-700 mr-2"></i>
                   <span class="ml-2">
                     {{ item.label }}
                   </span>
                 </li>
               </ul>
 
-              <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'"
+              <!-- <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'"
                 @mouseleave="handleMouseLeave('right')"
                 class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
                 <li class="flex justify-center items-center mt-3">
                   <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3" />
                   <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span>
                 </li>
-                <li v-for="item in menuData" :key="item" @mouseenter="rightValue = item.label"
-                  @click="selectItem('right', item.label)"
+                <li v-for="item in filteredRighttItems" :key="item" @mouseenter="rightValue = item.name"
+                  @click="selectItem('right', item.name)"
                   class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
-                  {{ item.label }}
+                  {{ item.name }} - {{ item.vicinity }}
                 </li>
-              </ul>
+              </ul> -->
             </div>
+
+            <CustomModal :is-open="isModalOpen" @close="toggleModal">
+              <SearchHotel/>
+            </CustomModal>
+
+            <div id="map" style="height: 500px; width: 100%;" class="hidden"></div>
+
 
             <CustomDropdown :footerDropdown="false">
               <template #button>
@@ -167,6 +173,8 @@
           </div>
         </nav>
       </div>
+
+
 
       <!-- User Management (à droite) -->
       <div v-show="!searchInMobil" id="userManage" class="relative flex items-center space-x-4">
@@ -206,7 +214,7 @@
                       class="flex justify-start item-center text-sm text-customRed hover:text-gray-900">
                       <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
                       <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{ itemY.label
-                        }}</span>
+                      }}</span>
                     </router-link>
                   </h3>
                 </div>
@@ -215,8 +223,8 @@
                 <h3 class="text-lg font-semibold text-gray-800 mt-3">
                   <router-link to="" class="flex justify-start item-center text-sm text-customRed hover:text-gray-900">
                     <BaseIcon name="Telescope" customColor="text-gray-700" size="20" stroke-width="2" />
-                    <span
-                      class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{ $t('navbar.yelpExploreBusiness') }}</span>
+                    <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2 whitespace-nowrap">{{
+                      $t('navbar.yelpExploreBusiness') }}</span>
                   </router-link>
                 </h3>
               </div>
@@ -284,6 +292,9 @@ import { ref, onMounted, onUnmounted, computed } from 'vue';
 import Button from '@/components/buttons/Button.vue';
 import CustomDropdown from '@/components/dropDown/dropdownContentP.vue';
 import CustomDropdownD from '@/components/dropDown/dropdownColumnsP.vue';
+import { Categories } from "@/mocks/categories.js";
+import CustomModal from '../CustomModal.vue';
+import SearchHotel from '../search/SearchHotel.vue';
 
 
 // import FloatingInput from '../input/FloatingInput.vue';
@@ -302,6 +313,18 @@ const showRightButton = ref(false);
 const searchInMobil = ref(false);
 // const router = useRouter();
 const isSidebarOpen = ref(false);
+const isModalOpen = ref(false);
+const toggleModal = () => {
+  isModalOpen.value = false ;
+}
+
+
+const handleSearch = () => {
+  if (leftValue.value == 'Hôtels & Séjours') {
+    isModalOpen.value = true;
+
+  }
+}
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -341,20 +364,35 @@ const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
 
-// const resetSearchBar =()=>{
-//   leftValue.value = '';
-//   rightValue.value = '';
-//   activeInput.value = null;
-//  }
-
 let leftSelected = false; // Track if a selection is made for left field
 let rightSelected = false; // Track if a selection is made for right field
 
+const filteredLeftItems = computed(() => {
+  return leftValue.value
+    ? Categories.filter(item => item.label.toLowerCase().includes(leftValue.value.toLowerCase()))
+    : Categories;
+});
+
+// const filteredRighttItems = computed(() => {
+//   return rightValue.value
+//     ? places.value.filter(item => item.name.toLowerCase().includes(rightValue.value.toLowerCase()))
+//     : places.value;
+// });
+
+// Filtrage dynamique pour la liste droite
+// const filteredRightItems = computed(() => {
+//   return rightValue.value
+//     ? menuData.value.filter(item => item.label.toLowerCase().includes(rightValue.value.toLowerCase()))
+//     : menuData.value;
+// });
+
+
 const selectItem = (side, item) => {
+
   if (side === 'left') {
     leftValue.value = item;
     leftSelected = true; // Mark as selected
-  } else if (side === 'right') {
+  } else {
     rightValue.value = item;
     rightSelected = true; // Mark as selected
   }
@@ -362,6 +400,7 @@ const selectItem = (side, item) => {
 };
 
 const handleMouseLeave = (input) => {
+
   if (input === 'left' && !leftSelected) {
     leftValue.value = ''; // Reset if no selection made
   }
@@ -377,6 +416,102 @@ const handleMouseLeave = (input) => {
   activeInput.value = null; // Hide the list when an item is selected
 };
 
+
+
+const selectedPlace = ref(null); // Lieu sélectionné
+const userLocation = ref(null); // Position de l'utilisateur
+
+// Fonction pour charger le script Google Maps
+function loadGoogleMapsScript() {
+  return new Promise((resolve, reject) => {
+    if (window.google) {
+      resolve(); // L'API est déjà chargée
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
+    document.head.appendChild(script);
+  });
+}
+
+// Fonction pour récupérer la position de l'utilisateur
+function getUserLocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("La géolocalisation n'est pas supportée par votre navigateur."));
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        resolve({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      (error) => {
+        reject(new Error("Erreur lors de la récupération de la position : " + error.message));
+      }
+    );
+  });
+}
+
+// Fonction pour initialiser l'autocomplete et la carte
+async function initMap() {
+  try {
+    // Charger l'API Google Maps
+    await loadGoogleMapsScript();
+
+    // Récupérer la position de l'utilisateur
+    userLocation.value = await getUserLocation();
+
+    // Initialiser la carte centrée sur la position de l'utilisateur
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: userLocation.value, // Centrer sur la position de l'utilisateur
+      zoom: 14,
+    });
+
+    // Initialiser l'autocomplete
+    const input = document.getElementById("search-input");
+
+    const autocomplete = new google.maps.places.Autocomplete(input);
+
+    // Lorsqu'un lieu est sélectionné
+    autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+
+      if (!place.geometry || !place.geometry.location) {
+        console.error("Lieu non valide");
+        return;
+      }
+
+      // Afficher les détails du lieu
+      selectedPlace.value = {
+        name: place.name,
+        formatted_address: place.formatted_address,
+        types: place.types,
+      };
+
+      // Centrer la carte sur le lieu sélectionné
+      map.setCenter(place.geometry.location);
+      new google.maps.Marker({
+        map: map,
+        position: place.geometry.location,
+        title: place.name,
+      });
+    });
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+// Initialiser la carte et l'autocomplete au montage du composant
+onMounted(() => {
+  initMap();
+});
 
 // const showLeft = ref(false);
 // const showRight = ref(false);
@@ -399,6 +534,8 @@ const handleMouseLeave = (input) => {
 // };
 
 onMounted(() => {
+
+  getLocation();
   checkScrollButtonsVisibility(); // Initial check after component is mounted
   document.addEventListener('click', handleClickOutside);
   // Re-check when the window resizes (for responsiveness)
@@ -496,6 +633,34 @@ const menuYelp = computed(() => [
 </script>
 
 <style scoped>
+#map {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.pac-container {
+  background-color: white !important;
+  /* Fond blanc */
+  border-radius: 8px !important;
+  /* Coins arrondis */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  /* Ombre légère */
+  font-size: 14px !important;
+  /* Taille du texte */
+}
+
+.pac-item {
+  padding: 10px !important;
+  /* Espacement interne */
+  border-bottom: 1px solid #e0e0e0 !important;
+  /* Séparateurs */
+}
+
+.pac-item:hover {
+  background-color: #f0f0f0 !important;
+  /* Survol */
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -530,5 +695,21 @@ const menuYelp = computed(() => [
 
 .fast-spin {
   animation: fast-spin 0.4s ease-in-out;
+}
+
+
+.ma-div::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ma-div::-webkit-scrollbar-thumb {
+  background: #FF5400;
+  /* Rouge */
+  border-radius: 0.25rem;
+}
+
+.ma-div::-webkit-scrollbar-track {
+  background: #ecf0f1;
+  /* Gris clair */
 }
 </style>
