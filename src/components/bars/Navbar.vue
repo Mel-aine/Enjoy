@@ -536,7 +536,7 @@ onMounted(() => {
 
 onMounted(() => {
 
-  getLocation();
+  // getLocation();
   checkScrollButtonsVisibility(); // Initial check after component is mounted
   document.addEventListener('click', handleClickOutside);
   // Re-check when the window resizes (for responsiveness)
