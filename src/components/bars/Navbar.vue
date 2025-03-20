@@ -1,11 +1,11 @@
 <template>
-  <div class="relative background" :style="{ backgroundImage: `url(${backgroundImage})` }">
+  <div class="relative" >
     <!-- <div class="absolute inset-0 bg-black opacity-50"></div> Superposition sombre -->
     <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
       <!-- Menu Mobile: Bouton avec icône "fa-bars" -->
       <div v-show="!searchInMobil" id="menuToggle" class="relative block md:hidden">
-        <button @click="toggleSidebar" class="text-white text-2xl">
+        <button @click="toggleSidebar" class="text-black text-2xl">
           <i class="fa fa-bars"></i>
         </button>
       </div>
@@ -25,8 +25,8 @@
       <div v-show="searchInMobil" id="menuToggle" class="container relative block md:hidden">
         <!-- <button @click="wantToSearchMobil" class="relative block md:hidden bg-customRed rounded px-5 py-1 mb-2">
           <div class="flex justify-start items-start">
-            <span class="text-white">Annuler</span>
-            <BaseIcon name="SearchX" size="20" stroke-width="2" class="ml-1 text-white" />
+            <span class="text-black">Annuler</span>
+            <BaseIcon name="SearchX" size="20" stroke-width="2" class="ml-1 text-black" />
           </div>
 
 
@@ -53,7 +53,7 @@
 
             </div>
             <router-link to="/recherche">
-              <button class="bg-customRed px-4 py-3 text-white ">
+              <button class="bg-customRed px-4 py-3 text-black ">
                 <BaseIcon name="Search" size="20" stroke-width="2" />
               </button>
             </router-link>
@@ -98,7 +98,7 @@
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
                 <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaoun"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                  <button @click="handleSearch" class="bg-customRed px-4 py-3 text-white ml-2">
+                  <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
                     <BaseIcon name="Search" size="20" stroke-width="2" />
                   </button>
 
@@ -136,12 +136,12 @@
               <SearchHotel/>
             </CustomModal>
 
-            <div id="map" style="height: 500px; width: 100%;" class="hidden"></div>
+            
 
 
-            <CustomDropdown :footerDropdown="false">
+            <CustomDropdown :footerDropdown="false" iconColor="text-black">
               <template #button>
-                <span> {{ $t('navbar.yelpProfessional') }} </span>
+                <span class="text-black"> {{ $t('navbar.yelpProfessional') }} </span>
               </template>
               <template #content>
                 <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
@@ -158,13 +158,13 @@
             </CustomDropdown>
 
             <router-link to="/comunity"
-              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               {{ $t('navbar.writeReview') }}
             </router-link>
 
             <router-link to="/comunity"
-              class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+              class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
               active-class="border-b-2 border-indigo-400">
               {{ $t('navbar.startProject') }}
             </router-link>
@@ -180,7 +180,7 @@
         <button class="hidden md:block">
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
-        <Button variant="ligth" class="font-poppins">{{ $t('login') }}</Button>
+        <Button variant="danger" class="font-poppins">{{ $t('login') }}</Button>
         <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button>
       </div>
     </div>
@@ -197,10 +197,10 @@
           <!-- Dropdown Menu -->
           <div class="relative group">
             <button @click="isDropdownVisible = !isDropdownVisible"
-              :class="{ 'focus:outline-none bg-white/10 text-white focus:ring-teal-500 transition': isDropdownVisible, 'text-white': !isDropdownVisible }"
+              :class="{ 'focus:outline-none bg-white/10 text-black focus:ring-teal-500 transition': isDropdownVisible, 'text-black': !isDropdownVisible }"
               class="hover:bg-white/20 hover:focus px-4 py-2 rounded-sm font-medium font-poppins">
               {{ $t('navbar.yelpProfessional') }}
-              <i class="fa fa-chevron-down text-xs ml-1 text-white"></i>
+              <i class="fa fa-chevron-down text-xs ml-1 text-black"></i>
             </button>
 
             <!-- Contenu du menu déroulant -->
@@ -230,12 +230,12 @@
             </div>
           </div>
 
-          <router-link to="/comunity" class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+          <router-link to="/comunity" class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
             active-class="border-b-2 border-indigo-400">
             {{ $t('navbar.writeReview') }}
           </router-link>
 
-          <router-link to="/comunity" class="text-white hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
+          <router-link to="/comunity" class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
             active-class="border-b-2 border-indigo-400">
             {{ $t('navbar.startProject') }}
           </router-link>
@@ -250,38 +250,38 @@
     </div>
 
 
-    <div class="hidden md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
-      <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2">
+    <div class="md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
+      <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
-          <span class="text-white">{{ $t('navbar.restaurant') }}</span>
+          <span class="text-black">{{ $t('navbar.restaurant') }}</span>
         </template>
       </CustomDropdownD>
-      <CustomDropdownD :menuData="menuHouseWork" columnClass="lg:grid-cols-2">
+      <CustomDropdownD :menuData="menuHouseWork" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
-          <span class="text-white">{{ $t('navbar.homeAndWork') }}</span>
+          <span class="text-black">{{ $t('navbar.homeAndWork') }}</span>
         </template>
       </CustomDropdownD>
-      <CustomDropdownD :menuData="menuCarService" columnClass="lg:grid-cols-2">
+      <CustomDropdownD :menuData="menuCarService" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
-          <span class="text-white">{{ $t('navbar.serviceRepaire') }}</span>
+          <span class="text-black">{{ $t('navbar.serviceRepaire') }}</span>
         </template>
       </CustomDropdownD>
-      <CustomDropdownD :menuData="menuOthers" columnClass="lg:grid-cols-2">
+      <CustomDropdownD :menuData="menuOthers" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
-          <span class="text-white">{{ $t('navbar.otherCategory') }}</span>
+          <span class="text-black">{{ $t('navbar.otherCategory') }}</span>
         </template>
       </CustomDropdownD>
     </div>
 
-    <div id="searchBar" class=" z-10 container justify-center mx-auto px-4 py-50 mt-20">
-      <h1 class="text-6xl text-white font-medium font-popins">{{ $t('navbar.descriptionStartPart1') }}</h1>
-      <p class="text-6xl text-white font-medium font-popins">{{ $t('navbar.descriptionStartPart2') }}</p>
+    <div v-if="clickedLocation">
+      <h2>Détails du lieu cliqué</h2>
+      <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
+      <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
     </div>
+    <div id="map" style="height: 800px; width: 100%;"></div>
 
-    <div class="relative container justify-center mx-auto px-4 py-40">
-      <h class="text-xl text-white font-medium font-popins">{{ $t('navbar.descriptionEndPart1') }}</h>
-      <p class="text-xl text-white font-medium font-popins">{{ $t('navbar.descriptionEndPart2') }}</p>
-    </div>
+
+
   </div>
 
 </template>
@@ -299,7 +299,7 @@ import SearchHotel from '../search/SearchHotel.vue';
 // import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '../icons/BaseIcon.vue';
 // import { useRouter } from 'vue-router';
-import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
+// import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
@@ -313,6 +313,10 @@ const searchInMobil = ref(false);
 // const router = useRouter();
 const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
+const clickedLocation = ref(null); // Données du lieu cliqué
+
+
+
 const toggleModal = () => {
   isModalOpen.value = false ;
 }
@@ -417,7 +421,7 @@ const handleMouseLeave = (input) => {
 
 
 const selectedPlace = ref(null); // Lieu sélectionné
-const userLocation = ref(null); // Position de l'utilisateur
+// const userLocation = ref(null); // Position de l'utilisateur
 
 // Fonction pour charger le script Google Maps
 function loadGoogleMapsScript() {
@@ -436,25 +440,51 @@ function loadGoogleMapsScript() {
 }
 
 // Fonction pour récupérer la position de l'utilisateur
-function getUserLocation() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error("La géolocalisation n'est pas supportée par votre navigateur."));
-      return;
-    }
+// function getUserLocation() {
+//   return new Promise((resolve, reject) => {
+//     if (!navigator.geolocation) {
+//       reject(new Error("La géolocalisation n'est pas supportée par votre navigateur."));
+//       return;
+//     }
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        resolve({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-      },
-      (error) => {
-        reject(new Error("Erreur lors de la récupération de la position : " + error.message));
-      }
-    );
-  });
+//     navigator.geolocation.getCurrentPosition(
+//       (position) => {
+//         resolve({
+//           lat:  "7.365302",
+//           lng: "12.343439"
+//         });
+//       },
+//       (error) => {
+//         reject(new Error("Erreur lors de la récupération de la position : " + error.message));
+//       }
+//     );
+//   });
+// }
+
+async function getAddressFromCoordinates(lat, lng) {
+  if (!lat || !lng) {
+    console.error("Latitude ou Longitude invalide !");
+    return "Coordonnées invalides";
+  }
+
+  const apiKey = import.meta.env.VITE_API_KEY;
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.status === "OK" && data.results.length > 0) {
+      console.log("Adresse trouvée :", data.results[0].formatted_address);
+      return data.results[0].formatted_address; // Adresse complète
+    } else {
+      console.warn("Aucune adresse trouvée :", data);
+      return "Adresse non trouvée";
+    }
+  } catch (error) {
+    console.error("Erreur lors de la récupération de l'adresse :", error);
+    return "Erreur lors de la récupération de l'adresse";
+  }
 }
 
 // Fonction pour initialiser l'autocomplete et la carte
@@ -464,12 +494,41 @@ async function initMap() {
     await loadGoogleMapsScript();
 
     // Récupérer la position de l'utilisateur
-    userLocation.value = await getUserLocation();
+    // userLocation.value = await getUserLocation();
 
     // Initialiser la carte centrée sur la position de l'utilisateur
     const map = new google.maps.Map(document.getElementById("map"), {
-      center: userLocation.value, // Centrer sur la position de l'utilisateur
+      center: { lat:  3.844119, lng: 11.501346 }, // Centrer sur Yaounde
       zoom: 14,
+    });
+
+    // new google.maps.Marker({
+    //   position: userLocation.value, // Position du marqueur
+    //   map: map, // Carte sur laquelle ajouter le marqueur
+    //   title: "Votre position", // Texte au survol du marqueur
+    //   icon: "https://maps.google.com/mapfiles/ms/icons/purple-dot.png", // Icône personnalisée (optionnelle)
+    // });
+
+    map.addListener("click", async (event) => {
+      const lat = event.latLng.lat(); // Latitude du point cliqué
+      const lng = event.latLng.lng(); // Longitude du point cliqué
+
+      // Récupérer l'adresse à partir des coordonnées
+      const address = await getAddressFromCoordinates(lat, lng);
+
+      // Stocker les données du lieu cliqué
+      clickedLocation.value = {
+        lat: lat,
+        lng: lng,
+        address: address,
+      };
+
+      // Ajouter un marqueur sur le point cliqué
+      new google.maps.Marker({
+        position: { lat: lat, lng: lng },
+        map: map,
+        title: address,
+      });
     });
 
     // Initialiser l'autocomplete
