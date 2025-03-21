@@ -121,7 +121,7 @@
                             placeholder="Type inside me" />
                         <label for="destination" @click="toggleDropdown"
                             class="cursor-pointer absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black font-medium cursor-pointer"> {{ destination }} </span> </label>
+                            <span class="text-black font-medium cursor-pointer"> {{ truncateText(destination,28) }} </span> </label>
                         <label for="destination"
                             class=" cursor-pointer  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <span class="text-black  cursor-pointer ">{{ $t("appServices.hotel.destination")
@@ -134,7 +134,7 @@
                     <div class="p-3 ">
                         <div class="search-container relative">
                             <input ref="searchInput" @input="filterSuggestions" v-model="destination"
-                                class="text-xl font-medium text-black outline-none h-full w-full placeholder-black text-start resize-none my-2 pr-10"
+                                class="font-medium text-black outline-none h-full w-full placeholder-black text-start resize-none my-2 pr-10"
                                 :placeholder="$t('appServices.hotel.question')" />
                             <button v-if="destination" @click="clearInput"
                                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-black text-xl">
@@ -162,7 +162,7 @@
                             <div v-if="!filteredWords.length" class="flex justify-start mt-10">
                                 <div v-if="!recentSearch.length" class="flex justify-start items-center">
 
-                                    <h1 class="text-2xl ml-2">{{ $t("appServices.hotel.info") }}</h1>
+                                    <h1 class="text-lg ml-2">{{ $t("appServices.hotel.info") }}</h1>
                                     <BaseIcon class="ml-2 fast-pin" name="Search" size="20" stroke-width="2" />
 
                                 </div>
@@ -276,6 +276,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import { French, English } from "flatpickr/dist/l10n/fr.js";
 import Counter from "@/components/counter/Counter.vue";
 import BaseIcon from '@/components/icons/BaseIcon.vue';
+import { truncateText } from '@/utils/functions.js';
 
 // import DropDown from '../dropDown/DropDown.vue';
 import { useI18n } from "vue-i18n";
@@ -311,6 +312,17 @@ const searchInput = ref(null);
 const filteredWords = ref([]);
 const recentSearch = ref([]);
 const emit = defineEmits(["search"]);
+
+
+
+import { useDataStore } from '@/stores/dataStore';
+
+const dataStore = useDataStore();
+
+if (dataStore.parentType === 'navbar') {
+    destination.value = dataStore.data;
+  console.log('Données provenant de Parent A');
+}
 
 
 const filterSuggestions = () => {

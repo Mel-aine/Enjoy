@@ -1,5 +1,5 @@
 <template>
-  <div class="relative" >
+  <div class="relative">
     <!-- <div class="absolute inset-0 bg-black opacity-50"></div> Superposition sombre -->
     <!-- Top Bar -->
     <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
@@ -34,7 +34,7 @@
         <div class="w-full max-w-sm min-w-[200px] relative">
           <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
             <div class="flex items-center justify-between ">
-              <input v-model="leftValue" @click="activeInput = 'left'" placeholder="Restaurant"
+              <input v-model="leftValue" @click="activeInput = 'left'" placeholder="Je recherche un..."
                 class="w-full px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none" />
               <button @click="wantToSearchMobil" class="p-2 w-15">
                 <BaseIcon name="CircleX" size="20" stroke-width="2" />
@@ -45,7 +45,7 @@
             <div class="h-6 border-l border-slate-200 ml-1"></div>
             <div class="flex items-center justify-between ">
 
-              <input v-model="rightValue" @click="activeInput = 'right'" placeholder="Yaoun"
+              <input v-model="rightValue" @click="activeInput = 'right'" placeholder="OU?"
                 class="w-full px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none" />
               <button @click="wantToSearchMobil" class="p-2 w-15">
                 <BaseIcon name="CircleX" size="20" stroke-width="2" />
@@ -93,30 +93,31 @@
 
             <div class="w-full max-w-sm min-w-[200px] relative ml-1">
               <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-                <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
+                <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Je veux un..."
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaoun"
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Où?" 
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                  <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
-                    <BaseIcon name="Search" size="20" stroke-width="2" />
-                  </button>
+                <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
+                  <BaseIcon name="Search" size="20" stroke-width="2" />
+                </button>
 
               </div>
 
               <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
                 @mouseleave="handleMouseLeave('left')"
                 class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-                <li v-for="item in filteredLeftItems" :key="item.label" @click="selectItem('left', $t('categories.' + item.label))"
+                <li v-for="item in filteredLeftItems" :key="item.label"
+                  @click="selectItem('left', $t('categories.' + item.label))"
                   class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
                   <i :class="item.icon" class="text-gray-700 mr-2"></i>
                   <span class="ml-2">
-                     {{ $t('categories.' + item.label) }}
+                    {{ $t('categories.' + item.label) }}
                   </span>
                 </li>
               </ul>
 
-              
+
               <!-- <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'"
                 @mouseleave="handleMouseLeave('right')"
                 class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
@@ -133,10 +134,10 @@
             </div>
 
             <CustomModal :isOpen="isModalOpen" @close="toggleModal">
-              <SearchHotel/>
+              <SearchHotel @search="handleSearchWithComponent" />
             </CustomModal>
 
-            
+
 
 
             <CustomDropdown :footerDropdown="false" iconColor="text-black">
@@ -273,11 +274,11 @@
       </CustomDropdownD>
     </div>
 
-    <div v-if="clickedLocation">
+    <!-- <div v-if="clickedLocation">
       <h2>Détails du lieu cliqué</h2>
       <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
       <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
-    </div>
+    </div> -->
     <div id="map" style="height: 800px; width: 100%;"></div>
 
 
@@ -294,6 +295,13 @@ import CustomDropdownD from '@/components/dropDown/dropdownColumnsP.vue';
 import { Categories } from "@/mocks/categories.js";
 import CustomModal from '../CustomModal.vue';
 import SearchHotel from '../search/SearchHotel.vue';
+import { useDataStore } from '@/stores/dataStore';
+import { useRouter } from 'vue-router';
+const router = useRouter();
+
+const dataStore = useDataStore();
+
+
 
 
 // import FloatingInput from '../input/FloatingInput.vue';
@@ -313,19 +321,20 @@ const searchInMobil = ref(false);
 // const router = useRouter();
 const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
-const clickedLocation = ref(null); // Données du lieu cliqué
+// const clickedLocation = ref(null); // Données du lieu cliqué
 
 
 
 const toggleModal = () => {
-  isModalOpen.value = false ;
+  isModalOpen.value = false;
 }
 
 
 const handleSearch = () => {
   if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-  isModalOpen.value = true;
-}
+    isModalOpen.value = true;
+  }
+  console.log('rigth value', rightValue.value)
 }
 
 const toggleSidebar = () => {
@@ -340,6 +349,12 @@ const checkScrollButtonsVisibility = () => {
   showRightButton.value = element.scrollWidth > element.clientWidth + element.scrollLeft;
 
 };
+
+
+const handleSearchWithComponent = () => {
+  router.push('/bookingHotel'); // Redirige vers la route /bookingHotel
+};
+
 
 // const scrollLeft = () => {
 //   scrollMenu.value.scrollLeft -= 100;
@@ -370,8 +385,10 @@ let leftSelected = false; // Track if a selection is made for left field
 let rightSelected = false; // Track if a selection is made for right field
 
 const filteredLeftItems = computed(() => {
+  console.log('Categories', Categories);
+
   return leftValue.value
-    ? Categories.filter(item => item.label.toLowerCase().includes(leftValue.value.toLowerCase()))
+    ? Categories.filter(item => t('categories.' + item.label).toLowerCase().startsWith(leftValue.value.toLowerCase()))
     : Categories;
 });
 
@@ -394,6 +411,11 @@ const selectItem = (side, item) => {
   if (side === 'left') {
     leftValue.value = item;
     leftSelected = true; // Mark as selected
+
+    haveTerminologyToSearchInGoogleMap();
+
+
+
   } else {
     rightValue.value = item;
     rightSelected = true; // Mark as selected
@@ -406,22 +428,27 @@ const handleMouseLeave = (input) => {
   if (input === 'left' && !leftSelected) {
     leftValue.value = ''; // Reset if no selection made
   }
-  if (input === 'right' && !rightSelected) {
-    rightValue.value = ''; // Reset if no selection made
-  }
+ 
   // Reset selected flags for future checks
   if (input === 'left') {
     leftSelected = false;
-  } else if (input === 'right') {
-    rightSelected = false;
   }
   activeInput.value = null; // Hide the list when an item is selected
 };
 
+const haveTerminologyToSearchInGoogleMap = (item) => {
+  if (item == 'Hotels & Stays' || item == 'Hôtels & séjours') {
+    selectedCategory.value = 'lodging';
+
+  }
+  updateMap(selectedCategory);
 
 
-const selectedPlace = ref(null); // Lieu sélectionné
-// const userLocation = ref(null); // Position de l'utilisateur
+}
+
+const selectedCategory = ref("restaurant"); // Catégorie sélectionnée
+let map = null; // Référence à la carte Google Maps
+let markers = []; // Liste des marqueurs affichés sur la carte
 
 // Fonction pour charger le script Google Maps
 function loadGoogleMapsScript() {
@@ -439,103 +466,101 @@ function loadGoogleMapsScript() {
   });
 }
 
-// Fonction pour récupérer la position de l'utilisateur
-// function getUserLocation() {
-//   return new Promise((resolve, reject) => {
-//     if (!navigator.geolocation) {
-//       reject(new Error("La géolocalisation n'est pas supportée par votre navigateur."));
-//       return;
-//     }
+// Fonction pour effacer tous les marqueurs de la carte
+function clearMarkers() {
+  markers.forEach((marker) => marker.setMap(null)); // Supprimer les marqueurs de la carte
+  markers = []; // Réinitialiser la liste des marqueurs
+}
 
-//     navigator.geolocation.getCurrentPosition(
-//       (position) => {
-//         resolve({
-//           lat:  "7.365302",
-//           lng: "12.343439"
-//         });
-//       },
-//       (error) => {
-//         reject(new Error("Erreur lors de la récupération de la position : " + error.message));
-//       }
-//     );
-//   });
-// }
+// Fonction pour rechercher des lieux d'une catégorie spécifique
+function searchNearbyPlaces(map, category) {
+  const center = map.getCenter(); // Centre de la carte
+  const request = {
+    location: center, // Centre de la recherche
+    radius: 1000, // Rayon de 1 km
+    type: category, // Catégorie (ex: "restaurant", "lodging")
+  };
 
-async function getAddressFromCoordinates(lat, lng) {
-  if (!lat || !lng) {
-    console.error("Latitude ou Longitude invalide !");
-    return "Coordonnées invalides";
-  }
+  const service = new google.maps.places.PlacesService(map);
+  service.nearbySearch(request, (results, status) => {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      clearMarkers(); // Effacer les anciens marqueurs
+      results.forEach((place) => {
+        // Créer un marqueur personnalisé
+        const marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location,
+          title: place.name,
+          icon: {
+            url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png", // Icône personnalisée
+            scaledSize: new google.maps.Size(40, 40), // Taille de l'icône
+          },
+        });
 
-  const apiKey = import.meta.env.VITE_API_KEY;
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+        // Créer une infowindow personnalisée
+        const infowindow = new google.maps.InfoWindow({
+          content: `
+            <div style="color: #000; font-size: 16px;">
+              <strong>${place.name}</strong><br>
+              ${place.vicinity || place.formatted_address} <br>
+              <a href="https://enjoy-em7y.onrender.com/recherche/restaurant" 
+                style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;"
+                class="custom-link">
+                Visitez nous 
+              </a>
+              😃
+            </div>
+          `,
+        });
 
-  try {
-    const response = await fetch(url);
-    const data = await response.json();
+        // Ouvrir l'infowindow lors du clic sur le marqueur
+        marker.addListener("click", () => {
+          infowindow.open(map, marker);
+        });
 
-    if (data.status === "OK" && data.results.length > 0) {
-      console.log("Adresse trouvée :", data.results[0].formatted_address);
-      return data.results[0].formatted_address; // Adresse complète
+        markers.push(marker); // Ajouter le marqueur à la liste
+      });
     } else {
-      console.warn("Aucune adresse trouvée :", data);
-      return "Adresse non trouvée";
+      console.error("Erreur lors de la recherche de lieux :", status);
     }
-  } catch (error) {
-    console.error("Erreur lors de la récupération de l'adresse :", error);
-    return "Erreur lors de la récupération de l'adresse";
+  });
+}
+
+// Fonction pour mettre à jour la carte lorsque la catégorie change
+function updateMap(selectedItem) {
+  if (map) {
+    searchNearbyPlaces(map, selectedItem);
   }
 }
 
-// Fonction pour initialiser l'autocomplete et la carte
+// Fonction pour initialiser la carte
 async function initMap() {
   try {
     // Charger l'API Google Maps
     await loadGoogleMapsScript();
 
-    // Récupérer la position de l'utilisateur
-    // userLocation.value = await getUserLocation();
-
-    // Initialiser la carte centrée sur la position de l'utilisateur
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat:  3.844119, lng: 11.501346 }, // Centrer sur Yaounde
+    // Initialiser la carte centrée sur une position par défaut (exemple : Yaoundé)
+    map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: 3.8480, lng: 11.5021 }, // Centrer sur Yaoundé
       zoom: 14,
-    });
-
-    // new google.maps.Marker({
-    //   position: userLocation.value, // Position du marqueur
-    //   map: map, // Carte sur laquelle ajouter le marqueur
-    //   title: "Votre position", // Texte au survol du marqueur
-    //   icon: "https://maps.google.com/mapfiles/ms/icons/purple-dot.png", // Icône personnalisée (optionnelle)
-    // });
-
-    map.addListener("click", async (event) => {
-      const lat = event.latLng.lat(); // Latitude du point cliqué
-      const lng = event.latLng.lng(); // Longitude du point cliqué
-
-      // Récupérer l'adresse à partir des coordonnées
-      const address = await getAddressFromCoordinates(lat, lng);
-
-      // Stocker les données du lieu cliqué
-      clickedLocation.value = {
-        lat: lat,
-        lng: lng,
-        address: address,
-      };
-
-      // Ajouter un marqueur sur le point cliqué
-      new google.maps.Marker({
-        position: { lat: lat, lng: lng },
-        map: map,
-        title: address,
-      });
+      styles: [
+        {
+          featureType: "poi", // Points d'intérêt (restaurants, stations-service, etc.)
+          elementType: "labels", // Masquer les étiquettes
+          stylers: [{ visibility: "off" }], // Désactiver la visibilité
+        },
+        {
+          featureType: "poi", // Points d'intérêt
+          elementType: "geometry", // Masquer les icônes
+          stylers: [{ visibility: "off" }], // Désactiver la visibilité
+        },
+      ],
     });
 
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
-
-    const autocomplete = new google.maps.places.Autocomplete(input);
-
+    const autocomplete = new google.maps.places.Autocomplete(input); 
+    console.log('autocomplete', autocomplete);
     // Lorsqu'un lieu est sélectionné
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
@@ -545,50 +570,27 @@ async function initMap() {
         return;
       }
 
-      // Afficher les détails du lieu
-      selectedPlace.value = {
-        name: place.name,
-        formatted_address: place.formatted_address,
-        types: place.types,
-      };
-
       // Centrer la carte sur le lieu sélectionné
       map.setCenter(place.geometry.location);
-      new google.maps.Marker({
-        map: map,
-        position: place.geometry.location,
-        title: place.name,
-      });
+
+      // Rechercher des lieux de la catégorie sélectionnée
+      searchNearbyPlaces(map, selectedCategory.value);
+      rightValue.value = place.formatted_address;
+      dataStore.setData(rightValue.value, 'navbar');
+      console.log('place', place);
     });
+
+    // Rechercher des lieux de la catégorie sélectionnée au chargement initial
+    searchNearbyPlaces(map, selectedCategory.value);
   } catch (error) {
     console.error(error.message);
   }
 }
 
-// Initialiser la carte et l'autocomplete au montage du composant
+// Initialiser la carte au montage du composant
 onMounted(() => {
   initMap();
 });
-
-// const showLeft = ref(false);
-// const showRight = ref(false);
-
-// const hide = (side) => {
-//   setTimeout(() => {
-//     if (side === 'left') showLeft.value = false;
-//     if (side === 'right') showRight.value = false;
-//   }, 200);
-// };
-
-// const select = (side, item) => {
-//   if (side === 'left') {
-//     leftValue.value = item;
-//     showLeft.value = false;
-//   } else 
-//     rightValue.value = item;
-//     showRight.value = false;
-//   }
-// };
 
 onMounted(() => {
 
@@ -682,10 +684,6 @@ const menuYelp = computed(() => [
 
 ]);
 
-// const connexion = () =>{
-// Redirect to login page
-//   router.push('/login');
-// }
 
 </script>
 
@@ -693,29 +691,6 @@ const menuYelp = computed(() => [
 #map {
   border: 1px solid #ccc;
   border-radius: 8px;
-}
-
-.pac-container {
-  background-color: white !important;
-  /* Fond blanc */
-  border-radius: 8px !important;
-  /* Coins arrondis */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
-  /* Ombre légère */
-  font-size: 14px !important;
-  /* Taille du texte */
-}
-
-.pac-item {
-  padding: 10px !important;
-  /* Espacement interne */
-  border-bottom: 1px solid #e0e0e0 !important;
-  /* Séparateurs */
-}
-
-.pac-item:hover {
-  background-color: #f0f0f0 !important;
-  /* Survol */
 }
 
 .scrollbar-hide {
