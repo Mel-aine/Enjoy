@@ -93,10 +93,10 @@
 
             <div class="w-full max-w-sm min-w-[200px] relative ml-1">
               <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-                <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Je veux un..."
+                <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Où?" 
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" 
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
                   <BaseIcon name="Search" size="20" stroke-width="2" />
