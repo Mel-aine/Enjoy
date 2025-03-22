@@ -96,7 +96,7 @@
                 <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" 
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
                   <BaseIcon name="Search" size="20" stroke-width="2" />
@@ -281,7 +281,11 @@
     </div> -->
     <div id="map" style="height: 800px; width: 100%;"></div>
 
-
+  
+    <!-- Shopping,Automobile,Maisons & Travaux,Alimentations,Art & Loisirs,Services destiné aux prof,Média,
+    Formation & Enseignement,Services financiers,Organisation d
+    événements,Services Locaux,Immobilier
+    map -->
 
   </div>
 
@@ -382,7 +386,7 @@ const rightValue = ref('');
 const activeInput = ref(null);
 
 let leftSelected = false; // Track if a selection is made for left field
-let rightSelected = false; // Track if a selection is made for right field
+// let rightSelected = false; // Track if a selection is made for right field
 
 const filteredLeftItems = computed(() => {
   console.log('Categories', Categories);
@@ -410,11 +414,10 @@ const selectItem = (side, item) => {
 
   if (side === 'left') {
     leftValue.value = item;
+
     leftSelected = true; // Mark as selected
 
-    haveTerminologyToSearchInGoogleMap();
-
-
+    haveTerminologyToSearchInGoogleMap(leftValue.value);
 
   } else {
     rightValue.value = item;
@@ -428,7 +431,7 @@ const handleMouseLeave = (input) => {
   if (input === 'left' && !leftSelected) {
     leftValue.value = ''; // Reset if no selection made
   }
- 
+
   // Reset selected flags for future checks
   if (input === 'left') {
     leftSelected = false;
@@ -437,16 +440,92 @@ const handleMouseLeave = (input) => {
 };
 
 const haveTerminologyToSearchInGoogleMap = (item) => {
-  if (item == 'Hotels & Stays' || item == 'Hôtels & séjours') {
-    selectedCategory.value = 'lodging';
+  // Réinitialiser le tableau des catégories sélectionnées
+  selectedCategories.value = [];
+
+  // Ajouter la catégorie correspondante en fonction de l'élément sélectionné
+  if (item === 'Restaurants' || item === 'Restaurants') {
+    selectedCategories.value.push('restaurant');
+  }
+  if (item === 'Hôtels & séjours' || item === 'Hotels & Stays') {
+    selectedCategories.value.push('lodging');
+  }
+  if (item === 'Salons de beauté & Spas' || item === 'Beauty Salons & Spas') {
+    selectedCategories.value.push('beauty_salon');
+    selectedCategories.value.push('spa');
+  }
+  if (item === 'Cafés & Thés' || item === 'Coffees & Teas') {
+    selectedCategories.value.push('cafe');
+  }
+  if (item === 'Sports & Activités de loisirs' || item === 'Sports & Leisure Activities') {
+    selectedCategories.value.push('gym');
+  }
+  if (item === 'Organisation religieuse' || item === 'Religious Organization') {
+    selectedCategories.value.push('church');
+    selectedCategories.value.push('mosque');
+    selectedCategories.value.push('Synagogues');
+    // selectedCategories.value.push('church');
 
   }
-  updateMap(selectedCategory);
+  if (item === 'Services publics & gouvernement' || item === 'Public Services & Government') {
+    selectedCategories.value.push('city_hall');
+    selectedCategories.value.push('embassy');
+    selectedCategories.value.push('post_office');
+    selectedCategories.value.push('embassy');
+    selectedCategories.value.push('courthouse');
+    selectedCategories.value.push('police');
 
 
-}
 
-const selectedCategory = ref("restaurant"); // Catégorie sélectionnée
+
+    // selectedCategories.value.push('church');
+
+  }
+  if (item === 'Santé & Médical' || item === 'Health & Medical') {
+    selectedCategories.value.push('drugstore');
+    selectedCategories.value.push('dentist');
+    selectedCategories.value.push('doctor');
+    selectedCategories.value.push('hospital');
+    selectedCategories.value.push('insurance_agency');
+    selectedCategories.value.push('physiotherapist');
+    selectedCategories.value.push('veterinary_care');
+
+
+  }
+  if (item === 'Alimentations' || item === 'Power Supplies') {
+    selectedCategories.value.push('supermarket');
+    selectedCategories.value.push('bakery');
+    selectedCategories.value.push('shopping_mall');
+    // selectedCategories.value.push('pet_store');
+    // selectedCategories.value.push('pet_store');
+
+  }
+  if (item === 'Voyage' || item === 'Travel') {
+    selectedCategories.value.push('airport');
+    selectedCategories.value.push('bus_station');
+    selectedCategories.value.push('subway_station');
+    selectedCategories.value.push('taxi_stand');
+    selectedCategories.value.push('train_station');
+    selectedCategories.value.push('transit_station');
+    selectedCategories.value.push('travel_agency');
+
+  }
+  if (item === 'Services financiers' || item === 'Financial Services') {
+    selectedCategories.value.push('bank');
+    selectedCategories.value.push('accounting');
+    selectedCategories.value.push('pet_store');
+    selectedCategories.value.push('pet_store');
+
+  }
+  // if (item === 'Animaux de compagnie' || item === 'Pets') {
+  //   selectedCategories.value.push('pet_store');
+  // }
+
+  // Mettre à jour la carte avec les catégories sélectionnées
+  updateMap(selectedCategories.value);
+};
+
+const selectedCategories = ref(["restaurant"]); // Catégorie sélectionnée
 let map = null; // Référence à la carte Google Maps
 let markers = []; // Liste des marqueurs affichés sur la carte
 
@@ -473,56 +552,86 @@ function clearMarkers() {
 }
 
 // Fonction pour rechercher des lieux d'une catégorie spécifique
-function searchNearbyPlaces(map, category) {
+async function searchNearbyPlaces(map, categories) {
   const center = map.getCenter(); // Centre de la carte
-  const request = {
-    location: center, // Centre de la recherche
-    radius: 1000, // Rayon de 1 km
-    type: category, // Catégorie (ex: "restaurant", "lodging")
-  };
-
+  const radius = 1000; // Rayon de 1 km
   const service = new google.maps.places.PlacesService(map);
-  service.nearbySearch(request, (results, status) => {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      clearMarkers(); // Effacer les anciens marqueurs
-      results.forEach((place) => {
-        // Créer un marqueur personnalisé
-        const marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location,
-          title: place.name,
-          icon: {
-            url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png", // Icône personnalisée
-            scaledSize: new google.maps.Size(40, 40), // Taille de l'icône
-          },
-        });
 
-        // Créer une infowindow personnalisée
-        const infowindow = new google.maps.InfoWindow({
-          content: `
-            <div style="color: #000; font-size: 16px;">
-              <strong>${place.name}</strong><br>
-              ${place.vicinity || place.formatted_address} <br>
-              <a href="https://enjoy-em7y.onrender.com/recherche/restaurant" 
-                style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;"
-                class="custom-link">
-                Visitez nous 
-              </a>
-              😃
-            </div>
-          `,
-        });
+  // Tableau pour stocker tous les résultats
+  let allResults = [];
 
-        // Ouvrir l'infowindow lors du clic sur le marqueur
-        marker.addListener("click", () => {
-          infowindow.open(map, marker);
-        });
+  // Effectuer une requête pour chaque catégorie
+  for (const category of categories) {
+    const request = {
+      location: center,
+      radius: radius,
+      type: category, // Une seule catégorie à la fois
+    };
 
-        markers.push(marker); // Ajouter le marqueur à la liste
+    // Effectuer la requête et attendre le résultat
+    const results = await new Promise((resolve, reject) => {
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          resolve(results);
+        } else {
+          reject(new Error(`Erreur lors de la recherche pour ${category}: ${status}`));
+        }
       });
-    } else {
-      console.error("Erreur lors de la recherche de lieux :", status);
-    }
+    });
+
+    // Ajouter les résultats au tableau global
+    allResults = allResults.concat(results);
+  }
+
+  // Supprimer les doublons (si nécessaire)
+  const uniqueResults = removeDuplicates(allResults);
+
+  // Effacer les anciens marqueurs
+  clearMarkers();
+
+  // Afficher les marqueurs pour tous les résultats uniques
+  uniqueResults.forEach((place) => {
+    // Créer un marqueur personnalisé
+    const marker = new google.maps.Marker({
+      map: map,
+      position: place.geometry.location,
+      title: place.name,
+    });
+
+    // Créer une infowindow personnalisée
+    const infowindow = new google.maps.InfoWindow({
+      content: `
+        <div style="color: #000; font-size: 16px;">
+          Catégorie: <strong style="color: #FF5400; font-size: 20px;">${leftValue.value}</strong><br>
+          <strong>${place.name}</strong><br>
+          ${place.vicinity || place.formatted_address} <br>
+          <a href="https://enjoy-em7y.onrender.com/recherche/restaurant" 
+            style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;"
+            class="custom-link">
+            Visitez nous 
+          </a>
+          😃
+        </div>
+      `,
+    });
+
+    // Ouvrir l'infowindow lors du clic sur le marqueur
+    marker.addListener('click', () => {
+      infowindow.open(map, marker);
+    });
+
+    // Ajouter le marqueur à la liste
+    markers.push(marker);
+  });
+}
+
+// Fonction pour supprimer les doublons
+function removeDuplicates(results) {
+  const seen = new Set();
+  return results.filter((place) => {
+    const duplicate = seen.has(place.place_id);
+    seen.add(place.place_id);
+    return !duplicate;
   });
 }
 
@@ -559,7 +668,7 @@ async function initMap() {
 
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
-    const autocomplete = new google.maps.places.Autocomplete(input); 
+    const autocomplete = new google.maps.places.Autocomplete(input);
     console.log('autocomplete', autocomplete);
     // Lorsqu'un lieu est sélectionné
     autocomplete.addListener("place_changed", () => {
@@ -574,14 +683,14 @@ async function initMap() {
       map.setCenter(place.geometry.location);
 
       // Rechercher des lieux de la catégorie sélectionnée
-      searchNearbyPlaces(map, selectedCategory.value);
+      searchNearbyPlaces(map, selectedCategories.value);
       rightValue.value = place.formatted_address;
       dataStore.setData(rightValue.value, 'navbar');
       console.log('place', place);
     });
 
     // Rechercher des lieux de la catégorie sélectionnée au chargement initial
-    searchNearbyPlaces(map, selectedCategory.value);
+    searchNearbyPlaces(map, selectedCategories.value);
   } catch (error) {
     console.error(error.message);
   }
