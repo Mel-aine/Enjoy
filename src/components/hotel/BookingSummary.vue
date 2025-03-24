@@ -3,6 +3,8 @@ import { ref, defineEmits } from "vue";
 import {
   CalendarIcon,
   LockIcon,
+  ArrowLeftFromLine,
+
 
 } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
@@ -12,7 +14,7 @@ const checkInDate = ref("Sun, 22 May 2022");
 const checkOutDate = ref("Wed, 25 May 2022");
 const stayLength = ref("3 nights");
 const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
-const emit = defineEmits(['nextBook', 'next'])
+const emit = defineEmits(['nextBook', 'next','back'])
 const { t } = useI18n();
 
 const nextBook = () => {
@@ -34,6 +36,9 @@ const nextBook = () => {
   // emit('nextBook');
 };
 
+const handleBackToStep = () =>{
+  emit('back');
+}
 const priceDetails = ref([
   { label: t('appServices.hotel.RoomsAndOffer:') , price: 625.93 },
   { label: t('appServices.hotel.8%VAT'), price: 50.03 },
@@ -49,9 +54,17 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="bg-white rounded-xl shadow-sm p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
 
+  <div class="bg-white rounded-xl shadow-sm p-6">
+    <button @click="handleBackToStep" class="w-full">
+      <div class="flex items-center justify-start border rounded-lg border-customBlue p-2 my-2 hover:bg-customBlue hover:text-white">
+      <ArrowLeftFromLine size="15" class="bg-customBlue rounded-full w-10 h-10 p-2 text-white"/>
+      <span class="mx-2"> Back to precedent step</span>
+    </div>
+    </button>
+
+
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
     <div class="flex justify-between pb-4 border-b">
       <div>
         <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
@@ -113,8 +126,6 @@ const props = defineProps({
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
       {{$t('appServices.hotel.downloadInvoice')}}
     </button>
-
-
     <div class="text-center text-xs text-gray-500 mt-4">
       {{$t('appServices.hotel.weRunOnEnjoyInc')}}
     </div>

@@ -4,6 +4,13 @@ import { ref } from 'vue'
 import HotelList from '@/components/HotelList.vue'
 import Filters from '@/components/FilterHotel.vue'
 import MapView from '@/components/services/MapView.vue'
+import SearchHotel from '@/components/search/SearchHotel.vue'
+import { useMIHStore } from '@/stores/manageHotelInterface';
+import BookingFlow from '@/components/hotel/BookingFlow.vue'
+
+
+
+const hotelStore = useMIHStore();
 
 // Reactive state
 const searchParams = ref({
@@ -37,16 +44,18 @@ const handleSortChange = (option) => {
 </script>
 
 <template>
+    <div class="mt-20"><SearchHotel/></div>
 
 
   <div class="min-h-screen bg-gray-50">
+
     <!-- <Header /> -->
-    <main class="container mx-auto px-4 py-6">
+    <main class="container mx-auto px-4 py-20">
       <!-- <SearchHotel /> -->
       <div class="flex flex-col md:flex-row gap-6 mt-6">
         <!-- Sidebar Filters -->
 
-        <div class="w-full md:w-1/4 ">
+        <div v-show="hotelStore.isListed" class="w-full  md:w-1/4 ">
           <router-link to="/viewInMap" class="relative hidden md:block">
           <div class="max-w-sm rounded-md mb-4 border bg-white ">
             <div class=" w-full h-[200px] md:h-[500px] lg:h-[100px] ">
@@ -76,11 +85,20 @@ const handleSortChange = (option) => {
         </div>
 
         <!-- Hotel List -->
-        <div class="w-full md:w-3/4">
+        <div v-show="hotelStore.isListed" class="w-full md:w-3/4">
           <HotelList :searchParams="searchParams" :filters="activeFilters" :sortOption="sortOption"
             @sortChange="handleSortChange" />
         </div>
       </div>
+       <div v-show="hotelStore.isSingleBooking">
+          <BookingFlow></BookingFlow>
+      </div>
+      <!-- <div v-show="hotelStore.isPaymentStepBooking">
+
+      </div>
+      <div v-show="hotelStore.isConfirmedBooking">
+
+      </div> -->
     </main>
   </div>
 

@@ -282,7 +282,7 @@
     <div id="map" style="height: 800px; width: 100%;"></div>
 
   
-    <!-- Shopping,Automobile,Maisons & Travaux,Alimentations,Art & Loisirs,Services destiné aux prof,Média,
+    <!-- Shopping,Automobile,Maisons & Travaux,Art & Loisirs,Services destiné aux prof,Média,
     Formation & Enseignement,Services financiers,Organisation d
     événements,Services Locaux,Immobilier
     map -->
@@ -326,7 +326,7 @@ const searchInMobil = ref(false);
 const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
 // const clickedLocation = ref(null); // Données du lieu cliqué
-
+const linkCategory = ref('')
 
 
 const toggleModal = () => {
@@ -335,6 +335,8 @@ const toggleModal = () => {
 
 
 const handleSearch = () => {
+  console.log('handleSearch')
+
   if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
     isModalOpen.value = true;
   }
@@ -356,7 +358,8 @@ const checkScrollButtonsVisibility = () => {
 
 
 const handleSearchWithComponent = () => {
-  router.push('/bookingHotel'); // Redirige vers la route /bookingHotel
+  if (rightValue.value == null) return;
+  router.push('/hotelList'); // Redirige vers la route /bookingHotel
 };
 
 
@@ -449,6 +452,7 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
   }
   if (item === 'Hôtels & séjours' || item === 'Hotels & Stays') {
     selectedCategories.value.push('lodging');
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Salons de beauté & Spas' || item === 'Beauty Salons & Spas') {
     selectedCategories.value.push('beauty_salon');
@@ -605,12 +609,7 @@ async function searchNearbyPlaces(map, categories) {
           Catégorie: <strong style="color: #FF5400; font-size: 20px;">${leftValue.value}</strong><br>
           <strong>${place.name}</strong><br>
           ${place.vicinity || place.formatted_address} <br>
-          <a href="https://enjoy-em7y.onrender.com/recherche/restaurant" 
-            style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;"
-            class="custom-link">
-            Visitez nous 
-          </a>
-          😃
+          ${linkCategory.value}
         </div>
       `,
     });

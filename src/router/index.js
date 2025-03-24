@@ -88,6 +88,13 @@ const router = createRouter({
       path: '/bookingHotel',
       name: 'booking',
       // component: () => import('@/views/hotel/EBookingHotelView.vue'),
+      component: () => import('@/views/hotel/EBookingHotelView.vue'),
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
+    },
+    {
+      path: '/hotelList',
+      name: 'hotelList',
+      // component: () => import('@/views/hotel/EBookingHotelView.vue'),
       component: () => import('@/views/hotel/EHotelView.vue'),
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },

@@ -394,7 +394,6 @@ const totalPersons = computed(() => {
 
 const handleSearch = () => {
 emit('search', { destination: destination.value, dateAller: formattedDateAller.value, dateRetour: formattedDateRetour.value, rooms: rooms.value });
-
 };
 
 const formatDate = (date) => {

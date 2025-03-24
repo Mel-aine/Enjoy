@@ -10,7 +10,7 @@ import {
   HeartIcon,
   MapPinIcon,
 } from 'lucide-vue-next'
-import { useReservationHotelStore } from '@/stores/reservationHotel';
+import { useMIHStore } from '@/stores/manageHotelInterface';
 
 
 const props = defineProps({
@@ -35,21 +35,21 @@ const iconMap = {
   breakfast: UtensilsIcon,
   gym: DumbbellIcon
 }
-
 const isFavorite = ref(false)
 
 // const starsArray = computed(() => {
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
-const hotelStore = useReservationHotelStore();
+const hotelStore = useMIHStore();
 
 
 const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
 }
 const handleViewDeal = () => {
-  hotelStore.setHotel(props.hotel)
-  hotelStore.setViewDeal(true)
+  hotelStore.singleBooking();
+  // hotelStore.setHotel(props.hotel)
+  // hotelStore.setViewDeal(true)
 
 }
 
