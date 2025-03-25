@@ -327,7 +327,17 @@ const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
 // const clickedLocation = ref(null); // Données du lieu cliqué
 const linkCategory = ref('')
+const iconMarker = ref('<i class="fa-solid fa-check"></i>')
+const colorIconCategory = ref('#FFD700')
+const bgColorMarkerCategory = ref('#7B2CBF')
+const bColorCategory = ref('#FF5400')
 
+const setSettingsMakerDisplay = (iC, cI, bCMC, bCC) => {
+  iconMarker.value = iC;
+  colorIconCategory.value = cI;
+  bgColorMarkerCategory.value = bCMC;
+  bColorCategory.value = bCC;
+}
 
 const toggleModal = () => {
   isModalOpen.value = false;
@@ -387,6 +397,7 @@ const wantToSearchMobil = () => {
 const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
+const labelToCategory = ref('');
 
 let leftSelected = false; // Track if a selection is made for left field
 // let rightSelected = false; // Track if a selection is made for right field
@@ -424,7 +435,7 @@ const selectItem = (side, item) => {
 
   } else {
     rightValue.value = item;
-    rightSelected = true; // Mark as selected
+    // rightSelected = true; // Mark as selected
   }
   activeInput.value = null; // Hide the list when an item is selected
 };
@@ -449,25 +460,41 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
   // Ajouter la catégorie correspondante en fonction de l'élément sélectionné
   if (item === 'Restaurants' || item === 'Restaurants') {
     selectedCategories.value.push('restaurant');
+    setSettingsMakerDisplay('<i class="fa fa-pizza-slice fa-lg"></i>','#ff8300','#FFD514','#ff8300')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Hôtels & séjours' || item === 'Hotels & Stays') {
     selectedCategories.value.push('lodging');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
   }
   if (item === 'Salons de beauté & Spas' || item === 'Beauty Salons & Spas') {
     selectedCategories.value.push('beauty_salon');
     selectedCategories.value.push('spa');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
   }
   if (item === 'Cafés & Thés' || item === 'Coffees & Teas') {
     selectedCategories.value.push('cafe');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
   }
   if (item === 'Sports & Activités de loisirs' || item === 'Sports & Leisure Activities') {
     selectedCategories.value.push('gym');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
   }
   if (item === 'Organisation religieuse' || item === 'Religious Organization') {
     selectedCategories.value.push('church');
     selectedCategories.value.push('mosque');
     selectedCategories.value.push('Synagogues');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
     // selectedCategories.value.push('church');
 
   }
@@ -478,6 +505,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('embassy');
     selectedCategories.value.push('courthouse');
     selectedCategories.value.push('police');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
 
 
 
@@ -493,6 +523,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('insurance_agency');
     selectedCategories.value.push('physiotherapist');
     selectedCategories.value.push('veterinary_care');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
 
 
   }
@@ -502,6 +535,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('shopping_mall');
     // selectedCategories.value.push('pet_store');
     // selectedCategories.value.push('pet_store');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
 
   }
   if (item === 'Voyage' || item === 'Travel') {
@@ -512,6 +548,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('train_station');
     selectedCategories.value.push('transit_station');
     selectedCategories.value.push('travel_agency');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
 
   }
   if (item === 'Services financiers' || item === 'Financial Services') {
@@ -519,6 +558,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('accounting');
     selectedCategories.value.push('pet_store');
     selectedCategories.value.push('pet_store');
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+
 
   }
   // if (item === 'Animaux de compagnie' || item === 'Pets') {
@@ -529,10 +571,9 @@ const haveTerminologyToSearchInGoogleMap = (item) => {
   updateMap(selectedCategories.value);
 };
 
-const selectedCategories = ref(["restaurant"]); // Catégorie sélectionnée
+const selectedCategories = ref([""]); // Catégorie sélectionnée
 let map = null; // Référence à la carte Google Maps
 let markers = []; // Liste des marqueurs affichés sur la carte
-
 // Fonction pour charger le script Google Maps
 function loadGoogleMapsScript() {
   return new Promise((resolve, reject) => {
@@ -542,7 +583,8 @@ function loadGoogleMapsScript() {
     }
 
     const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+    // script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&callback=initMap&v=weekly&libraries=places,marker`;
     script.onload = resolve;
     script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
     document.head.appendChild(script);
@@ -557,22 +599,18 @@ function clearMarkers() {
 
 // Fonction pour rechercher des lieux d'une catégorie spécifique
 async function searchNearbyPlaces(map, categories) {
-  const center = map.getCenter(); // Centre de la carte
-  const radius = 1000; // Rayon de 1 km
+  const center = map.getCenter();
+  const radius = 1000;
   const service = new google.maps.places.PlacesService(map);
-
-  // Tableau pour stocker tous les résultats
   let allResults = [];
 
-  // Effectuer une requête pour chaque catégorie
   for (const category of categories) {
     const request = {
       location: center,
       radius: radius,
-      type: category, // Une seule catégorie à la fois
+      type: category,
     };
 
-    // Effectuer la requête et attendre le résultat
     const results = await new Promise((resolve, reject) => {
       service.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
@@ -583,30 +621,48 @@ async function searchNearbyPlaces(map, categories) {
       });
     });
 
-    // Ajouter les résultats au tableau global
     allResults = allResults.concat(results);
   }
 
-  // Supprimer les doublons (si nécessaire)
   const uniqueResults = removeDuplicates(allResults);
+  clearMarkers(); // Supprime les anciens marqueurs
 
-  // Effacer les anciens marqueurs
-  clearMarkers();
-
-  // Afficher les marqueurs pour tous les résultats uniques
   uniqueResults.forEach((place) => {
-    // Créer un marqueur personnalisé
-    const marker = new google.maps.Marker({
+    // Création de l'icône FontAwesome pour le marqueur
+    const icon = document.createElement("div");
+    icon.innerHTML = iconMarker.value; // Icône personnalisée
+    icon.style.display = "flex";
+    icon.style.alignItems = "center";
+    icon.style.justifyContent = "center";
+    icon.style.width = "100%";
+    icon.style.height = "100%";
+
+    // Création d'un PinElement personnalisé
+    const faPin = new google.maps.marker.PinElement({
+      glyph: icon,
+      glyphColor: colorIconCategory.value, // Couleur de l'icône
+      background: bgColorMarkerCategory.value, // Couleur de fond du marqueur
+      borderColor: bColorCategory.value, // Bordure
+    });
+
+    // Création du marqueur avancé
+    const marker = new google.maps.marker.AdvancedMarkerElement({
       map: map,
       position: place.geometry.location,
+      content: faPin.element,
       title: place.name,
     });
 
-    // Créer une infowindow personnalisée
+    if(leftValue.value === ''){
+      labelToCategory.value = '';
+    }else{
+      labelToCategory.value = `Catégorie: <strong style="color: #FF5400; font-size: 20px;">${leftValue.value}</strong><br>`;
+    }
+    // InfoWindow pour afficher les détails du lieu
     const infowindow = new google.maps.InfoWindow({
       content: `
         <div style="color: #000; font-size: 16px;">
-          Catégorie: <strong style="color: #FF5400; font-size: 20px;">${leftValue.value}</strong><br>
+          ${labelToCategory.value}
           <strong>${place.name}</strong><br>
           ${place.vicinity || place.formatted_address} <br>
           ${linkCategory.value}
@@ -614,15 +670,14 @@ async function searchNearbyPlaces(map, categories) {
       `,
     });
 
-    // Ouvrir l'infowindow lors du clic sur le marqueur
-    marker.addListener('click', () => {
+    marker.addListener("click", () => {
       infowindow.open(map, marker);
     });
 
-    // Ajouter le marqueur à la liste
     markers.push(marker);
   });
 }
+
 
 // Fonction pour supprimer les doublons
 function removeDuplicates(results) {
@@ -644,23 +699,25 @@ function updateMap(selectedItem) {
 // Fonction pour initialiser la carte
 async function initMap() {
   try {
-    // Charger l'API Google Maps
     await loadGoogleMapsScript();
 
-    // Initialiser la carte centrée sur une position par défaut (exemple : Yaoundé)
     map = new google.maps.Map(document.getElementById("map"), {
-      center: { lat: 3.8480, lng: 11.5021 }, // Centrer sur Yaoundé
+      center: { lat: 3.8480, lng: 11.5021 }, // Centré sur Yaoundé
       zoom: 14,
+      mapId: "map",
       styles: [
         {
-          featureType: "poi", // Points d'intérêt (restaurants, stations-service, etc.)
-          elementType: "labels", // Masquer les étiquettes
-          stylers: [{ visibility: "off" }], // Désactiver la visibilité
+          featureType: "poi", // Supprime les points d'intérêt (restaurants, magasins...)
+          stylers: [{ visibility: "off" }],
         },
         {
-          featureType: "poi", // Points d'intérêt
-          elementType: "geometry", // Masquer les icônes
-          stylers: [{ visibility: "off" }], // Désactiver la visibilité
+          featureType: "transit", // Supprime les icônes de transport en commun
+          stylers: [{ visibility: "off" }],
+        },
+        {
+          featureType: "road", // Facultatif : Supprime les icônes de routes (ex : péages)
+          elementType: "labels.icon",
+          stylers: [{ visibility: "off" }],
         },
       ],
     });
@@ -668,32 +725,26 @@ async function initMap() {
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
-    console.log('autocomplete', autocomplete);
-    // Lorsqu'un lieu est sélectionné
+    
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
-
       if (!place.geometry || !place.geometry.location) {
         console.error("Lieu non valide");
         return;
       }
 
-      // Centrer la carte sur le lieu sélectionné
       map.setCenter(place.geometry.location);
-
-      // Rechercher des lieux de la catégorie sélectionnée
       searchNearbyPlaces(map, selectedCategories.value);
       rightValue.value = place.formatted_address;
       dataStore.setData(rightValue.value, 'navbar');
-      console.log('place', place);
     });
 
-    // Rechercher des lieux de la catégorie sélectionnée au chargement initial
     searchNearbyPlaces(map, selectedCategories.value);
   } catch (error) {
     console.error(error.message);
   }
 }
+
 
 // Initialiser la carte au montage du composant
 onMounted(() => {
