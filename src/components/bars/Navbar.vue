@@ -471,7 +471,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
   if (item === 'Hôtels & séjours' || item === 'Hotels & Stays') {
     selectedCategories.value.push('lodging');
     setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
-    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
+    linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/this.hotel" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
   if (item === 'Salons de beauté & Spas' || item === 'Beauty Salons & Spas') {

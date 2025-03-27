@@ -99,6 +99,13 @@ const router = createRouter({
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
     {
+      path: '/this.hotel',
+      name: 'this.hotel',
+      component: () => import('../components/hotel/BookingFlow.vue'),
+      meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
+    },
+
+    {
       path: '/viewInMap',
       name: 'viewInMap',
       component: () => import('@/views/hotel/EViewInMapView.vue'),
