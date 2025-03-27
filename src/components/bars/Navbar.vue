@@ -749,7 +749,7 @@ async function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 3.8480, lng: 11.5021 }, // Centré sur Yaoundé
       zoom: 14,
-      mapId: mapId
+      mapId: 'map'
     });
 
     // Initialiser l'autocomplete
