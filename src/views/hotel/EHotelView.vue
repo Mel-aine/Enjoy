@@ -79,8 +79,6 @@ const handleSortChange = (option) => {
             </div>
           </div>
         </router-link>
-
-
           <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
         </div>
 

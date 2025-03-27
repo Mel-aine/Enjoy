@@ -32,9 +32,7 @@
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa"
-                className="h-6" />
-
+              <img src="@/assets/splash_new 2.png" class="w-30 h-10" />
             </div>
           </button>
 

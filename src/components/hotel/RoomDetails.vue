@@ -120,9 +120,9 @@
             FIRST NAME <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text"
+            <input type="text" v-model="firstName"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              value="Maciej" />
+              value="John" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
               <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
@@ -137,9 +137,9 @@
             LAST NAME <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text"
+            <input type="text" v-model="lastName"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              value="Kuropatwa" />
+              value="Doe" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
               <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
@@ -154,9 +154,9 @@
             EMAIL ADDRESS <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="email"
+            <input type="email" v-model="emaiAdress"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500"
-              value="kuropatwamaciej@gmail.com" />
+              value="doejohn@gmail.com" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
               <div class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
@@ -172,13 +172,13 @@
             <!-- Country Code Dropdown -->
             <select
               class="px-3 py-2 border border-gray-300 rounded-lg rounded-r-none border-r-0 bg-gray-50 text-gray-500">
-              <option>+48</option>
+              <option>+237</option>
               <option>+33</option>
               <option>+1</option>
             </select>
 
             <!-- Phone Number Input -->
-            <input type="tel"
+            <input type="tel" v-model="phoneNumber"
               class="flex-1 px-3 py-2 border border-gray-300 rounded-lg rounded-l-none focus:ring-2 focus:ring-indigo-500"
               value="567 890 123" />
 
@@ -387,8 +387,10 @@ import {
 const expanded = ref(false);
 const selectedParkingType = ref(false);
 const selectedVehicle = ref('motorcycle');
-
-
+const firstName = ref('');
+const lastName = ref('');
+const phoneNumber = ref('');
+const emaiAdress = ref('');
 // Fonction pour basculer entre affiché/caché
 const toggleExpanded = () => {
   expanded.value = !expanded.value
