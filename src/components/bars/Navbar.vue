@@ -398,7 +398,7 @@ const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
 const labelToCategory = ref('');
-const mapId = import.meta.env.VITE_IDCARD;
+// const mapId = import.meta.env.VITE_IDCARD;
 
 
 let leftSelected = false; // Track if a selection is made for left field
