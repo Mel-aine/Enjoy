@@ -101,7 +101,7 @@ const router = createRouter({
     {
       path: '/this.hotel',
       name: 'this.hotel',
-      component: () => import('../components/hotel/BookingFlow.vue'),
+      component: () => import('@/views/hotel/EBookingHotelView.vue'),
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
 
