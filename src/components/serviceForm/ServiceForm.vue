@@ -5,6 +5,7 @@ import ContactInfoSection from '@/components/serviceForm/ContactInfoSection.vue'
 import OperationalInfoSection from '@/components/serviceForm/OperationalInfoSection.vue';
 import AdditionalInfoSection from '@/components/serviceForm/AdditionalInfoSection.vue';
 import AdressSection from '@/components/serviceForm/AdressSection.vue';
+import { createService } from '@/services/api'
 
 import { CheckIcon } from 'lucide-vue-next';
 
@@ -47,33 +48,40 @@ const handlePrevious = () => {
   }
 };
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  console.log('Form submitted with data:', formData.value);
-  formSubmitted.value = true;
+const handleSubmit = async (e) => {
+  e.preventDefault()
   
-  setTimeout(() => {
-    formSubmitted.value = false;
-    formData.value = {
-      name: '',
-      description: '',
-      category_id: '',
-      address: '',
-      phone_number: '',
-      email: '',
-      website: '',
-      opening_days: [],
-      opening_hours: '',
-      price_range: '',
-      facilities: [],
-      policies: '',
-      capacity: '',
-      payment_methods: [],
-      status: 'active',
-    };
-    activeStep.value = 1;
-  }, 3000);
-};
+  try {
+    const response = await createService(formData.value) // Envoi des données au backend
+    console.log('Service ajouté avec succès:', response.data)
+    
+    formSubmitted.value = true
+    setTimeout(() => {
+      formSubmitted.value = false
+      formData.value = {
+        name: '',
+        description: '',
+        category_id: '',
+        address: '',
+        phone_number: '',
+        email: '',
+        website: '',
+        opening_days: [],
+        opening_hours: '',
+        price_range: '',
+        facilities: [],
+        policies: '',
+        capacity: '',
+        payment_methods: [],
+        status: 'active',
+      }
+      activeStep.value = 1
+    }, 3000)
+
+  } catch (error) {
+    console.error('Erreur lors de l’ajout du service:', error)
+  }
+}
 </script>
 
 <template>

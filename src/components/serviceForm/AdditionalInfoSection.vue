@@ -1,5 +1,6 @@
 <script setup>
-// import { computed } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+import { WifiIcon, CarIcon, AccessibilityIcon,SpadeIcon, SnowflakeIcon, SunIcon,WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
 
 const props = defineProps({
   formData: Object,
@@ -7,12 +8,27 @@ const props = defineProps({
 const emit = defineEmits(['updateFormData']);
 
 const facilitiesOptions = [
-  'Wi-Fi', 'Parking', 'Accessible PMR', 'Climatisation', 'Terrasse', 'Piscine', 'Salle de sport', 'Spa',
-  'Restaurant', 'Bar', 'Espace enfants', 'Animaux acceptés', 'Salle de réunion'
+  { name: 'Wi-Fi', icon: WifiIcon },
+  { name: 'Parking', icon: CarIcon },
+  { name: 'Accessible PMR', icon: AccessibilityIcon },
+  { name: 'Climatisation', icon: SnowflakeIcon },
+  { name: 'Terrasse', icon: SunIcon },
+  { name: 'Piscine', icon: WavesLadderIcon },
+  { name: 'Salle de sport', icon: DumbbellIcon },
+  { name: 'Spa', icon: SpadeIcon },
+  { name: 'Restaurant', icon: UtensilsIcon },
+  { name: 'Bar', icon: WineIcon },
+  { name: 'Espace enfants', icon: BabyIcon },
+  { name: 'Animaux acceptés', icon: DogIcon },
+  { name: 'Salle de réunion', icon: BriefcaseIcon }
 ];
 
 const paymentMethodsOptions = [
-  'Carte bancaire', 'Espèces', 'Chèque', 'PayPal', 'Apple Pay', 'Google Pay', 'Virement bancaire', 'Chèques vacances'
+  { name: 'Carte bancaire', icon: CreditCardIcon },
+  { name: 'Espèces', icon: DollarSignIcon },
+  { name: 'Chèque', icon: CheckIcon },
+  { name: 'PayPal', icon: AppleIcon },
+  { name: 'Small Pay', icon: AppleIcon },
 ];
 
 const handleChange = (event) => {
@@ -40,12 +56,13 @@ const handleCheckboxChange = (name, value, checked) => {
     <fieldset>
       <legend class="text-sm font-medium text-gray-700">Équipements et services</legend>
       <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-y-2">
-        <div v-for="facility in facilitiesOptions" :key="facility" class="flex items-center">
-          <input type="checkbox" :id="`facility-${facility}`" name="facilities" :value="facility"
+        <div v-for="facility in facilitiesOptions" :key="facility.name" class="flex items-center gap-2">
+          <component :is="facility.icon" class="w-5 h-5 text-gray-700" />
+          <input type="checkbox" :id="`facility-${facility.name}`" name="facilities" :value="facility.name"
                  class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                 :checked="formData.facilities.includes(facility)"
-                 @change="(e) => handleCheckboxChange('facilities', facility, e.target.checked)" />
-          <label :for="`facility-${facility}`" class="ml-2 text-sm text-gray-700">{{ facility }}</label>
+                 :checked="formData.facilities.includes(facility.name)"
+                 @change="(e) => handleCheckboxChange('facilities', facility.name, e.target.checked)" />
+          <label :for="`facility-${facility.name}`" class="text-sm text-gray-700">{{ facility.name }}</label>
         </div>
       </div>
     </fieldset>
@@ -62,12 +79,13 @@ const handleCheckboxChange = (name, value, checked) => {
     <fieldset>
       <legend class="text-sm font-medium text-gray-700">Modes de paiement acceptés</legend>
       <div class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-y-2">
-        <div v-for="method in paymentMethodsOptions" :key="method" class="flex items-center">
-          <input type="checkbox" :id="`payment-${method}`" name="payment_methods" :value="method"
+        <div v-for="method in paymentMethodsOptions" :key="method.name" class="flex items-center gap-2">
+          <component :is="method.icon" class="w-5 h-5 text-gray-700" />
+          <input type="checkbox" :id="`payment-${method.name}`" name="payment_methods" :value="method.name"
                  class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-                 :checked="formData.payment_methods.includes(method)"
-                 @change="(e) => handleCheckboxChange('payment_methods', method, e.target.checked)" />
-          <label :for="`payment-${method}`" class="ml-2 text-sm text-gray-700">{{ method }}</label>
+                 :checked="formData.payment_methods.includes(method.name)"
+                 @change="(e) => handleCheckboxChange('payment_methods', method.name, e.target.checked)" />
+          <label :for="`payment-${method.name}`" class="text-sm text-gray-700">{{ method.name }}</label>
         </div>
       </div>
     </fieldset>
