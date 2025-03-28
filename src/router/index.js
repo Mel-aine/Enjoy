@@ -45,8 +45,8 @@ const router = createRouter({
     {
       path: '/addBusiness',
       name: 'addBusiness',
-      component: () => import('../views/EAddBusiness.vue'),
-      meta: { showFooter2:true},
+      component: () => import('../views/allServices/EServiceFormView.vue'),
+      meta: {hiddeMap:true , showFooter2:true},
     },
     {
       path: '/checkout',

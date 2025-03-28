@@ -279,7 +279,7 @@
       <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
       <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
     </div> -->
-    <div id="map" style="height: 800px; width: 100%;"></div>
+    <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
   
     <!-- ,,Services destiné aux prof,Média,
@@ -300,7 +300,8 @@ import { Categories } from "@/mocks/categories.js";
 import CustomModal from '../CustomModal.vue';
 import SearchHotel from '../search/SearchHotel.vue';
 import { useDataStore } from '@/stores/dataStore';
-import { useRouter } from 'vue-router';
+import { useRouter,useRoute } from 'vue-router';
+
 const router = useRouter();
 
 const dataStore = useDataStore();
@@ -315,8 +316,9 @@ import BaseIcon from '../icons/BaseIcon.vue';
 import { useI18n } from 'vue-i18n';
 
 // Utilisation de useI18n pour accéder aux traductions
+const $route = useRoute();
 
-
+const showMap = computed(() => $route.meta.hiddeMap);
 const isDropdownVisible = ref(false);
 const scrollMenu = ref(null);
 const showLeftButton = ref(false);
