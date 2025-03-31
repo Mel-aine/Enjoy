@@ -22,13 +22,13 @@ import djeuga from '@/assets/hotel/djeuga.jpg';
 
 export const Categories = [
     {
-      id: "restaurant",
+      id: "1",
       label: "Restaurants",
       //route: "/recherche/restaurants",
       icon: "fa fa-utensils",
       places: [
         {
-          id: "PLACE-REST-001",
+          id: "PLACE-1-001",
           name: "O'san",
           route: "/restaurant/PLACE-REST-001",
           description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
@@ -88,7 +88,7 @@ export const Categories = [
       ]
     },
     {
-      id: "shopping",
+      id: "2",
       label: "Shopping",
      // route: "/recherche/shopping",
       icon: "fa fa-shopping-bag",
@@ -116,7 +116,7 @@ export const Categories = [
       ]
     },
     {
-      id: "vie nocturne",
+      id: "3",
       label: "Vie nocturne",
       icon: "fa fa-glass-cheers",
       places: [
@@ -143,7 +143,7 @@ export const Categories = [
       ]
     },
     {
-      id: "sport",
+      id: "4",
       label: "Sports & Activités de loisirs",
       icon: "fa fa-football-ball",
       places: [
@@ -169,7 +169,7 @@ export const Categories = [
        },]
     },
     {
-      id: "salon",
+      id: "5",
       label: "Salons de beauté & Spas",
       icon: "fa fa-spa",
       places: [
@@ -219,7 +219,7 @@ export const Categories = [
       ]
     },
     {
-      id: "automobile",
+      id: "6",
       label: "Automobile",
       icon: "fa fa-bus",
       places: [
@@ -267,7 +267,7 @@ export const Categories = [
     },
 
     {
-      id: "maison",
+      id: "7",
       label: "Maisons & Travaux",
       icon: "fa fa-home",
       places: [
@@ -293,7 +293,7 @@ export const Categories = [
       ]
     },
     {
-      id: "cafe",
+      id: "8",
       label: "Cafés & Thés",
       icon: "fa fa-coffee",
       places: [
@@ -318,7 +318,7 @@ export const Categories = [
        },]
     },
     {
-      id: "alimentation",
+      id: "9",
       label: "Alimentations",
       icon: "fa fa-apple-alt",
       places: [
@@ -343,7 +343,7 @@ export const Categories = [
        },]
     },
     {
-      id: "art",
+      id: "10",
       label: "Art & Loisirs",
       icon: "fa fa-palette",
       places: [
@@ -368,7 +368,7 @@ export const Categories = [
        },]
     },
     {
-      id: "sante",
+      id: "11",
       label: "Santé & Médical",
       icon: "fa fa-briefcase-medical",
       places: [
@@ -393,7 +393,7 @@ export const Categories = [
        },]
     },
     {
-      id: "services",
+      id: "12",
       label: "Services destiné aux prof",
       icon: "fa fa-shield-alt",
       places: [
@@ -418,7 +418,7 @@ export const Categories = [
        },]
     },
     {
-      id: "animaux",
+      id: "13",
       label: "Animaux de companie",
       icon: "fa fa-paw",
       places: [
@@ -443,7 +443,7 @@ export const Categories = [
        },]
     },
     {
-      id: "immobilier",
+      id: "14",
       label: "Immobilier",
       icon: "fa fa-home",
       places: [
@@ -470,7 +470,7 @@ export const Categories = [
     },
 
     {
-      id: "hotel",
+      id: "15",
       label: "Hôtels & Séjours",
       icon: "fa fa-hotel",
       places: [
@@ -539,7 +539,7 @@ export const Categories = [
 
     },
     {
-      id: "local",
+      id: "16",
       label: "Services Locaux",
       icon: "fa fa-map-marker-alt",
       places: [
@@ -565,7 +565,7 @@ export const Categories = [
       ]
     },
     {
-      id: "tourisme",
+      id: "17",
       label: "Organisation d événements",
       icon: "fa fa-calendar-alt",
       places: [
@@ -593,7 +593,7 @@ export const Categories = [
     },
 
     {
-      id: "public",
+      id: "18",
       label: "Services publics & gouvernement",
       icon: "fa fa-landmark",
       places: [
@@ -622,7 +622,7 @@ export const Categories = [
 
 
     {
-        id: "finance",
+        id: "19",
         label: "Services financiers",
         icon: "fa fa-chart-line",
         places: [
@@ -648,7 +648,7 @@ export const Categories = [
          ]
     },
     {
-      id: "formation",
+      id: "20",
       label: "Formation & Enseignement",
       icon: "fa fa-pencil-alt",
       places: [
@@ -674,7 +674,7 @@ export const Categories = [
        ]
     },
     {
-      id: "religion",
+      id: "21",
       label: "Organisation religieuse",
       icon: "fa fa-church",
       places: [
@@ -700,7 +700,7 @@ export const Categories = [
        ]
     },
     {
-      id: "travel",
+      id: "22",
       label: "Travel",
       icon: "fa fa-bus",
       places: [
@@ -767,7 +767,7 @@ export const Categories = [
       ]
     },
     {
-      id: "media",
+      id: "23",
       label: "Média",
       icon: "fa fa-newspaper",
       places: [
