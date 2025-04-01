@@ -96,7 +96,7 @@
                 <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound"
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" v-model="rightValue"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
                   <BaseIcon name="Search" size="20" stroke-width="2" />
@@ -281,7 +281,7 @@
     </div> -->
     <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
-  
+
     <!-- ,,Services destiné aux prof,Média,
     Formation & Enseignement,Organisation d
     événements,Services Locaux,Immobilier
@@ -301,19 +301,20 @@ import CustomModal from '../CustomModal.vue';
 import SearchHotel from '../search/SearchHotel.vue';
 import { useDataStore } from '@/stores/dataStore';
 import { useRouter,useRoute } from 'vue-router';
-
-const router = useRouter();
-
-const dataStore = useDataStore();
-
-
-
-
 // import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '../icons/BaseIcon.vue';
 // import { useRouter } from 'vue-router';
 // import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
+import {getCategories} from '@/services/api'
+
+const router = useRouter();
+
+const dataStore = useDataStore();
+const categories = ref([])
+
+
+
 
 // Utilisation de useI18n pour accéder aux traductions
 const $route = useRoute();
@@ -346,14 +347,51 @@ const toggleModal = () => {
 }
 
 
-const handleSearch = () => {
-  console.log('handleSearch')
-
-  if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-    isModalOpen.value = true;
+const fetchCategories = async () => {
+  try {
+    const response = await getCategories();
+    categories.value = response.data.data;
+    console.log('categories', categories.value);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des catégories:', error);
   }
-  console.log('rigth value', rightValue.value)
-}
+};
+
+onMounted(() => {
+  fetchCategories();
+});
+
+
+const handleSearch = () => {
+  if (!leftValue || !rightValue) {
+    console.warn("Veuillez remplir les deux champs.");
+    return;
+  }
+  console.log(leftValue.value, rightValue.value);
+
+  const foundCategory = categories.value.find(category =>
+    category.categoryName === leftValue.value
+  );
+  console.log(foundCategory);
+  if (foundCategory) {
+    router.push({
+      path: `/categories/${foundCategory.id}`,
+      query: { city: rightValue.value }
+    });
+
+  } else {
+    console.warn("Catégorie non trouvée");
+  }
+};
+
+// const handleSearch = () => {
+//   console.log('handleSearch')
+
+//   if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+//     isModalOpen.value = true;
+//   }
+//   console.log('rigth value', rightValue.value)
+// }
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -757,7 +795,7 @@ async function initMap() {
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
-    
+
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
       if (!place.geometry || !place.geometry.location) {

@@ -1,47 +1,42 @@
 <template>
 <div class="flex flex-col z-0 lg:flex-row w-full min-h-screen bg-white ">
   <!-- Bouton Hamburger -->
-  <button
+  <!-- <button
     @click="toggleMenu"
-    class="md:block absolute  right-5 px-2 items-center p-1 bg-gray-200 rounded-full mt-2 lg:hidden space-x-1"
-  >
+    class="md:block absolute  right-5 px-2 items-center p-1 bg-gray-200 rounded-full mt-2 lg:hidden space-x-1">
   <BaseIcon name="Filter" size="20" stroke-width="2" class="text-black inline-flex" />
   <span class="text-sm font-medium">{{ $t('filter') }}</span>
-  </button>
+  </button> -->
 
   <!-- category (filtre) -->
 
-  <div :class="['lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white',
+  <!-- <div :class="['lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white border-t border-gray-100',
        showMenu ? 'block absolute  left-0 w-full h-screen z-50 ' : 'hidden lg:block  ']">
-       <!-- <span class="text-gray-950">oiuiu</span> -->
-
        <button
           @click="showMenu = false"
-          class="md:block absolute text-black right-5 bg-gray-200 rounded-full  lg:hidden"
-        >
+          class="md:block absolute text-black right-5 bg-gray-200 rounded-full lg:hidden">
         <svg class="h-7 w-7 text-gray-900"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <polyline points="11 7 6 12 11 17" />  <polyline points="17 7 12 12 17 17" /></svg>
         </button>
            <Filter />
 
-  </div>
+  </div> -->
+
+  <div class="hidden lg:block lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white border-t border-gray-100 sm:hidden ">
+       <Filter />
+       </div>
 
 
   <!-- Contenu principal -->
-  <div class="flex-1 flex flex-col p-5 items-start mx-auto px-2">
+  <div class="flex-1 flex flex-col p-5 items-start mx-auto px-2 border-t border-gray-100">
 
-    <div class="text-gray-700 text-sm">
-      <!-- <span v-for="(tab, i) in pathSegments" :key="i">
-    <div class="text-gray-700 text-sm ml-5">
-      <span v-for="(tab, i) in pathSegments" :key="i">
-        {{ tab }} <span v-if="i !== pathSegments.length - 1"> > </span>
-      </span> -->
+    <div class="z-0 mx-auto">
+      <div class="flex justify-between ">
+      <div class="text-gray-700 text-sm">
       <span >
         {{ $t('categories.' + textSearch) }}
       </span>
          <h1 class="text-gray-950 font-bold text-xl"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} </h1>
     </div>
-
-    <div class="z-0">
       <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2  right-8 w-full md:w-auto">
         <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">
         {{$t('trie')}} :
@@ -62,6 +57,13 @@
         </li>
       </ul>
   </div>
+      </div>
+      <button
+    @click="toggleMenu"
+        class="flex  right-5 px-2 items-center p-1 bg-gray-200 rounded-full mt-8  space-x-1">
+      <BaseIcon name="Filter" size="20" stroke-width="2" class="text-black inline-flex" />
+      <span class="text-sm font-medium">{{ $t('filter') }}</span>
+  </button>
   <div class="mt-7 lg:translate-x-8 translate-x-0 space-y-4">
       <!-- <ServiceView /> -->
     <div  v-for =" item in filteredPlaces" :key="item.id">
@@ -78,6 +80,7 @@
   </div>
   </div>
     </div>
+
 
   </div>
 
@@ -111,6 +114,11 @@ const category = ref('');
 const filteredPlaces = ref([]);
 const textSearch = ref('');
 const { t } = useI18n();
+const categoryId = route.params.id;
+const city = route.query.city;
+
+console.log("Catégorie ID:", categoryId);
+console.log("Ville:", city);
 
 
 
