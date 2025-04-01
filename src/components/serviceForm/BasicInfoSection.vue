@@ -1,10 +1,12 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
 import FormField from '@/components/serviceForm/field/FormField.vue';
-import { Categories } from '@/mocks/categories';
-const props = defineProps({ formData: Object });
-const emit = defineEmits(['updateFormData']);
 
+
+const props = defineProps({ formData: Object,   categoriesItems: Array
+});
+const emit = defineEmits(['updateFormData']);
+console.log('props', props.categoriesItems)
 // const categories = [
 //     { id: 1, name: 'Restaurant' }, { id: 2, name: 'Hôtel' }, { id: 3, name: 'Spa' },
 //     { id: 4, name: 'Salle de sport' }, { id: 5, name: 'Divertissement' },
@@ -26,7 +28,7 @@ const handleChange = (e) => emit('updateFormData', { [e.target.name]: e.target.v
                 <label for="category_id" class="block text-sm font-medium text-gray-700">Catégorie <span class="text-red-500">*</span></label>
                 <select id="category_id" name="category_id" class="form-select" :value="formData.category_id" @change="handleChange" required>
                     <option value="">Sélectionnez une catégorie</option>
-                    <option v-for="category in Categories" :key="category.id" :value="category.id">{{ category.label }}</option>
+                    <option v-for="category in props.categoriesItems.data" :key="category.id" :value="category.id">{{ category.categoryName }}</option>
                 </select>
             </div>
         </div>

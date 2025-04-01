@@ -1,14 +1,30 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import BasicInfoSection from '@/components/serviceForm/BasicInfoSection.vue';
 import ContactInfoSection from '@/components/serviceForm/ContactInfoSection.vue';
 import OperationalInfoSection from '@/components/serviceForm/OperationalInfoSection.vue';
 import AdditionalInfoSection from '@/components/serviceForm/AdditionalInfoSection.vue';
 import AdressSection from '@/components/serviceForm/AdressSection.vue';
-import { createService } from '@/services/api'
-
+import { createService, getCategories } from '@/services/api';
 import { CheckIcon } from 'lucide-vue-next';
 
+const categories = ref([]);
+
+const fetchCategories = async () => {
+  try {
+    const response = await getCategories();
+    categories.value = response.data;
+    console.log('response.data.data', response.data);
+    console.log('getCategories après récupération', categories.value);
+  } catch (error) {
+    console.error('Erreur lors de la récupération des catégories:', error);
+  }
+};
+
+onMounted(() => {
+  fetchCategories();
+  console.log('getCategories', categories.value);
+});
 const activeStep = ref(1);
 const formSubmitted = ref(false);
 const formData = ref({
@@ -20,8 +36,6 @@ const formData = ref({
   email: '',
   website: '',
   opening_days: [],
-  // opening_time: '',
-  // closing_time: '',
   price_range: '',
   facilities: [],
   policies: '',
@@ -51,7 +65,6 @@ const handlePrevious = () => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-  // Validation des champs obligatoires
   if (!formData.value.name || !formData.value.category_id) {
     alert('Les champs "Nom" et "Catégorie" sont obligatoires');
     return;
@@ -60,12 +73,12 @@ const handleSubmit = async (e) => {
   const payload = {
     name: formData.value.name,
     description: formData.value.description,
-    category_id: Number(formData.value.category_id), // Conversion en number
+    category_id: Number(formData.value.category_id),
     address: JSON.stringify({
-      text: formData.value.address,
-      lat: formData.value.latitude,
-      lng: formData.value.longitude
-    }), 
+      text: formData.value.address || '',
+      lat: formData.value.latitude ?? null,
+      lng: formData.value.longitude ?? null
+    }),
     phone_number: formData.value.phone_number,
     email: formData.value.email,
     website: formData.value.website,
@@ -82,14 +95,12 @@ const handleSubmit = async (e) => {
     console.log('Données du formulaire:', formData.value);
     console.log('Payload envoyé:', payload);
 
-    // Correction: utiliser payload directement sans .value
     const response = await createService(payload);
     console.log('Réponse du serveur:', response.data);
 
     formSubmitted.value = true;
     setTimeout(() => {
       formSubmitted.value = false;
-      // Réinitialisation du formulaire
       formData.value = {
         name: '',
         description: '',
@@ -128,17 +139,17 @@ const handleSubmit = async (e) => {
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
         <div class="flex items-center justify-between">
-          <div v-for="step in [1, 2, 3, 4, 5]" :key="step" class="flex flex-col items-center">
-            <div :class="['w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
-              activeStep === step ? 'bg-customBlue text-white' :
-                activeStep > step ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600']">
-              <CheckIcon v-if="activeStep > step" class="h-5 w-5" />
-              <span v-else>{{ step }}</span>
+          <div v-for="(label, index) in ['Informations de base', 'Adresse', 'Contact', 'Opérationnel', 'Supplémentaire']"
+            :key="index" class="flex flex-col items-center">
+            <div :class="[
+              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
+              activeStep === index + 1 ? 'bg-customBlue text-white' :
+              activeStep > index + 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
+            ]">
+              <CheckIcon v-if="activeStep > index + 1" class="h-5 w-5" />
+              <span v-else>{{ index + 1 }}</span>
             </div>
-            <div class="text-xs mt-2 text-gray-500">
-              {{ step === 1 ? 'Informations de base' : step === 2 ? 'Adresse' : step === 3 ? 'Contact' : step === 4 ?
-                'Opérationnel' : 'Supplémentaire' }}
-            </div>
+            <div class="text-xs mt-2 text-gray-500">{{ label }}</div>
           </div>
         </div>
         <div class="mt-2 h-0.5 w-full bg-gray-200 relative">
@@ -147,7 +158,8 @@ const handleSubmit = async (e) => {
         </div>
       </div>
       <form @submit="handleSubmit">
-        <BasicInfoSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData" />
+        <BasicInfoSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData"
+          :categoriesItems="categories || []" />
         <AdressSection v-if="activeStep === 2" :formData="formData" @updateFormData="updateFormData" />
         <ContactInfoSection v-if="activeStep === 3" :formData="formData" @updateFormData="updateFormData" />
         <OperationalInfoSection v-if="activeStep === 4" :formData="formData" @updateFormData="updateFormData" />

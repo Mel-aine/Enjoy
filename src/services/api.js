@@ -1,7 +1,9 @@
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL
 
-const API_URL = ' https://enjoybackend.onrender.com/api' // URL de ton backend AdonisJS
 
+
+//Services Service Api start
 export const getServices = () => {
   return axios.get(`${API_URL}/services`)
 }
@@ -21,3 +23,11 @@ export const updateService = (id, serviceData) => {
 export const deleteService = (id) => {
   return axios.delete(`${API_URL}/services/${id}`)
 }
+//Services Service Api end
+
+
+//Categories Service Api start
+export const getCategories  = () => {
+  return axios.get(`${API_URL}/category`)
+}
+//Categories Service Api end
