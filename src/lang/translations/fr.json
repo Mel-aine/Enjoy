@@ -479,7 +479,9 @@
     "Wine cellar" :"Cave à vins",
     "Bar": "Bar"
   
-  }
+  },
+  "applyFilter" : "Appliquer le Filtre",
+  "in" : "à"
   
 }
 

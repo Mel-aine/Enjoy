@@ -481,6 +481,8 @@
     "Restaurant":"Restaurant",
     "Wine cellar" : "Wine cellar",
     "Bar": "Bar"
-  }
+  },
+  "applyFilter" : "Apply Filter",
+  "in" : "in"
 
 }
