@@ -241,7 +241,30 @@
             {{ $t('navbar.startProject') }}
           </router-link>
         </div>
+        <div class="flex flex-col lg:flex-row">
+          <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
+            <template #button>
+              <span class="text-black">{{ $t('navbar.restaurant') }}</span>
+            </template>
+          </CustomDropdownD>
+          <CustomDropdownD :menuData="menuHouseWork" columnClass="lg:grid-cols-2" iconColor="text-black">
+            <template #button>
+              <span class="text-black">{{ $t('navbar.homeAndWork') }}</span>
+            </template>
+          </CustomDropdownD>
+          <CustomDropdownD :menuData="menuCarService" columnClass="lg:grid-cols-2" iconColor="text-black">
+            <template #button>
+              <span class="text-black">{{ $t('navbar.serviceRepaire') }}</span>
+            </template>
+          </CustomDropdownD>
+          <CustomDropdownD :menuData="menuOthers" columnClass="lg:grid-cols-2" iconColor="text-black">
+            <template #button>
+              <span class="text-black">{{ $t('navbar.otherCategory') }}</span>
+            </template>
+          </CustomDropdownD>
+        </div>
       </div>
+
     </div>
 
     <div id="menuToggle" class="container relative block md:hidden">
@@ -251,7 +274,7 @@
     </div>
 
 
-    <div class="md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
+    <div class="hidden md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
       <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
           <span class="text-black">{{ $t('navbar.restaurant') }}</span>
@@ -281,7 +304,7 @@
     </div> -->
     <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
-  
+
     <!-- ,,Services destiné aux prof,Média,
     Formation & Enseignement,Organisation d
     événements,Services Locaux,Immobilier
@@ -300,7 +323,7 @@ import { Categories } from "@/mocks/categories.js";
 import CustomModal from '../CustomModal.vue';
 import SearchHotel from '../search/SearchHotel.vue';
 import { useDataStore } from '@/stores/dataStore';
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
 
@@ -467,38 +490,38 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('meal_delivery');
     selectedCategories.value.push('meal_takeaway');
 
-    setSettingsMakerDisplay('<i class="fa fa-pizza-slice fa-lg"></i>','#ff8300','#FFD514','#ff8300')
+    setSettingsMakerDisplay('<i class="fa fa-pizza-slice fa-lg"></i>', '#ff8300', '#FFD514', '#ff8300')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Hôtels & séjours' || item === 'Hotels & Stays') {
     selectedCategories.value.push('lodging');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/this.hotel" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
   if (item === 'Salons de beauté & Spas' || item === 'Beauty Salons & Spas') {
     selectedCategories.value.push('beauty_salon');
     selectedCategories.value.push('spa');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
   if (item === 'Cafés & Thés' || item === 'Coffees & Teas') {
     selectedCategories.value.push('cafe');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
   if (item === 'Sports & Activités de loisirs' || item === 'Sports & Leisure Activities') {
     selectedCategories.value.push('gym');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Organisation religieuse' || item === 'Religious Organization') {
     selectedCategories.value.push('church');
     selectedCategories.value.push('mosque');
     selectedCategories.value.push('Synagogues');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
     // selectedCategories.value.push('church');
   }
@@ -509,7 +532,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('embassy');
     selectedCategories.value.push('courthouse');
     selectedCategories.value.push('police');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
     // selectedCategories.value.push('church');
   }
@@ -521,7 +544,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('insurance_agency');
     selectedCategories.value.push('physiotherapist');
     selectedCategories.value.push('veterinary_care');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Alimentations' || item === 'Power Supplies') {
@@ -531,7 +554,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('supermarket');
     // selectedCategories.value.push('pet_store');
     // selectedCategories.value.push('pet_store');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Voyage' || item === 'Travel') {
@@ -542,7 +565,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('train_station');
     selectedCategories.value.push('transit_station');
     selectedCategories.value.push('travel_agency');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Services financiers' || item === 'Financial Services') {
@@ -550,7 +573,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('accounting');
     selectedCategories.value.push('pet_store');
     selectedCategories.value.push('pet_store');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Automobile' || item === 'Automobile') {
@@ -560,7 +583,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('car_wash');
     selectedCategories.value.push('laundry');
     // selectedCategories.value.push('bus_station');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
   if (item === 'Shopping' || item === 'Shopping') {
@@ -570,7 +593,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('shoe_store');
     selectedCategories.value.push('shopping_mall');
     selectedCategories.value.push('store');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
@@ -584,7 +607,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('park');
     selectedCategories.value.push('tourist_attraction');
     selectedCategories.value.push('zoo');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
   }
@@ -597,7 +620,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('casino');
     selectedCategories.value.push('movie_theater');
     selectedCategories.value.push('park');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
 
 
@@ -610,7 +633,7 @@ const getTerminologyToSearchInGoogleMap = (item) => {
     selectedCategories.value.push('casino');
     selectedCategories.value.push('movie_theater');
     selectedCategories.value.push('park');
-    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>','#FFFFFF','#FF5400','#7B2CBF')
+    setSettingsMakerDisplay('<i class="fa fa-utensils fa-lg"></i>', '#FFFFFF', '#FF5400', '#7B2CBF')
     linkCategory.value = '<a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃'
   }
 
@@ -700,9 +723,9 @@ async function searchNearbyPlaces(map, categories) {
       title: place.name,
     });
 
-    if(leftValue.value === ''){
+    if (leftValue.value === '') {
       labelToCategory.value = '';
-    }else{
+    } else {
       labelToCategory.value = `Catégorie: <strong style="color: #FF5400; font-size: 20px;">${leftValue.value}</strong><br>`;
     }
     // InfoWindow pour afficher les détails du lieu
@@ -757,7 +780,7 @@ async function initMap() {
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
     const autocomplete = new google.maps.places.Autocomplete(input);
-    
+
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();
       if (!place.geometry || !place.geometry.location) {

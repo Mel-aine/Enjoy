@@ -7,7 +7,13 @@ import AdditionalInfoSection from '@/components/serviceForm/AdditionalInfoSectio
 import AdressSection from '@/components/serviceForm/AdressSection.vue';
 import { createService, getCategories } from '@/services/api';
 import { CheckIcon } from 'lucide-vue-next';
+import AlertInfo from '../alert/AlertInfo.vue';
 
+const isVisible = ref(false);
+const infoAlert = ref('')
+const closeAlert = () => {
+  isVisible.value = false;
+};
 const categories = ref([]);
 
 const fetchCategories = async () => {
@@ -49,6 +55,9 @@ const updateFormData = (newData) => {
 };
 
 const handleNext = () => {
+  if (!validateStep()) {
+    return; // Arrête la fonction si validation échoue
+  }
   if (activeStep.value < 5) {
     activeStep.value++;
     window.scrollTo(0, 0);
@@ -61,6 +70,49 @@ const handlePrevious = () => {
     window.scrollTo(0, 0);
   }
 };
+const validateStep = () => {
+  switch (activeStep.value) {
+    case 1:
+      if (!formData.value.name || !formData.value.category_id) {
+        isVisible.value = true;
+        infoAlert.value =' Veuillez remplir tous les champs obligatoires : Nom et Catégorie.';
+        return false;
+      }
+      break;
+    case 2:
+      if (!formData.value.address) {
+        isVisible.value = true;
+        infoAlert.value =' Veuillez renseigner l\'adresse.';
+        return false;
+      }
+      break;
+    case 3:
+      if (!formData.value.phone_number || !formData.value.email) {
+        isVisible.value = true;
+        infoAlert.value =' Veuillez entrer un numéro de téléphone et une adresse e-mail.';
+        return false;
+      }
+      break;
+    case 4:
+      if (!formData.value.opening_days.length) {
+        isVisible.value = true;
+        infoAlert.value =' Veuillez sélectionner les jours d\'ouverture.';
+        return false;
+      }
+      break;
+    case 5:
+      if (!formData.value.policies) {
+        isVisible.value = true;
+        infoAlert.value =' Veuillez renseigner les politiques du service.';
+        return false;
+      }
+      break;
+    default:
+      return true;
+  }
+  return true;
+};
+
 
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -130,6 +182,7 @@ const handleSubmit = async (e) => {
 <template>
   <div class="bg-white shadow rounded-lg">
     <div v-if="formSubmitted" class="p-8 text-center">
+
       <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
         <CheckIcon class="h-6 w-6 text-green-600" />
       </div>
@@ -138,18 +191,24 @@ const handleSubmit = async (e) => {
     </div>
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
+        <AlertInfo v-if="isVisible" @close="closeAlert" type="danger"  :message="infoAlert" />
+
         <div class="flex items-center justify-between">
-          <div v-for="(label, index) in ['Informations de base', 'Adresse', 'Contact', 'Opérationnel', 'Supplémentaire']"
+          <div
+            v-for="(label, index) in ['Informations de base', 'Adresse', 'Contact', 'Opérationnel', 'Supplémentaire']"
             :key="index" class="flex flex-col items-center">
             <div :class="[
               'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
               activeStep === index + 1 ? 'bg-customBlue text-white' :
-              activeStep > index + 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
+                activeStep > index + 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
             ]">
               <CheckIcon v-if="activeStep > index + 1" class="h-5 w-5" />
               <span v-else>{{ index + 1 }}</span>
             </div>
-            <div class="text-xs mt-2 text-gray-500">{{ label }}</div>
+            <!-- Modification ici pour cacher le texte sur mobile sauf pour l'étape active -->
+            <div class="text-xs mt-2 text-gray-500" :class="{ 'hidden sm:block': activeStep !== index + 1 }">
+              {{ label }}
+            </div>
           </div>
         </div>
         <div class="mt-2 h-0.5 w-full bg-gray-200 relative">
