@@ -36,65 +36,100 @@ const initMap = () => {
 };
 
 
-
 const deleteMarkers = () => {
-  if (markers.value) {
-    markers.value.forEach(marker => {
-      marker.setMap(null);
-    });
-    markers.value = [];
-  }
+  console.log("Suppression des marqueurs... Nombre actuel :", markers.value.length);
+
+  markers.value.forEach(marker => {
+    marker.setMap(null); 
+  });
+
+  markers.value = []; // Réinitialiser le tableau pour éviter les références obsolètes
+  console.log("Marqueurs supprimés ! Nouveau total :", markers.value.length);
 };
+const refreshMap = () => {
+  if (!map.value) return;
+  const currentZoom = map.value.getZoom();
+  map.value.setZoom(currentZoom - 1); // Zoom arrière
+  setTimeout(() => {
+    map.value.setZoom(currentZoom); // Revenir au zoom initial
+  }, 200);
+};
+
+
+
 
 // Mettre à jour la carte avec les emplacements récupérés
 const updateMapWithLocations = () => {
+  console.log("Mise à jour de la carte...");
   if (!map.value) return;
 
-  // Supprimer les anciens marqueurs
-  deleteMarkers()
+  deleteMarkers(); 
+  refreshMap()
 
   const infoWindow = new google.maps.InfoWindow();
 
   locations.value.forEach(location => {
     try {
       const parsedLocation = typeof location === "string" ? JSON.parse(location) : location;
+      if (!parsedLocation?.lat || !parsedLocation?.lng) return;
 
-      if (parsedLocation.lat && parsedLocation.lng) {
-        const marker = new google.maps.Marker({
-          position: { lat: parsedLocation.lat, lng: parsedLocation.lng },
-          map: map.value,
-          title: parsedLocation.name || parsedLocation.text, // Nom du lieu
-        });
+      const marker = new google.maps.Marker({
+        position: { lat: parsedLocation.lat, lng: parsedLocation.lng },
+        map: map.value,
+        title: parsedLocation.text, 
+      });
+      const service = Services.value.find(service => {
+        if (!service.address) return false;
 
-        const filtered = Services.value.filter(service => service.categoryId === store.category).map(service => service.name)
-        console.log("filtered" , filtered)
-        // Ajouter une infoWindow au clic
-        marker.addListener("click", () => {
-          infoWindow.setContent(`
-            <div>
-              <strong>${parsedLocation.name || parsedLocation.text}</strong><br/>
-              ${parsedLocation.address ? `<small>${parsedLocation.address}</small>` : ""}
-            </div>
-          `);
-          infoWindow.open(map.value, marker);
-        });
+        try {
+          const serviceAddress = JSON.parse(service.address); 
+          return (
+            Math.abs(serviceAddress.lat - parsedLocation.lat) < 0.0001 && 
+            Math.abs(serviceAddress.lng - parsedLocation.lng) < 0.0001   
+          );
+        } catch (e) {
+          console.warn("Erreur de parsing JSON pour l'adresse du service :", service.address, e);
+          return false;
+        }
+      });
 
-        markers.value.push(marker);
-      }
+      marker.addListener("click", () => {
+        const addressText = service?.address ? (() => {
+          try {
+            return JSON.parse(service.address).text;
+          } catch {
+            return service.address;
+          }
+        })() : "Non spécifiée";
+
+        infoWindow.setContent(`
+          <div style="color: #000; font-size: 16px;">
+            <strong> ${service ? service.name : "Non spécifié"}</strong><br>
+             ${addressText}<br>
+            <a href="https://enjoy-em7y.onrender.com/hotelList" style="color: blue; text-decoration: underline; transition: text-decoration 0.2s ease-in-out;" class="custom-link"> Visitez nous  </a> 😃
+          </div>
+        `);
+        infoWindow.open(map.value, marker);
+      });
+
+      markers.value.push(marker);
     } catch (error) {
-      console.warn("Erreur de parsing JSON pour la localisation :", location, error);
+      console.error("Erreur de parsing JSON pour la localisation :", location, error);
     }
   });
+  console.log("Nouveaux marqueurs ajoutés :", markers.value.length);
+}; 
 
-  // Centrer la carte sur le premier emplacement valide
-  const firstValidLocation = locations.value.find(loc => loc.lat && loc.lng);
-  if (firstValidLocation) {
-    map.value.setCenter({ lat: firstValidLocation.lat, lng: firstValidLocation.lng });
-    map.value.setZoom(12);
-  }
-};
+
+
+
+
+
+
+
+
 const Services = ref([])
-// Récupérer les services depuis l'API en fonction de la catégorie
+
 const fetchService = async () => {
   try {
     const response = await getServices();
@@ -113,7 +148,7 @@ const fetchService = async () => {
         try {
           return typeof location === "string" ? JSON.parse(location) : location;
         } catch (error) {
-          console.warn("Erreur de parsing JSON pour la localisation :", location);
+          console.warn("Erreur de parsing JSON pour la localisation :", error);
           return null;
         }
       })
@@ -163,7 +198,7 @@ watch(() => store.category, (newCategory) => {
 
 
     <div v-show="mapsLoaded" class="">
-      <div ref="mapRef" class="w-screen h-[900px] lg:w-full   rounded-md border border-gray-300"></div>
+      <div ref="mapRef" class="w-screen md:w-[930px] h-[900px] lg:w-full   rounded-md border border-gray-300"></div>
       <p class="mt-1 text-sm text-gray-500">Cliquez sur la carte ou recherchez une adresse pour définir l'emplacement.</p>
     </div>
   </div>

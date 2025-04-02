@@ -45,7 +45,7 @@
         <div class="flex justify-between">
           <div class="text-gray-700 text-sm">
             <span>{{ $t('categories.' + textSearch) }}</span>
-            <h1 class="text-gray-950 font-bold text-xl"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} {{ $t('in') }} {{ city }} </h1>
+            <h1 class="text-gray-950 font-bold text-xl w-[500px] flex-wrap"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} {{ $t('in') }} {{ city }} </h1>
           </div>
           <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2 right-8 w-full md:w-auto">
             <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">
@@ -56,6 +56,7 @@
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
                 </svg>
               </button>
+              <svg width="16" height="16" class="icon_svg"><path d="M8 14.75A6.75 6.75 0 1 1 14.75 8 6.757 6.757 0 0 1 8 14.75Zm0-12A5.25 5.25 0 1 0 13.25 8 5.256 5.256 0 0 0 8 2.75Z"></path><path d="M8 11.605a.75.75 0 0 1-.75-.75v-3a.75.75 0 0 1 1.5 0v3a.75.75 0 0 1-.75.75ZM8 6.15a.998.998 0 0 1-.92-.62 1 1 0 0 1 1.63-1.09c.182.189.285.439.29.7a.996.996 0 0 1-.62.93 1 1 0 0 1-.38.08Z"></path></svg>
             </span>
             <ul v-if="showDropDown" class="absolute top-full left-0 bg-white border border-gray-300 shadow-lg rounded-lg max-h-40 overflow-y-auto z-50 mt-1 w-40">
               <li v-for="option in options" :key="option" @click="selectOption(option)" class="px-6 py-2 text-gray-700 hover:bg-gray-100 cursor-pointer">
