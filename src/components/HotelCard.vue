@@ -50,7 +50,7 @@ const handleViewDeal = () => {
   hotelStore.singleBooking();
   // hotelStore.setHotel(props.hotel)
   // hotelStore.setViewDeal(true)
-
+   hotelStore.getHotelId(props.hotel.id)
 }
 
 </script>

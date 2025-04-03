@@ -2,7 +2,7 @@
 import { ref, defineEmits } from "vue";
 import {
   CalendarIcon,
-  LockIcon,
+  // LockIcon,
   ArrowLeftFromLine,
 
 
@@ -17,24 +17,24 @@ const selectedRoom = ref("King bed stylish Apartment with Loft style family room
 const emit = defineEmits(['nextBook', 'next','back'])
 const { t } = useI18n();
 
-const nextBook = () => {
-  // console.log('step4', props.stepCompleted);
-  if (!props._stepCompleted) {
-    emit('next');
-    console.log('step4', props._stepCompleted);
+// const nextBook = () => {
+//   // console.log('step4', props.stepCompleted);
+//   if (!props._stepCompleted) {
+//     emit('next');
+//     console.log('step4', props._stepCompleted);
 
-  }
+//   }
 
-  if (!props.stepCompleted) {
-    emit('nextBook');
-    console.log('step3', props.stepCompleted);
+//   if (!props.stepCompleted) {
+//     emit('nextBook');
+//     console.log('step3', props.stepCompleted);
 
-    // return;
-  }
+//     // return;
+//   }
 
 
-  // emit('nextBook');
-};
+//   // emit('nextBook');
+// };
 
 const handleBackToStep = () =>{
   emit('back');
@@ -45,23 +45,23 @@ const priceDetails = ref([
   { label: t('appServices.hotel.cityTax'), price: 16.44 },
 ]);
 const totalPrice = ref(698.87);
-const props = defineProps({
-  stepCompleted: Boolean,
-  stepAllCompleted: Boolean
+// const props = defineProps({
+//   stepCompleted: Boolean,
+//   stepAllCompleted: Boolean
 
-});
+// });
 
 </script>
 
 <template>
 
   <div class="bg-white rounded-xl shadow-sm p-6">
-    <button @click="handleBackToStep" class="w-full">
+    <!-- <button @click="handleBackToStep" class="w-full">
       <div class="flex items-center justify-start border rounded-lg border-customBlue p-2 my-2 hover:bg-customBlue hover:text-white">
       <ArrowLeftFromLine size="15" class="bg-customBlue rounded-full w-10 h-10 p-2 text-white"/>
       <span class="mx-2"> Back to precedent step</span>
     </div>
-    </button>
+    </button> -->
 
 
     <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
@@ -108,7 +108,7 @@ const props = defineProps({
       </div>
     </div>
 
-    <button @click="nextBook"
+    <!-- <button @click="nextBook"
     v-if="!props.stepAllCompleted"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
 
@@ -125,7 +125,7 @@ const props = defineProps({
     v-if="props.stepAllCompleted"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
       {{$t('appServices.hotel.downloadInvoice')}}
-    </button>
+    </button> -->
     <div class="text-center text-xs text-gray-500 mt-4">
       {{$t('appServices.hotel.weRunOnEnjoyInc')}}
     </div>

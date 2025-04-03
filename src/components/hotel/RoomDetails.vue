@@ -9,21 +9,26 @@
         <!-- Content beside the image -->
         <div class="flex-1">
 
-          <div class="flex items-start justify-start space-x-3">
+          <div class="flex items-start justify-between space-x-3">
             <span class=" px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-md mb-2">
-              {{$t('appServices.hotel.bestChoice')}}            </span>
-            <WifiIcon size="18" class="text-gray-600" />
-            <DumbbellIcon size="18" class="text-gray-600" />
+              {{ $t('appServices.hotel.bestChoice') }}</span>
+            <div class="flex space-x-3 mt-1 ">
+              <WifiIcon v-if="amenitiesStatus.wifi" size="18" class="text-gray-600" />
+              <CoffeeIcon v-if="amenitiesStatus.breakfast" size="18" class="text-gray-600" />
+              <WavesLadderIcon v-if="amenitiesStatus.pool" size="18" class="text-gray-600" />
+              <DumbbellIcon v-if="amenitiesStatus.gym" size="18" class="text-gray-600" />
+            </div>
+
           </div>
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2">
-            King bed stylish Apartment with Loft style family room
+          <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
+            {{ hotelStore.this_hotel?.name || 'Nom indisponible' }}
           </h2>
           <div class="flex items-center space-x-2 mb-4 mt-2">
             <div class="flex">
               <StarIcon v-for="star in stars" :key="star" size="16" class="text-yellow-400 fill-yellow-400" />
             </div>
             <span class="font-medium text-gray-900">4.87</span>
-            <span class="text-gray-500">(262 {{$t('appServices.hotel.review')}}s )</span>
+            <span class="text-gray-500">(262 {{ $t('appServices.hotel.review') }}s )</span>
           </div>
 
           <!-- Icons section (beds, guests, etc.) - moved inside the flex container -->
@@ -32,7 +37,7 @@
               <BedDoubleIcon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">3</div>
-                <div class="text-xs text-gray-500">{{$t('appServices.hotel.beds')}} </div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.beds') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -52,21 +57,21 @@
               </svg>
               <div>
                 <div class="text-sm font-medium text-gray-900">12 m² </div>
-                <div class="text-xs text-gray-500">{{$t('appServices.hotel.area')}} </div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Users2Icon size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">6</div>
-                <div class="text-xs text-gray-500">{{$t('appServices.hotel.guests')}} </div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.guests') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Bath size="20" class="text-slate-600" />
               <div>
                 <div class="text-sm font-medium text-gray-900">1</div>
-                <div class="text-xs text-gray-500">{{$t('appServices.hotel.bathroom')}} </div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.bathroom') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
@@ -76,7 +81,7 @@
               </svg>
               <div>
                 <div class="text-sm font-medium text-gray-900">4</div>
-                <div class="text-xs text-gray-500">{{$t('appServices.hotel.floor')}} </div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.floor') }} </div>
               </div>
             </div>
           </div>
@@ -84,7 +89,7 @@
       </div>
     </div>
     <div class="px-6 py-2">
-      <h2 class="font-semibold text-lg -900 mb-4">{{$t('appServices.hotel.getStarted')}}  :</h2>
+      <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
       <div class="space-y-3 text-gray-600 text-sm">
         <p>Free cancellation until 11:59 PM on May 21, 2022</p>
         <p>
@@ -104,7 +109,7 @@
         </template>
 
         <button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
-          {{$t('read')}}  {{ expanded ? $t('less') : $t('more') }}
+          {{ $t('read') }} {{ expanded ? $t('less') : $t('more') }}
           <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
             :class="{ 'rotate-180': expanded }" />
         </button>
@@ -112,7 +117,7 @@
     </div>
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
-      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{$t('appServices.hotel.enterYourDetails')}}</h2>
+      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- First Name -->
         <div>
@@ -366,13 +371,27 @@
       </div>
     </div>
   </div>
+  <div class="flex justify-between items-center">
+    <button @click="handleBack"
+    class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
+    Precedent
+  </button>
+  <h1 class="w-full border border-top mt-4"></h1>
+  <button @click="handleNext"
+    class="w-full max-w-60 bg-customRed text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
+    {{ $t('appServices.hotel.requestToBook') }}
+  </button>
+  </div>
+
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import {
   DumbbellIcon,
   WifiIcon,
+  WavesLadderIcon,
+  CoffeeIcon,
   BedDoubleIcon,
   Users2Icon,
   Bath,
@@ -383,7 +402,21 @@ import {
   ChevronDownIcon,
   StarIcon,
 } from 'lucide-vue-next';
+import { useMIHStore } from '@/stores/manageHotelInterface';
+// import { useI18n } from 'vue-i18n';
+const hotelStore = useMIHStore();
+// const { t } = useI18n();
+const roomData = ref({
+  // Vos données de formulaire ici
+});
+const emit = defineEmits(['next','back']);
 
+const handleBack = () => {
+  emit('back'); 
+};
+const handleNext = () => {
+  emit('next', roomData.value); // Émet les données du formulaire
+};
 const expanded = ref(false);
 const selectedParkingType = ref(false);
 const selectedVehicle = ref('motorcycle');
@@ -406,6 +439,16 @@ const setSelectedVehicle = (vehicle) => {
   selectedVehicle.value = vehicle
 }
 const stars = ref([1, 2, 3, 4, 5]);
+
+const amenitiesStatus = computed(() => {
+  return {
+    wifi: hotelStore.this_hotel?.amenities?.includes('wifi') || false,
+    breakfast: hotelStore.this_hotel?.amenities?.includes('breakfast') || false,
+    pool: hotelStore.this_hotel?.amenities?.includes('pool') || false,
+    gym: hotelStore.this_hotel?.amenities?.includes('gym') || false
+  };
+});
+
 
 
 </script>

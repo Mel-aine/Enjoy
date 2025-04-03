@@ -1,7 +1,38 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import HotelCard from './HotelCard.vue'
 import { ArrowUpDownIcon } from 'lucide-vue-next'
+import { useMIHStore } from '@/stores/manageHotelInterface'
+
+const hotelStore = useMIHStore();
+watch(() => hotelStore.hotelId, async (newHotelId, oldHotelId) => {
+  if (newHotelId !== oldHotelId) {
+    console.log('hotelId a changé:', newHotelId);
+    // Ici, tu peux appeler une API, recharger des données, etc.
+    await fetchHotelDetails(newHotelId);
+  }
+});
+
+// Exemple de fonction pour récupérer les détails de l'hôtel
+const fetchHotelDetails = async (id) => {
+  if (!id) return;
+
+  try {
+    // Recherche de l'hôtel dans la liste des hôtels stockés
+    const hotel = hotels.value.find(h => h.id === id);
+
+    if (hotel) {
+      hotelStore.setHotel(hotel); // On passe l'hôtel trouvé à la fonction getHotel
+      console.log('Hôtel sélectionné:', hotel);
+    } else {
+      console.warn(`Aucun hôtel trouvé avec l'ID ${id}`);
+    }
+
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l’hôtel:', error);
+  }
+};
+
 
 // Mock data
 const hotels = ref([

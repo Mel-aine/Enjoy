@@ -76,6 +76,10 @@
         </div>
       </div>
     </div>
+    <button @click="handleBack"
+      class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
+      Precedent
+    </button>
     
 </template>
 <script setup>
@@ -96,4 +100,9 @@ const parkingDetails = ref({
   place: 'Place C-124 on 1st Floor',
   qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=example'
 })
+const emit = defineEmits(['back']);
+
+const handleBack = () => {
+  emit('back');
+};
 </script>
