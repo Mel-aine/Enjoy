@@ -9,9 +9,14 @@ export const useMIHStore = defineStore('MIH', {
     isListed: true,
     isSingleBooking: false,
     isPaymentStepBooking: false,
-    isConfirmedBooking: false
+    isConfirmedBooking: false,
+    arrivalDate: null,
+    departureDate: null,
+    persons: null,
+    places: null,
 
   }),
+
   actions: {
   
   singleBooking () {
@@ -39,6 +44,11 @@ export const useMIHStore = defineStore('MIH', {
   },
   setHotel(hotel) {
     this.this_hotel = { ...hotel }; 
+  },
+  setOthersData (arrivalDate, departureDate, persons) {
+    this.arrivalDate = arrivalDate;
+    this.departureDate = departureDate;
+    this.persons = persons;
   }
 }
 //   ,

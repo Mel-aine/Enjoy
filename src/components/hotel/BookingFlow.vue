@@ -35,23 +35,23 @@ const handleBackStep = () => {
 };
 
 const goToStep3 = (roomData) => {
-  // nextstep.value = true; // Set to null, not undefined.  Boolean values are best
+  // nextstep.value = true;
   if (roomData) {
-    updateForm(roomData, 'room'); // Met à jour les données de l'étape 2
+    updateForm(roomData, 'room'); 
   }
   step2Active.value = false;
   step2Completed.value = true;
   step3Completed.value = false;
   step3Active.value = true;
   step4Active.value = false;
-  step.value = 2; // Assurez-vous que le step est mis à jour
+  step.value = 2; 
 
 
 };
 
 const goToStep4 = (paymentData) => {
   if (paymentData) {
-    updateForm(paymentData, 'payment'); // Met à jour les données de l'étape 3
+    updateForm(paymentData, 'payment'); 
   }
   console.log('gostep3', step3Active.value);
   step3Completed.value = true;
@@ -70,8 +70,7 @@ const goToStep4 = (paymentData) => {
 
 const formData = ref({
   roomDetails: null,
-  paymentDetails: null,
-  confirmationDetails: null
+  paymentDetails: null
 });
 
 const updateForm = (data, stepName) => {
@@ -96,7 +95,7 @@ const handleSubmitForm = () => {
   <div class="flex flex-col lg:flex-row gap-8">
     <div class="flex-1">
       <ProgressSteps :steps="[t('appServices.hotel.datesRooms'), t('appServices.hotel.extras'), t('appServices.hotel.payment'), t('appServices.hotel.confirmation')]" :currentStep="step" />
-      <RoomDetails v-if="step2Active && !step3Active && !step4Active" @next="goToStep3" @back="handleBackStep"/>
+      <RoomDetails v-if="step2Active && !step3Active && !step4Active" :roomData="formData.roomDetails" @next="goToStep3" @back="handleBackStep"/>
       <BookingPayement v-if="step3Active && !step3Completed && !step4Active" @next="goToStep4" @back="handleBackStep"/>
       <BookingConfirm v-if="step4Active" :bookingData="formData" @back="handleBackStep"/>
     </div>

@@ -78,7 +78,11 @@
     </div>
     <button @click="handleBack"
       class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
-      Precedent
+      Previous
+    </button>
+    <button @click="handleNext"
+      class="w-full max-w-60 bg-customRed text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
+      {{ $t('appServices.hotel.requestToBook') }}
     </button>
     
 </template>

@@ -277,6 +277,7 @@ import { French, English } from "flatpickr/dist/l10n/fr.js";
 import Counter from "@/components/counter/Counter.vue";
 import BaseIcon from '@/components/icons/BaseIcon.vue';
 import { truncateText } from '@/utils/functions.js';
+import { useMIHStore } from '@/stores/manageHotelInterface';
 
 // import DropDown from '../dropDown/DropDown.vue';
 import { useI18n } from "vue-i18n";
@@ -284,6 +285,7 @@ import { useI18n } from "vue-i18n";
 import "vue-skeletor/dist/vue-skeletor.css";
 import { Skeletor } from "vue-skeletor";
 
+const hotelStore = useMIHStore();
 // Utilisation de useI18n pour accéder aux traductions
 const langChange = ref(false);
 const isDropdownVisible = ref(false);
@@ -483,6 +485,10 @@ const isSmallScreen = ref(window.innerWidth < 1024);
 const updateScreenSize = () => {
     isSmallScreen.value = window.innerWidth < 1024;
 };
+
+// hotelStore.arrivalDate = formattedDateAller.value;
+// hotelStore.departureDate = formattedDateRetour.value;
+// hotelStore.persons = totalPersons.value;
 
 
 onMounted(() => {

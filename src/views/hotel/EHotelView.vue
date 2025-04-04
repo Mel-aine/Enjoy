@@ -7,8 +7,10 @@ import MapView from '@/components/services/MapView.vue'
 import SearchHotel from '@/components/search/SearchHotel.vue'
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import BookingFlow from '@/components/hotel/BookingFlow.vue'
+import { useRouter } from 'vue-router';
 
 
+const router = useRouter();
 
 const hotelStore = useMIHStore();
 
@@ -38,13 +40,17 @@ const handleFilterChange = (filters) => {
   activeFilters.value = filters
 }
 
+const handleSearch = () =>{
+  router.push('/hotelList'); // Redirige vers la route /bookingHotel
+
+}
 const handleSortChange = (option) => {
   sortOption.value = option
 }
 </script>
 
 <template>
-    <div class="mt-20"><SearchHotel/></div>
+    <div class="mt-20"><SearchHotel @search="handleSearch"/></div>
 
 
   <div class="min-h-screen bg-gray-50">
