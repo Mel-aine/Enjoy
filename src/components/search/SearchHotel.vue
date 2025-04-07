@@ -200,12 +200,12 @@
                 <div
                     class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
                     <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                    <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateAller"
+                    <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateArrival"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateAller"
                         class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                        <span class="text-black font-medium">{{ formattedDateAller }}</span></label>
+                        <span class="text-black font-medium">{{ formattedDateArrival }}</span></label>
                     <label for="dateAller"
                         class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                         <span class="text-black ">{{ $t("appServices.hotel.arrival") }}</span></label>
@@ -216,12 +216,12 @@
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
                     <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateRetour"
+                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateRetour"
                         class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                        <span class="text-black font-medium">{{ formattedDateRetour }}</span></label>
+                        <span class="text-black font-medium">{{ formattedDateDeparture }}</span></label>
                     <label for="deteRetour"
                         class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                         <span class="text-black">{{ $t("appServices.hotel.departure") }}</span></label>
@@ -277,7 +277,7 @@ import { French, English } from "flatpickr/dist/l10n/fr.js";
 import Counter from "@/components/counter/Counter.vue";
 import BaseIcon from '@/components/icons/BaseIcon.vue';
 import { truncateText } from '@/utils/functions.js';
-import { useMIHStore } from '@/stores/manageHotelInterface';
+// import { useMIHStore } from '@/stores/manageHotelInterface';
 
 // import DropDown from '../dropDown/DropDown.vue';
 import { useI18n } from "vue-i18n";
@@ -285,7 +285,7 @@ import { useI18n } from "vue-i18n";
 import "vue-skeletor/dist/vue-skeletor.css";
 import { Skeletor } from "vue-skeletor";
 
-const hotelStore = useMIHStore();
+// const hotelStore = useMIHStore();
 // Utilisation de useI18n pour accéder aux traductions
 const langChange = ref(false);
 const isDropdownVisible = ref(false);
@@ -302,8 +302,8 @@ const addRoomDisabled = ref(false);
 
 const datepickerAller = ref(null);
 const datepickerRetour = ref(null);
-const formattedDateAller = ref("");
-const formattedDateRetour = ref("");
+const formattedDateArrival = ref("");
+const formattedDateDeparture = ref("");
 
 const currentLanguage = ref("en");
 const dropdown = ref(null);
@@ -395,7 +395,7 @@ const totalPersons = computed(() => {
 });
 
 const handleSearch = () => {
-emit('search', { destination: destination.value, dateAller: formattedDateAller.value, dateRetour: formattedDateRetour.value, rooms: rooms.value });
+emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
 };
 
 const formatDate = (date) => {
@@ -428,21 +428,21 @@ const langChanged = (lang) => {
         minDate: "today",
         onChange: (selectedDates) => {
             if (selectedDates.length > 0) {
-                formattedDateAller.value = _formatDate(selectedDates[0]);
-                datepickerAller.value.value = formattedDateAller.value; // Mettre à jour l'input
+                formattedDateArrival.value = _formatDate(selectedDates[0]);
+                datepickerAller.value.value = formattedDateArrival.value; // Mettre à jour l'input
             }
             if (selectedDates.length > 1) {
-                formattedDateRetour.value = _formatDate(selectedDates[1]);
-                datepickerRetour.value.value = formattedDateRetour.value; // Mettre à jour l'input retour
+                formattedDateDeparture.value = _formatDate(selectedDates[1]);
+                datepickerRetour.value.value = formattedDateDeparture.value; // Mettre à jour l'input retour
             }
         },
     });
 
     const today = new Date();
-    formattedDateAller.value = formatDate(today);
-    formattedDateRetour.value = formatDate(today);
+    formattedDateArrival.value = formatDate(today);
+    formattedDateDeparture.value = formatDate(today);
 
-    console.log("formattedDateAller.value", formattedDateAller.value);
+    console.log("formattedDateArrival.value", formattedDateArrival.value);
 };
 
 // window.onload = function() {
@@ -450,12 +450,17 @@ const langChanged = (lang) => {
 //   };
 
 onMounted(() => {
+    langChanged("en"); // Initialiser avec le français au premier chargement
     isOpen.value = false;
     isLoading.value = true;
     setTimeout(() => {
         isLoading.value = false;
     }, 5000);
-    langChanged("en"); // Initialiser avec le français au premier chargement
+    if (dataStore.searchFrom) {
+        formattedDateArrival.value = dataStore.searchFrom.dateAller;
+        formattedDateDeparture.value = dataStore.searchFrom.dateRetour;
+        rooms.value = dataStore.searchFrom.rooms;
+    }
 });
 
 const checkScrollButtonsVisibility = () => {
@@ -486,8 +491,8 @@ const updateScreenSize = () => {
     isSmallScreen.value = window.innerWidth < 1024;
 };
 
-// hotelStore.arrivalDate = formattedDateAller.value;
-// hotelStore.departureDate = formattedDateRetour.value;
+// hotelStore.arrivalDate = formattedDateArrival.value;
+// hotelStore.departureDate = formattedDateDeparture.value;
 // hotelStore.persons = totalPersons.value;
 
 

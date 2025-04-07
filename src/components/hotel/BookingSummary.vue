@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import {
   CalendarIcon,
   // LockIcon,
@@ -8,11 +8,13 @@ import {
 
 } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
-import { useMIHStore } from '@/stores/manageHotelInterface';
+// import { useMIHStore } from '@/stores/manageHotelInterface';
+import {useDataStore} from '@/stores/dataStore';
+import {useMIHStore} from '@/stores/manageHotelInterface';
 const hotelStore = useMIHStore();
-
-const checkInDate = ref(hotelStore.arrivalDate);
-const checkOutDate = ref(hotelStore.departureDate); 
+const dataStore = useDataStore();
+const checkInDate = ref(dataStore.searchFrom.dateAller);
+const checkOutDate = ref(dataStore.searchFrom.dateRetour); 
 
 const totalDays = () => {
   const checkIn = new Date(checkInDate.value);
@@ -53,16 +55,13 @@ const { t } = useI18n();
 //   emit('back');
 // }
 const priceDetails = ref([
-  { label: t('appServices.hotel.RoomsAndOffer:') , price: 625.93 },
-  { label: t('appServices.hotel.8%VAT'), price: 50.03 },
-  { label: t('appServices.hotel.cityTax'), price: 16.44 },
+  { label: t('appServices.hotel.RoomsAndOffer') , price: hotelStore?.this_hotel?.price ?? 0, },
+  { label: t('appServices.hotel.8%VAT'), price: 2050 },
+  { label: t('appServices.hotel.cityTax'), price: 1600 },
 ]);
-const totalPrice = ref(698.87);
-// const props = defineProps({
-//   stepCompleted: Boolean,
-//   stepAllCompleted: Boolean
-
-// });
+const totalPrice = computed(() =>
+  priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)
+);
 
 </script>
 
@@ -74,12 +73,12 @@ const totalPrice = ref(698.87);
       <div>
         <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
         <div class="font-medium">{{ checkInDate }}</div>
-        <div class="text-sm text-gray-600">from 16:00</div>
+        <!-- <div class="text-sm text-gray-600">from 16:00</div> -->
       </div>
       <div class="text-right">
         <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkOut')}}</div>
         <div class="font-medium">{{ checkOutDate }}</div>
-        <div class="text-sm text-gray-600">by 11:00</div>
+        <!-- <div class="text-sm text-gray-600">by 11:00</div> -->
       </div>
     </div>
 
@@ -93,9 +92,9 @@ const totalPrice = ref(698.87);
     </div>
 
     <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.youSelected')}}:</div>
+      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.youSelected')}}</div>
       <div class="font-medium">{{ selectedRoom }}</div>
-      <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button>
+      <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
     </div>
 
     <div class="py-4">
@@ -103,34 +102,20 @@ const totalPrice = ref(698.87);
       <div class="space-y-2">
         <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
           <span>{{ item.label }}</span>
-          <span>${{ item.price.toFixed(2) }}</span>
+          <span>FCFA {{ item.price.toFixed(2) }}</span>
         </div>
         <div class="flex justify-between font-medium text-customRed pt-2 border-t">
           <span>      {{$t('appServices.hotel.total')}} {{$t('appServices.hotel.price')}}
           </span>
-          <span>${{ totalPrice.toFixed(2) }}</span>
+          <span>FCFA <span class="text-xl font-bold">{{ totalPrice.toFixed(2) }} </span> </span>
         </div>
       </div>
     </div>
-
-    <!-- <button @click="nextBook"
-    v-if="!props.stepAllCompleted"
-      class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
-
-      <div :class="props.stepAllCompleted ? 'hidden' : ''">
-        <span v-if="!props.stepCompleted">{{$t('appServices.hotel.requestToBook')}}</span>
-        <div v-if="props.stepCompleted" class="flex items-center justify-center">
-          <LockIcon size="16" />
-          <span class="ml-2">{{$t('appServices.hotel.paySecurely')}} $788.87</span>
-        </div>
-      </div>
-      <div v-if="props.stepAllCompleted">{{$t('appServices.hotel.downloadInvoice')}}</div>
-    </button>
+    
     <button @click="nextBook"
-    v-if="props.stepAllCompleted"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
       {{$t('appServices.hotel.downloadInvoice')}}
-    </button> -->
+    </button>
     <div class="text-center text-xs text-gray-500 mt-4">
       {{$t('appServices.hotel.weRunOnEnjoyInc')}}
     </div>

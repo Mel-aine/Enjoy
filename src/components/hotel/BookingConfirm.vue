@@ -29,12 +29,12 @@
         <div>
           <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
           <div class="font-medium">{{ checkIn.date }}</div>
-          <div class="text-sm text-gray-500">{{ checkIn.time }}</div>
+          <!-- <div class="text-sm text-gray-500">{{ checkIn.time }}</div> -->
         </div>
         <div>
           <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.checkOut')}}</div>
           <div class="font-medium">{{ checkOut.date }}</div>
-          <div class="text-sm text-gray-500">{{ checkOut.time }}</div>
+          <!-- <div class="text-sm text-gray-500">{{ checkOut.time }}</div> -->
         </div>
         <div>
           <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.yourReservation')}}</div>
@@ -70,43 +70,59 @@
           <div class="text-sm text-gray-500 mb-1">{{$t('appServices.hotel.carPark')}}</div>
           <div class="font-medium mb-1">{{ parkingDetails.type }}</div>
           <div class="text-sm text-gray-600 mb-4">{{ parkingDetails.place }}</div>
-          <button class="inline-flex items-center px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
+          <!-- <button class="inline-flex items-center px-4 py-2 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
             {{$t('appServices.hotel.downloadParkingTicket')}}
-          </button>
+          </button> -->
         </div>
       </div>
     </div>
-    <button @click="handleBack"
-      class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
-      Previous
-    </button>
-    <button @click="handleNext"
-      class="w-full max-w-60 bg-customRed text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
-      {{ $t('appServices.hotel.requestToBook') }}
-    </button>
+    <div class="flex justify-end">
+  <button class="inline-flex px-4 py-2 mt-4 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
+    {{$t('appServices.hotel.downloadParkingTicket')}}
+  </button>
+</div>
     
 </template>
 <script setup>
 import { ref, } from 'vue';
 import { CheckIcon } from 'lucide-vue-next';
+import {useDataStore} from '@/stores/dataStore';
 
+
+const dataStore = useDataStore();
+// import {dataStore} from '@/stores/dataStore.js'
 // data confirm booking
-
-const guestName = ref('Maciej Kuropatwa')
-const checkIn = ref({ date: 'Sun, 22 May 2022', time: 'from 16:00' })
-const checkOut = ref({ date: 'Wed, 25 May 2022', time: 'by 11:00' })
+const props = defineProps({
+  // searchFrom: {
+  //   Object,
+  //   required: false,
+  //   default: () => ({})
+  // },
+  bookingData: {
+    Object,
+    required: false,
+    default: () => ({})
+  }
+});
+const guestName = ref(props.bookingData?.roomDetails?.guestInfo?.firstName || 'Maciej Kuropatwa');
+const checkIn = ref({ date: dataStore.searchFrom.dateAller, time: 'from 16:00' })
+const checkOut = ref({ date: dataStore.searchFrom.dateRetour, time: 'by 11:00' })
 const reservation = ref('3 Nights, 1 Apartment')
-const phone = ref('+48 567 890 123')
-const email = ref('kuropatwamaciej@gmail.com')
+const phone = ref(
+  props.bookingData?.roomDetails?.guestInfo?.phone?.countryCode && props.bookingData?.roomDetails?.guestInfo?.phone?.number
+    ? `${props.bookingData.roomDetails.guestInfo.phone.countryCode} ${props.bookingData.roomDetails.guestInfo.phone.number}`
+    : '+48 567 890 123'
+);
+const email = ref(props.bookingData?.roomDetails?.guestInfo?.email || 'kuropatwamaciej@gmail.com')
 const bookingNumber = ref('#54237982')
 const parkingDetails = ref({
   type: 'Car, 3 nights',
   place: 'Place C-124 on 1st Floor',
   qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=example'
 })
-const emit = defineEmits(['back']);
+// const emit = defineEmits(['back']);
 
-const handleBack = () => {
-  emit('back');
-};
+// const handleBack = () => {
+//   emit('back');
+// };
 </script>

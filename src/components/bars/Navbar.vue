@@ -392,8 +392,9 @@ const checkScrollButtonsVisibility = () => {
 };
 
 
-const handleSearchWithComponent = () => {
+const handleSearchWithComponent = (searchFromNavbar) => {
   if (rightValue.value == null) return;
+  dataStore.searchFrom = {... searchFromNavbar}
   router.push('/hotelList'); // Redirige vers la route /bookingHotel
 };
 
@@ -690,13 +691,11 @@ async function searchNearbyPlaces(map, categories) {
         }
       });
     });
-
     allResults = allResults.concat(results);
   }
 
   const uniqueResults = removeDuplicates(allResults);
   clearMarkers(); // Supprime les anciens marqueurs
-
   uniqueResults.forEach((place) => {
     // Création de l'icône FontAwesome pour le marqueur
     const icon = document.createElement("div");

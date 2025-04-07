@@ -310,7 +310,7 @@
                   <path d="M12 14l5 5" />
                 </svg>
                 <div>Motorcycle</div>
-                <div class="text-gray-500">$20/night</div>
+                <div class="text-gray-500">FCFA 20000/night</div>
               </button>
 
               <!-- Car -->
@@ -322,7 +322,7 @@
               ]" @click="setSelectedVehicle('car')">
                 <CarFrontIcon class="mb-1" size="30" />
                 <div>Car</div>
-                <div class="text-gray-500">$30/night</div>
+                <div class="text-gray-500">FCFA 30000/night</div>
               </button>
 
               <!-- Bus -->
@@ -334,7 +334,7 @@
               ]" @click="setSelectedVehicle('bus')">
                 <BusFrontIcon class="mb-1" size="30" />
                 <div>Bus</div>
-                <div class="text-gray-500">$50/night</div>
+                <div class="text-gray-500">FCFA 50000/night</div>
               </button>
             </div>
           </div>
@@ -443,7 +443,7 @@
       class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
       Previous
     </button>
-    <h1 class="w-full border border-top mt-4"></h1>
+    <h1 class="w-full border border-top mx-4 mt-4"></h1>
     <button @click="handleNext"
       class="w-full max-w-60 bg-customRed text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
       {{ $t('appServices.hotel.requestToBook') }}
@@ -645,13 +645,13 @@ const getOptionPrice = (option) => {
   switch(option) {
     case 'carPark':
       switch(selectedVehicle.value) {
-        case 'motorcycle': return 20;
-        case 'car': return 30;
-        case 'bus': return 50;
-        default: return 20;
+        case 'motorcycle': return 20000;
+        case 'car': return 30000;
+        case 'bus': return 50000;
+        default: return 20000;
       }
-    case 'wine': return 50;
-    case 'pet': return 50;
+    case 'wine': return 50000;
+    case 'pet': return 50000;
     default: return 0;
   }
 };
