@@ -41,7 +41,7 @@ const formData = ref({
   phone_number: '',
   email: '',
   website: '',
-  opening_days: [],
+  openings: {},
   price_range: '',
   facilities: [],
   policies: '',
@@ -94,8 +94,9 @@ const validateStep = () => {
       }
       break;
     case 4:
-      if (!formData.value.opening_days.length) {
+      if (!formData.value.openings || Object.keys(formData.value.openings).length === 0) {
         isVisible.value = true;
+        console.log('formData.value.openings', formData.value.openings);
         infoAlert.value =' Veuillez sélectionner les jours d\'ouverture.';
         return false;
       }

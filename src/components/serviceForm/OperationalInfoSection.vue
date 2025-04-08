@@ -33,6 +33,7 @@ const handleDaySelection = (event) => {
 const selectAllDays = () => {
   const allDays = Object.fromEntries(daysOfWeek.map(day => [day, { opening: '09:00', closing: '18:00' }]));
   emit('updateFormData', { openings: allDays });
+  console.log('All days selected:', allDays);
 };
 
 // Sélectionner uniquement les jours de semaine

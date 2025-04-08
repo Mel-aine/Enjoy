@@ -1,9 +1,9 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import HotelCard from './HotelCard.vue'
 import { ArrowUpDownIcon } from 'lucide-vue-next'
 import { useMIHStore } from '@/stores/manageHotelInterface'
-
+import { getServices } from '@/services/api.js'
 const hotelStore = useMIHStore();
 watch(() => hotelStore.hotelId, async (newHotelId, oldHotelId) => {
   if (newHotelId !== oldHotelId) {
@@ -126,6 +126,16 @@ const sortedHotels = computed(() => {
     }
   })
 })
+
+onMounted(async () => {
+  try {
+    const services = await getServices();
+    console.log('Services récupérés :', services);
+  } catch (error) {
+    console.log('error', error);
+    // Affiche une alerte ou un message à l’utilisateur si besoin
+  }
+});
 </script>
 
 <template>

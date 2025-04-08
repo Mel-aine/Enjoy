@@ -260,29 +260,29 @@
     <div class="bg-white rounded-xl p-6 shadow-sm">
       <h2 class="font-semibold text-lg text-gray-900 mb-4">Add to your stay</h2>
       <!-- Car Park Section -->
-      <div class="border-b" :class="selectedOption === 'carPark' ? 'pb-6 mb-6' : ''">
+      <div class="border-b" :class="selectedOptions.carPark ? 'pb-6 mb-6' : ''">
         <div class="flex items-start justify-between mb-4">
           <div class="flex items-center space-x-3">
-            <input type="checkbox" class="w-4 h-4 rounded border-customRed" :checked="selectedOption === 'carPark'"
+            <input type="checkbox" class="w-4 h-4 rounded border-customRed" :checked="selectedOptions.carPark"
               @click="toggleOption('carPark')" />
             <div>
               <div class="font-medium flex items-start justify-start">
                 <span> Car park </span>
                 <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOption === 'carPark' }" />
+                  :class="{ 'rotate-180': selectedOptions.carPark }" />
               </div>
               <div class="text-sm text-gray-500">The choice of families</div>
             </div>
           </div>
           <div class="text-right">
             <div class="font-medium">
-              $20 <span class="text-sm text-gray-500">/night</span>
+              FCFA 20000 <span class="text-sm text-gray-500">/night</span>
             </div>
           </div>
         </div>
 
         <!-- Vehicle Type Selection - Only shown when carPark is selected -->
-        <div class="space-y-4" v-if="selectedOption === 'carPark'">
+        <div class="space-y-4" v-if="selectedOptions.carPark">
           <div>
             <div class="text-sm font-medium text-gray-700 mb-2">VEHICLE TYPE</div>
             <div class="grid grid-cols-3 gap-3">
@@ -370,16 +370,16 @@
       </div>
 
       <!-- Bottle of Wine Section -->
-      <div class="border-b" :class="selectedOption === 'wine' ? 'pb-6 mb-6' : ''">
+      <div class="border-b" :class="selectedOptions.wine ? 'pb-6 mb-6' : ''">
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3 mt-2">
-            <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOption === 'wine'"
+            <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOptions.wine"
               @click="toggleOption('wine')" />
             <div>
               <div class="font-medium flex items-start justify-start">
                 <span>Bottle of wine</span>
                 <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOption === 'wine' }" />
+                  :class="{ 'rotate-180': selectedOptions.wine }" />
               </div>
               <div class="text-sm text-gray-500">
                 Ventisquero Reserva Chardonnay/Valle de Casablanca Aconcagua
@@ -389,14 +389,14 @@
           <div class="text-right">
             <div class="text-right mt-2">
               <div class="font-medium">
-                $50 <span class="text-sm text-gray-500">/piece</span>
+                FCFA 50000 <span class="text-sm text-gray-500">/piece</span>
               </div>
             </div>
           </div>
         </div>
 
         <!-- Additional wine info - Only shown when wine is selected -->
-        <div v-if="selectedOption === 'wine'" class="mt-4">
+        <div v-if="selectedOptions.wine" class="mt-4">
           <p class="text-sm text-gray-600">
             This premium Chardonnay comes from the Casablanca Valley and pairs perfectly with seafood and poultry.
           </p>
@@ -404,16 +404,16 @@
       </div>
 
       <!-- Stay of a Pet Section -->
-      <div :class="selectedOption === 'pet' ? 'pb-6' : ''">
+      <div :class="selectedOptions.pet  ? 'pb-6' : ''">
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3 mt-2">
-            <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOption === 'pet'"
+            <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOptions.pet"
               @click="toggleOption('pet')" />
             <div>
               <div class="font-medium flex items-start justify-start">
                 <span>Stay of a pet</span>
                 <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOption === 'pet' }" />
+                  :class="{ 'rotate-180': selectedOptions.pet }" />
               </div>
               <div class="text-sm text-gray-500">
                 Traveling with pets can seem like a daunting task
@@ -423,7 +423,7 @@
           <div class="text-right">
             <div class="text-right mt-2">
               <div class="font-medium">
-                $50 <span class="text-sm text-gray-500">/night</span>
+                FCFA 50000 <span class="text-sm text-gray-500">/night</span>
               </div>
             </div>
           </div>
@@ -516,7 +516,11 @@ const emit = defineEmits(['next','back']);
 
 
 // Options supplémentaires
-const selectedOption = ref(null);
+const selectedOptions = ref({
+  carPark: false,
+  wine: false,
+  pet: false,
+});
 const selectedVehicle = ref('motorcycle');
 const selectedParkingType = ref('default');
 const expanded = ref(false);
@@ -534,11 +538,7 @@ const amenitiesStatus = computed(() => {
 });
 
 const toggleOption = (option) => {
-  if (selectedOption.value === option) {
-    selectedOption.value = null;
-  } else {
-    selectedOption.value = option;
-  }
+  selectedOptions.value[option] = !selectedOptions.value[option];
 };
 
 const setSelectedVehicle = (vehicle) => {
@@ -610,20 +610,21 @@ const handleNext = () => {
     
     // Options supplémentaires sélectionnées
     additionalOptions: {
-      carPark: selectedOption.value === 'carPark' ? {
+      carPark: selectedOptions.value === 'carPark' ? {
         vehicleType: selectedVehicle.value,
         parkingType: selectedParkingType.value,
         price: getOptionPrice('carPark')
       } : null,
       
-      wine: selectedOption.value === 'wine' ? {
+      wine: selectedOptions.value === 'wine' ? {
         price: getOptionPrice('wine')
       } : null,
       
-      pet: selectedOption.value === 'pet' ? {
+      pet: selectedOptions.value === 'pet' ? {
         price: getOptionPrice('pet')
       } : null
     },
+    
     
     // Détails de la réservation
     bookingDetails: {
@@ -637,22 +638,30 @@ const handleNext = () => {
     }
   };
 
+hotelStore.this_hotel.price = hotelStore.this_hotel.price + getOptionPrice('carPark') + getOptionPrice('wine') + getOptionPrice('pet');
+console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
+console.log('gets', getOptionPrice('carPark'), getOptionPrice('wine'), getOptionPrice('pet'));
+console.log('selectedOption:', selectedOptions.value);
   emit('next', roomData);
 };
 
 // Helper function to get option prices
 const getOptionPrice = (option) => {
-  switch(option) {
-    case 'carPark':
-      switch(selectedVehicle.value) {
-        case 'motorcycle': return 20000;
-        case 'car': return 30000;
-        case 'bus': return 50000;
-        default: return 20000;
-      }
-    case 'wine': return 50000;
-    case 'pet': return 50000;
-    default: return 0;
+  if (!selectedOptions.value[option]) return 0;
+
+  if (option === 'carPark') {
+    switch (selectedVehicle.value) {
+      case 'motorcycle': return 20000;
+      case 'car': return 30000;
+      case 'bus': return 50000;
+      default: return 0;
+    }
   }
+
+  if (option === 'wine' || option === 'pet') {
+    return 50000;
+  }
+
+  return 0;
 };
 </script>

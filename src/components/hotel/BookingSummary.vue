@@ -54,10 +54,19 @@ const { t } = useI18n();
 // const handleBackToStep = () =>{
 //   emit('back');
 // }
-const priceDetails = ref([
-  { label: t('appServices.hotel.RoomsAndOffer') , price: hotelStore?.this_hotel?.price ?? 0, },
-  { label: t('appServices.hotel.8%VAT'), price: 2050 },
-  { label: t('appServices.hotel.cityTax'), price: 1600 },
+const priceDetails = computed(() => [
+  {
+    label: t('appServices.hotel.RoomsAndOffer'),
+    price: Number(hotelStore?.this_hotel?.price) || 0,
+  },
+  {
+    label: t('appServices.hotel.8%VAT'),
+    price: 2050,
+  },
+  {
+    label: t('appServices.hotel.cityTax'),
+    price: 1600,
+  },
 ]);
 const totalPrice = computed(() =>
   priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)

@@ -114,8 +114,7 @@
                 <div class="bg-transparent mt-1 rounded-lg cursor-pointer" @click="toggleDropdown">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-80">
-                        <i
-                            class="fas fa-location-dot absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
+                            <MapPinIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
                         <input type="text" id="destination" v-model="destination"
                             class="cursor-pointer opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
@@ -199,7 +198,7 @@
             <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer">
                 <div
                     class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
-                    <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
+                    <CalendarRangeIcon size="22" class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
                     <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateArrival"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
@@ -215,8 +214,7 @@
             <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-pointer">
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
-                    <i class="fas fa-calendar-alt hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
-                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
+                    <CalendarRangeIcon size="22" class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateRetour"
@@ -232,7 +230,7 @@
                 <label for="toggle-passager">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-72">
-                        <i class="fas fa-users absolute left-3 top-1/2 transform -translate-y-1/2 text-black"></i>
+                        <UsersIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
                         <input type="text" id="travelers" name="travelers" v-model="nothing"
                             class="opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
@@ -278,7 +276,11 @@ import Counter from "@/components/counter/Counter.vue";
 import BaseIcon from '@/components/icons/BaseIcon.vue';
 import { truncateText } from '@/utils/functions.js';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
-
+import {
+  UsersIcon,
+  CalendarRangeIcon,
+  MapPinIcon
+} from 'lucide-vue-next';
 // import DropDown from '../dropDown/DropDown.vue';
 import { useI18n } from "vue-i18n";
 

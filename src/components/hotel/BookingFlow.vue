@@ -100,8 +100,10 @@ const handleSubmitForm = () => {
       <BookingConfirm v-if="step4Active" :bookingData="formData" @back="handleBackStep"/>
     </div>
     <div class="lg:w-96">
-      <BookingSummary/>
-    </div>
+  <div class="lg:sticky lg:top-6">
+    <BookingSummary/>
+  </div>
+</div>
   </div>
 </template>
 
