@@ -26,7 +26,8 @@ const searchParams = ref({
 const activeFilters = ref({
   priceRange: [20000, 40000],
   starRating: [],
-  amenities: []
+  amenities: [],
+  propertyTypes: []
 })
 const hotels = [
   {
@@ -128,7 +129,10 @@ const handleSortChange = (option) => {
             </div>
           </div>
         </router-link>
+        <div class="sticky top-4"> 
           <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
+
+        </div>
         </div>
 
         <!-- Hotel List -->

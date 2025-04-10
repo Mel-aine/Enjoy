@@ -10,6 +10,7 @@ export const useMIHStore = defineStore('MIH', {
     isSingleBooking: false,
     isPaymentStepBooking: false,
     isConfirmedBooking: false,
+    searchFrom: null,
 
 
   }),

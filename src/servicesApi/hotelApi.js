@@ -23,7 +23,14 @@ export const updateService = (id, serviceData) => {
 export const deleteService = (id) => {
   return axios.delete(`${API_URL}/services/${id}`)
 }
+
+export const getServicesCategoryIdBy = (id) => {
+  return axios.get(`${API_URL}/servicesByCategory/${id}`)
+}
 //Services Service Api end
+
+
+
 
 
 //Categories Service Api start

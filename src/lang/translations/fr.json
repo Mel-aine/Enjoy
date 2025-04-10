@@ -375,9 +375,26 @@
       "carDetails": "Voiture, 3 nuits",
       "parkingPlace": "Place C-124 au 1er étage",
       "downloadParkingTicket": "Télécharger le ticket de parking",
-      "parkingInfo1": "délivré par la machine d'entrée du parking.. "
-
-
+      "parkingInfo1": "délivré par la machine d'entrée du parking.. ",
+      "propertyType": "Type de logement",
+      "apartment": "Appartement",
+      "suite": "ggg",
+      "duplex": "Duplex",
+      "budget": "Économique",
+      "standard": "Standard",
+      "premium": "Premium",
+      "luxury": "Luxe",
+      "parking": "Parking",
+      "accessiblePmr": "Accessible PMR",
+      "airConditioning": "Climatisation",
+      "terrace": "Terrasse",
+      "pool": "Piscine",
+      "spa": "Spa",
+      "restaurant": "Restaurant",
+      "bar": "Bar",
+      "kidsSpace": "Espace enfants",
+      "petsAllowed": "Animaux acceptés",
+      "meetingRoom": "Salle de réunion"
 
     }
   },

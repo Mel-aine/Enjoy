@@ -5,7 +5,7 @@ import ContactInfoSection from '@/components/serviceForm/ContactInfoSection.vue'
 import OperationalInfoSection from '@/components/serviceForm/OperationalInfoSection.vue';
 import AdditionalInfoSection from '@/components/serviceForm/AdditionalInfoSection.vue';
 import AdressSection from '@/components/serviceForm/AdressSection.vue';
-import { createService, getCategories } from '@/services/api';
+import { createService, getCategories } from '@/servicesApi/hotelApi';
 import { CheckIcon } from 'lucide-vue-next';
 import AlertInfo from '../alert/AlertInfo.vue';
 

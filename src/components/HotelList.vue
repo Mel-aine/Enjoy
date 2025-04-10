@@ -1,163 +1,140 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import HotelCard from './HotelCard.vue'
 import { ArrowUpDownIcon } from 'lucide-vue-next'
-import { useMIHStore } from '@/stores/manageHotelInterface'
-import { getServices } from '@/services/api.js'
-const hotelStore = useMIHStore();
-watch(() => hotelStore.hotelId, async (newHotelId, oldHotelId) => {
-  if (newHotelId !== oldHotelId) {
-    console.log('hotelId a changé:', newHotelId);
-    // Ici, tu peux appeler une API, recharger des données, etc.
-    await fetchHotelDetails(newHotelId);
-  }
-});
+import "vue-skeletor/dist/vue-skeletor.css"
+import { Skeletor } from "vue-skeletor"
+import { getServicesCategoryIdBy } from '@/servicesApi/hotelApi.js'
 
-// Exemple de fonction pour récupérer les détails de l'hôtel
-const fetchHotelDetails = async (id) => {
-  if (!id) return;
-
-  try {
-    // Recherche de l'hôtel dans la liste des hôtels stockés
-    const hotel = hotels.value.find(h => h.id === id);
-
-    if (hotel) {
-      hotelStore.setHotel(hotel); // On passe l'hôtel trouvé à la fonction getHotel
-      console.log('Hôtel sélectionné:', hotel);
-    } else {
-      console.warn(`Aucun hôtel trouvé avec l'ID ${id}`);
-    }
-
-  } catch (error) {
-    console.error('Erreur lors de la récupération de l’hôtel:', error);
-  }
-};
-
-
-// Mock data
-const hotels = ref([
-  {
-    id: 1,
-    name: 'Grand Plaza Hotel',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    rating: 4.8,
-    reviews: 1243,
-    price: 22400,
-    location: 'Downtown',
-    amenities: ['wifi', 'breakfast', 'pool', 'gym'],
-    stars: 5,
-    description: 'Luxury hotel in the heart of the city with panoramic views.'
-  },
-  {
-    id: 2,
-    name: 'Seaside Resort & Spa',
-    image: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    rating: 4.6,
-    reviews: 879,
-    price: 29900,
-    location: 'Beachfront',
-    amenities: ['wifi', 'pool', 'gym'],
-    stars: 5,
-    description: 'Beachfront resort with full-service spa and multiple dining options.'
-  },
-  {
-    id: 3,
-    name: 'City Comfort Inn',
-    image: 'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    rating: 4.2,
-    reviews: 543,
-    price: 30900,
-    location: 'Midtown',
-    amenities: ['wifi', 'breakfast'],
-    stars: 3,
-    description: 'Comfortable and affordable accommodation with modern amenities.'
-  },
-  {
-    id: 4,
-    name: 'Mountain View Lodge',
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80',
-    rating: 4.5,
-    reviews: 328,
-    price: 39600,
-    location: 'Mountain Range',
-    amenities: ['wifi', 'breakfast', 'gym'],
-    stars: 4,
-    description: 'Rustic lodge with stunning mountain views and outdoor activities.'
-  }
-])
+const services = ref([])
+const isLoading = ref(true)
 
 const props = defineProps({
   searchParams: Object,
   filters: Object,
-  sortOption: String
+  sortOption: { type: String, default: 'recommended' }
 })
 
 const emit = defineEmits(['sortChange'])
 
-// Filtrage des hôtels
 const filteredHotels = computed(() => {
-  return hotels.value.filter(hotel => {
-    if (hotel.price < props.filters.priceRange[0] || hotel.price > props.filters.priceRange[1]) {
-      return false
-    }
-    if (props.filters.starRating.length > 0 && !props.filters.starRating.includes(hotel.stars)) {
-      return false
-    }
-    if (props.filters.amenities.length > 0) {
-      const hasAllAmenities = props.filters.amenities.every(amenity => hotel.amenities.includes(amenity))
-      if (!hasAllAmenities) return false
-    }
-    return true
-  })
+  if (!services.value.data || !Array.isArray(services.value.data)) return []
+
+  let result = [...services.value.data]
+
+  const selectedRanges = props.filters?.priceRange || []
+  const selectedAmenities = props.filters?.amenities || []
+
+  // Ne filtrer que si les valeurs sont des chaînes comme '$$', '$$$$', etc.
+  const isSymbolRange = selectedRanges.every(val => typeof val === 'string' && val.includes('$'))
+
+  if (selectedRanges.length && isSymbolRange) {
+    result = result.filter(hotel =>
+      selectedRanges.includes(hotel.priceRange)
+    )
+  }
+
+  if (selectedAmenities.length) {
+    result = result.filter(hotel => {
+      if (!hotel.facilities) return false
+
+      let parsedFacilities
+      try {
+        parsedFacilities = JSON.parse(hotel.facilities) // Ex: ["Parking", "Restaurant"]
+      } catch (e) {
+        console.warn('Erreur parsing facilities pour hôtel ID:', hotel.id || hotel._id, e)
+        return false
+      }
+
+      // Normaliser pour éviter les erreurs de casse
+      const normalized = parsedFacilities.map(f => f.toLowerCase())
+
+      // Convertir amenities sélectionnés en labels connus (id → label)
+      const amenityLabels = {
+        wifi: "Wi-Fi",
+        parking: "Parking",
+        pmr: "Accessible PMR",
+        ac: "Climatisation",
+        terrace: "Terrasse",
+        pool: "Piscine",
+        gym: "Salle de sport",
+        spa: "Spa",
+        restaurant: "Restaurant",
+        bar: "Bar",
+        kids: "Espace enfants",
+        pets: "Animaux acceptés",
+        meeting: "Salle de réunion"
+      }
+
+      return selectedAmenities.every(amenityId => {
+        const label = amenityLabels[amenityId]?.toLowerCase()
+        return normalized.includes(label)
+      })
+    })
+  }
+
+
+  return result
 })
 
-// Tri des hôtels
+
 const sortedHotels = computed(() => {
-  return [...filteredHotels.value].sort((a, b) => {
-    switch (props.sortOption) {
-      case 'price-low':
-        return a.price - b.price
-      case 'price-high':
-        return b.price - a.price
-      case 'rating':
-        return b.rating - a.rating
-      default:
-        return 0
-    }
-  })
+  console.log('sortedHotels', filteredHotels.value)
+  const hotels = filteredHotels.value
+  if (!hotels.length) return []
+  
+  // Créer une copie pour le tri
+  const sorted = [...hotels]
+  
+  switch (props.sortOption) {
+    case 'price-low':
+      return sorted.sort((a, b) => (a.price || 0) - (b.price || 0))
+    case 'price-high':
+      return sorted.sort((a, b) => (b.price || 0) - (a.price || 0))
+    case 'rating':
+      return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0))
+    default:
+      return sorted
+  }
 })
 
 onMounted(async () => {
   try {
-    const services = await getServices();
-    console.log('Services récupérés :', services);
+    isLoading.value = true
+    const response = await getServicesCategoryIdBy(16)
+    
+    // Assurez-vous que la réponse contient bien un tableau data
+    services.value = response.data ? response : { data: response }
+    
+    console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value)))
   } catch (error) {
-    console.log('error', error);
-    // Affiche une alerte ou un message à l’utilisateur si besoin
+    console.error('Erreur lors du chargement:', error)
+  } finally {
+    isLoading.value = false
   }
-});
+})
 </script>
 
 <template>
   <div>
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
-        {{ filteredHotels.length }} hotels found
-        <span v-if="searchParams.location"> in {{ searchParams.location }}</span>
+        {{ sortedHotels.length }} hôtels trouvés
+        <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
       </h2>
       
       <div class="flex items-center">
-        <span class="mr-2 text-sm">Sort by:</span>
+        <span class="mr-2 text-sm">Trier par :</span>
         <div class="relative">
           <select 
             :value="sortOption"
             @change="emit('sortChange', $event.target.value)"
             class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-customRed focus:border-transparent"
           >
-            <option value="recommended">Recommended</option>
-            <option value="price-low">Price (low to high)</option>
-            <option value="price-high">Price (high to low)</option>
-            <option value="rating">Guest Rating</option>
+            <option value="recommended">Recommandé</option>
+            <option value="price-low">Prix (croissant)</option>
+            <option value="price-high">Prix (décroissant)</option>
+            <option value="rating">Note des clients</option>
           </select>
           <ArrowUpDownIcon 
             size="16"
@@ -167,19 +144,34 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="space-y-4">
-      <template v-if="sortedHotels.length > 0">
-        <div v-for="hotel in sortedHotels" :key="hotel.id" >
-            <HotelCard :hotel="hotel" />
+    <!-- Squelettes de chargement -->
+    <div v-if="isLoading" class="space-y-4">
+      <div v-for="i in 4" :key="`skeleton-${i}`" class="flex items-center p-4 bg-white rounded-lg shadow">
+        <Skeletor circle size="60" />
+        <div class="ml-4 flex-1">
+          <Skeletor width="60%" height="20px" />
+          <Skeletor width="40%" height="16px" class="mt-2" />
+          <Skeletor width="80%" height="14px" class="mt-2" />
         </div>
-        <!-- <HotelCard v-for="hotel in sortedHotels" :key="hotel.id" :hotel="hotel" /> -->
+      </div>
+    </div>
+    
+    <!-- Liste des hôtels -->
+    <div v-else class="space-y-4">
+      <template v-if="sortedHotels.length > 0">
+        <HotelCard 
+          v-for="hotel in sortedHotels" 
+          :key="hotel.id || hotel._id || Math.random()" 
+          :hotel="hotel" 
+        />
       </template>
+      
       <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
         <p class="text-lg text-gray-600">
-          No hotels match your current filters.
+          Aucun hôtel ne correspond à vos critères.
         </p>
         <p class="text-sm text-gray-500 mt-2">
-          Try adjusting your filters to see more results.
+          Essayez d'ajuster vos filtres pour voir plus de résultats.
         </p>
       </div>
     </div>

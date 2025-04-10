@@ -373,14 +373,30 @@
       "parkingTicket": "Parking ticket",
       "parkingInfo": "Entrance to parking area is possible only with parking ticket ",
       "parkingInfo1": "issued by parking entrance machine. ",
-
+      "propertyType": "Property Type",
+      "apartment": "Apartment",
+      "suite": "Suite",
+      "duplex": "Duplex",
       "parkingQRCode": "Parking QR Code",
       "carPark": "CART PARK",
       "carDetails": "Car, 3 nights",
       "parkingPlace": "Place C-124 on 1st Floor",
-      "downloadParkingTicket": "Download parking Ticket"
-
-
+      "downloadParkingTicket": "Download parking Ticket",
+      "budget": "Budget",
+      "standard": "Standard",
+      "premium": "Premium",
+      "luxury": "Luxury",
+      "parking": "Parking",
+      "accessiblePmr": "Accessible",
+      "airConditioning": "Air conditioning",
+      "terrace": "Terrace",
+      "pool": "Pool",
+      "spa": "Spa",
+      "restaurant": "Restaurant",
+      "bar": "Bar",
+      "kidsSpace": "Kids' area",
+      "petsAllowed": "Pets allowed",
+      "meetingRoom": "Meeting room"
 
     }
   },

@@ -1,46 +1,82 @@
 <script setup>
 import { ref, computed, } from 'vue'
-import {
-  // BedDoubleIcon,
-  // PlaneIcon,
-  // CarIcon,
-  WifiIcon,
-  UtensilsIcon,
-  DumbbellIcon,
-  HeartIcon,
-  MapPinIcon,
-} from 'lucide-vue-next'
+import { WifiIcon, SquareParkingIcon, AccessibilityIcon,SpadeIcon, SnowflakeIcon, SunIcon,WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 import { useMIHStore } from '@/stores/manageHotelInterface';
-
-
+const iconMap = {
+   'Wi-Fi': WifiIcon, 
+   'Parking': SquareParkingIcon ,
+   'Accessible PMR': AccessibilityIcon, 
+   'Climatisation': SnowflakeIcon, 
+   'Terrasse': SunIcon ,
+   'Piscine': WavesLadderIcon ,
+   'Salle de sport': DumbbellIcon ,
+   'Spa': SpadeIcon ,
+   'Restaurant': UtensilsIcon ,
+   'Bar': WineIcon ,
+   'Espace enfants': BabyIcon ,
+   'Animaux acceptés': DogIcon ,
+   'Salle de réunion': BriefcaseIcon 
+}
+const amenities = computed(() => {
+  try {
+    const parsedFacilities = JSON.parse(props.hotel.facilities || '[]')
+    return parsedFacilities.filter(facility => iconMap[facility])
+  } catch (error) {
+    console.warn('Erreur de parsing des facilities:', error)
+    return []
+  }
+})
+const displayPriceRange = computed(() => {
+  switch (props.hotel.priceRange) {
+    case '$':
+      return t('appServices.hotel.budget')
+    case '$$':
+      return t('appServices.hotel.standard')
+    case '$$$':
+      return t('appServices.hotel.premium')
+    case '$$$$':
+      return t('appServices.hotel.luxury')
+    default:
+      return ''
+  }
+})
 const props = defineProps({
-  hotel: Object
+  hotel: {
+    type: Object,
+    default: () => ({
+      name: '',
+      description: '',
+      category_id: null,
+      address: '',
+      phone_number: '',
+      email: '',
+      website: '',
+      openings: {},
+      price_range: 0,
+      facilities: [],
+      policies: [],
+      capacity: 0,
+      payment_methods: [],
+      status: '',
+      rating: 0,
+      reviews: 0,
+      location: '',
+      price: 0,
+      amenities: []
+    })
+  }
 })
 
-// Extraire les valeurs de l'hôtel
-const {
-  image,
-  rating,
-  reviews,
-  location,
-  amenities,
-  stars,
-  price,
-  name
-} = props.hotel
-
-// Définir les icônes des équipements
-const iconMap = {
-  wifi: WifiIcon,
-  breakfast: UtensilsIcon,
-  gym: DumbbellIcon
-}
 const isFavorite = ref(false)
-
+console.log('ameneties', amenities)
 // const starsArray = computed(() => {
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
 const hotelStore = useMIHStore();
+const location = JSON.parse(props.hotel.address);
 
 
 const toggleFavorite = () => {
@@ -60,11 +96,11 @@ const handleViewDeal = () => {
       <div class="flex flex-col md:flex-row">
         <!-- Image -->
         <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
-          <img 
+          <!-- <img 
             :src="hotel.image" 
             :alt="hotel.name" 
             class="w-full h-full object-cover"
-          />
+          /> -->
           <button 
             @click="toggleFavorite" 
             class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100"
@@ -91,13 +127,13 @@ const handleViewDeal = () => {
   
           <div class="flex items-center text-gray-600 text-sm mt-2">
             <MapPinIcon size="16" class="mr-1" />
-            <span>{{ hotel.location }}</span>
+            <span>{{ location.text }}</span>
           </div>
   
           <p class="mt-2 text-sm text-gray-600">{{ hotel.description }}</p>
   
           <div class="mt-2 flex space-x-2">
-            <div v-for="amenity in hotel.amenities" :key="amenity" class="flex items-center">
+            <div v-for="amenity in amenities" :key="amenity" class="flex items-center">
               <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" />
             </div>
           </div>
@@ -109,8 +145,9 @@ const handleViewDeal = () => {
             <span>{{ $t('appServices.hotel.rating') }}: {{ hotel.rating }} ({{ hotel.reviews }} {{ $t('appServices.hotel.review') }})</span>
           </div>
           <div class="text-right mt-2">
-            <div class="text-sm text-gray-500">{{ $t('appServices.hotel.pricePerNight') }}</div>
-            <div class="text-xl font-bold">FCFA {{ hotel.price }}</div>
+
+            <div class="text-sm text-gray-500">Price Range</div>
+            <div class="text-xl font-bold">{{ displayPriceRange }}</div>
             <div class="text-xs text-gray-500">{{ $t('appServices.hotel.includeTaxesFees') }}</div>
             <button @click="handleViewDeal" class="bg-customRed text-white px-4 py-2 rounded-md hover:text-black mt-2">
               {{ $t('appServices.hotel.viewDeal') }}            
