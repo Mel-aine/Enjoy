@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from "vue";
 import { useCategoryStore } from "@/stores/map";
-import { getServices } from "@/services/api";
+import { getServices } from "@/servicesApi/hotelApi.js";
 
 const store = useCategoryStore();
 const mapRef = ref(null);

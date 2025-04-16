@@ -84,12 +84,12 @@ const router = createRouter({
       component: () => import('@/views/allServices/EServiceView.vue'),
       meta: { hideComponent: true, showHeader2: true, showFooter2: true },
     },
-    {
-      path: '/categories/:id',
-      name: 'categories',
-      component: () => import('../components/services/FilterView.vue'),
-      meta: {hiddeMap:true , showFooter2:true},
-    },
+    // {
+    //   path: '/categories/:id',
+    //   name: 'categories',
+    //   component: () => import('../components/services/FilterView.vue'),
+    //   meta: {hiddeMap:true , showFooter2:true},
+    // },
     {
       path: '/bookingHotel',
       name: 'booking',

@@ -16,7 +16,7 @@ const props = defineProps({
   },
 });
 
-const mapRef = ref(null);
+const mapDisplay = ref(null);
 const map = ref(null);
 const markers = ref([]);
 const mapsLoaded = ref(false);
@@ -50,7 +50,7 @@ const initMapWithMarkers = () => {
     lng: props.places[0].lng || 0,
   };
 
-  map.value = new google.maps.Map(mapRef.value, {
+  map.value = new google.maps.Map(mapDisplay.value, {
     center,
     zoom: 8,
   });
@@ -118,7 +118,7 @@ onMounted(async () => {
     <div class="w-full">
       <div
         v-show="mapsLoaded"
-        ref="mapRef"
+        ref="mapDisplay"
         :class="mapSizeClass"
       ></div>
     </div>
