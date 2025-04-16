@@ -45,7 +45,7 @@
         <div class="flex justify-between">
           <div class="text-gray-700 text-sm">
             <span>{{ $t('categories.' + textSearch) }}</span>
-            <h1 class="text-gray-950 font-bold text-xl w-[500px] flex-wrap"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} {{ $t('in') }} {{ city }} </h1>
+            <h1 class="text-gray-950 font-bold text-xl w-[200px] sm:w-[500px] flex-wrap"> {{$t('les_meilleurs')}} {{ $t('categories.' + textSearch) }} {{ $t('in') }} {{ city }} </h1>
           </div>
           <div class="relative flex flex-wrap md:flex-wrap items-start justify-end space-x-2 md:space-x-4 p-2 right-8 w-full md:w-auto">
             <span class="flex items-center space-x-2 gap-2 text-right text-xs md:text-sm">

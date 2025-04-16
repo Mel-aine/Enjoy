@@ -40,7 +40,7 @@ const deleteMarkers = () => {
   console.log("Suppression des marqueurs... Nombre actuel :", markers.value.length);
 
   markers.value.forEach(marker => {
-    marker.setMap(null); 
+    marker.setMap(null);
   });
 
   markers.value = []; // Réinitialiser le tableau pour éviter les références obsolètes
@@ -63,7 +63,7 @@ const updateMapWithLocations = () => {
   console.log("Mise à jour de la carte...");
   if (!map.value) return;
 
-  deleteMarkers(); 
+  deleteMarkers();
   refreshMap()
 
   const infoWindow = new google.maps.InfoWindow();
@@ -76,16 +76,16 @@ const updateMapWithLocations = () => {
       const marker = new google.maps.Marker({
         position: { lat: parsedLocation.lat, lng: parsedLocation.lng },
         map: map.value,
-        title: parsedLocation.text, 
+        title: parsedLocation.text,
       });
       const service = Services.value.find(service => {
         if (!service.address) return false;
 
         try {
-          const serviceAddress = JSON.parse(service.address); 
+          const serviceAddress = JSON.parse(service.address);
           return (
-            Math.abs(serviceAddress.lat - parsedLocation.lat) < 0.0001 && 
-            Math.abs(serviceAddress.lng - parsedLocation.lng) < 0.0001   
+            Math.abs(serviceAddress.lat - parsedLocation.lat) < 0.0001 &&
+            Math.abs(serviceAddress.lng - parsedLocation.lng) < 0.0001
           );
         } catch (e) {
           console.warn("Erreur de parsing JSON pour l'adresse du service :", service.address, e);
@@ -118,7 +118,7 @@ const updateMapWithLocations = () => {
     }
   });
   console.log("Nouveaux marqueurs ajoutés :", markers.value.length);
-}; 
+};
 
 
 
