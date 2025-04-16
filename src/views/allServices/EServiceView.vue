@@ -190,6 +190,11 @@ const isModalOpen = ref(false)
 const route = useRoute();
 const serviceId = route.params.serviceId;
 const placeId = route.params.placeId
+const categoryId = route.params.id;
+const city = route.query.city;
+
+console.log("Catégorie ID:", categoryId);
+console.log("Ville:", city);
 const filteredPlaces = ref([]);
 
 

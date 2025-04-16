@@ -22,13 +22,13 @@ import djeuga from '@/assets/hotel/djeuga.jpg';
 
 export const Categories = [
     {
-      id: "1",
+      id: "2",
       label: "Restaurants",
       //route: "/recherche/restaurants",
       icon: "fa fa-utensils",
       places: [
         {
-          id: "PLACE-1-001",
+          id: "PLACE-REST-001",
           name: "O'san",
           route: "/restaurant/PLACE-REST-001",
           description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
@@ -84,11 +84,101 @@ export const Categories = [
           open_until: "01h00 ",
           category: ["Restoration", "Restaurant"],
           images: [african, africain1]
-        }
+        },
+        {
+          id: "PLACE-REST-004",
+          name: "O'san",
+          route: "/restaurant/PLACE-REST-001",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating :4,
+          location: "Bloc SONEL",
+          phone: "+237690111222",
+          opening_hours: [
+            { day: "monday", open: "12h00", close: "23h00" },
+            { day: "wednesday", open: "14h00", close: "00h00" },
+            { day: "sunday", open: "01h00", close: "00h00" }
+          ],
+          open_until: "01h00 ",
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
+          images: [image1, image2, image3, image4, vin]
+        },
+        {
+          id: "PLACE-REST-005",
+          name: "O'san",
+          route: "/restaurant/PLACE-REST-001",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating :4,
+          location: "Bloc SONEL",
+          phone: "+237690111222",
+          opening_hours: [
+            { day: "monday", open: "12h00", close: "23h00" },
+            { day: "wednesday", open: "14h00", close: "00h00" },
+            { day: "sunday", open: "01h00", close: "00h00" }
+          ],
+          open_until: "01h00 ",
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
+          images: [image1, image2, image3, image4, vin]
+        },
+        {
+          id: "PLACE-REST-006",
+          name: "O'san",
+          route: "/restaurant/PLACE-REST-001",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating :4,
+          location: "Bloc SONEL",
+          phone: "+237690111222",
+          opening_hours: [
+            { day: "monday", open: "12h00", close: "23h00" },
+            { day: "wednesday", open: "14h00", close: "00h00" },
+            { day: "sunday", open: "01h00", close: "00h00" }
+          ],
+          open_until: "01h00 ",
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
+          images: [image1, image2, image3, image4, vin]
+        },
+        {
+          id: "PLACE-REST-007",
+          name: "O'san",
+          route: "/restaurant/PLACE-REST-001",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating :4,
+          location: "Bloc SONEL",
+          phone: "+237690111222",
+          opening_hours: [
+            { day: "monday", open: "12h00", close: "23h00" },
+            { day: "wednesday", open: "14h00", close: "00h00" },
+            { day: "sunday", open: "01h00", close: "00h00" }
+          ],
+          open_until: "01h00 ",
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
+          images: [image1, image2, image3, image4, vin]
+        },
+        {
+          id: "PLACE-REST-008",
+          name: "O'san",
+          route: "/restaurant/PLACE-REST-001",
+          description: "O'SAN est Situé au cœur de Bonamoussadi à Douala, le restaurant O'SAN offre une ambiance chaleureuse et conviviale où les amateurs de vin et de gastronomie se retrouvent .",
+          address: " Bonamoussadi, Douala, CM.",
+          rating :4,
+          location: "Bloc SONEL",
+          phone: "+237690111222",
+          opening_hours: [
+            { day: "monday", open: "12h00", close: "23h00" },
+            { day: "wednesday", open: "14h00", close: "00h00" },
+            { day: "sunday", open: "01h00", close: "00h00" }
+          ],
+          open_until: "01h00 ",
+          category: ["Restoration", "Restaurant", "Wine cellar", "Bar"],
+          images: [image1, image2, image3, image4, vin]
+        },
       ]
     },
     {
-      id: "2",
+      id: "3",
       label: "Shopping",
      // route: "/recherche/shopping",
       icon: "fa fa-shopping-bag",
@@ -116,7 +206,7 @@ export const Categories = [
       ]
     },
     {
-      id: "3",
+      id: "4",
       label: "Vie nocturne",
       icon: "fa fa-glass-cheers",
       places: [
@@ -143,7 +233,7 @@ export const Categories = [
       ]
     },
     {
-      id: "4",
+      id: "5",
       label: "Sports & Activités de loisirs",
       icon: "fa fa-football-ball",
       places: [
@@ -169,7 +259,7 @@ export const Categories = [
        },]
     },
     {
-      id: "5",
+      id: "6",
       label: "Salons de beauté & Spas",
       icon: "fa fa-spa",
       places: [
@@ -219,7 +309,7 @@ export const Categories = [
       ]
     },
     {
-      id: "6",
+      id: "7",
       label: "Automobile",
       icon: "fa fa-bus",
       places: [
@@ -267,7 +357,7 @@ export const Categories = [
     },
 
     {
-      id: "7",
+      id: "8",
       label: "Maisons & Travaux",
       icon: "fa fa-home",
       places: [
@@ -293,7 +383,7 @@ export const Categories = [
       ]
     },
     {
-      id: "8",
+      id: "9",
       label: "Cafés & Thés",
       icon: "fa fa-coffee",
       places: [
@@ -318,7 +408,7 @@ export const Categories = [
        },]
     },
     {
-      id: "9",
+      id: "10",
       label: "Alimentations",
       icon: "fa fa-apple-alt",
       places: [
@@ -343,7 +433,7 @@ export const Categories = [
        },]
     },
     {
-      id: "10",
+      id: "11",
       label: "Art & Loisirs",
       icon: "fa fa-palette",
       places: [
@@ -368,7 +458,7 @@ export const Categories = [
        },]
     },
     {
-      id: "11",
+      id: "12",
       label: "Santé & Médical",
       icon: "fa fa-briefcase-medical",
       places: [
@@ -393,7 +483,7 @@ export const Categories = [
        },]
     },
     {
-      id: "12",
+      id: "13",
       label: "Services destiné aux prof",
       icon: "fa fa-shield-alt",
       places: [
@@ -418,7 +508,7 @@ export const Categories = [
        },]
     },
     {
-      id: "13",
+      id: "14",
       label: "Animaux de companie",
       icon: "fa fa-paw",
       places: [
@@ -443,7 +533,7 @@ export const Categories = [
        },]
     },
     {
-      id: "14",
+      id: "15",
       label: "Immobilier",
       icon: "fa fa-home",
       places: [
@@ -470,7 +560,7 @@ export const Categories = [
     },
 
     {
-      id: "15",
+      id: "16",
       label: "Hôtels & Séjours",
       icon: "fa fa-hotel",
       places: [
@@ -539,7 +629,7 @@ export const Categories = [
 
     },
     {
-      id: "16",
+      id: "17",
       label: "Services Locaux",
       icon: "fa fa-map-marker-alt",
       places: [
@@ -565,7 +655,7 @@ export const Categories = [
       ]
     },
     {
-      id: "17",
+      id: "18",
       label: "Organisation d événements",
       icon: "fa fa-calendar-alt",
       places: [
@@ -593,7 +683,7 @@ export const Categories = [
     },
 
     {
-      id: "18",
+      id: "19",
       label: "Services publics & gouvernement",
       icon: "fa fa-landmark",
       places: [
@@ -622,7 +712,7 @@ export const Categories = [
 
 
     {
-        id: "19",
+        id: "20",
         label: "Services financiers",
         icon: "fa fa-chart-line",
         places: [
@@ -648,7 +738,7 @@ export const Categories = [
          ]
     },
     {
-      id: "20",
+      id: "21",
       label: "Formation & Enseignement",
       icon: "fa fa-pencil-alt",
       places: [
@@ -674,7 +764,7 @@ export const Categories = [
        ]
     },
     {
-      id: "21",
+      id: "22",
       label: "Organisation religieuse",
       icon: "fa fa-church",
       places: [
@@ -700,7 +790,7 @@ export const Categories = [
        ]
     },
     {
-      id: "22",
+      id: "23",
       label: "Travel",
       icon: "fa fa-bus",
       places: [
@@ -767,7 +857,7 @@ export const Categories = [
       ]
     },
     {
-      id: "23",
+      id: "24",
       label: "Média",
       icon: "fa fa-newspaper",
       places: [
