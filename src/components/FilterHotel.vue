@@ -51,7 +51,7 @@
 </div>
 
 
-    <div class="mb-6">
+  <!--   <div class="mb-6">
       <h3 class="font-medium mb-2 mt-2">{{ $t('appServices.hotel.starRating') }}</h3>
       <div class="space-y-2">
         <div v-for="rating in [5, 4, 3, 2, 1]" :key="rating" class="grid grid-cols-[auto_1fr] gap-2 items-center">
@@ -64,7 +64,7 @@
           </label>
         </div>
       </div>
-    </div>
+    </div>-->
 
     <h3 class="font-medium mb-2 mt-2">{{ $t('appServices.hotel.amenities') }}</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
