@@ -58,14 +58,17 @@ const initMapWithMarkers = () => {
   clearMarkers();
 
   if (props.showMarkers) {
-    props.places.forEach(place => {
-      const marker = new google.maps.Marker({
-        position: { lat: place.lat, lng: place.lng },
-        map: map.value,
-        title: place.name || '',
-      });
-      markers.value.push(marker);
+    props.places.forEach((place, index) => {
+  setTimeout(() => {
+    const marker = new google.maps.Marker({
+      position: { lat: place.lat, lng: place.lng },
+      map: map.value,
+      title: place.name || '',
+      animation: google.maps.Animation.DROP,
     });
+    markers.value.push(marker);
+  }, index * 150); // 150ms entre chaque "chute"
+});
   }
 };
 

@@ -713,7 +713,7 @@ async function searchNearbyPlaces(map, categories) {
       background: bgColorMarkerCategory.value, // Couleur de fond du marqueur
       borderColor: bColorCategory.value, // Bordure
     });
-
+    
     // Création du marqueur avancé
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map: map,
