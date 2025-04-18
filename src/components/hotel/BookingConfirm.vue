@@ -19,7 +19,7 @@
     </div>
     </div>
     <!-- Booking Details -->
-    <div class="bg-white rounded-xl shadow-sm p-6">
+    <div class="bg-white rounded-xl shadow-sm p-6 mt-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-6">{{$t('appServices.hotel.bookingDetails')}}</h3>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Parking Ticket -->
-    <div class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between">
+    <div v-if="isParkingChoice" class="bg-white rounded-xl shadow-sm p-6 flex items-center justify-between">
       <div class="flex-col">
         <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.parkingTicket')}}</h3>
       <p class="text-gray-500 text-sm mb-6">
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="flex justify-end">
-  <button class="inline-flex px-4 py-2 mt-4 border border-indigo-600 text-indigo-600 rounded-lg hover:bg-indigo-50 transition-colors">
+  <button v-if="isParkingChoice" class="inline-flex px-4 py-2 mt-4 border border-indigo-600 text-indigo-600 rounded hover:bg-indigo-50 transition-colors">
     {{$t('appServices.hotel.downloadParkingTicket')}}
   </button>
 </div>
@@ -87,9 +87,11 @@
 import { ref, } from 'vue';
 import { CheckIcon } from 'lucide-vue-next';
 import {useDataStore} from '@/stores/dataStore';
+import { useMIHStore } from '@/stores/manageHotelInterface';
 
-
-const dataStore = useDataStore();
+const hotelStore = useMIHStore();
+const isParkingChoice = ref(hotelStore.isCarParkSelected)
+const dataStore = useDataStore(); 
 // import {dataStore} from '@/stores/dataStore.js'
 // data confirm booking
 const props = defineProps({

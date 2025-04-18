@@ -4,7 +4,7 @@ import HotelCard from './HotelCard.vue'
 import { ArrowUpDownIcon } from 'lucide-vue-next'
 import "vue-skeletor/dist/vue-skeletor.css"
 import { Skeletor } from "vue-skeletor"
-import { getServicesCategoryIdBy } from '@/servicesApi/hotelApi.js'
+import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
 
 const services = ref([])
 const isLoading = ref(true)
@@ -119,7 +119,8 @@ onMounted(async () => {
   <div>
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
-        {{ sortedHotels.length }} hôtels trouvés
+        <span v-if="!sortedHotels.length">Un instant nous avons trouvew ce que vous cherchez!</span>
+        <span v-if="sortedHotels.length"></span>{{ sortedHotels.length }} hôtels trouvés
         <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
       </h2>
       

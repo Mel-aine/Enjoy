@@ -1,5 +1,45 @@
 <template>
-  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
+  <div v-if="isLoading">
+
+    <div v-if="isLoading" class="space-y-6">
+      <div v-for="i in 4" :key="`skeleton-${i}`" class="flex items-start p-6 bg-white rounded-xl shadow-sm">
+        <Skeletor circle size="96px" />
+
+        <div class="ml-6 flex-1 space-y-3">
+          <Skeletor width="40%" height="20px" />
+          <Skeletor width="60%" height="16px" />
+          <Skeletor width="80%" height="14px" />
+
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-4">
+            <Skeletor v-for="j in 5" :key="`icon-${j}`" width="100%" height="40px" />
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+            <div v-for="k in 4" :key="`input-${k}`" class="space-y-2">
+              <Skeletor width="30%" height="16px" />
+              <Skeletor width="100%" height="36px" />
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <Skeletor width="50%" height="20px" />
+            <div v-for="l in 2" :key="`addon-${l}`" class="flex items-center justify-between mt-4">
+              <div class="flex items-center space-x-3">
+                <Skeletor circle size="16px" />
+                <div class="space-y-1">
+                  <Skeletor width="100px" height="14px" />
+                  <Skeletor width="80px" height="12px" />
+                </div>
+              </div>
+              <Skeletor width="50px" height="16px" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div v-else class="bg-white rounded-xl shadow-sm overflow-hidden">
     <div class="p-6">
       <div class="flex items-start">
         <!-- Image at the beginning -->
@@ -21,7 +61,8 @@
 
           </div>
           <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
-            {{ hotelStore.this_hotel?.name || 'Nom indisponible' }}
+            {{ hotelStore.this_hotel?.name || 'Nom indisponible' }} <span class="text-gray-700">•</span> {{
+              RoomsWithLowPrice.productName || 'Nom indisponible' }}
           </h2>
           <div class="flex items-center space-x-2 mb-4 mt-2">
             <div class="flex">
@@ -56,7 +97,7 @@
                 <polyline points="4,16 6,16 5,14" fill="none" stroke="#475569" />
               </svg>
               <div>
-                <div class="text-sm font-medium text-gray-900">12 m² </div>
+                <div class="text-sm font-medium text-gray-900">{{sizeValue}} m² </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
               </div>
             </div>
@@ -109,7 +150,7 @@
         </template>
 
         <button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
-          {{ $t('read') }} {{ expanded ? $t('less') : $t('more') }}
+          {{ $t('read') }} {{ expanded ? $t('less') : $t('Plus') }}
           <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
             :class="{ 'rotate-180': expanded }" />
         </button>
@@ -117,142 +158,124 @@
     </div>
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
-    <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <!-- First Name -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          FIRST NAME <span class="text-red-500">*</span>
-        </label>
-        <div class="relative">
-          <input 
-            type="text" 
-            v-model="firstName"
-            @input="validateFirstName"
-            :class="[
+      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- First Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            FIRST NAME <span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <input type="text" v-model="firstName" @input="validateFirstName" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              firstNameValid === false ? 'border-red-500 focus:ring-red-200' : 
-              firstNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
-            ]" 
-          />
-          <div class="absolute right-3 top-1/2 -translate-y-1/2">
-            <div v-if="firstNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-              <CheckIcon size="12" class="text-white" />
-            </div>
-            <div v-else-if="firstNameValid === false" class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-              <XIcon size="12" class="text-white" />
+              firstNameValid === false ? 'border-red-500 focus:ring-red-200' :
+                firstNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+            ]" />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <div v-if="firstNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                <CheckIcon size="12" class="text-white" />
+              </div>
+              <div v-else-if="firstNameValid === false"
+                class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <XIcon size="12" class="text-white" />
+              </div>
             </div>
           </div>
+          <p v-if="firstNameValid === false" class="mt-1 text-sm text-red-600">
+            Le prénom doit contenir au moins 2 caractères
+          </p>
         </div>
-        <p v-if="firstNameValid === false" class="mt-1 text-sm text-red-600">
-          Le prénom doit contenir au moins 2 caractères
-        </p>
-      </div>
 
-      <!-- Last Name -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          LAST NAME <span class="text-red-500">*</span>
-        </label>
-        <div class="relative">
-          <input 
-            type="text" 
-            v-model="lastName"
-            @input="validateLastName"
-            :class="[
+        <!-- Last Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            LAST NAME <span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <input type="text" v-model="lastName" @input="validateLastName" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              lastNameValid === false ? 'border-red-500 focus:ring-red-200' : 
-              lastNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
-            ]" 
-          />
-          <div class="absolute right-3 top-1/2 -translate-y-1/2">
-            <div v-if="lastNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-              <CheckIcon size="12" class="text-white" />
-            </div>
-            <div v-else-if="lastNameValid === false" class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-              <XIcon size="12" class="text-white" />
+              lastNameValid === false ? 'border-red-500 focus:ring-red-200' :
+                lastNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+            ]" />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <div v-if="lastNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                <CheckIcon size="12" class="text-white" />
+              </div>
+              <div v-else-if="lastNameValid === false"
+                class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <XIcon size="12" class="text-white" />
+              </div>
             </div>
           </div>
+          <p v-if="lastNameValid === false" class="mt-1 text-sm text-red-600">
+            Le nom doit contenir au moins 2 caractères
+          </p>
         </div>
-        <p v-if="lastNameValid === false" class="mt-1 text-sm text-red-600">
-          Le nom doit contenir au moins 2 caractères
-        </p>
-      </div>
 
-      <!-- Email Address -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          EMAIL ADDRESS <span class="text-red-500">*</span>
-        </label>
-        <div class="relative">
-          <input 
-            type="email" 
-            v-model="emaiAdress"
-            @input="validateEmail"
-            :class="[
+        <!-- Email Address -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            EMAIL ADDRESS <span class="text-red-500">*</span>
+          </label>
+          <div class="relative">
+            <input type="email" v-model="emailAddress" @input="validateEmail" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              emailValid === false ? 'border-red-500 focus:ring-red-200' : 
-              emailValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
-            ]" 
-          />
-          <div class="absolute right-3 top-1/2 -translate-y-1/2">
-            <div v-if="emailValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-              <CheckIcon size="12" class="text-white" />
-            </div>
-            <div v-else-if="emailValid === false" class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-              <XIcon size="12" class="text-white" />
+              emailValid === false ? 'border-red-500 focus:ring-red-200' :
+                emailValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+            ]" />
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <div v-if="emailValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                <CheckIcon size="12" class="text-white" />
+              </div>
+              <div v-else-if="emailValid === false"
+                class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <XIcon size="12" class="text-white" />
+              </div>
             </div>
           </div>
+          <p v-if="emailValid === false" class="mt-1 text-sm text-red-600">
+            Veuillez entrer une adresse email valide
+          </p>
         </div>
-        <p v-if="emailValid === false" class="mt-1 text-sm text-red-600">
-          Veuillez entrer une adresse email valide
-        </p>
-      </div>
 
-      <!-- Phone Number -->
-      <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">
-          PHONE NUMBER <span class="text-red-500">*</span>
-        </label>
-        <div class="relative flex">
-          <!-- Country Code Dropdown -->
-          <select
-            v-model="countryCode"
-            class="px-3 py-2 border border-gray-300 rounded-lg rounded-r-none border-r-0 bg-gray-50 text-gray-500"
-          >
-            <option value="+237">+237</option>
-            <option value="+33">+33</option>
-            <option value="+1">+1</option>
-          </select>
+        <!-- Phone Number -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">
+            PHONE NUMBER <span class="text-red-500">*</span>
+          </label>
+          <div class="relative flex">
+            <!-- Country Code Dropdown -->
+            <select v-model="countryCode"
+              class="px-3 py-2 border border-gray-300 rounded-lg rounded-r-none border-r-0 bg-gray-50 text-gray-500">
+              <option value="+237">+237</option>
+              <option value="+33">+33</option>
+              <option value="+1">+1</option>
+            </select>
 
-          <!-- Phone Number Input -->
-          <input 
-            type="tel" 
-            v-model="phoneNumber"
-            @input="validatePhoneNumber"
-            :class="[
+            <!-- Phone Number Input -->
+            <input type="tel" v-model="phoneNumber" @input="validatePhoneNumber" :class="[
               'flex-1 px-3 py-2 border rounded-lg rounded-l-none focus:ring-2',
-              phoneValid === false ? 'border-red-500 focus:ring-red-200' : 
-              phoneValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
-            ]" 
-          />
+              phoneValid === false ? 'border-red-500 focus:ring-red-200' :
+                phoneValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+            ]" />
 
-          <!-- Validation Icon -->
-          <div class="absolute right-3 top-1/2 -translate-y-1/2">
-            <div v-if="phoneValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-              <CheckIcon size="12" class="text-white" />
-            </div>
-            <div v-else-if="phoneValid === false" class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
-              <XIcon size="12" class="text-white" />
+            <!-- Validation Icon -->
+            <div class="absolute right-3 top-1/2 -translate-y-1/2">
+              <div v-if="phoneValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+                <CheckIcon size="12" class="text-white" />
+              </div>
+              <div v-else-if="phoneValid === false"
+                class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                <XIcon size="12" class="text-white" />
+              </div>
             </div>
           </div>
+          <p v-if="phoneValid === false" class="mt-1 text-sm text-red-600">
+            Le numéro de téléphone doit être valide (8-15 chiffres)
+          </p>
         </div>
-        <p v-if="phoneValid === false" class="mt-1 text-sm text-red-600">
-          Le numéro de téléphone doit être valide (8-15 chiffres)
-        </p>
       </div>
     </div>
-  </div>
     <!-- User Details Form end-->
 
     <!-- Additional ways to booking start -->
@@ -404,7 +427,7 @@
       </div>
 
       <!-- Stay of a Pet Section -->
-      <div :class="selectedOptions.pet  ? 'pb-6' : ''">
+      <div :class="selectedOptions.pet ? 'pb-6' : ''">
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3 mt-2">
             <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOptions.pet"
@@ -430,7 +453,7 @@
         </div>
 
         <!-- Additional pet info - Only shown when pet is selected -->
-        <div v-if="selectedOption === 'pet'" class="mt-4">
+        <div v-if="selectedOptions === 'pet'" class="mt-4">
           <p class="text-sm text-gray-600">
             Please inform us about the type and size of your pet. Additional cleaning fees may apply.
           </p>
@@ -440,12 +463,12 @@
   </div>
   <div class="flex justify-between items-center">
     <button @click="handleBack"
-      class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
+      class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
       Previous
     </button>
     <h1 class="w-full border border-top mx-4 mt-4"></h1>
     <button @click="handleNext"
-      class="w-full max-w-60 bg-customRed text-white  py-3 rounded-lg mt-4 hover:text-black  transition duration-200">
+      class="w-full max-w-60 bg-customRed text-white  py-3 rounded mt-4 hover:text-black  transition duration-200">
       {{ $t('appServices.hotel.requestToBook') }}
     </button>
   </div>
@@ -453,7 +476,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import {
   DumbbellIcon,
   XIcon,
@@ -471,12 +494,14 @@ import {
   StarIcon,
 } from 'lucide-vue-next';
 import { useMIHStore } from '@/stores/manageHotelInterface';
-
+import { getAllServicesByService, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
+import "vue-skeletor/dist/vue-skeletor.css"
+import { Skeletor } from "vue-skeletor"
 const defaultValues = {
-  firstName: 'John',
-  lastName: 'Doe',
-  phoneNumber: '567 890 123',
-  emailAdress: 'doejohn@gmail.com',
+  firstName: '',
+  lastName: '',
+  phoneNumber: '',
+  emailAddress: '',
   countryCode: '+237'
 }
 
@@ -493,8 +518,9 @@ const props = defineProps({
 const firstName = ref('')
 const lastName = ref('')
 const phoneNumber = ref('')
-const emailAdress = ref('')
+const emailAddress = ref('')
 const countryCode = ref('')
+const isLoading = ref(false)
 
 // Fonction pour initialiser les champs depuis les props ou les defaults
 const initializeForm = () => {
@@ -503,7 +529,7 @@ const initializeForm = () => {
   firstName.value = guestInfo.firstName ?? defaultValues.firstName
   lastName.value = guestInfo.lastName ?? defaultValues.lastName
   phoneNumber.value = guestInfo.phone?.number ?? defaultValues.phoneNumber
-  emailAdress.value = guestInfo.email ?? defaultValues.emailAdress
+  emailAddress.value = guestInfo.email ?? defaultValues.emailAddress
   countryCode.value = guestInfo.phone?.countryCode ?? defaultValues.countryCode
 }
 
@@ -511,8 +537,10 @@ const initializeForm = () => {
 initializeForm()
 
 const hotelStore = useMIHStore();
-const emit = defineEmits(['next','back']);
-
+const emit = defineEmits(['next', 'back']);
+const Rooms = ref([]);
+const options = ref([]);
+const sizeValue = ref(0);
 
 
 // Options supplémentaires
@@ -521,6 +549,13 @@ const selectedOptions = ref({
   wine: false,
   pet: false,
 });
+const verifyCarParkOptionSelected = () => {
+  if (selectedOptions.value.carPark) {
+    hotelStore.setIsCarParkSelected();
+  }
+}
+verifyCarParkOptionSelected();
+
 const selectedVehicle = ref('motorcycle');
 const selectedParkingType = ref('default');
 const expanded = ref(false);
@@ -554,7 +589,7 @@ const toggleExpanded = () => {
 };
 
 const handleBack = () => {
-  emit('back'); 
+  emit('back');
 };
 const firstNameValid = ref(null);
 const lastNameValid = ref(null);
@@ -572,7 +607,7 @@ const validateLastName = () => {
 
 const validateEmail = () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  emailValid.value = emailRegex.test(emailAdress.value);
+  emailValid.value = emailRegex.test(emailAddress.value);
 };
 
 const validatePhoneNumber = () => {
@@ -587,11 +622,11 @@ const isFormValid = () => {
   validateLastName();
   validateEmail();
   validatePhoneNumber();
-  
-  return firstNameValid.value && 
-         lastNameValid.value && 
-         emailValid.value && 
-         phoneValid.value;
+
+  return firstNameValid.value &&
+    lastNameValid.value &&
+    emailValid.value &&
+    phoneValid.value;
 };
 const handleNext = () => {
   if (!isFormValid()) {
@@ -601,13 +636,13 @@ const handleNext = () => {
     guestInfo: {
       firstName: firstName.value,
       lastName: lastName.value,
-      email: emailAdress.value,
+      email: emailAddress.value,
       phone: {
         countryCode: countryCode.value,
         number: phoneNumber.value
       }
     },
-    
+
     // Options supplémentaires sélectionnées
     additionalOptions: {
       carPark: selectedOptions.value === 'carPark' ? {
@@ -615,33 +650,33 @@ const handleNext = () => {
         parkingType: selectedParkingType.value,
         price: getOptionPrice('carPark')
       } : null,
-      
+
       wine: selectedOptions.value === 'wine' ? {
         price: getOptionPrice('wine')
       } : null,
-      
+
       pet: selectedOptions.value === 'pet' ? {
         price: getOptionPrice('pet')
       } : null
     },
-    
-    
+
+
     // Détails de la réservation
     bookingDetails: {
       hotelName: hotelStore.this_hotel?.name || 'Nom indisponible',
       rating: 4.87,
       reviewCount: 262,
       amenities: amenitiesStatus.value,
-      cancellationPolicy: expanded.value ? 
-        "Free cancellation until 11:59 PM on May 21, 2022. Your account will be charged on Sunday, May 22, 2022. If you cancel by 11:59 PM on Tuesday, May 31, 2022 you'll get your money back!" : 
+      cancellationPolicy: expanded.value ?
+        "Free cancellation until 11:59 PM on May 21, 2022. Your account will be charged on Sunday, May 22, 2022. If you cancel by 11:59 PM on Tuesday, May 31, 2022 you'll get your money back!" :
         "Free cancellation until 11:59 PM on May 21, 2022"
     }
   };
 
-hotelStore.this_hotel.price = hotelStore.this_hotel.price + getOptionPrice('carPark') + getOptionPrice('wine') + getOptionPrice('pet');
-console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
-console.log('gets', getOptionPrice('carPark'), getOptionPrice('wine'), getOptionPrice('pet'));
-console.log('selectedOption:', selectedOptions.value);
+  // hotelStore.this_hotel.price = hotelStore.this_hotel.price + getOptionPrice('carPark') + getOptionPrice('wine') + getOptionPrice('pet');
+  // console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
+  console.log('gets', getOptionPrice('carPark'), getOptionPrice('wine'), getOptionPrice('pet'));
+  console.log('selectedOption:', selectedOptions.value);
   emit('next', roomData);
 };
 
@@ -664,4 +699,107 @@ const getOptionPrice = (option) => {
 
   return 0;
 };
+const serviceId = ref(0);
+const RoomsWithLowPrice = ref({})
+// Fonction pour charger les chambres
+const loadRooms = async () => {
+  try {
+    isLoading.value = true;
+    console.log('serviceId:', serviceId.value);
+
+    // if (!serviceId.value) {
+    //   console.error('Aucun service ID trouvé dans this_hotel');
+    //   return;
+    // }
+
+    // const roomsResponse = await getAllServicesByServiceId(serviceId.value);
+    // Rooms.value = roomsResponse.data;
+    // console.log('Rooms chargés:', Rooms.value);
+
+    // // Trouver la chambre avec le prix le plus bas
+    // if (Rooms.value.length > 0) {
+    //   const cheapestRoom = Rooms.value.reduce((min, room) => {
+    //     return room.price < min.price ? room : min;
+    //   }, Rooms.value[0]);
+
+    // RoomsWithLowPrice.value = cheapestRoom;
+    // console.log('Chambre la moins chère:', RoomsWithLowPrice.value);
+    // loadOptions(RoomsWithLowPrice.value.id); // Charger les options pour la chambre la moins chère
+    // hotelStore.roomPrice = RoomsWithLowPrice.value.price; // Mettre à jour le store avec la chambre la moins chère
+    // } else {
+    //   RoomsWithLowPrice.value = {}; // ou null si tu préfères
+    // }
+
+    const roomsResponse = await getAllServicesByService();
+    Rooms.value = roomsResponse.data;
+    console.log('Rooms chargés:', Rooms.value);
+    if (Rooms.value.length > 0) {
+      const cheapestRoom = Rooms.value.reduce((min, room) => {
+        return room.price < min.price ? room : min;
+      }, Rooms.value[0]);
+
+      RoomsWithLowPrice.value = cheapestRoom;
+      console.log('Chambre la moins chère:', RoomsWithLowPrice.value);
+      // loadOptions(RoomsWithLowPrice.value.id); // Charger les options pour la chambre la moins chère
+      hotelStore.roomPrice = RoomsWithLowPrice.value.price; // Mettre à jour le store avec la chambre la moins chère
+      const optionIds = RoomsWithLowPrice.value.options?.map(opt => opt.optionId) || [];
+      console.log("IDs des options:", optionIds);
+      await loadOptions();
+      const roomSizeOption = options.value.find(opt => opt.optionName === "Room Size (sqm)");
+
+      // Ensuite, tu peux accéder à la valeur "15" comme ceci :
+      sizeValue.value = roomSizeOption?.values?.find(v => v === "15");
+
+      console.log(sizeValue); // Affichera "15" si elle est présente
+
+
+    } else {
+      RoomsWithLowPrice.value = {}; // ou null si tu préfères
+    }
+
+  } catch (error) {
+    console.error('Erreur lors du chargement:', error);
+  } finally {
+    isLoading.value = false;
+  }
+};
+
+const loadOptions = async () => {
+  try {
+    const optionIds = RoomsWithLowPrice.value.options?.map(opt => opt.optionId) || [];
+
+    if (!optionIds.length) {
+      console.warn('Aucune option à charger');
+      options.value = [];
+      return;
+    }
+
+    console.log('Chargement des options pour IDs:', optionIds);
+
+    const responses = await Promise.all(
+      optionIds.map(id => getOptionsByServiceId(id))
+    );
+
+    // Fusionner toutes les options retournées
+    options.value = responses.flatMap(res => res.data || []);
+    console.log('Options chargées:', options.value);
+
+  } catch (error) {
+    console.error('Erreur lors du chargement des options:', error);
+  }
+};
+
+// Observer les changements de l'ID depuis le store
+watch(
+  () => hotelStore.this_hotel?.id,
+  (newId, oldId) => {
+    if (newId && newId !== oldId) {
+      console.log('serviceId changed:', newId);
+      serviceId.value = newId;
+      loadRooms();
+    }
+  },
+  { immediate: true }
+);
+
 </script>

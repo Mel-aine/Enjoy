@@ -54,10 +54,15 @@ const { t } = useI18n();
 // const handleBackToStep = () =>{
 //   emit('back');
 // }
+function getTotalPersons(rooms) {
+  return rooms.reduce((total, room) => {
+    return total + (room.adults || 0) + (room.childrens || 0)
+  }, 0)
+}
 const priceDetails = computed(() => [
   {
     label: t('appServices.hotel.RoomsAndOffer'),
-    price: Number(hotelStore?.this_hotel?.price) || 0,
+    price: Number(hotelStore?.roomPrice) || 0,
   },
   {
     label: t('appServices.hotel.8%VAT'),
@@ -71,6 +76,10 @@ const priceDetails = computed(() => [
 const totalPrice = computed(() =>
   priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)
 );
+hotelStore.totalPrice = totalPrice.value;
+hotelStore.dateArrived = checkInDate.value;
+hotelStore.dateDepart = checkOutDate.value;
+hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
 
 </script>
 

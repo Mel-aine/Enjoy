@@ -188,12 +188,12 @@
   <!-- Navigation Buttons -->
   <div class="flex justify-between items-center mt-6">
     <button @click="handleBack"
-      class="w-full max-w-60 bg-gray-400 text-white py-3 rounded-lg hover:text-black transition duration-200">
+      class="w-full max-w-60 bg-gray-400 text-white py-3 rounded hover:text-black transition duration-200">
       Previous
     </button>
     <h1 class="w-full border border-top mx-4"></h1>
     <button @click="handleNext" :disabled="isLoading"
-      class="w-full max-w-60 bg-customRed text-white py-3 rounded-lg hover:text-black transition duration-200 disabled:opacity-75">
+      class="w-full max-w-60 bg-customRed text-white py-3 rounded hover:text-black transition duration-200 disabled:opacity-75">
       <div class="flex items-center justify-center">
         <LockIcon size="16" />
         <span v-if="isLoading" class="ml-2 flex items-center">

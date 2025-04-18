@@ -330,7 +330,7 @@ import BaseIcon from '../icons/BaseIcon.vue';
 // import { useRouter } from 'vue-router';
 // import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
-import {getCategories} from '@/servicesApi/hotelApi.js'
+import {getCategories} from '@/servicesApi/hotelServicesApi.js'
 const router = useRouter();
 
 const dataStore = useDataStore();
