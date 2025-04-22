@@ -394,10 +394,10 @@ const handleSearch = () => {
   }
   console.log(leftValue.value, rightValue.value);
 
-  const foundCategory = Categories.value.find(category =>
+  const foundCategory = categories.value.find(category =>
     category.categoryName === leftValue.value,
   );
-
+console.log('foundCategory', foundCategory)
   if (foundCategory) {
     store.setSearchData(foundCategory.id, rightValue.value)
     if(leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays'){
