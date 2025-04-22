@@ -148,7 +148,7 @@ watch(() => route.params.city, (newCity) => {
 
         <!-- Hotel List -->
         <div v-show="hotelStore.isListed" class="w-full md:w-3/4">
-          <HotelList :searchParams="searchParams" :filters="activeFilters" :sortOption="sortOption"
+          <HotelList :key="searchParams.location" :searchParams="searchParams" :filters="activeFilters" :sortOption="sortOption"
             @sortChange="handleSortChange" />
         </div>
       </div>

@@ -440,6 +440,7 @@ const checkScrollButtonsVisibility = () => {
 
 const handleSearchWithComponent = (searchFromNavbar) => {
   if (rightValue.value == null) return;
+  isModalOpen.value = false;
   dataStore.searchFrom = {... searchFromNavbar}
   router.push(`/hotelList/${searchFromNavbar.destination}`); // Redirige vers la route /bookingHotel
 };
