@@ -394,7 +394,7 @@ const handleSearch = () => {
   }
   console.log(leftValue.value, rightValue.value);
 
-  const foundCategory = categories.value.find(category =>
+  const foundCategory = Categories.value.find(category =>
     category.categoryName === leftValue.value,
   );
 
