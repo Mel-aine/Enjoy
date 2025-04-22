@@ -1,5 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
+import { useRoute } from 'vue-router';
+
 // import Header from '@/components/HeaderHotel.vue'
 import HotelList from '@/components/HotelList.vue'
 import Filters from '@/components/FilterHotel.vue'
@@ -11,6 +13,7 @@ import { useRouter } from 'vue-router';
 
 
 const router = useRouter();
+const route = useRoute();
 
 const hotelStore = useMIHStore();
 
@@ -90,13 +93,21 @@ const handleFilterChange = (filters) => {
   activeFilters.value = filters
 }
 
-const handleSearch = () =>{
-  router.push('/hotelList'); // Redirige vers la route /bookingHotel
-
-}
+const handleSearch = (params) => {
+  const city = params.destination?.toLowerCase() || 'all';
+  console.log('city', city)
+  router.push(`/hotelList/${city}`);
+};
 const handleSortChange = (option) => {
   sortOption.value = option
 }
+watch(() => route.params.city, (newCity) => {
+  // chaque fois que la ville change => tu mets à jour les données
+    console.log("🔁 Ville changée :", newCity); // Ajoute ceci
+
+  searchParams.value.location = newCity;
+  // ici tu peux relancer la recherche ou un appel API
+}, { immediate: true });
 </script>
 
 <template>

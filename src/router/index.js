@@ -98,7 +98,7 @@ const router = createRouter({
       meta: { hideComponent: true , showHeader2:true ,showFooter2:true},
     },
     {
-      path: '/hotelList',
+      path: '/hotelList/:city',
       name: 'hotelList',
       // component: () => import('@/views/hotel/EBookingHotelView.vue'),
       component: () => import('@/views/hotel/EHotelView.vue'),
