@@ -97,7 +97,7 @@
                 <polyline points="4,16 6,16 5,14" fill="none" stroke="#475569" />
               </svg>
               <div>
-                <div class="text-sm font-medium text-gray-900">{{sizeValue}} m² </div>
+                <div class="text-sm font-medium text-gray-900">{{ sizeValue }} m² </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
               </div>
             </div>
@@ -459,19 +459,63 @@
           </p>
         </div>
       </div>
+        <!-- Navigation Buttons -->
+      <div class="mx-auto max-w-5xl mt-12 justify">
+        <!-- Version mobile -->
+        <div class="flex justify-between flex-1 sm:hidden">
+          <button @click="handleBack"
+            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            :disabled="isFirstPage">
+            <svg stroke="currentColor" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                clip-rule="evenodd" />
+            </svg>
+            Previous
+          </button>
+          <button @click="handleNext"
+            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+            {{ $t('appServices.hotel.requestToBook') }}
+            <svg stroke="currentColor" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 ml-2" aria-hidden="true">
+              <path fill-rule="evenodd"
+                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Version desktop -->
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+          <div class="relative z-0 flex justify-between w-full -space-x-px rounded-md" aria-label="Navigation">
+            <button @click="handleBack"
+              class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 sm:rounded-l-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              :disabled="isFirstPage">
+              <svg stroke="currentColor" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 mr-2"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+              Previous
+            </button>
+            <button @click="handleNext"
+              class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 sm:rounded-r-md hover:bg-gray-50">
+              {{ $t('appServices.hotel.requestToBook') }}
+              <svg stroke="currentColor" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5 ml-2"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
     </div>
+
   </div>
-  <div class="flex justify-between items-center">
-    <button @click="handleBack"
-      class="w-full max-w-60  bg-gray-400 text-white  py-3 rounded mt-4 hover:text-black  transition duration-200 disabled:bg-slate-500">
-      Previous
-    </button>
-    <h1 class="w-full border border-top mx-4 mt-4"></h1>
-    <button @click="handleNext"
-      class="w-full max-w-60 bg-customRed text-white  py-3 rounded mt-4 hover:text-black  transition duration-200">
-      {{ $t('appServices.hotel.requestToBook') }}
-    </button>
-  </div>
+
 
 </template>
 
