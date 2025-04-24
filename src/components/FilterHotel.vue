@@ -34,7 +34,7 @@
 
 
     </div>
-      <h3 class="font-medium mb-1">Price Range</h3>
+      <h3 class="font-medium mb-1">{{ $t('appServices.hotel.priceRange') }}</h3>
 
     <div v-for="option in priceRangeOptions" :key="option.id" class="flex items-center">
   <input
@@ -96,7 +96,7 @@
 <script setup>
 import { ref, defineProps,computed } from 'vue';
 import {
-  StarIcon, WifiIcon, SquareParkingIcon, AccessibilityIcon, SnowflakeIcon,
+  WifiIcon, SquareParkingIcon, AccessibilityIcon, SnowflakeIcon,
   SunIcon, WavesLadderIcon, DumbbellIcon, SpadeIcon,
   UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon
 } from 'lucide-vue-next'

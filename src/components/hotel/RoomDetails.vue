@@ -132,20 +132,15 @@
     <div class="px-6 py-2">
       <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
       <div class="space-y-3 text-gray-600 text-sm">
-        <p>Free cancellation until 11:59 PM on May 21, 2022</p>
+        <p>{{ $t('appServices.hotel.freeCancellation') }}</p>
         <p>
-          Your account will be charged on Sunday, May 22, 2022. If you cancel
-          by 11:59 PM on Tuesday, May 31, 2022 you'll get your money back!.....
+          {{ $t('appServices.hotel.chargeDate') }} {{ $t('appServices.hotel.ifYouCancel') }}
+          {{ $t('appServices.hotel.apartmentDescription') }}
         </p>
 
         <template v-if="expanded">
           <p>
-            You're booking the last available Double or Twin Room with Balcony
-            we have at King bed stylish Apartment with Loft style family.
-          </p>
-          <p>
-            Again, by clicking the "BOOK NOW" button you agree to the processing
-            of your personal data effected in order to complete this booking.
+            {{ $t('appServices.hotel.bookNowAgreement') }}
           </p>
         </template>
 
@@ -163,7 +158,8 @@
         <!-- First Name -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
-            FIRST NAME <span class="text-red-500">*</span>
+            {{ $t('appServices.hotel.firstName') }}
+ <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <input type="text" v-model="firstName" @input="validateFirstName" :class="[
@@ -182,14 +178,15 @@
             </div>
           </div>
           <p v-if="firstNameValid === false" class="mt-1 text-sm text-red-600">
-            Le prénom doit contenir au moins 2 caractères
+            {{ $t('appServices.hotel.firstNameError') }}
           </p>
         </div>
 
         <!-- Last Name -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
-            LAST NAME <span class="text-red-500">*</span>
+            {{ $t('appServices.hotel.lastName') }}
+ <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <input type="text" v-model="lastName" @input="validateLastName" :class="[
@@ -208,14 +205,15 @@
             </div>
           </div>
           <p v-if="lastNameValid === false" class="mt-1 text-sm text-red-600">
-            Le nom doit contenir au moins 2 caractères
+            {{ $t('appServices.hotel.lastNameError') }}
           </p>
         </div>
 
         <!-- Email Address -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
-            EMAIL ADDRESS <span class="text-red-500">*</span>
+            {{ $t('appServices.hotel.email') }}
+ <span class="text-red-500">*</span>
           </label>
           <div class="relative">
             <input type="email" v-model="emailAddress" @input="validateEmail" :class="[
@@ -234,14 +232,15 @@
             </div>
           </div>
           <p v-if="emailValid === false" class="mt-1 text-sm text-red-600">
-            Veuillez entrer une adresse email valide
+            {{ $t('appServices.hotel.emailError') }}
           </p>
         </div>
 
         <!-- Phone Number -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
-            PHONE NUMBER <span class="text-red-500">*</span>
+            {{ $t('appServices.hotel.phone') }}
+ <span class="text-red-500">*</span>
           </label>
           <div class="relative flex">
             <!-- Country Code Dropdown -->
@@ -271,7 +270,7 @@
             </div>
           </div>
           <p v-if="phoneValid === false" class="mt-1 text-sm text-red-600">
-            Le numéro de téléphone doit être valide (8-15 chiffres)
+            {{ $t('appServices.hotel.phoneError') }}
           </p>
         </div>
       </div>
@@ -281,7 +280,8 @@
     <!-- Additional ways to booking start -->
 
     <div class="bg-white rounded-xl p-6 shadow-sm">
-      <h2 class="font-semibold text-lg text-gray-900 mb-4">Add to your stay</h2>
+      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.addToYourStay') }}
+      </h2>
       <!-- Car Park Section -->
       <div class="border-b" :class="selectedOptions.carPark ? 'pb-6 mb-6' : ''">
         <div class="flex items-start justify-between mb-4">
@@ -290,16 +290,19 @@
               @click="toggleOption('carPark')" />
             <div>
               <div class="font-medium flex items-start justify-start">
-                <span> Car park </span>
+                <span> {{ $t('appServices.hotel.carPark') }}
+                </span>
                 <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
                   :class="{ 'rotate-180': selectedOptions.carPark }" />
               </div>
-              <div class="text-sm text-gray-500">The choice of families</div>
+              <div class="text-sm text-gray-500">{{ $t('appServices.hotel.familyChoice') }}
+              </div>
             </div>
           </div>
           <div class="text-right">
             <div class="font-medium">
-              FCFA 20000 <span class="text-sm text-gray-500">/night</span>
+              FCFA 20000 <span class="text-sm text-gray-500">/{{ $t('appServices.hotel.night') }}
+              </span>
             </div>
           </div>
         </div>
@@ -307,7 +310,8 @@
         <!-- Vehicle Type Selection - Only shown when carPark is selected -->
         <div class="space-y-4" v-if="selectedOptions.carPark">
           <div>
-            <div class="text-sm font-medium text-gray-700 mb-2">VEHICLE TYPE</div>
+            <div class="text-sm font-medium text-gray-700 mb-2">{{ $t('appServices.hotel.vehicleType') }}
+            </div>
             <div class="grid grid-cols-3 gap-3">
               <!-- Motorcycle -->
               <button :class="[
@@ -332,8 +336,10 @@
                   <path d="M12 14l-5 5" />
                   <path d="M12 14l5 5" />
                 </svg>
-                <div>Motorcycle</div>
-                <div class="text-gray-500">FCFA 20000/night</div>
+                <div>{{ $t('appServices.hotel.motorcycle') }}
+                </div>
+                <div class="text-gray-500">FCFA 20000/{{ $t('appServices.hotel.night') }}
+</div>
               </button>
 
               <!-- Car -->
@@ -345,7 +351,8 @@
               ]" @click="setSelectedVehicle('car')">
                 <CarFrontIcon class="mb-1" size="30" />
                 <div>Car</div>
-                <div class="text-gray-500">FCFA 30000/night</div>
+                <div class="text-gray-500">FCFA 30000/{{ $t('appServices.hotel.night') }}
+</div>
               </button>
 
               <!-- Bus -->
@@ -356,15 +363,18 @@
                   : 'border-gray-200',
               ]" @click="setSelectedVehicle('bus')">
                 <BusFrontIcon class="mb-1" size="30" />
-                <div>Bus</div>
-                <div class="text-gray-500">FCFA 50000/night</div>
+                <div>{{ $t('appServices.hotel.bus') }}
+                </div>
+                <div class="text-gray-500">FCFA 50000/{{ $t('appServices.hotel.night') }}
+</div>
               </button>
             </div>
           </div>
 
           <!-- Parking Type Selection -->
           <div>
-            <div class="text-sm font-medium text-gray-700 mb-2">PLACE TYPE</div>
+            <div class="text-sm font-medium text-gray-700 mb-2">{{ $t('appServices.hotel.placeType') }}
+            </div>
             <div class="grid grid-cols-2 gap-3">
               <!-- Default Parking -->
               <button :class="[
@@ -374,7 +384,8 @@
                   : 'border-gray-200',
               ]" @click="setSelectedParkingType('default')">
                 <CarFrontIcon class="mb-1" size="30" />
-                <div>Default</div>
+                <div>{{ $t('appServices.hotel.default') }}
+                </div>
               </button>
 
               <!-- Disabled Parking -->
@@ -385,7 +396,8 @@
                   : 'border-gray-200',
               ]" @click="setSelectedParkingType('disabled')">
                 <Accessibility class="mb-1" size="30" />
-                <div>Disabled Parking spot</div>
+                <div>{{ $t('appServices.hotel.disabledParking') }}
+                </div>
               </button>
             </div>
           </div>
@@ -400,7 +412,8 @@
               @click="toggleOption('wine')" />
             <div>
               <div class="font-medium flex items-start justify-start">
-                <span>Bottle of wine</span>
+                <span>{{ $t('appServices.hotel.bottle') }}
+                </span>
                 <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
                   :class="{ 'rotate-180': selectedOptions.wine }" />
               </div>
@@ -412,7 +425,8 @@
           <div class="text-right">
             <div class="text-right mt-2">
               <div class="font-medium">
-                FCFA 50000 <span class="text-sm text-gray-500">/piece</span>
+                FCFA 50000 <span class="text-sm text-gray-500">/{{ $t('appServices.hotel.piece') }}
+                </span>
               </div>
             </div>
           </div>
@@ -446,7 +460,8 @@
           <div class="text-right">
             <div class="text-right mt-2">
               <div class="font-medium">
-                FCFA 50000 <span class="text-sm text-gray-500">/night</span>
+                FCFA 50000 <span class="text-sm text-gray-500">/{{ $t('appServices.hotel.night') }}
+</span>
               </div>
             </div>
           </div>
@@ -471,7 +486,8 @@
                 d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                 clip-rule="evenodd" />
             </svg>
-            Previous
+            {{ $t('appServices.hotel.previous') }}
+
           </button>
           <button @click="handleNext"
             class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
@@ -496,7 +512,8 @@
                   d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
                   clip-rule="evenodd" />
               </svg>
-              Previous
+              {{ $t('appServices.hotel.previous') }}
+
             </button>
             <button @click="handleNext"
               class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 sm:rounded-r-md hover:bg-gray-50">

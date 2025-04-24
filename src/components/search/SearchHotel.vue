@@ -105,7 +105,7 @@
     <!-- il yavait bottom-0 -->
 
     <div
-        class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md max-w-screen-xl min-w-screen-md py-4 md:p-4 lg:p-4 shadow-lg ">
+        class="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-md max-w-screen-2xl min-w-screen-md py-4 md:p-4 lg:p-4 shadow-lg ">
 
         <div ref="dropdown"
             class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
@@ -452,7 +452,7 @@ const langChanged = (lang) => {
 //   };
 
 onMounted(() => {
-    langChanged("en"); // Initialiser avec le français au premier chargement
+    langChanged("en"); // Initialiser avec le englais au premier chargement
     isOpen.value = false;
     isLoading.value = true;
     setTimeout(() => {
@@ -461,6 +461,8 @@ onMounted(() => {
     if (dataStore.searchFrom) {
         formattedDateArrival.value = dataStore.searchFrom.dateAller;
         formattedDateDeparture.value = dataStore.searchFrom.dateRetour;
+        console.log('formattedDateArrival.value', formattedDateArrival.value);
+        console.log('formattedDateDeparture.value', formattedDateDeparture.value);
         rooms.value = dataStore.searchFrom.rooms;
     }
 });

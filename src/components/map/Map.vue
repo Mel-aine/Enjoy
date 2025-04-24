@@ -108,11 +108,11 @@ onMounted(async () => {
 <template>
   <div class="space-y-4">
     <div v-if="mapsLoadingError" class="text-red-600">
-      Erreur Google Maps: {{ mapsLoadingError }}
+      {{ $t('appServices.hotel.mapError') }} {{ mapsLoadingError }} 
     </div>
 
     <div v-if="!mapsLoaded && !mapsLoadingError" class="text-blue-500">
-      Chargement de Google Maps...
+      {{ $t('appServices.hotel.loadingMaps') }}
     </div>
 
     <div class="w-full">

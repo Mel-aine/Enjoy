@@ -6,7 +6,6 @@ export const useDataStore = defineStore('data', {
     parentType: '', // Identifiant du parent
     searchFrom: null,
 
-
   }),
   actions: {
     setData(newData, newParentType) {

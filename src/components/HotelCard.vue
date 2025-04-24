@@ -146,7 +146,7 @@ const handleViewDeal = () => {
           </div>
           <div class="text-right mt-2">
 
-            <div class="text-sm text-gray-500">Price Range</div>
+            <div class="text-sm text-gray-500">{{ $t('appServices.hotel.priceRange') }}</div>
             <div class="text-xl font-bold">{{ displayPriceRange }}</div>
             <div class="text-xs text-gray-500">{{ $t('appServices.hotel.includeTaxesFees') }}</div>
             <button @click="handleViewDeal" class="bg-customRed text-white px-4 py-2 rounded-md hover:text-black mt-2">

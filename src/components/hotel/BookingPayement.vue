@@ -1,7 +1,8 @@
 <template>
   <!-- Payment form start -->
   <div class="bg-white rounded-xl shadow-sm p-6">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.paymentMethod')}}
+    </h2>
     <div class="space-y-4">
       <!-- Card Payment Option -->
       <button class="w-full flex items-center justify-between p-4 rounded-lg border"
@@ -9,8 +10,10 @@
         @click="paymentMethod = 'card'">
         <div class="flex items-center space-x-4">
           <div class="text-left">
-            <div class="font-medium">Credit / Debit Card</div>
-            <div class="text-sm text-gray-500">Visa, Mastercard, American Express</div>
+            <div class="font-medium">{{$t('appServices.hotel.creditDebitCard')}}
+            </div>
+            <div class="text-sm text-gray-500">{{$t('appServices.hotel.acceptedCards')}}
+            </div>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -27,7 +30,8 @@
         <div class="flex items-center space-x-4">
           <div class="text-left">
             <div class="font-medium">Small Pay</div>
-            <div class="text-sm text-gray-500">Pay with Small Pay</div>
+            <div class="text-sm text-gray-500">{{$t('appServices.hotel.payWith')}}
+              Small Pay</div>
           </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -43,7 +47,8 @@
           <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt="PayPal" class="h-6" />
           <div class="text-left">
             <div class="font-medium">PayPal</div>
-            <div class="text-sm text-gray-500">Pay with your PayPal account</div>
+            <div class="text-sm text-gray-500">{{$t('appServices.hotel.paypalAccount')}}
+            </div>
           </div>
         </div>
       </button>
@@ -52,11 +57,13 @@
 
   <!-- Card Details Form -->
   <div v-if="paymentMethod === 'card'" class="bg-white rounded-xl shadow-sm p-6 mt-4">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Card details</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.cardDetails')}}
+    </h2>
     <div class="space-y-4">
       <!-- Card Number -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Card number</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.cardNumber')}}
+        </label>
         <input v-model="cardNumber" @input="formatCardNumber" @blur="validateCardNumber" type="text"
           :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                   cardNumberError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -67,7 +74,8 @@
       <!-- Expiry Date and Security Code -->
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Expiry date</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.expiryDate')}}
+          </label>
           <input v-model="expiryDate" @input="formatExpiryDate" @blur="validateExpiryDate" type="text"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     expiryDateError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -75,7 +83,8 @@
           <p v-if="expiryDateError" class="mt-1 text-sm text-red-600">{{ expiryDateError }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Security code</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.securityCode')}}
+          </label>
           <input v-model="securityCode" @input="validateSecurityCode" type="password"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     securityCodeError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -86,7 +95,8 @@
 
       <!-- Card Name -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Name on card</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.nameOnCard')}}
+        </label>
         <input v-model="cardName" @input="validateCardName" type="text"
           :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                   cardNameError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -99,7 +109,7 @@
         <input type="checkbox" id="save-card" v-model="saveCard"
           class="h-4 w-4 text-indigo-600 rounded focus:ring-indigo-500" />
         <label for="save-card" class="ml-2 text-sm text-gray-600">
-          Save this card for future payments
+          {{$t('appServices.hotel.saveCard')}}
         </label>
       </div>
     </div>
@@ -107,10 +117,12 @@
 
   <!-- Small Pay Form -->
   <div v-if="paymentMethod === 'smallPay'" class="bg-white rounded-xl shadow-sm p-6 mt-4">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Small Pay details</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">Small Pay {{$t('appServices.hotel.details')}}
+    </h2>
     <div class="space-y-4">
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Small Pay ID or Phone Number</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.smallPayId')}}
+        </label>
         <input v-model="smallPayId" @input="validateSmallPay" type="text"
           :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                   smallPayError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -122,19 +134,22 @@
 
   <!-- Billing Address Form -->
   <div class="bg-white rounded-xl shadow-sm p-6 mt-4">
-    <h2 class="text-lg font-semibold text-gray-900 mb-4">Billing address</h2>
+    <h2 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.billingAddress')}}
+    </h2>
     <div class="space-y-4">
       <!-- First and Last Name -->
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">First name</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.firstName')}}
+          </label>
           <input v-model="firstName" @blur="validateFirstName" type="text"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     firstNameError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']" />
           <p v-if="firstNameError" class="mt-1 text-sm text-red-600">{{ firstNameError }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.lastName')}}
+          </label>
           <input v-model="lastName" @blur="validateLastName" type="text"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     lastNameError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']" />
@@ -144,7 +159,8 @@
 
       <!-- Address -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.address')}}
+        </label>
         <input v-model="address" @blur="validateAddress" type="text"
           :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                   addressError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']"
@@ -155,14 +171,16 @@
       <!-- City and Postal Code -->
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">City</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.city')}}
+          </label>
           <input v-model="city" @blur="validateCity" type="text"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     cityError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']" />
           <p v-if="cityError" class="mt-1 text-sm text-red-600">{{ cityError }}</p>
         </div>
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Postal code</label>
+          <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.postalCode')}}
+          </label>
           <input v-model="postalCode" @blur="validatePostalCode" type="text"
             :class="['w-full px-3 py-2 border rounded-lg focus:ring-2', 
                     postalCodeError ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-indigo-500']" />
@@ -172,7 +190,8 @@
 
       <!-- Country -->
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{$t('appServices.hotel.country')}}
+        </label>
         <select v-model="country" 
           class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500">
           <option value="United States">United States</option>
@@ -194,7 +213,8 @@
           d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
           clip-rule="evenodd" />
       </svg>
-      Previous
+      {{ $t('appServices.hotel.previous') }}
+
     </button>
     <button @click="handleNext" :disabled="isLoading"
       class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-white bg-customRed rounded-md hover:text-black transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed">
@@ -205,9 +225,10 @@
           <path class="opacity-75" fill="currentColor"
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
         </svg>
-        Processing...
+        {{$t('appServices.hotel.processing')}}
       </span>
-      <span v-else class="ml-2">Pay Securely</span>
+      <span v-else class="ml-2">{{$t('appServices.hotel.paySecurely')}}
+      </span>
     </button>
   </div>
 
@@ -222,7 +243,8 @@
             d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
             clip-rule="evenodd" />
         </svg>
-        Previous
+        {{ $t('appServices.hotel.previous') }}
+
       </button>
       <button @click="handleNext" :disabled="isLoading"
         class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-white bg-customRed sm:rounded-r-md hover:text-black transition duration-200 disabled:opacity-75 disabled:cursor-not-allowed">
@@ -233,9 +255,11 @@
             <path class="opacity-75" fill="currentColor"
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
           </svg>
-          Processing...
+          {{$t('appServices.hotel.processing')}}
+
         </span>
-        <span v-else class="ml-2">Pay Securely</span>
+        <span v-else class="ml-2">{{$t('appServices.hotel.paySecurely')}}
+        </span>
       </button>
     </div>
   </div>

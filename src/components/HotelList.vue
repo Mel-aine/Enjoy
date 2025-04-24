@@ -119,23 +119,23 @@ onMounted(async () => {
   <div>
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
-        <span v-if="!sortedHotels.length">Un instant nous avons trouvew ce que vous cherchez!</span>
-        <span v-if="sortedHotels.length"></span>{{ sortedHotels.length }} hôtels trouvés
+        <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span>
+        <span v-if="sortedHotels.length"></span>{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }}
         <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
       </h2>
       
       <div class="flex items-center">
-        <span class="mr-2 text-sm">Trier par :</span>
+        <span class="mr-2 text-sm">{{ $t('appServices.hotel.sortBy') }}</span>
         <div class="relative">
           <select 
             :value="sortOption"
             @change="emit('sortChange', $event.target.value)"
             class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-customRed focus:border-transparent"
           >
-            <option value="recommended">Recommandé</option>
-            <option value="price-low">Prix (croissant)</option>
-            <option value="price-high">Prix (décroissant)</option>
-            <option value="rating">Note des clients</option>
+            <option value="recommended">{{ $t('appServices.hotel.recommended') }}</option>
+            <option value="price-low">{{ $t('appServices.hotel.priceLowToHigh') }}</option>
+            <option value="price-high">{{ $t('appServices.hotel.priceHighToLow') }}</option>
+            <option value="rating">{{ $t('appServices.hotel.guestRating') }}</option>
           </select>
           <ArrowUpDownIcon 
             size="16"
@@ -169,10 +169,10 @@ onMounted(async () => {
       
       <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
         <p class="text-lg text-gray-600">
-          Aucun hôtel ne correspond à vos critères.
+         {{ $t('appServices.hotel.noHotelsMatch') }}
         </p>
         <p class="text-sm text-gray-500 mt-2">
-          Essayez d'ajuster vos filtres pour voir plus de résultats.
+         {{ $t('appServices.hotel.adjustFilters') }}
         </p>
       </div>
     </div>

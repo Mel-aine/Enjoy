@@ -18,6 +18,8 @@ const checkOutDate = ref(dataStore.searchFrom.dateRetour);
 
 const totalDays = () => {
   const checkIn = new Date(checkInDate.value);
+  console.log('checkIn', checkIn);
+  console.log('checkOutDate', checkOutDate.value);
   const checkOut = new Date(checkOutDate.value);
 console.log('checkIn', checkIn);
 console.log('checkOut', checkOut);
@@ -101,7 +103,8 @@ hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
     </div>
 
     <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">TOTAL LENGTH OF STAY:</div>
+      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.totalLengthOfStay')}}
+      </div>
       <div class="font-medium flex">
         <span>{{ stayLength }}</span>
         <CalendarIcon size="16" class="ml-3 mt-1" />

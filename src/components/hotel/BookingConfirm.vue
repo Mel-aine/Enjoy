@@ -11,8 +11,8 @@
         <div class="ml-4">
           <h2 class="text-lg font-semibold text-gray-900 mb-2">{{$t('appServices.hotel.bookingConfirmed')}}</h2>
           <p class="text-gray-600">
-            Nulla Lorem mollit cupidatat irure. Laborum magna nulla duis ullamco cillum dolor.
-            Voluptate exercitation incididunt aliquip deserunt reprehenderit elit laborum.
+            {{$t('appServices.hotel.noCompromiseComfort')}}
+            {{$t('appServices.hotel.premiumExperience')}}
           </p>
         </div>
       </div>

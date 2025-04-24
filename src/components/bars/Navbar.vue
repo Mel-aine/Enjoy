@@ -385,6 +385,31 @@ onMounted(() => {
   fetchCategories();
   initMap();
 });
+const categoryTranslations = {
+  "Restaurants": "Restaurants",
+  "Shopping": "Shopping",
+  "Vie Nocturne": "Nightlife",
+  "Sport & Loisirs": "Sport & Leisure Activities",
+  "Salons de beauté & Spas": "Beauty Salons & Spas",
+  "Automobile": "Automobile",
+  "Maisons & Travaux": "Houses & Works",
+  "Cafés & Thés": "Coffees & Teas",
+  "Fournitures d'énergie": "Power Supplies",
+  "Art & Loisirs": "Art & Leisure",
+  "Santé & Médical": "Health & Medical",
+  "Services Professionnels": "Services For Professional",
+  "Animaux": "Pets",
+  "Immobilier": "Real Estate",
+  "Hôtels & séjours": "Hotels & Stays",
+  "Services Locaux": "Local Services",
+  "Organisation d'Événements": "Event Organization",
+  "Services Publics & Gouvernement": "Public Services & Government",
+  "Services Financiers": "Financial Services",
+  "Formation & Enseignement": "Training & Teaching",
+  "Organisations Religieuses": "Religious Organization",
+  "Voyage": "Travel",
+  "Médias": "Media"
+}
 
 
 const handleSearch = () => {
@@ -392,28 +417,32 @@ const handleSearch = () => {
     console.warn("Veuillez remplir les deux champs.");
     return;
   }
-  console.log(leftValue.value, rightValue.value);
+
+  // Récupère le nom de la catégorie EN à partir de l'affichage FR
+  const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
 
   const foundCategory = categories.value.find(category =>
-    category.categoryName === leftValue.value,
-  );
-console.log('foundCategory', foundCategory)
+    category.categoryName === englishCategory
+  )
+  console.log('foundCategory', englishCategory)
+
   if (foundCategory) {
     store.setSearchData(foundCategory.id, rightValue.value)
-    if(leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays'){
-      isModalOpen.value = true;
-    }else {
+    console.log('foundCategory', englishCategory)
+
+    if (foundCategory.categoryName === 'Hotels & Stays') {
+      isModalOpen.value = true
+    } else {
       router.push({
-      path: `/recherche/${foundCategory.id}`,
-      query: { city: rightValue.value }
-    })
+        path: `/recherche/${foundCategory.id}`,
+        query: { city: rightValue.value }
+      })
     }
-
   } else {
-    console.warn("Catégorie non trouvée");
+    console.warn("Catégorie non trouvée")
   }
+}
 
-};
 
 // const handleSearch = () => {
 //   console.log('handleSearch')
