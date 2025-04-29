@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, } from 'vue'
-import { WifiIcon, SquareParkingIcon, AccessibilityIcon,SpadeIcon, SnowflakeIcon, SunIcon,WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
+import { WifiIcon, SquareParkingIcon, AccessibilityIcon,SpadeIcon, SnowflakeIcon, SunIcon,WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon,HeartIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -96,11 +96,11 @@ const handleViewDeal = () => {
       <div class="flex flex-col md:flex-row">
         <!-- Image -->
         <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
-          <!-- <img 
-            :src="hotel.image" 
+          <img 
+            :src="hotel.images" 
             :alt="hotel.name" 
             class="w-full h-full object-cover"
-          /> -->
+          />
           <button 
             @click="toggleFavorite" 
             class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100"

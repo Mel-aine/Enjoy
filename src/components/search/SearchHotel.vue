@@ -266,7 +266,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick, computed,defineEmits } from "vue";
+import { ref, onMounted, onUnmounted, nextTick, computed, defineEmits, watch } from "vue";
 // import router from "vue-router";
 // import router from "@/router";
 import flatpickr from "flatpickr";
@@ -286,6 +286,11 @@ import { useI18n } from "vue-i18n";
 
 import "vue-skeletor/dist/vue-skeletor.css";
 import { Skeletor } from "vue-skeletor";
+import { useLanguageStore } from "@/lang/language";
+import { storeToRefs } from 'pinia';
+
+const useLanguage = useLanguageStore()
+const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
 
 // const hotelStore = useMIHStore();
 // Utilisation de useI18n pour accéder aux traductions
@@ -307,7 +312,7 @@ const datepickerRetour = ref(null);
 const formattedDateArrival = ref("");
 const formattedDateDeparture = ref("");
 
-const currentLanguage = ref("en");
+
 const dropdown = ref(null);
 
 // const showFilter = ref(false);
@@ -317,7 +322,9 @@ const filteredWords = ref([]);
 const recentSearch = ref([]);
 const emit = defineEmits(["search"]);
 
-
+watch(() => locale.value, (newLocale) => {
+  langChanged(newLocale);
+}, { deep: true });
 
 import { useDataStore } from '@/stores/dataStore';
 
@@ -402,8 +409,12 @@ emit('search', { destination: destination.value, dateAller: formattedDateArrival
 
 const formatDate = (date) => {
     const options = { day: "2-digit", month: "short" };
+    const currentLocale = locale.value || 'en';
+    // Utiliser la bonne locale selon la langue
+    const localeString = currentLocale === "en" ? "en-US" : "fr-FR";
+    
     return `${t("appServices.agency.today")}, ${new Intl.DateTimeFormat(
-        currentLanguage.value,
+        localeString,
         options
     ).format(date)}`;
 };
@@ -415,31 +426,40 @@ const _formatDate = (date) => {
         month: "short",
         year: "numeric",
     };
-    return new Intl.DateTimeFormat(currentLanguage.value, options).format(date);
+    const currentLocale = locale.value || 'en';
+    // Utiliser la bonne locale selon la langue
+    const localeString = currentLocale === "en" ? "en-US" : "fr-FR";
+    
+    return new Intl.DateTimeFormat(localeString, options).format(date);
 };
 
 const langChanged = (lang) => {
-    currentLanguage.value = lang;
     langChange.value = !langChange.value;
-
+    console.log("langChanged", lang);
+    
     // Mettre à jour la locale de Flatpickr
     flatpickr(".datepicker", {
         mode: "range",
-        locale: lang === "en" ? English : French,
+        locale: lang === "en" ? English : French, // Vérifiez la valeur directement
         dateFormat: "d M Y",
         minDate: "today",
         onChange: (selectedDates) => {
             if (selectedDates.length > 0) {
                 formattedDateArrival.value = _formatDate(selectedDates[0]);
-                datepickerAller.value.value = formattedDateArrival.value; // Mettre à jour l'input
+                if (datepickerAller.value) {
+                    datepickerAller.value.value = formattedDateArrival.value;
+                }
             }
             if (selectedDates.length > 1) {
                 formattedDateDeparture.value = _formatDate(selectedDates[1]);
-                datepickerRetour.value.value = formattedDateDeparture.value; // Mettre à jour l'input retour
+                if (datepickerRetour.value) {
+                    datepickerRetour.value.value = formattedDateDeparture.value;
+                }
             }
         },
     });
 
+    // Reformater les dates existantes
     const today = new Date();
     formattedDateArrival.value = formatDate(today);
     formattedDateDeparture.value = formatDate(today);
@@ -452,7 +472,7 @@ const langChanged = (lang) => {
 //   };
 
 onMounted(() => {
-    langChanged("en"); // Initialiser avec le englais au premier chargement
+    langChanged(locale.value); // Initialiser avec le englais au premier chargement
     isOpen.value = false;
     isLoading.value = true;
     setTimeout(() => {

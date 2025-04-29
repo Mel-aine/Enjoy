@@ -11,6 +11,9 @@ import { useI18n } from 'vue-i18n';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
 import {useDataStore} from '@/stores/dataStore';
 import {useMIHStore} from '@/stores/manageHotelInterface';
+import jsPDF from 'jspdf';
+import domtoimage from 'dom-to-image';
+
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
 const checkInDate = ref(dataStore.searchFrom.dateAller);
@@ -31,31 +34,8 @@ console.log('checkOut', checkOut);
 
 const stayLength = ref(totalDays());
 const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
-// const emit = defineEmits(['nextBook', 'next','back'])
 const { t } = useI18n();
 
-// const nextBook = () => {
-//   // console.log('step4', props.stepCompleted);
-//   if (!props._stepCompleted) {
-//     emit('next');
-//     console.log('step4', props._stepCompleted);
-
-//   }
-
-//   if (!props.stepCompleted) {
-//     emit('nextBook');
-//     console.log('step3', props.stepCompleted);
-
-//     // return;
-//   }
-
-
-//   // emit('nextBook');
-// };
-
-// const handleBackToStep = () =>{
-//   emit('back');
-// }
 function getTotalPersons(rooms) {
   return rooms.reduce((total, room) => {
     return total + (room.adults || 0) + (room.childrens || 0)
@@ -83,11 +63,57 @@ hotelStore.dateArrived = checkInDate.value;
 hotelStore.dateDepart = checkOutDate.value;
 hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
 
+const invoiceRef = ref(null);
+
+const downloadAsPDF = () => {
+  const node = invoiceRef.value;
+  if (!node) return;
+
+  domtoimage.toPng(node)
+    .then((dataUrl) => {
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      const imgProps = pdf.getImageProperties(dataUrl);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save('facture-booking.pdf');
+    })
+    .catch((error) => {
+      console.error('Erreur lors du téléchargement du PDF:', error);
+    });
+};
+// const clientName = ref(`${props.guestData.firstName}-${props.guest.lastName}`);
+
+// const sanitizeFileName = (str) => str.replace(/\s+/g, '').replace(/[^\w-]/g, '');
+// const clientName = computed(() => {
+//   const guestData = dataStore.searchFrom.guestInfo;
+//   return `${guestData.firstName}-${guestData.lastName}`;
+// });
+// const downloadAsPDF = () => {
+//   const node = invoiceRef.value;
+//   if (!node) return;
+
+//   domtoimage.toPng(node)
+//     .then((dataUrl) => {
+//       const pdf = new jsPDF('p', 'mm', 'a4');
+//       const imgProps = pdf.getImageProperties(dataUrl);
+//       const pdfWidth = pdf.internal.pageSize.getWidth();
+//       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+//       pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+
+//       const cleanName = sanitizeFileName(clientName);
+//       const fileName = `facture-${cleanName}-${checkInDate.value}.pdf`;
+//       pdf.save(fileName);
+//     })
+//     .catch((error) => {
+//       console.error('Erreur lors du téléchargement du PDF:', error);
+//     });
+// };
 </script>
 
 <template>
 
-  <div class="bg-white rounded-xl shadow-sm p-6">
+  <div ref="invoiceRef" class="bg-white rounded-xl shadow-sm p-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
     <div class="flex justify-between pb-4 border-b">
       <div>
@@ -133,7 +159,7 @@ hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
       </div>
     </div>
     
-    <button @click="nextBook"
+    <button @click="downloadAsPDF"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
       {{$t('appServices.hotel.downloadInvoice')}}
     </button>

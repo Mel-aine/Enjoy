@@ -132,7 +132,7 @@ const handleSubmitForm = async () => {
     // user_id: 2,
     service_id: hotelStore.this_hotel.id,
     reservation_type: "Standard",
-    statusR: "pending",
+    statusR: "paid",
     total_price: hotelStore?.totalPrice || 0,
     total_person: hotelStore?.totalPerson || 1,
     arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],

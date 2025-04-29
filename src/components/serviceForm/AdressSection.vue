@@ -131,7 +131,7 @@ const handleChange = (event) => {
         name="address"
         type="text"
         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        placeholder="Rechercher une adresse..."
+        placeholder="Rechercher votre adresse..."
         :value="formData.address"
         @input="handleChange"
         required
@@ -141,7 +141,7 @@ const handleChange = (event) => {
     <div v-show="mapsLoaded">
       <label class="block text-sm font-medium text-gray-700">Position sur la carte</label>
       <div ref="mapRef" class="w-full h-64 mt-2 rounded-md border border-gray-300"></div>
-      <p class="mt-1 text-sm text-gray-500">Cliquez sur la carte ou recherchez une adresse pour définir l'emplacement.</p>
+      <p class="mt-1 text-sm text-gray-500">Cliquez sur la carte selon votre addresse recherchez pour définir l'emplacement de votre service.</p>
     </div>
 
     <!-- Champs cachés pour les coordonnées -->

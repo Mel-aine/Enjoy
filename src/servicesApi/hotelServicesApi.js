@@ -13,7 +13,7 @@ export const getServiceById = (id) => {
 }
 
 export const createService = (serviceData) => {
-  return axios.post(`${API_URL}/services`, serviceData)
+  return axios.post(`${API_URL}/servicesWithUser`, serviceData)
 }
 
 export const updateService = (id, serviceData) => {

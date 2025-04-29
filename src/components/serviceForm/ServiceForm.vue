@@ -75,21 +75,21 @@ const validateStep = () => {
     case 1:
       if (!formData.value.name || !formData.value.category_id) {
         isVisible.value = true;
-        infoAlert.value =' Veuillez remplir tous les champs obligatoires : Nom et Catégorie.';
+        infoAlert.value = ' Veuillez remplir tous les champs obligatoires : Nom et Catégorie.';
         return false;
       }
       break;
     case 2:
       if (!formData.value.address) {
         isVisible.value = true;
-        infoAlert.value =' Veuillez renseigner l\'adresse.';
+        infoAlert.value = ' Veuillez renseigner l\'adresse.';
         return false;
       }
       break;
     case 3:
       if (!formData.value.phone_number || !formData.value.email) {
         isVisible.value = true;
-        infoAlert.value =' Veuillez entrer un numéro de téléphone et une adresse e-mail.';
+        infoAlert.value = ' Veuillez entrer un numéro de téléphone et une adresse e-mail.';
         return false;
       }
       break;
@@ -97,14 +97,14 @@ const validateStep = () => {
       if (!formData.value.openings || Object.keys(formData.value.openings).length === 0) {
         isVisible.value = true;
         console.log('formData.value.openings', formData.value.openings);
-        infoAlert.value =' Veuillez sélectionner les jours d\'ouverture.';
+        infoAlert.value = ' Veuillez sélectionner les jours d\'ouverture.';
         return false;
       }
       break;
     case 5:
       if (!formData.value.policies) {
         isVisible.value = true;
-        infoAlert.value =' Veuillez renseigner les politiques du service.';
+        infoAlert.value = ' Veuillez renseigner les politiques du service.';
         return false;
       }
       break;
@@ -141,7 +141,13 @@ const handleSubmit = async (e) => {
     policies: formData.value.policies || null,
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
+    images: formData.value.url.length ? JSON.stringify(formData.value.url) : '[]',
     status: formData.value.status || 'active',
+    firstname: formData.value.firstName,
+    lastname: formData.value.lastName,
+    password: formData.value.password,
+    emailU: formData.value.email,
+    phone_numberU: formData.value.phone_number
   };
 
   try {
@@ -168,7 +174,13 @@ const handleSubmit = async (e) => {
         policies: '',
         capacity: '',
         payment_methods: [],
+        url: [],
         status: 'active',
+        lastname: '',
+        firstname: '',
+        password: '',
+        emailU: '',
+        phone_numberU: ''
       };
       activeStep.value = 1;
     }, 3000);
@@ -178,6 +190,7 @@ const handleSubmit = async (e) => {
     alert(`Erreur lors de l'envoi: ${error.response?.data?.message || error.message}`);
   }
 };
+
 </script>
 
 <template>
@@ -192,7 +205,7 @@ const handleSubmit = async (e) => {
     </div>
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
-        <AlertInfo v-if="isVisible" @close="closeAlert" type="danger"  :message="infoAlert" />
+        <AlertInfo v-if="isVisible" @close="closeAlert" type="danger" :message="infoAlert" />
 
         <div class="flex items-center justify-between">
           <div
