@@ -116,6 +116,13 @@
               </div>
             </div>
             <div class="flex items-center space-x-2">
+              <BadgeCheck size="20" class="text-slate-600" />
+              <div>
+                <div class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.yes') }}</div>
+                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.availability') }} </div>
+              </div>
+            </div>
+            <!-- <div class="flex items-center space-x-2">
               <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
                 stroke="#475569" stroke-width="2">
                 <path d="M1 16 H6 M6 12 H10 M10 8 H14 M14 4 H18" />
@@ -124,14 +131,14 @@
                 <div class="text-sm font-medium text-gray-900">4</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.floor') }} </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
     </div>
     <div class="px-6 py-2">
-      <!-- <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2> -->
-      <!-- <div class="space-y-3 text-gray-600 text-sm">
+      <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
+      <div class="space-y-3 text-gray-600 text-sm">
         <p>{{ $t('appServices.hotel.freeCancellation') }}</p>
         <p>
           {{ $t('appServices.hotel.chargeDate') }} {{ $t('appServices.hotel.ifYouCancel') }}
@@ -149,7 +156,7 @@
           <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
             :class="{ 'rotate-180': expanded }" />
         </button>
-      </div> -->
+      </div>
     </div>
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
@@ -553,6 +560,7 @@ import {
   CarFrontIcon,
   ChevronDownIcon,
   StarIcon,
+  BadgeCheck
 } from 'lucide-vue-next';
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import { getAllServicesByService, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
@@ -602,7 +610,28 @@ const emit = defineEmits(['next', 'back']);
 const Rooms = ref([]);
 const options = ref([]);
 const sizeValue = ref(0);
+// const priceOption = ref([
+//   { id: 1, name: 'Car Park', price: 0 },
+//   { id: 2, name: 'Wine', price: 0 },
+//   { id: 3, name: 'Pet', price: 0 }
+// ]);
 
+// const setOptionsPrice = () =>{
+//   if(selectedOptions.value.carPark){
+//     priceOption.value[0].price = getOptionPrice('carPark');
+//     console.log('priceOption.value.price',priceOption.value.price)
+//     console.log('getOptionPrice carkPark',getOptionPrice('carPark'))
+// }
+//   if(selectedOptions.value.carPark){
+//     priceOption.value[1].price = getOptionPrice('wine');
+//   }
+
+//   if(selectedOptions.value.carPark){
+//     priceOption.value[2].price = getOptionPrice('pet');
+//   }
+// hotelStore.priceOption = priceOption.value;
+// console.log('priceOption store',hotelStore.priceOption)
+// }
 
 // Options supplémentaires
 const selectedOptions = ref({
@@ -615,7 +644,6 @@ const verifyCarParkOptionSelected = () => {
     hotelStore.setIsCarParkSelected();
   }
 }
-verifyCarParkOptionSelected();
 
 const selectedVehicle = ref('motorcycle');
 const selectedParkingType = ref('default');
@@ -635,10 +663,24 @@ const amenitiesStatus = computed(() => {
 
 const toggleOption = (option) => {
   selectedOptions.value[option] = !selectedOptions.value[option];
+  if (option === 'carPark') {
+    hotelStore.carParkPrice = getOptionPrice(option);
+    setSelectedVehicle(selectedVehicle.value)
+    console.log('carParkPrice', hotelStore.carParkPrice);
+  } else if (option === 'wine') {
+    hotelStore.winePrice = getOptionPrice(option);
+  } else if (option === 'pet') {
+    hotelStore.petPrice = getOptionPrice(option);
+  }
+
 };
 
 const setSelectedVehicle = (vehicle) => {
   selectedVehicle.value = vehicle;
+  if (selectedOptions.value.carPark) {
+    hotelStore.carParkPrice = getOptionPrice('carPark');
+    console.log('carParkPrice', hotelStore.carParkPrice);
+  }
 };
 
 const setSelectedParkingType = (type) => {
@@ -651,6 +693,7 @@ const toggleExpanded = () => {
 
 const handleBack = () => {
   emit('back');
+  console.log('handleBack');
 };
 const firstNameValid = ref(null);
 const lastNameValid = ref(null);
@@ -736,8 +779,9 @@ const handleNext = () => {
 
   // hotelStore.this_hotel.price = hotelStore.this_hotel.price + getOptionPrice('carPark') + getOptionPrice('wine') + getOptionPrice('pet');
   // console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
-  console.log('gets', getOptionPrice('carPark'), getOptionPrice('wine'), getOptionPrice('pet'));
   console.log('selectedOption:', selectedOptions.value);
+  // setOptionsPrice();
+  verifyCarParkOptionSelected();
   emit('next', roomData);
 };
 
@@ -760,6 +804,8 @@ const getOptionPrice = (option) => {
 
   return 0;
 };
+console.log('gets', getOptionPrice('carPark'), getOptionPrice('wine'), getOptionPrice('pet'));
+
 const serviceId = ref(0);
 const RoomsWithLowPrice = ref({})
 // Fonction pour charger les chambres

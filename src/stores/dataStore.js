@@ -16,4 +16,7 @@ export const useDataStore = defineStore('data', {
       this.filtedHotel = { ...fHotel }
     }
   },
+  persist: {
+    storage: sessionStorage,
+},
 });

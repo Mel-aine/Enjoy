@@ -9,27 +9,32 @@ import {
 } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
-import {useDataStore} from '@/stores/dataStore';
-import {useMIHStore} from '@/stores/manageHotelInterface';
+import { useDataStore } from '@/stores/dataStore';
+import { useMIHStore } from '@/stores/manageHotelInterface';
+import { useLanguageStore } from "@/lang/language";
+import { storeToRefs } from 'pinia';
+
+const useLanguage = useLanguageStore()
+const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
 import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
 const checkInDate = ref(dataStore.searchFrom.dateAller);
-const checkOutDate = ref(dataStore.searchFrom.dateRetour); 
+const checkOutDate = ref(dataStore.searchFrom.dateRetour);
 
 const totalDays = () => {
   const checkIn = new Date(checkInDate.value);
   console.log('checkIn', checkIn);
   console.log('checkOutDate', checkOutDate.value);
   const checkOut = new Date(checkOutDate.value);
-console.log('checkIn', checkIn);
-console.log('checkOut', checkOut);
+  console.log('checkIn', checkIn);
+  console.log('checkOut', checkOut);
   if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) return 0;
 
   const timeDiff = checkOut.getTime() - checkIn.getTime();
-  return Math.ceil(timeDiff / (1000 * 60 * 60 * 24)); 
+  return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 };
 
 const stayLength = ref(totalDays());
@@ -47,6 +52,20 @@ const priceDetails = computed(() => [
     price: Number(hotelStore?.roomPrice) || 0,
   },
   {
+    label: t('appServices.hotel.carOption'),
+    price: stayLength.value > 0
+      ? Number(hotelStore?.carParkPrice) * stayLength.value || 0
+      : Number(hotelStore?.carParkPrice) || 0,
+  },
+  {
+    label: t('appServices.hotel.wineOption'),
+    price: Number(hotelStore?.winePrice) || 0,
+  },
+  {
+    label: t('appServices.hotel.petOption'),
+    price: Number(hotelStore?.petPrice) || 0,
+  },
+  {
     label: t('appServices.hotel.8%VAT'),
     price: 2050,
   },
@@ -59,8 +78,10 @@ const totalPrice = computed(() =>
   priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)
 );
 hotelStore.totalPrice = totalPrice.value;
+console.log('totalPrice', totalPrice.value);
 hotelStore.dateArrived = checkInDate.value;
 hotelStore.dateDepart = checkOutDate.value;
+
 hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
 
 const invoiceRef = ref(null);
@@ -69,19 +90,53 @@ const downloadAsPDF = () => {
   const node = invoiceRef.value;
   if (!node) return;
 
+  // D'abord, on récupère les dimensions du DOM réel
+  const pixelToMm = (px) => px * 0.264583; // Conversion pixels → mm (1 px ≈ 0.2646 mm)
+  const domRect = node.getBoundingClientRect();
+  const domWidthMm = pixelToMm(domRect.width);
+  const domHeightMm = pixelToMm(domRect.height);
+
   domtoimage.toPng(node)
     .then((dataUrl) => {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const imgProps = pdf.getImageProperties(dataUrl);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      const pdf = new jsPDF('p', 'mm', [domHeightMm, domWidthMm]); // Taille exacte du DOM
+      pdf.addImage(dataUrl, 'PNG', 0, 0, domWidthMm, domHeightMm);
       pdf.save('facture-booking.pdf');
     })
     .catch((error) => {
       console.error('Erreur lors du téléchargement du PDF:', error);
     });
 };
+
+const formatDate = (dateValue) => {
+  const currentLocale = locale.value === "fr" ? "fr-FR" : "en-US";
+  const today = new Date();
+  const inputDate = dateValue instanceof Date ? new Date(dateValue) : new Date(dateValue);
+
+  if (isNaN(inputDate.getTime())) return "Invalid date";
+
+  // Si c'est aujourd'hui, on force l'année en cours
+  const isSameDay =
+    inputDate.getDate() === today.getDate() &&
+    inputDate.getMonth() === today.getMonth();
+
+  if (isSameDay) {
+    inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
+  }
+
+  const options = {
+    weekday: "short",
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+
+  const formattedDate = new Intl.DateTimeFormat(currentLocale, options).format(inputDate);
+
+  return isSameDay ? `${t('appServices.agency.today')} - ${formattedDate}` : formattedDate;
+};
+
+
+
 // const clientName = ref(`${props.guestData.firstName}-${props.guest.lastName}`);
 
 // const sanitizeFileName = (str) => str.replace(/\s+/g, '').replace(/[^\w-]/g, '');
@@ -113,23 +168,24 @@ const downloadAsPDF = () => {
 
 <template>
 
-  <div ref="invoiceRef" class="bg-white rounded-xl shadow-sm p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{$t('appServices.hotel.reservationSummary')}}</h3>
+  <div class="bg-white rounded-xl shadow-sm ">
+    <div ref="invoiceRef" class="p-6">
+    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
     <div class="flex justify-between pb-4 border-b">
       <div>
-        <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkIn')}}</div>
-        <div class="font-medium">{{ checkInDate }}</div>
+        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkIn') }}</div>
+        <div class="font-medium">{{ formatDate(checkInDate) }}</div>
         <!-- <div class="text-sm text-gray-600">from 16:00</div> -->
       </div>
       <div class="text-right">
-        <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.checkOut')}}</div>
-        <div class="font-medium">{{ checkOutDate }}</div>
+        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkOut') }}</div>
+        <div class="font-medium">{{ formatDate(checkOutDate) }}</div>
         <!-- <div class="text-sm text-gray-600">by 11:00</div> -->
       </div>
     </div>
 
     <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.totalLengthOfStay')}}
+      <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.totalLengthOfStay') }}
       </div>
       <div class="font-medium flex">
         <span>{{ stayLength }}</span>
@@ -139,32 +195,35 @@ const downloadAsPDF = () => {
     </div>
 
     <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">{{$t('appServices.hotel.youSelected')}}</div>
+      <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
       <div class="font-medium">{{ selectedRoom }}</div>
       <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
     </div>
 
     <div class="py-4">
-      <h4 class="font-medium mb-2">{{$t('appServices.hotel.yourPriceSummary')}}</h4>
+      <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>
       <div class="space-y-2">
         <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
           <span>{{ item.label }}</span>
           <span>FCFA {{ item.price.toFixed(2) }}</span>
         </div>
         <div class="flex justify-between font-medium text-customRed pt-2 border-t">
-          <span>      {{$t('appServices.hotel.total')}} {{$t('appServices.hotel.price')}}
+          <span> {{ $t('appServices.hotel.total') }} {{ $t('appServices.hotel.price') }}
           </span>
           <span>FCFA <span class="text-xl font-bold">{{ totalPrice.toFixed(2) }} </span> </span>
         </div>
       </div>
     </div>
-    
-    <button @click="downloadAsPDF"
+</div>
+<div class="mx-6 -my-6">
+  <button @click="downloadAsPDF"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
-      {{$t('appServices.hotel.downloadInvoice')}}
+      {{ $t('appServices.hotel.downloadInvoice') }}
     </button>
-    <div class="text-center text-xs text-gray-500 mt-4">
-      {{$t('appServices.hotel.weRunOnEnjoyInc')}}
+    <div class="text-center text-xs text-gray-500 mt-4 pb-6">
+      {{ $t('appServices.hotel.weRunOnEnjoyInc') }}
     </div>
+</div>
+   
   </div>
 </template>

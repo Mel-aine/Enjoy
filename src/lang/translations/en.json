@@ -449,7 +449,13 @@
       "processing": "Processing...",
       "totalLengthOfStay": "TOTAL LENGTH OF STAY",
       "noCompromiseComfort": "No compromise on comfort. Enjoy a seamless service, effortless and hassle-free.",
-      "premiumExperience": "An experience designed for your well-being, with premium services and nothing unnecessary."
+      "premiumExperience": "An experience designed for your well-being, with premium services and nothing unnecessary.",
+      "availability": "Availability",
+      "yes": "Yes",
+      "no": "No",
+      "carOption": "Car option",
+      "wineOption": "Wine option",
+      "petOption": "Pet option"
     }
   },
   "open": "Open",

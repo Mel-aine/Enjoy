@@ -12,6 +12,10 @@ export const useMIHStore = defineStore("MIH", {
     isCarParkSelected: null,
     roomPrice: null,
     totalPrice: null,
+    priceOption: [],
+    carParkPrice: null,
+    winePrice: null,
+    petPrice: null,
     dateArrived: null,
     dateDepart: null,
     totalPerson: null,
@@ -57,4 +61,7 @@ export const useMIHStore = defineStore("MIH", {
   //   getters: {
   //     getShowCount: (state) => state.count,
   //   }
+  persist: {
+    storage: sessionStorage,
+},
 });

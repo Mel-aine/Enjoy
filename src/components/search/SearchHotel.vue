@@ -249,7 +249,7 @@
                         </label>
                         <label for="toggle-passager"
                             class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black">{{ $t("appServices.hotel.travelers") }}</span></label>
+                            <span class="text-black">{{ $t("appServices.hotel.guests") }}</span></label>
                     </div>
                 </label>
             </div>

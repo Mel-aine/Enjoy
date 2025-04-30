@@ -37,6 +37,7 @@ const handleBackStep = () => {
     step3Active.value = false;
     step4Active.value = false;
   }
+  console.log('handleBackStep');
 };
 
 const goToStep3 = (roomData) => {

@@ -446,7 +446,14 @@
       "processing": "Traitement en cours...",
       "totalLengthOfStay": "DURÉE TOTALE DU SÉJOUR",
       "noCompromiseComfort": "Aucun compromis sur le confort. Profitez d’un service fluide, sans effort ni tracas.",
-      "premiumExperience": "Une expérience pensée pour votre bien-être, avec des prestations haut de gamme et sans superflu."
+      "premiumExperience": "Une expérience pensée pour votre bien-être, avec des prestations haut de gamme et sans superflu.",
+      "availability": "Disponibilité",
+      "yes": "Oui",
+      "no": "Non",
+      "carOption": "Option de vehicule",
+      "wineOption": "Option de vin",
+      "petOption": "Option d'animal"
+
     }
   },
   "open": "Ouvert",
