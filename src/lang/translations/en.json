@@ -33,6 +33,7 @@
   "read": "Read",
 
   "navbar": {
+    "noResult" : "No found",
     "space": "Current Location",
     "yelpProfessional": "Enjoy for Professionals",
     "writeReview": "Write a Review",
@@ -295,7 +296,6 @@
       "hotelAnnouncement": "Make your reservation now and pay at the hotel. Cancellation is free.",
       "arrival": "Arrival",
       "per": "per",
-      "night": "night",
       "departure": "Departure",
       "destination": "Destination",
       "persons": "Person(s)",
@@ -337,7 +337,7 @@
       "readMore": "Read more",
       "enterYourDetails": "Enter your details",
       "addToStay": "Add to stay",
-      "night": "Night",
+      "nights": "Night(s)",
       "requestToBook": "Request to book",
       "reservationSummary": "Reservation summary",
       "checkIn": "CHECK-IN",
@@ -455,7 +455,17 @@
       "no": "No",
       "carOption": "Car option",
       "wineOption": "Wine option",
-      "petOption": "Pet option"
+      "petOption": "Pet option",
+      "Individual": "Individual",
+      "Group": "Group",
+      "Corporate": "Corporate",
+      "Wedding": "Wedding",
+      "Honeymoon": "Honeymoon",
+      "Standard": "Standard",
+      "choiceOnePackage": "Choice one package",
+      "confirmed": "Confirmed",
+      "Ticket-Parking.pdf": "Parking-Ticket.pdf",
+      "bill-Booking.pdf": "Booking-Bill.pdf"
     }
   },
   "open": "Open",

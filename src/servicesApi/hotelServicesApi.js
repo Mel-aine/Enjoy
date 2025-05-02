@@ -45,6 +45,10 @@ export const getOptionsByService = () => {
 export const makeReservation = (reservationData) => {
   return axios.post(`${API_URL}/reservationswithuser`, reservationData)
 }
+
+export const makePayment = (paymentData) => {
+  return axios.post(`${API_URL}/paymentConfirm`, paymentData)
+}
 //Services Service Api end
 
 

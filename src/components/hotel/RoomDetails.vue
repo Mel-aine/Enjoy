@@ -280,9 +280,26 @@
             {{ $t('appServices.hotel.phoneError') }}
           </p>
         </div>
+
       </div>
+      <!-- picklist start-->
+      <!-- <div class=" mt-4">
+        <div>
+          <label for="packageSelect" class="block mb-2">{{ $t('appServices.hotel.choiceOnePackage') }}</label>
+          <select id="packageSelect" v-model="selectedPackage" class="border border-gray-300 p-2 rounded-lg w-full">
+            <option v-for="pkg in Package" :key="pkg.value" :value="pkg.value">
+              {{ pkg.label }}
+            </option>
+          </select>
+        </div>
+      </div> -->
+      <!-- picklist end-->
     </div>
     <!-- User Details Form end-->
+
+
+
+
 
     <!-- Additional ways to booking start -->
 
@@ -535,16 +552,14 @@
           </div>
         </div>
       </div>
-
     </div>
-
   </div>
-
+  <LoadingSpinner v-if="hotelStore.isSpinnerDisplayed" />
 
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import {
   DumbbellIcon,
   XIcon,
@@ -566,6 +581,9 @@ import { useMIHStore } from '@/stores/manageHotelInterface';
 import { getAllServicesByService, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
 import "vue-skeletor/dist/vue-skeletor.css"
 import { Skeletor } from "vue-skeletor"
+import LoadingSpinner from '@/components/spiner/LoaodingSpinner.vue';
+// import { useI18n } from 'vue-i18n';
+
 const defaultValues = {
   firstName: '',
   lastName: '',
@@ -573,6 +591,7 @@ const defaultValues = {
   emailAddress: '',
   countryCode: '+237'
 }
+// const { t } = useI18n();
 
 // Props
 const props = defineProps({
@@ -590,6 +609,16 @@ const phoneNumber = ref('')
 const emailAddress = ref('')
 const countryCode = ref('')
 const isLoading = ref(false)
+// const selectedPackage = ref('Individual');
+
+// const Package = computed(() => [
+//   { value: 'Individual', label: t('appServices.hotel.Individual') },
+//   { value: 'Group', label: t('appServices.hotel.Group') },
+//   { value: 'Corporate', label: t('appServices.hotel.Corporate') },
+//   { value: 'Wedding', label: t('appServices.hotel.Wedding') },
+//   { value: 'Honeymoon', label: t('appServices.hotel.Honeymoon') },
+//   { value: 'Standard', label: t('appServices.hotel.Standard') },
+// ]);
 
 // Fonction pour initialiser les champs depuis les props ou les defaults
 const initializeForm = () => {
@@ -782,7 +811,7 @@ const handleNext = () => {
   console.log('selectedOption:', selectedOptions.value);
   // setOptionsPrice();
   verifyCarParkOptionSelected();
-  emit('next', roomData);
+  emit('next', roomData,RoomsWithLowPrice.value.id);
 };
 
 // Helper function to get option prices
@@ -909,4 +938,8 @@ watch(
   { immediate: true }
 );
 
+onMounted(() => {
+  // Scroll en haut de la page quand le composant est monté
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
 </script>

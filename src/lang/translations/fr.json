@@ -33,6 +33,7 @@
   "read": "Lire",
 
   "navbar": {
+    "noResult" : "Pas trouver",
     "space": "Emplacement actuel",
     "yelpProfessional": "Enjoy pour les professionnels",
     "writeReview": "Écrire un avis",
@@ -452,8 +453,17 @@
       "no": "Non",
       "carOption": "Option de vehicule",
       "wineOption": "Option de vin",
-      "petOption": "Option d'animal"
-
+      "petOption": "Option d'animal",
+      "Individual": "Individuel",
+      "Group": "Groupe",
+      "Corporate": "Entreprise",
+      "Wedding": "Mariage",
+      "Honeymoon": "Lune de miel",
+      "Standard": "Standard",
+      "choiceOnePackage": "Choisissez un forfait",
+      "confirmed": "Confirmé",
+      "Ticket-Parking.pdf": "Ticket-Parking.pdf",
+      "bill-Booking.pdf": "Facture-Reservation.pdf"
     }
   },
   "open": "Ouvert",

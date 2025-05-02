@@ -19,6 +19,9 @@ export const useMIHStore = defineStore("MIH", {
     dateArrived: null,
     dateDepart: null,
     totalPerson: null,
+    stayLength: null,
+    roomNumber: [],
+    isSpinnerDisplayed: false,
   }),
 
   actions: {
@@ -56,6 +59,10 @@ export const useMIHStore = defineStore("MIH", {
     setIsCarParkSelected() {
       this.isCarParkSelected = true;
     },
+    getRoomNumber(rooms) {
+      this.roomNumber = rooms.length;
+      return this.roomNumber;
+    }
   },
   //   ,
   //   getters: {

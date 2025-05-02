@@ -38,6 +38,7 @@ const totalDays = () => {
 };
 
 const stayLength = ref(totalDays());
+hotelStore.stayLength = stayLength.value;
 const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
 const { t } = useI18n();
 
@@ -46,6 +47,7 @@ function getTotalPersons(rooms) {
     return total + (room.adults || 0) + (room.childrens || 0)
   }, 0)
 }
+
 const priceDetails = computed(() => [
   {
     label: t('appServices.hotel.RoomsAndOffer'),
@@ -86,7 +88,7 @@ hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
 
 const invoiceRef = ref(null);
 
-const downloadAsPDF = () => {
+const downloadBillBooking = () => {
   const node = invoiceRef.value;
   if (!node) return;
 
@@ -100,7 +102,7 @@ const downloadAsPDF = () => {
     .then((dataUrl) => {
       const pdf = new jsPDF('p', 'mm', [domHeightMm, domWidthMm]); // Taille exacte du DOM
       pdf.addImage(dataUrl, 'PNG', 0, 0, domWidthMm, domHeightMm);
-      pdf.save('facture-booking.pdf');
+      pdf.save(t('appServices.hotel.bill-Booking.pdf'));
     })
     .catch((error) => {
       console.error('Erreur lors du téléchargement du PDF:', error);
@@ -216,7 +218,7 @@ const formatDate = (dateValue) => {
     </div>
 </div>
 <div class="mx-6 -my-6">
-  <button @click="downloadAsPDF"
+  <button @click="downloadBillBooking"
       class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
       {{ $t('appServices.hotel.downloadInvoice') }}
     </button>

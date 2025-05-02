@@ -107,6 +107,9 @@
               <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
                 @mouseleave="handleMouseLeave('left')"
                 class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+                <li v-if="filteredLeftItems.length === 0" class="text-gray-600 italic">
+                  {{ $t('navbar.noResult') }}
+                </li>
                 <li v-for="item in filteredLeftItems" :key="item.label"
                   @click="selectItem('left', $t('categories.' + item.label))"
                   class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
@@ -304,7 +307,7 @@
     </div> -->
     <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
-  
+
     <!-- ,,Services destiné aux prof,Média,
     Formation & Enseignement,Organisation d
     événements,Services Locaux,Immobilier
@@ -312,6 +315,7 @@
 
   </div>
 
+<LoaodingSpinner v-if="hotelStore.isSpinnerDisplayed" />
 </template>
 
 <script setup>
@@ -323,16 +327,18 @@ import { Categories } from "@/mocks/categories.js";
 import CustomModal from '../CustomModal.vue';
 import SearchHotel from '../search/SearchHotel.vue';
 import { useDataStore } from '@/stores/dataStore';
-import { useRouter,useRoute } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { useCategoryStore } from "@/stores/map";
+import { useMIHStore } from '@/stores/manageHotelInterface.js';
 // import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '../icons/BaseIcon.vue';
 // import { useRouter } from 'vue-router';
 // import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
-import {getCategories} from '@/servicesApi/hotelServicesApi.js'
+import { getCategories } from '@/servicesApi/hotelServicesApi.js'
+import LoaodingSpinner from '../spiner/LoaodingSpinner.vue';            
 const router = useRouter();
-
+const hotelStore = useMIHStore();
 const dataStore = useDataStore();
 const store = useCategoryStore();
 const categories = ref([])
@@ -373,11 +379,14 @@ const toggleModal = () => {
 
 const fetchCategories = async () => {
   try {
+    hotelStore.isSpinnerDisplayed = true;
     const response = await getCategories();
     categories.value = response.data.data;
     console.log('categories', categories.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories:', error);
+  }finally{
+    hotelStore.isSpinnerDisplayed = false;
   }
 };
 
@@ -470,7 +479,8 @@ const checkScrollButtonsVisibility = () => {
 const handleSearchWithComponent = (searchFromNavbar) => {
   if (rightValue.value == null) return;
   isModalOpen.value = false;
-  dataStore.searchFrom = {... searchFromNavbar}
+  dataStore.searchFrom = { ...searchFromNavbar }
+  console.log('searchFromNavbar', searchFromNavbar)
   router.push(`/hotelList/${searchFromNavbar.destination}`); // Redirige vers la route /bookingHotel
 };
 
@@ -789,7 +799,7 @@ async function searchNearbyPlaces(map, categories) {
       background: bgColorMarkerCategory.value, // Couleur de fond du marqueur
       borderColor: bColorCategory.value, // Bordure
     });
-    
+
     // Création du marqueur avancé
     const marker = new google.maps.marker.AdvancedMarkerElement({
       map: map,
