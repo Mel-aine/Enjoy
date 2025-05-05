@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed, } from 'vue'
-import { WifiIcon, SquareParkingIcon, AccessibilityIcon, SpadeIcon, SnowflakeIcon, SunIcon, WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, HeartIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
+import { WifiIcon, SquareParkingIcon, AccessibilityIcon, SpadeIcon, SnowflakeIcon, SunIcon, WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, HeartIcon, MapPinIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
@@ -108,7 +108,7 @@ const handleViewDeal = () => {
       <div class="flex-grow p-4">
         <div class="flex items-start justify-between">
           <div>
-            <h3 class="text-lg font-bold">{{ hotel.name }}</h3>
+            <h3 class="text-2xl font-bold">{{ hotel.name }}</h3>
             <div class="flex items-center space-x-1">
               <span v-for="(star, index) in renderStars" :key="index">
                 <StarIcon :size="16" :class="star === 'filled' ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'" />
@@ -120,7 +120,7 @@ const handleViewDeal = () => {
           </div>
         </div>
 
-        <div class="flex items-center text-gray-600 text-sm mt-2">
+        <div class="flex items-center text-gray-600 text-md mt-2">
           <MapPinIcon size="16" class="mr-1" />
           <span>{{ location.text }}</span>
         </div>

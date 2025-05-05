@@ -1,4 +1,3 @@
-
 <template>
     <!-- ✅ Checkbox caché pour gérer l'affichage -->
     <input type="checkbox" id="toggle-passager" class="peer hidden" />
@@ -90,7 +89,7 @@
             <div class="flex justify-between mt-2">
                 <label for="toggle-passager"
                     class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-pointer peer-checked:bg-blue-200">
-                    {{ $t("appServices.hotel.valid") }}           
+                    {{ $t("appServices.hotel.valid") }}
                 </label>
 
             </div>
@@ -111,24 +110,25 @@
             class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
             <!-- Search Section -->
             <div class="lg:flex justify-center">
-                <div class="bg-transparent mt-1 rounded-lg cursor-pointer" @click="toggleDropdown">
+                <div class="bg-transparent mt-1 rounded-lg cursor-pointer">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-80">
-                            <MapPinIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
-                        <input type="text" id="destination" v-model="destination"
+                        <MapPinIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+                        <input ref="autocompleteInput" type="text" id="destination" v-model="destination"
                             class="cursor-pointer opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
-                        <label for="destination" @click="toggleDropdown"
+                        <label for="destination"
                             class="cursor-pointer absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black font-medium cursor-pointer"> {{ truncateText(destination,28) }} </span> </label>
+                            <span class="text-black font-medium cursor-pointer"> {{ truncateText(destination, 28) }}
+                            </span> </label>
                         <label for="destination"
                             class=" cursor-pointer  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <span class="text-black  cursor-pointer ">{{ $t("appServices.hotel.destination")
-                                }}</span></label>
+                            }}</span></label>
                     </div>
                 </div>
                 <!-- <div v-if="isOpen" class="h-[800px]"></div> -->
-                <div v-if="isOpen"
+                <!-- <div v-if="isOpen"
                     class=" absolute dropdown-menu bg-white border h-[350px] lg:h-[500px] overflow-x-auto scrollbar-hide mt-4 shadow-xl rounded w-full max-w-sm sm:min-w-56 md:min-w-56 lg:w-80 transition duration-300">
                     <div class="p-3 ">
                         <div class="search-container relative">
@@ -137,7 +137,8 @@
                                 :placeholder="$t('appServices.hotel.question')" />
                             <button v-if="destination" @click="clearInput"
                                 class="absolute right-3 top-1/2 transform -translate-y-1/2 text-black text-xl">
-                                <BaseIcon name="X" size="20" stroke-width="3" class="bg-red-200 rounded-full p-2 w-8 h-8" />
+                                <BaseIcon name="X" size="20" stroke-width="3"
+                                    class="bg-red-200 rounded-full p-2 w-8 h-8" />
                             </button>
                         </div>
 
@@ -193,12 +194,13 @@
 
                     </div>
 
-                </div>
+                </div> -->
             </div>
             <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer">
                 <div
                     class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
-                    <CalendarRangeIcon size="22" class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
+                    <CalendarRangeIcon size="22"
+                        class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
                     <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateArrival"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
@@ -214,7 +216,9 @@
             <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-pointer">
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
-                    <CalendarRangeIcon size="22" class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
+                    <CalendarRangeIcon size="22"
+                        class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" /> <input
+                        type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
                         class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateRetour"
@@ -230,7 +234,7 @@
                 <label for="toggle-passager">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-72">
-                        <UsersIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black"/>
+                        <UsersIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
                         <input type="text" id="travelers" name="travelers" v-model="nothing"
                             class="opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
@@ -273,21 +277,22 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import { French, English } from "flatpickr/dist/l10n/fr.js";
 import Counter from "@/components/counter/Counter.vue";
-import BaseIcon from '@/components/icons/BaseIcon.vue';
+// import BaseIcon from '@/components/icons/BaseIcon.vue';
 import { truncateText } from '@/utils/functions.js';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
 import {
-  UsersIcon,
-  CalendarRangeIcon,
-  MapPinIcon
+    UsersIcon,
+    CalendarRangeIcon,
+    MapPinIcon
 } from 'lucide-vue-next';
 // import DropDown from '../dropDown/DropDown.vue';
 import { useI18n } from "vue-i18n";
 
 import "vue-skeletor/dist/vue-skeletor.css";
-import { Skeletor } from "vue-skeletor";
+// import { Skeletor } from "vue-skeletor";
 import { useLanguageStore } from "@/lang/language";
 import { storeToRefs } from 'pinia';
+
 
 const useLanguage = useLanguageStore()
 const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
@@ -306,7 +311,7 @@ const nothing = ref('true');
 const addRoomDisabled = ref(false);
 
 
-
+const autocompleteInput = ref(null)
 const datepickerAller = ref(null);
 const datepickerRetour = ref(null);
 const formattedDateArrival = ref("");
@@ -318,12 +323,12 @@ const dropdown = ref(null);
 // const showFilter = ref(false);
 const searchInput = ref(null);
 
-const filteredWords = ref([]);
-const recentSearch = ref([]);
+// const filteredWords = ref([]);
+// const recentSearch = ref([]);
 const emit = defineEmits(["search"]);
 
 watch(() => locale.value, (newLocale) => {
-  langChanged(newLocale);
+    langChanged(newLocale);
 }, { deep: true });
 
 import { useDataStore } from '@/stores/dataStore';
@@ -332,33 +337,47 @@ const dataStore = useDataStore();
 
 if (dataStore.parentType === 'navbar') {
     destination.value = dataStore.data;
-  console.log('Données provenant de Parent A');
+    console.log('Données provenant de Parent A');
 }
 
-
-const filterSuggestions = () => {
-    if (destination.value.length === 0) {
-        filteredWords.value = [];
-        return;
+const loadGoogleMapsAPI = () => {
+  return new Promise((resolve, reject) => {
+    if (window.google) {
+      resolve();
+      return;
     }
-    filteredWords.value = menuData.value.filter(item =>
-        item.label.toLowerCase().includes(destination.value.toLowerCase())
-    );
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+    script.onload = resolve;
+    script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
+    document.head.appendChild(script);
+  });
 };
 
-const selectSuggestion = (label) => {
-    destination.value = label;
-    recentSearch.value.push(label);
-    console.log("recentSearch", recentSearch.value);
-    filteredWords.value = [];
-};
+// const filterSuggestions = () => {
+//     if (destination.value.length === 0) {
+//         filteredWords.value = [];
+//         return;
+//     }
+//     filteredWords.value = menuData.value.filter(item =>
+//         item.label.toLowerCase().includes(destination.value.toLowerCase())
+//     );
+// };
 
-const clearInput = () => {
-    destination.value = "";
-    filteredWords.value = [];
+// const selectSuggestion = (label) => {
+//     destination.value = label;
+//     recentSearch.value.push(label);
+//     console.log("recentSearch", recentSearch.value);
+//     filteredWords.value = [];
+// };
+
+// const clearInput = () => {
+//     destination.value = "";
+//     filteredWords.value = [];
 
 
-};
+// };
 
 const toggleDropdown = async () => {
     if (isOpen.value === true) {
@@ -404,7 +423,8 @@ const totalPersons = computed(() => {
 });
 
 const handleSearch = () => {
-emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
+    emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
+    console.log({ destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
 };
 
 const formatDate = (date) => {
@@ -412,7 +432,7 @@ const formatDate = (date) => {
     const currentLocale = locale.value || 'en';
     // Utiliser la bonne locale selon la langue
     const localeString = currentLocale === "en" ? "en-US" : "fr-FR";
-    
+
     return `${t("appServices.agency.today")}, ${new Intl.DateTimeFormat(
         localeString,
         options
@@ -429,14 +449,14 @@ const _formatDate = (date) => {
     const currentLocale = locale.value || 'en';
     // Utiliser la bonne locale selon la langue
     const localeString = currentLocale === "en" ? "en-US" : "fr-FR";
-    
+
     return new Intl.DateTimeFormat(localeString, options).format(date);
 };
 
 const langChanged = (lang) => {
     langChange.value = !langChange.value;
     console.log("langChanged", lang);
-    
+
     // Mettre à jour la locale de Flatpickr
     flatpickr(".datepicker", {
         mode: "range",
@@ -520,7 +540,25 @@ const updateScreenSize = () => {
 // hotelStore.persons = totalPersons.value;
 
 
-onMounted(() => {
+onMounted(async () => {
+    try {
+    await loadGoogleMapsAPI()
+
+    if (autocompleteInput.value) {
+      const autocomplete = new google.maps.places.Autocomplete(autocompleteInput.value, {
+        types: ['(cities)'],
+        componentRestrictions: { country: 'fr' }, // facultatif
+      })
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace()
+        destination.value = place.formatted_address || place.name || ''
+      })
+    }
+  } catch (error) {
+    console.error(error)
+  }
+
     document.addEventListener("click", handleClickOutside);
     checkScrollButtonsVisibility(); // Initial check after component is mounted
     // Re-check when the window resizes (for responsiveness)
@@ -534,18 +572,18 @@ onUnmounted(() => {
 
 const { t } = useI18n();
 
-const menuData = computed(() => [
-    { label: "Yaounde, CE," + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Douala, LT , " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Bamenda, NW, " + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Garoua, NO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Bafoussam, OU, " + t('navbar.cameroon'), icon: "Luggage" },
-    { label: "Limbe, SO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Kribi, SU, " + t('navbar.cameroon'), icon: "Ship" },
-    { label: "Buea, SW, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-    { label: "Maroua, EN, " + t('navbar.cameroon'), icon: "Ship" },
-    { label: "Dschang, OU, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
-]);
+// const menuData = computed(() => [
+//     { label: "Yaounde, CE," + t('navbar.cameroon'), icon: "Luggage" },
+//     { label: "Douala, LT , " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
+//     { label: "Bamenda, NW, " + t('navbar.cameroon'), icon: "Luggage" },
+//     { label: "Garoua, NO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
+//     { label: "Bafoussam, OU, " + t('navbar.cameroon'), icon: "Luggage" },
+//     { label: "Limbe, SO, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
+//     { label: "Kribi, SU, " + t('navbar.cameroon'), icon: "Ship" },
+//     { label: "Buea, SW, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
+//     { label: "Maroua, EN, " + t('navbar.cameroon'), icon: "Ship" },
+//     { label: "Dschang, OU, " + t('navbar.cameroon'), icon: "PlaneTakeoff" },
+// ]);
 </script>
 
 <style scoped>
@@ -600,7 +638,9 @@ const menuData = computed(() => [
     z-index: 50 !important;
     /* Passe au-dessus de tout */
 }
+
 .dropdown-menu {
-  z-index: 9999 !important; /* Assure que le menu reste au-dessus des autres éléments */
+    z-index: 9999 !important;
+    /* Assure que le menu reste au-dessus des autres éléments */
 }
 </style>

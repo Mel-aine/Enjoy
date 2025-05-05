@@ -1,11 +1,9 @@
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch } from "vue";
 import {
   CalendarIcon,
   // LockIcon,
   // ArrowLeftFromLine,
-
-
 } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
@@ -21,24 +19,38 @@ import domtoimage from 'dom-to-image';
 
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
-const checkInDate = ref(dataStore.searchFrom.dateAller);
-const checkOutDate = ref(dataStore.searchFrom.dateRetour);
 
-const totalDays = () => {
+// Rendre les dates réactives en utilisant storeToRefs pour maintenir la réactivité
+const { searchFrom } = storeToRefs(dataStore);
+
+// Utiliser correctement computed pour les dates qui doivent être réactives
+const checkInDate = computed(() => searchFrom.value.dateAller);
+const checkOutDate = computed(() => searchFrom.value.dateRetour);
+
+// Transformer totalDays en computed pour qu'il se mette à jour automatiquement
+const stayLength = computed(() => {
   const checkIn = new Date(checkInDate.value);
-  console.log('checkIn', checkIn);
-  console.log('checkOutDate', checkOutDate.value);
   const checkOut = new Date(checkOutDate.value);
-  console.log('checkIn', checkIn);
-  console.log('checkOut', checkOut);
+  
+  console.log('checkIn computed', checkIn);
+  console.log('checkOut computed', checkOut);
+  
   if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) return 0;
 
   const timeDiff = checkOut.getTime() - checkIn.getTime();
   return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-};
+});
 
-const stayLength = ref(totalDays());
-hotelStore.stayLength = stayLength.value;
+// Mettre à jour le hotelStore quand les valeurs changent
+watch(stayLength, (newValue) => {
+  hotelStore.stayLength = newValue;
+});
+
+watch([checkInDate, checkOutDate], ([newCheckIn, newCheckOut]) => {
+  hotelStore.dateArrived = newCheckIn;
+  hotelStore.dateDepart = newCheckOut;
+});
+
 const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
 const { t } = useI18n();
 
@@ -47,6 +59,11 @@ function getTotalPersons(rooms) {
     return total + (room.adults || 0) + (room.childrens || 0)
   }, 0)
 }
+
+// Mettre à jour totalPersons quand les chambres changent
+watch(() => searchFrom.value.rooms, (newRooms) => {
+  hotelStore.totalPerson = getTotalPersons(newRooms);
+}, { deep: true });
 
 const priceDetails = computed(() => [
   {
@@ -76,15 +93,26 @@ const priceDetails = computed(() => [
     price: 1600,
   },
 ]);
+
+const test = () => {
+  console.log("check date in summary ", checkInDate.value, checkOutDate.value);
+}
+
 const totalPrice = computed(() =>
   priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)
 );
+
+// Mettre à jour le prix total quand il change
+watch(totalPrice, (newTotalPrice) => {
+  hotelStore.totalPrice = newTotalPrice;
+});
+
+// Initialiser les valeurs au démarrage
+hotelStore.stayLength = stayLength.value;
 hotelStore.totalPrice = totalPrice.value;
-console.log('totalPrice', totalPrice.value);
 hotelStore.dateArrived = checkInDate.value;
 hotelStore.dateDepart = checkOutDate.value;
-
-hotelStore.totalPerson = getTotalPersons(dataStore.searchFrom.rooms);
+hotelStore.totalPerson = getTotalPersons(searchFrom.value.rooms);
 
 const invoiceRef = ref(null);
 
@@ -112,7 +140,7 @@ const downloadBillBooking = () => {
 const formatDate = (dateValue) => {
   const currentLocale = locale.value === "fr" ? "fr-FR" : "en-US";
   const today = new Date();
-  const inputDate = dateValue instanceof Date ? new Date(dateValue) : new Date(dateValue);
+  const inputDate = dateValue instanceof Date ? dateValue : new Date(dateValue);
 
   if (isNaN(inputDate.getTime())) return "Invalid date";
 
@@ -136,40 +164,9 @@ const formatDate = (dateValue) => {
 
   return isSameDay ? `${t('appServices.agency.today')} - ${formattedDate}` : formattedDate;
 };
-
-
-
-// const clientName = ref(`${props.guestData.firstName}-${props.guest.lastName}`);
-
-// const sanitizeFileName = (str) => str.replace(/\s+/g, '').replace(/[^\w-]/g, '');
-// const clientName = computed(() => {
-//   const guestData = dataStore.searchFrom.guestInfo;
-//   return `${guestData.firstName}-${guestData.lastName}`;
-// });
-// const downloadAsPDF = () => {
-//   const node = invoiceRef.value;
-//   if (!node) return;
-
-//   domtoimage.toPng(node)
-//     .then((dataUrl) => {
-//       const pdf = new jsPDF('p', 'mm', 'a4');
-//       const imgProps = pdf.getImageProperties(dataUrl);
-//       const pdfWidth = pdf.internal.pageSize.getWidth();
-//       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-//       pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
-
-//       const cleanName = sanitizeFileName(clientName);
-//       const fileName = `facture-${cleanName}-${checkInDate.value}.pdf`;
-//       pdf.save(fileName);
-//     })
-//     .catch((error) => {
-//       console.error('Erreur lors du téléchargement du PDF:', error);
-//     });
-// };
 </script>
 
 <template>
-
   <div class="bg-white rounded-xl shadow-sm ">
     <div ref="invoiceRef" class="p-6">
     <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
@@ -192,10 +189,9 @@ const formatDate = (dateValue) => {
       <div class="font-medium flex">
         <span>{{ stayLength }}</span>
         <CalendarIcon size="16" class="ml-3 mt-1" />
-
       </div>
     </div>
-
+    <button @click="test">test</button>
     <div class="py-4 border-b">
       <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
       <div class="font-medium">{{ selectedRoom }}</div>

@@ -722,6 +722,7 @@ const toggleExpanded = () => {
 
 const handleBack = () => {
   emit('back');
+  hotelStore.listHotel();
   console.log('handleBack');
 };
 const firstNameValid = ref(null);

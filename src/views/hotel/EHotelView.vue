@@ -10,11 +10,12 @@ import SearchHotel from '@/components/search/SearchHotel.vue'
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import BookingFlow from '@/components/hotel/BookingFlow.vue'
 import { useRouter } from 'vue-router';
+import {useDataStore} from '@/stores/dataStore'
 
 
 const router = useRouter();
 const route = useRoute();
-
+const dataStore = useDataStore
 const hotelStore = useMIHStore();
 
 // Reactive state
@@ -97,6 +98,8 @@ const handleSearch = (params) => {
   const city = params.destination?.toLowerCase() || 'all';
   console.log('city', city)
   router.push(`/hotelList/${city}`);
+  dataStore.searchFrom = { ...params }
+  console.log("data store zhere E hotel view",params);
 };
 const handleSortChange = (option) => {
   sortOption.value = option

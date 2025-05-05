@@ -25,6 +25,11 @@ export const useMIHStore = defineStore("MIH", {
   }),
 
   actions: {
+    listHotel(){
+      this.isListed = true;
+      this.isSingleBooking = false;
+    },
+
     singleBooking() {
       this.isSingleBooking = true;
       this.isPaymentStepBooking = false;

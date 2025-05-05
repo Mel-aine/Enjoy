@@ -107,7 +107,7 @@
               <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
                 @mouseleave="handleMouseLeave('left')"
                 class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-                <li v-if="filteredLeftItems.length === 0" class="text-gray-600 italic">
+                <li v-if="filteredLeftItems.length === 0" class="text-gray-600 italic flex justify-start items-center px-3 py-2">
                   {{ $t('navbar.noResult') }}
                 </li>
                 <li v-for="item in filteredLeftItems" :key="item.label"

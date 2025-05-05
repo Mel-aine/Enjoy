@@ -8,6 +8,7 @@ export const useDataStore = defineStore('data', {
 
   }),
   actions: {
+    
     setData(newData, newParentType) {
       this.data = newData;
       this.parentType = newParentType;
