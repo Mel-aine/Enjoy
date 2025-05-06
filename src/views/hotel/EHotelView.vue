@@ -15,7 +15,7 @@ import {useDataStore} from '@/stores/dataStore'
 
 const router = useRouter();
 const route = useRoute();
-const dataStore = useDataStore
+const dataStore = useDataStore()
 const hotelStore = useMIHStore();
 
 // Reactive state
@@ -98,12 +98,14 @@ const handleSearch = (params) => {
   const city = params.destination?.toLowerCase() || 'all';
   console.log('city', city)
   router.push(`/hotelList/${city}`);
-  dataStore.searchFrom = { ...params }
-  console.log("data store zhere E hotel view",params);
+  dataStore.setSearchParams(params);
+  hotelStore.listHotel();
+  console.log("data store zhere E hotel view", dataStore.searchFrom);
 };
 const handleSortChange = (option) => {
   sortOption.value = option
 }
+
 watch(() => route.params.city, (newCity) => {
   // chaque fois que la ville change => tu mets à jour les données
     console.log("🔁 Ville changée :", newCity); // Ajoute ceci

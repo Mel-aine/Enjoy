@@ -15,6 +15,9 @@ export const useDataStore = defineStore('data', {
     },
     setFiltedHotel (fHotel) {
       this.filtedHotel = { ...fHotel }
+    },
+    setSearchParams(searchFrom) {
+      this.searchFrom = searchFrom;
     }
   },
   persist: {

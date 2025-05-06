@@ -864,7 +864,10 @@ async function initMap() {
 
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
-    const autocomplete = new google.maps.places.Autocomplete(input);
+    const autocomplete = new google.maps.places.Autocomplete(input,{
+      types: ['(cities)'],
+      componentRestrictions: { country: "CM" }, // facultatif
+    });
 
     autocomplete.addListener("place_changed", () => {
       const place = autocomplete.getPlace();

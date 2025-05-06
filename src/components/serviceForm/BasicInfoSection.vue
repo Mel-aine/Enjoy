@@ -23,6 +23,7 @@ const handleChange = (e) => {
   emit('updateFormData', updatedData);
 };
 
+
 const establishmentType = computed(() => {
   const category = props.categoriesItems.data.find(c => c.id === Number(props.formData.category_id));
   return category ? category.categoryName : '';

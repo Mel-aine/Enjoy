@@ -270,7 +270,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, nextTick, computed, defineEmits, watch } from "vue";
+import { ref, onMounted, onUnmounted, computed, defineEmits, watch } from "vue";
 // import router from "vue-router";
 // import router from "@/router";
 import flatpickr from "flatpickr";
@@ -317,11 +317,10 @@ const datepickerRetour = ref(null);
 const formattedDateArrival = ref("");
 const formattedDateDeparture = ref("");
 
-
 const dropdown = ref(null);
 
 // const showFilter = ref(false);
-const searchInput = ref(null);
+// const searchInput = ref(null);
 
 // const filteredWords = ref([]);
 // const recentSearch = ref([]);
@@ -379,21 +378,21 @@ const loadGoogleMapsAPI = () => {
 
 // };
 
-const toggleDropdown = async () => {
-    if (isOpen.value === true) {
-        isOpen.value = false;
-        console.log("isOpen", isOpen.value);
-    } else {
-        isOpen.value = !isOpen.value;
-        console.log("isOpen", isOpen.value);
+// const toggleDropdown = async () => {
+//     if (isOpen.value === true) {
+//         isOpen.value = false;
+//         console.log("isOpen", isOpen.value);
+//     } else {
+//         isOpen.value = !isOpen.value;
+//         console.log("isOpen", isOpen.value);
 
-    }
-    nextTick(() => {
-        searchInput.value?.focus();
-        searchInput.value.style.caretColor = "#FF5400"; // Appliquer la couleur du curseur
+//     }
+//     nextTick(() => {
+//         searchInput.value?.focus();
+//         searchInput.value.style.caretColor = "#FF5400"; // Appliquer la couleur du curseur
 
-    });
-};
+//     });
+// };
 
 const rooms = ref([
     { id: 1, adults: 2, childrens: 0 } // Une chambre par défaut
@@ -425,6 +424,7 @@ const totalPersons = computed(() => {
 const handleSearch = () => {
     emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
     console.log({ destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
+    
 };
 
 const formatDate = (date) => {
@@ -547,7 +547,7 @@ onMounted(async () => {
     if (autocompleteInput.value) {
       const autocomplete = new google.maps.places.Autocomplete(autocompleteInput.value, {
         types: ['(cities)'],
-        componentRestrictions: { country: 'fr' }, // facultatif
+        componentRestrictions: { country: "CM" }, // facultatif
       })
 
       autocomplete.addListener('place_changed', () => {

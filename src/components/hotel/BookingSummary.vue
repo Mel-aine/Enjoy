@@ -96,8 +96,16 @@ const priceDetails = computed(() => [
 
 const test = () => {
   console.log("check date in summary ", checkInDate.value, checkOutDate.value);
+  console.log("data store", dataStore.searchFrom);
 }
-
+watch(
+  () => dataStore.searchFrom,
+  (newValue) => {
+    hotelStore.dateArrived = newValue.dateAller;
+    hotelStore.dateDepart = newValue.dateRetour;
+  },
+  { deep: true }
+);
 const totalPrice = computed(() =>
   priceDetails.value.reduce((sum, item) => sum + Number(item.price || 0), 0)
 );
