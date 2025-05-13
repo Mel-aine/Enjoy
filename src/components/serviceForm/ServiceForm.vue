@@ -5,9 +5,10 @@ import ContactInfoSection from '@/components/serviceForm/ContactInfoSection.vue'
 import OperationalInfoSection from '@/components/serviceForm/OperationalInfoSection.vue';
 import AdditionalInfoSection from '@/components/serviceForm/AdditionalInfoSection.vue';
 import AdressSection from '@/components/serviceForm/AdressSection.vue';
-import { createService, getCategories } from '@/servicesApi/hotelServicesApi';
+import { createService } from '@/servicesApi/hotelServicesApi';
 import { CheckIcon } from 'lucide-vue-next';
 import AlertInfo from '../alert/AlertInfo.vue';
+import { useMIHStore } from '@/stores/manageHotelInterface'
 
 const isVisible = ref(false);
 const infoAlert = ref('')
@@ -15,20 +16,9 @@ const closeAlert = () => {
   isVisible.value = false;
 };
 const categories = ref([]);
-
-const fetchCategories = async () => {
-  try {
-    const response = await getCategories();
-    categories.value = response.data;
-    console.log('response.data.data', response.data);
-    console.log('getCategories après récupération', categories.value);
-  } catch (error) {
-    console.error('Erreur lors de la récupération des catégories:', error);
-  }
-};
-
+const hotelStore = useMIHStore();
 onMounted(() => {
-  fetchCategories();
+  categories.value = hotelStore.allCategories;
   console.log('getCategories', categories.value);
 });
 const activeStep = ref(1);
@@ -242,15 +232,15 @@ const handleSubmit = async (e) => {
           <button type="button" @click="handlePrevious" :disabled="activeStep === 1"
             class="px-4 py-2 border rounded-md shadow-sm text-sm font-medium"
             :class="activeStep === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'">
-            Précédent
+            {{$t(previous)}}
           </button>
           <button v-if="activeStep < 5" type="button" @click="handleNext"
             class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-customBlue hover:bg-blue-700">
-            Suivant
+            {{$t(next)}}
           </button>
           <button v-else type="submit"
             class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-            Enregistrer le service
+            {{$t(saveService)}}
           </button>
         </div>
       </form>

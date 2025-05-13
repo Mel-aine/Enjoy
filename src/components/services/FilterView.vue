@@ -156,6 +156,7 @@ import MapView from './MapView.vue'
 import { useRoute } from 'vue-router';
 import { ref,onMounted,computed,watch, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
+// import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
 
 
 
@@ -171,6 +172,7 @@ const categoryId = route.params.id;
 const city = route.query.city;
 console.log("Catégorie ID:", categoryId);
 console.log("Ville:", city);
+// let restaurants = [...services.value.data]
 
 
 
@@ -243,7 +245,25 @@ watchEffect(() => {
   fetchData(route.params.id);
 });
 
+// let restaurants = [...services.value.data]
+// onMounted(async () => {
+      // Auto-play carousel
+//   interval = setInterval(nextSlide, 3000);
 
+//   try {
+//     isLoading.value = true
+//     const response = await getServicesCategoryIdBy(16)
+    
+//     // Assurez-vous que la réponse contient bien un tableau data
+//     services.value = response.data ? response : { data: response }
+    
+//     console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value)))
+//   } catch (error) {
+//     console.error('Erreur lors du chargement:', error)
+//   } finally {
+//     isLoading.value = false
+//   }
+// })
 
 </script>
 <style scoped>

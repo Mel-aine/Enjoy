@@ -16,13 +16,13 @@ const handleChange = (event) => {
     <div class="space-y-8">
         <!-- Section principale - Informations de contact -->
         <div class="bg-white p-4 rounded-lg">
-            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-2">Informations de contact</h3>
-            <p class="text-sm text-gray-400 mb-6">Comment les clients peuvent-ils vous contacter et vous trouver?</p>
+            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-2">{{ $t('infoContact')}}</h3>
+            <p class="text-sm text-gray-400 mb-6">{{ $t('descriptioncontactInfo') }}</p>
             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <MapPin class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">{{ $t('Adresse')}}</label>
                     </div>
                     <input type="text" name="address" id="address"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 bg-gray-100 cursor-not-allowed rounded-md"
@@ -34,7 +34,7 @@ const handleChange = (event) => {
         <!-- Section - Informations personnelles -->
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <div class="flex items-center mb-4">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">Informations de connection a votre DashBord</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ $t('infoConnectDashboard')}}</h3>
                 <div class="ml-3 flex-grow border-t border-gray-300"></div>
             </div>
 
@@ -42,7 +42,7 @@ const handleChange = (event) => {
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="lastName" class="block text-sm font-medium text-gray-700">Prénom</label>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700">{{$t('first_name')}}</label>
                     </div>
                     <input type="text" name="lastName" id="lastName"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -52,7 +52,7 @@ const handleChange = (event) => {
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">Nom</label>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name')}}</label>
                     </div>
                     <input type="text" name="firstName" id="firstName"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -63,7 +63,7 @@ const handleChange = (event) => {
                     <div class="flex items-center">
                         <Phone class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="phone_number" class="block text-sm font-medium text-gray-700">
-                            Numéro de téléphone
+                            {{ $t('phone')}}
                         </label>
                     </div>
                     <input type="tel" name="phone_number" id="phone_number"
@@ -74,7 +74,7 @@ const handleChange = (event) => {
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <AtSign class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email')}}</label>
                     </div>
                     <input type="email" name="email" id="email"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -84,7 +84,7 @@ const handleChange = (event) => {
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="password" class="block text-sm font-medium text-gray-700">Mot de passe</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('password')}}</label>
                     </div>
                     <input type="password" name="password" id="password"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
@@ -99,12 +99,12 @@ const handleChange = (event) => {
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <Globe class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="website" class="block text-sm font-medium text-gray-700">Site web</label>
+                        <label for="website" class="block text-sm font-medium text-gray-700">{{ $t('webSite')}}</label>
                     </div>
                     <input type="url" name="website" id="website"
                         class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
                         placeholder="https://www.example.com" :value="formData.website" @input="handleChange" />
-                    <p class="mt-1 text-sm text-gray-400">Optionnel</p>
+                    <p class="mt-1 text-sm text-gray-400">{{ $t('optional')}}</p>
                 </div>
             </div>
         </div>

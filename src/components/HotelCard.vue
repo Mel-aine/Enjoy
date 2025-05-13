@@ -20,14 +20,16 @@ const iconMap = {
   'Animaux acceptés': DogIcon,
   'Salle de réunion': BriefcaseIcon
 }
+let lengthAmenities = null
 const amenities = computed(() => {
   try {
     const parsedFacilities = JSON.parse(props.hotel.facilities || '[]')
+    lengthAmenities = parsedFacilities.lengthAmenities 
     return parsedFacilities.filter(facility => iconMap[facility])
   } catch (error) {
     console.warn('Erreur de parsing des facilities:', error)
     return []
-  }
+  } 
 })
 const displayPriceRange = computed(() => {
   switch (props.hotel.priceRange) {
@@ -69,7 +71,6 @@ const props = defineProps({
     })
   }
 })
-
 const isFavorite = ref(false)
 console.log('ameneties', amenities)
 // const starsArray = computed(() => {
@@ -96,7 +97,7 @@ const handleViewDeal = () => {
     <div class="flex flex-col md:flex-row">
       <!-- Image -->
       <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
-        <img :src="hotel.images && hotel.images.length ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'" :alt="hotel.name"
+        <img :src="hotel.images && hotel.images.lengthAmenities ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'" :alt="hotel.name"
           class="w-full h-full object-cover"/>
         <button @click="toggleFavorite"
           class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
@@ -127,9 +128,9 @@ const handleViewDeal = () => {
 
         <p class="mt-2 text-sm text-gray-600">{{ hotel.description }}</p>
 
-        <div class="mt-2 flex space-x-2">
+        <div v-if="lengthAmenities<=6" class="mt-2 flex space-x-2">
           <div v-for="amenity in amenities" :key="amenity" class="flex items-center">
-            <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" />
+            <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" alt=""/>
           </div>
         </div>
       </div>

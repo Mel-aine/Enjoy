@@ -69,27 +69,27 @@ const handleChange = (event) => {
 
 <template>
   <div class="space-y-6">
-    <h3 class="text-lg font-medium leading-6 text-gray-900">Informations opérationnelles</h3>
-    <p class="text-sm text-gray-500">Détails sur les horaires et la capacité de votre service.</p>
+    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ $t('infoOperatinal')}}</h3>
+    <p class="text-sm text-gray-500">{{ $t('detailsOnHour')}}</p>
     
     <!-- Sélection des jours -->
     <div>
       <fieldset>
-        <legend class="text-sm font-medium text-gray-700">Jours d'ouverture</legend>
+        <legend class="text-sm font-medium text-gray-700">{{ $t('openingDays')}}</legend>
         <div class="flex flex-wrap gap-2">
           <button 
             type="button"
             @click="selectAllDays" 
             class="px-3 py-1 text-sm bg-blue-500 text-white rounded-md hover:bg-blue-600"
           >
-            Toute la semaine
+          {{ $t('allWeek')}}
           </button>
           <button 
             type="button"
             @click="selectWeekdays" 
             class="px-3 py-1 text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600"
           >
-            Sauf le week-end
+          {{ $t('mondayToFriday')}}
           </button>
           <div class="relative">
             <button 
@@ -97,7 +97,7 @@ const handleChange = (event) => {
               @click="showDaySelector = !showDaySelector" 
               class="px-3 py-1 text-sm bg-gray-500 text-white rounded-md hover:bg-gray-600"
             >
-              Un jour en particulier
+            {{ $t('aParticularDay')}}
             </button>
             <div v-if="showDaySelector" class="absolute z-10 mt-1 w-48 bg-white rounded-md shadow-lg">
               <button 
@@ -133,7 +133,7 @@ const handleChange = (event) => {
     
     <!-- Horaires d'ouverture -->
     <div v-if="props.formData.openings && Object.keys(props.formData.openings).length > 0">
-      <label class="block text-sm font-medium text-gray-700">Horaires d'ouverture</label>
+      <label class="block text-sm font-medium text-gray-700">{{ $t('openingHour')}}</label>
       <div v-for="(times, day) in props.formData.openings" :key="day" class="mt-2">
         <span class="text-gray-700 font-medium">{{ day }}</span>
         <div class="mt-1 flex items-center space-x-4">
@@ -158,7 +158,7 @@ const handleChange = (event) => {
 
     <!-- Gamme de prix -->
     <div>
-      <label for="price_range" class="block text-sm font-medium text-gray-700">Gamme de prix</label>
+      <label for="price_range" class="block text-sm font-medium text-gray-700">{{ $t('priceRange')}}</label>
       <select 
         id="price_range"
         name="price_range"
@@ -167,7 +167,7 @@ const handleChange = (event) => {
         @change="handleChange"
         required
       >
-        <option value="">Sélectionnez une gamme de prix</option>
+        <option value="">{{ $t('selectPriceRange')}}</option>
         <option v-for="range in priceRanges" :key="range.value" :value="range.value">
           {{ range.label }}
         </option>
@@ -176,7 +176,7 @@ const handleChange = (event) => {
     
     <!-- Capacité -->
     <div>
-      <label for="capacity" class="block text-sm font-medium text-gray-700">Capacité maximale</label>
+      <label for="capacity" class="block text-sm font-medium text-gray-700">{{ $t('maxCapacity')}}</label>
       <input 
         type="number" 
         name="capacity" 
@@ -188,7 +188,7 @@ const handleChange = (event) => {
         @change="handleChange"
         required 
       />
-      <p class="mt-1 text-sm text-gray-500">Nombre maximum de personnes que votre service peut accueillir simultanément.</p>
+      <p class="mt-1 text-sm text-gray-500">{{ $t('maxNumberPersons')}}</p>
     </div>
   </div>
 </template>

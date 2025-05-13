@@ -109,7 +109,7 @@
         <div ref="dropdown"
             class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
             <!-- Search Section -->
-            <div class="lg:flex justify-center">
+            <div class="lg:flex justify-center cursor-pointer block">
                 <div class="bg-transparent mt-1 rounded-lg cursor-pointer">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-80">
@@ -196,7 +196,7 @@
 
                 </div> -->
             </div>
-            <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer">
+            <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer block">
                 <div
                     class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
                     <CalendarRangeIcon size="22"
@@ -213,7 +213,7 @@
                 </div>
             </div>
 
-            <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-pointer">
+            <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-pointer block">
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
                     <CalendarRangeIcon size="22"
@@ -230,7 +230,7 @@
                 </div>
             </div>
 
-            <div class="bg-transparent p-4 mt-1 rounded-sm">
+            <div class="bg-transparent p-4 mt-1 rounded-sm cursor-pointer block">
                 <label for="toggle-passager">
                     <div
                         class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-72">

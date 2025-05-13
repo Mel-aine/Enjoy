@@ -90,19 +90,19 @@ const uploadImages = async () => {
 
 <template>
   <div class="space-y-6 border border-gray-200 bg-white p-4 rounded-lg">
-    <h3 class="text-lg font-medium text-gray-900">Informations de base</h3>
-    <p class="text-sm text-gray-500">Veuillez fournir les informations principales concernant votre service.</p>
+    <h3 class="text-lg font-medium text-gray-900">{{ $t('basicInfo') }}</h3>
+    <p class="text-sm text-gray-500">{{ $t('pleaseGiveInfo') }}</p>
 
     <div class="flex items-end gap-4">
       <FormField class="flex-1" label="Nom du service" id="name" name="name" type="text" :value="formData.name"
         @input="handleChange" placeholder="Ex: Restaurant Le Gourmet" required />
 
       <div class="flex-1">
-        <label for="category_id" class="block text-sm font-medium text-gray-700">Catégorie <span
+        <label for="category_id" class="block text-sm font-medium text-gray-700">{{ $t('category') }}<span
             class="text-red-500">*</span></label>
         <select id="category_id" name="category_id" class="form-select" :value="formData.category_id"
           @change="handleChange" required>
-          <option value="">Sélectionnez une catégorie</option>
+          <option value="">{{ $t('selectCategory') }}</option>
           <option v-for="category in props.categoriesItems.data" :key="category.id" :value="category.id">{{
             category.categoryName }}</option>
         </select>
@@ -110,23 +110,22 @@ const uploadImages = async () => {
     </div>
 
     <div>
-      <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+      <label for="description" class="block text-sm font-medium text-gray-700">{{ $t('description') }}</label>
       <textarea id="description" name="description" rows="4" class="form-textarea"
         placeholder="Décrivez votre service en détail..." :value="formData.description" @input="handleChange"
         required></textarea>
-      <p class="mt-1 text-sm text-gray-500">Une description détaillée aidera les utilisateurs à comprendre votre
-        service.</p>
+      <p class="mt-1 text-sm text-gray-500">{{ $t('descriptionUtilBasicInfo') }}</p>
     </div>
   </div>
   <div class="space-y-6 mt-8 border border-gray-200 bg-white p-4 rounded-lg">
 
     <label for="file-upload" class="block text-sm font-medium text-gray-700 mb-2">
-      Image principale du service
+      {{ $t('mainImage') }} 
     </label>
 
     <div class="flex items-center gap-4">
       <label for="file-upload" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-        Choisir l'image
+        {{ $t('chooseImage') }} 
       </label>
       <span class="text-gray-600 text-sm">
         {{files.length > 0 ? files.map(f => f.name).join(', ') : "Aucun fichier sélectionné"}}
@@ -138,7 +137,7 @@ const uploadImages = async () => {
       class="bg-customBlue text-white px-4 py-2 rounded mt-2">
       {{ uploading ? "Upload en cours..." : "Uploader l'image" }}
     </button>
-    <p class="text-sm text-gray-500">Image principale du service – elle sera visible par vos clients</p>
+    <p class="text-sm text-gray-500">{{ $t('descriptionUtilBasicInfoImage') }} </p>
   </div>
 </template>
 

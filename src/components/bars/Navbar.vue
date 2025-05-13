@@ -336,7 +336,8 @@ import BaseIcon from '../icons/BaseIcon.vue';
 // import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
 import { getCategories } from '@/servicesApi/hotelServicesApi.js'
-import LoaodingSpinner from '../spiner/LoaodingSpinner.vue';            
+import LoaodingSpinner from '../spiner/LoaodingSpinner.vue'; 
+import { categoryTranslations} from '@/utils/helpToTranslate.js'           
 const router = useRouter();
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
@@ -382,6 +383,7 @@ const fetchCategories = async () => {
     hotelStore.isSpinnerDisplayed = true;
     const response = await getCategories();
     categories.value = response.data.data;
+    hotelStore.allCategories = categories.value;
     console.log('categories', categories.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories:', error);
@@ -394,31 +396,31 @@ onMounted(() => {
   fetchCategories();
   initMap();
 });
-const categoryTranslations = {
-  "Restaurants": "Restaurants",
-  "Shopping": "Shopping",
-  "Vie Nocturne": "Nightlife",
-  "Sport & Loisirs": "Sport & Leisure Activities",
-  "Salons de beauté & Spas": "Beauty Salons & Spas",
-  "Automobile": "Automobile",
-  "Maisons & Travaux": "Houses & Works",
-  "Cafés & Thés": "Coffees & Teas",
-  "Fournitures d'énergie": "Power Supplies",
-  "Art & Loisirs": "Art & Leisure",
-  "Santé & Médical": "Health & Medical",
-  "Services Professionnels": "Services For Professional",
-  "Animaux": "Pets",
-  "Immobilier": "Real Estate",
-  "Hôtels & séjours": "Hotels & Stays",
-  "Services Locaux": "Local Services",
-  "Organisation d'Événements": "Event Organization",
-  "Services Publics & Gouvernement": "Public Services & Government",
-  "Services Financiers": "Financial Services",
-  "Formation & Enseignement": "Training & Teaching",
-  "Organisations Religieuses": "Religious Organization",
-  "Voyage": "Travel",
-  "Médias": "Media"
-}
+// const categoryTranslations = {
+//   "Restaurants": "Restaurants",
+//   "Shopping": "Shopping",
+//   "Vie Nocturne": "Nightlife",
+//   "Sport & Loisirs": "Sport & Leisure Activities",
+//   "Salons de beauté & Spas": "Beauty Salons & Spas",
+//   "Automobile": "Automobile",
+//   "Maisons & Travaux": "Houses & Works",
+//   "Cafés & Thés": "Coffees & Teas",
+//   "Fournitures d'énergie": "Power Supplies",
+//   "Art & Loisirs": "Art & Leisure",
+//   "Santé & Médical": "Health & Medical",
+//   "Services Professionnels": "Services For Professional",
+//   "Animaux": "Pets",
+//   "Immobilier": "Real Estate",
+//   "Hôtels & séjours": "Hotels & Stays",
+//   "Services Locaux": "Local Services",
+//   "Organisation d'Événements": "Event Organization",
+//   "Services Publics & Gouvernement": "Public Services & Government",
+//   "Services Financiers": "Financial Services",
+//   "Formation & Enseignement": "Training & Teaching",
+//   "Organisations Religieuses": "Religious Organization",
+//   "Voyage": "Travel",
+//   "Médias": "Media"
+// }
 
 
 const handleSearch = () => {

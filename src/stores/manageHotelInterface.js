@@ -22,6 +22,7 @@ export const useMIHStore = defineStore("MIH", {
     stayLength: null,
     roomNumber: [],
     isSpinnerDisplayed: false,
+    allCategories: [],
   }),
 
   actions: {

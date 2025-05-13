@@ -20,7 +20,7 @@ const emit = defineEmits(['sortChange'])
 const filteredHotels = computed(() => {
   if (!services.value.data || !Array.isArray(services.value.data)) return []
 
-  let result = [...services.value.data]
+  let hotels = [...services.value.data]
 
   const selectedRanges = props.filters?.priceRange || []
   const selectedAmenities = props.filters?.amenities || []
@@ -29,13 +29,13 @@ const filteredHotels = computed(() => {
   const isSymbolRange = selectedRanges.every(val => typeof val === 'string' && val.includes('$'))
 
   if (selectedRanges.length && isSymbolRange) {
-    result = result.filter(hotel =>
+    hotels = hotels.filter(hotel =>
       selectedRanges.includes(hotel.priceRange)
     )
   }
 
   if (selectedAmenities.length) {
-    result = result.filter(hotel => {
+    hotels = hotels.filter(hotel => {
       if (!hotel.facilities) return false
 
       let parsedFacilities
@@ -74,7 +74,7 @@ const filteredHotels = computed(() => {
   }
 
 
-  return result
+  return hotels
 })
 
 

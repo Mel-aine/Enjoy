@@ -116,15 +116,15 @@ const handleChange = (event) => {
 <template>
   <div class="space-y-6">
     <div v-if="mapsLoadingError" class="p-4 bg-red-100 text-red-700 rounded">
-      Erreur de chargement de Google Maps: {{ mapsLoadingError }}
+      {{ $t('errorLoad') }} {{ mapsLoadingError }}
     </div>
 
     <div v-if="!mapsLoaded && !mapsLoadingError" class="p-4 bg-blue-100 text-blue-700 rounded">
-      Chargement de la carte en cours...
+      {{ $t('loadprogressing') }}...
     </div>
 
     <div v-show="mapsLoaded">
-      <label for="address" class="block text-sm font-medium text-gray-700">Adresse</label>
+      <label for="address" class="block text-sm font-medium text-gray-700">{{ $t('address') }}</label>
       <input
         ref="addressInput"
         id="address"
@@ -139,9 +139,9 @@ const handleChange = (event) => {
     </div>
 
     <div v-show="mapsLoaded">
-      <label class="block text-sm font-medium text-gray-700">Position sur la carte</label>
+      <label class="block text-sm font-medium text-gray-700">{{ $t('positionMap') }}</label>
       <div ref="mapRef" class="w-full h-64 mt-2 rounded-md border border-gray-300"></div>
-      <p class="mt-1 text-sm text-gray-500">Cliquez sur la carte selon votre addresse recherchez pour définir l'emplacement de votre service.</p>
+      <p class="mt-1 text-sm text-gray-500">{{ $t('descriptionTodoInMap') }}</p>
     </div>
 
     <!-- Champs cachés pour les coordonnées -->

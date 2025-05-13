@@ -50,7 +50,7 @@
               d="M5 1 1 5l4 4"
             />
           </svg>
-          <span class="sr-only">Previous</span>
+          <span class="sr-only">{{$t('previous')}}</span>
         </span>
       </button>
 
@@ -79,7 +79,7 @@
               d="m1 9 4-4-4-4"
             />
           </svg>
-          <span class="sr-only">Next</span>
+          <span class="sr-only">{{$t('next')}}</span>
         </span>
       </button>
     </div>
@@ -210,8 +210,10 @@
 </template>
 
 <script setup>
-import { ref, onUnmounted,computed } from "vue";
+import { ref, onUnmounted,computed} from "vue";
 import RoundedButton from "../filter/RoundedButton.vue";
+// import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
+
 const props = defineProps({
   title: String,
   image: String,
@@ -228,7 +230,6 @@ const props = defineProps({
 // ]);
 const currentIndex = ref(0);
 let interval = null;
-
 const nextSlide = () => {
   currentIndex.value = (currentIndex.value + 1) % props.image.length;
 };
@@ -238,10 +239,7 @@ const prevSlide = () => {
     (currentIndex.value - 1 + props.image.length) % props.image.length;
 };
 
-// Auto-play carousel
-// onMounted(() => {
-//   interval = setInterval(nextSlide, 3000);
-// });
+
 
 onUnmounted(() => {
   clearInterval(interval);
