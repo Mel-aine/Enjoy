@@ -4,11 +4,12 @@
     <FilterSection :title="$t('filter')">
 
       <h2 class="text-gray-950 text-md mt-2">{{ $t('price') }}</h2>
-      <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between md:px-1 px-3 w-full md:w-[160px] mt-2">
+      <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between md:px-1 px-3 w-full md:w-[160px] mt-2 " >
         <span v-for="(symbol, index) in priceOptions" :key="index"
               class="text-gray-800 px-2 text-sm font-medium" :class="{ 'border-l': index > 0, 'border-gray-300': index > 0 }">
           {{ symbol }}
         </span>
+        
       </div>
     </FilterSection>
 
