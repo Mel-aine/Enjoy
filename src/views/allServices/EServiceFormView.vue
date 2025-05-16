@@ -3,11 +3,10 @@
     <div class="max-w-4xl mx-auto">
       <div class="text-center mb-8">
         <h1 class="text-3xl font-bold text-gray-900">
-          Enregistrement d'un Service
+          {{ $t('saveServiceForm') }}
         </h1>
         <p class="mt-2 text-lg text-gray-600">
-          Complétez le formulaire ci-dessous pour ajouter un nouveau service
-        </p>
+          {{ $t('addNewService') }}        </p>
       </div>
       <ServiceForm />
     </div>
@@ -16,4 +15,5 @@
 
 <script setup>
 import ServiceForm from '@/components/serviceForm/ServiceForm.vue'
+
 </script>

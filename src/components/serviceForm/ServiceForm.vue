@@ -9,8 +9,12 @@ import { createService } from '@/servicesApi/hotelServicesApi';
 import { CheckIcon } from 'lucide-vue-next';
 import AlertInfo from '../alert/AlertInfo.vue';
 import { useMIHStore } from '@/stores/manageHotelInterface'
+import Prog from '@/components/hotel/Progress.vue';
+import { useI18n } from 'vue-i18n';
+
 
 const isVisible = ref(false);
+const { t } = useI18n();
 const infoAlert = ref('')
 const closeAlert = () => {
   isVisible.value = false;
@@ -21,7 +25,7 @@ onMounted(() => {
   categories.value = hotelStore.allCategories;
   console.log('getCategories', categories.value);
 });
-const activeStep = ref(1);
+const activeStep = ref(0);
 const formSubmitted = ref(false);
 const formData = ref({
   name: '',
@@ -48,42 +52,46 @@ const handleNext = () => {
   if (!validateStep()) {
     return; // Arrête la fonction si validation échoue
   }
-  if (activeStep.value < 5) {
+  if (activeStep.value < 4) {
     activeStep.value++;
-    window.scrollTo(0, 0);
+
   }
 };
 
 const handlePrevious = () => {
-  if (activeStep.value > 1) {
+  console.log(activeStep.value);
+
+  if (activeStep.value > 0) {
     activeStep.value--;
-    window.scrollTo(0, 0);
+    console.log(activeStep.value);
+  } else {
+    activeStep.value = 0;
   }
 };
 const validateStep = () => {
   switch (activeStep.value) {
-    case 1:
+    case 0:
       if (!formData.value.name || !formData.value.category_id) {
         isVisible.value = true;
         infoAlert.value = ' Veuillez remplir tous les champs obligatoires : Nom et Catégorie.';
         return false;
       }
       break;
-    case 2:
+    case 1:
       if (!formData.value.address) {
         isVisible.value = true;
         infoAlert.value = ' Veuillez renseigner l\'adresse.';
         return false;
       }
       break;
-    case 3:
+    case 2:
       if (!formData.value.phone_number || !formData.value.email) {
         isVisible.value = true;
         infoAlert.value = ' Veuillez entrer un numéro de téléphone et une adresse e-mail.';
         return false;
       }
       break;
-    case 4:
+    case 3:
       if (!formData.value.openings || Object.keys(formData.value.openings).length === 0) {
         isVisible.value = true;
         console.log('formData.value.openings', formData.value.openings);
@@ -91,7 +99,7 @@ const validateStep = () => {
         return false;
       }
       break;
-    case 5:
+    case 4:
       if (!formData.value.policies) {
         isVisible.value = true;
         infoAlert.value = ' Veuillez renseigner les politiques du service.';
@@ -184,6 +192,8 @@ const handleSubmit = async (e) => {
 </script>
 
 <template>
+  
+
   <div class="bg-white shadow rounded-lg">
     <div v-if="formSubmitted" class="p-8 text-center">
 
@@ -196,51 +206,30 @@ const handleSubmit = async (e) => {
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
         <AlertInfo v-if="isVisible" @close="closeAlert" type="danger" :message="infoAlert" />
+        <Prog :steps="[t('baseInfos'), t('address'), t('contact'), t('operational'), t('additional')]" :currentStep="activeStep" />
 
-        <div class="flex items-center justify-between">
-          <div
-            v-for="(label, index) in ['Informations de base', 'Adresse', 'Contact', 'Opérationnel', 'Supplémentaire']"
-            :key="index" class="flex flex-col items-center">
-            <div :class="[
-              'w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium',
-              activeStep === index + 1 ? 'bg-customBlue text-white' :
-                activeStep > index + 1 ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-600'
-            ]">
-              <CheckIcon v-if="activeStep > index + 1" class="h-5 w-5" />
-              <span v-else>{{ index + 1 }}</span>
-            </div>
-            <!-- Modification ici pour cacher le texte sur mobile sauf pour l'étape active -->
-            <div class="text-xs mt-2 text-gray-500" :class="{ 'hidden sm:block': activeStep !== index + 1 }">
-              {{ label }}
-            </div>
-          </div>
-        </div>
-        <div class="mt-2 h-0.5 w-full bg-gray-200 relative">
-          <div class="h-0.5 bg-customBlue absolute top-0 left-0 transition-all duration-300"
-            :style="{ width: `${((activeStep - 1) / 5) * 100}%` }"></div>
-        </div>
       </div>
       <form @submit="handleSubmit">
-        <BasicInfoSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData"
-          :categoriesItems="categories || []" />
-        <AdressSection v-if="activeStep === 2" :formData="formData" @updateFormData="updateFormData" />
-        <ContactInfoSection v-if="activeStep === 3" :formData="formData" @updateFormData="updateFormData" />
-        <OperationalInfoSection v-if="activeStep === 4" :formData="formData" @updateFormData="updateFormData" />
-        <AdditionalInfoSection v-if="activeStep === 5" :formData="formData" @updateFormData="updateFormData" />
+        <BasicInfoSection v-if="activeStep === 0" :formData="formData" @updateFormData="updateFormData"
+          :categoriesItems="hotelStore.allCategories || []" />
+        <AdressSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData" />
+        <ContactInfoSection v-if="activeStep === 2" :formData="formData" @updateFormData="updateFormData" />
+        <OperationalInfoSection v-if="activeStep === 3" :formData="formData" @updateFormData="updateFormData" />
+        <AdditionalInfoSection v-if="activeStep === 4" :formData="formData" @updateFormData="updateFormData" />
 
         <div class="mt-8 flex justify-between">
-          <button type="button" @click="handlePrevious" :disabled="activeStep === 1"
+          <button type="button" @click="handlePrevious" :disabled="activeStep === 0"
             class="px-4 py-2 border rounded-md shadow-sm text-sm font-medium"
-            :class="activeStep === 1 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'">
-            {{$t(previous)}}
+            :class="activeStep === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'">
+            {{ $t('previous') }}
           </button>
-          <button v-if="activeStep < 5" type="button" @click="handleNext"
+          <button v-if="activeStep < 4" type="button" @click="handleNext"
             class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-customBlue hover:bg-blue-700">
-            {{$t(next)}}
+            {{ $t('next') }}
           </button>
           <button v-else type="submit"
             class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-            {{$t(saveService)}}
+            {{ $t('saveService') }}
           </button>
         </div>
       </form>

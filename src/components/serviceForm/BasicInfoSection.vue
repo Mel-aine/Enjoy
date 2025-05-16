@@ -1,11 +1,15 @@
 <script setup>
 import { defineProps, defineEmits, ref, computed } from 'vue';
 import FormField from '@/components/serviceForm/field/FormField.vue';
-
-
+// import {
+// ArrowUpToLine
+// } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
 const props = defineProps({
-  formData: Object, categoriesItems: Array
+  formData: Object,
+  categoriesItems: Array
 });
+const t = useI18n();
 const emit = defineEmits(['updateFormData']);
 console.log('props', props.categoriesItems)
 // const categories = [
@@ -15,17 +19,18 @@ console.log('props', props.categoriesItems)
 // ];
 
 const handleChange = (e) => {
-  // Create a new object with the updated field and include the uploaded URLs
-  const updatedData = {
+  // Create a new object with the uploaded field and include the uploaded URLs
+  const uploadedData = {
     [e.target.name]: e.target.value,
     url: uploadedUrls.value
   };
-  emit('updateFormData', updatedData);
+  emit('updateFormData', uploadedData);
 };
 
 
 const establishmentType = computed(() => {
-  const category = props.categoriesItems.data.find(c => c.id === Number(props.formData.category_id));
+  const category = props.categoriesItems.find(c => c.id === Number(props.formData.category_id));
+  console.log('category', category)
   return category ? category.categoryName : '';
 });
 
@@ -33,6 +38,8 @@ const establishmentName = computed(() => props.formData.name);
 const files = ref([]);
 const uploadedUrls = ref([]);
 const uploading = ref(false);
+const uploaded = ref(false);
+
 
 const handleFiles = (event) => {
   files.value = Array.from(event.target.files);
@@ -51,13 +58,11 @@ const slugify = (text) =>
 const uploadImages = async () => {
   const cloudName = 'dylb6x7hj';
   const uploadPreset = 'preset_hotels';
-
   const type = establishmentType.value;
   const nameSlug = slugify(establishmentName.value);
   const folder = `${slugify(type)}s/${nameSlug}`;
   uploadedUrls.value = [];
   uploading.value = true;
-
   for (const file of files.value) {
     const formData = new FormData();
     formData.append('file', file);
@@ -73,8 +78,12 @@ const uploadImages = async () => {
       const data = await res.json();
       console.log('Image uploadée:', data.secure_url);
       uploadedUrls.value.push(data.secure_url);
+      uploaded.value = true;
+
     } catch (err) {
       console.error('Erreur dupload:', err);
+      uploaded.value = false;
+
     }
   }
 
@@ -90,7 +99,7 @@ const uploadImages = async () => {
 
 <template>
   <div class="space-y-6 border border-gray-200 bg-white p-4 rounded-lg">
-    <h3 class="text-lg font-medium text-gray-900">{{ $t('basicInfo') }}</h3>
+    <h3 class="text-lg font-medium text-gray-900">{{ $t('baseInfo') }}</h3>
     <p class="text-sm text-gray-500">{{ $t('pleaseGiveInfo') }}</p>
 
     <div class="flex items-end gap-4">
@@ -103,8 +112,8 @@ const uploadImages = async () => {
         <select id="category_id" name="category_id" class="form-select" :value="formData.category_id"
           @change="handleChange" required>
           <option value="">{{ $t('selectCategory') }}</option>
-          <option v-for="category in props.categoriesItems.data" :key="category.id" :value="category.id">{{
-            category.categoryName }}</option>
+          <option v-for="category in props.categoriesItems" :key="category.id" :value="category.id">{{
+            t(category.categoryName) }}</option>
         </select>
       </div>
     </div>
@@ -120,23 +129,23 @@ const uploadImages = async () => {
   <div class="space-y-6 mt-8 border border-gray-200 bg-white p-4 rounded-lg">
 
     <label for="file-upload" class="block text-sm font-medium text-gray-700 mb-2">
-      {{ $t('mainImage') }} 
+      {{ $t('mainImage') }}
     </label>
 
     <div class="flex items-center gap-4">
       <label for="file-upload" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
-        {{ $t('chooseImage') }} 
+        {{ $t('chooseImage') }}
       </label>
       <span class="text-gray-600 text-sm">
-        {{files.length > 0 ? files.map(f => f.name).join(', ') : "Aucun fichier sélectionné"}}
+        {{files.length > 0 ? files.map(f => f.name).join(', ') : $t('noFileSelected')}}
       </span>
     </div>
-
     <input id="file-upload" type="file" multiple accept="image/*" @change="handleFiles" class="hidden" />
-    <button @click="uploadImages" :disabled="!establishmentName || files.length === 0 || uploading"
-      class="bg-customBlue text-white px-4 py-2 rounded mt-2">
-      {{ uploading ? "Upload en cours..." : "Uploader l'image" }}
-    </button>
+      <button v-if="!uploaded" @click="uploadImages" :disabled="!establishmentName || files.length === 0 || uploading"
+        class="border border-customBlue bg-white text-customBlue px-4 py-2 rounded mt-2 hover:text-white hover:bg-customBlue" :class="uploading ? 'border-2 border-gray-100 bg-gray-100 text-gray-400 cursor-not-allowed hover:bg-white hover:text-gray-400' : ''">
+        {{ uploading ? $t('uploadImage') : $t('uploadImage') }}
+
+      </button>
     <p class="text-sm text-gray-500">{{ $t('descriptionUtilBasicInfoImage') }} </p>
   </div>
 </template>
