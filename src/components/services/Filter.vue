@@ -1,37 +1,35 @@
 <template>
   <div class="p-5 space-y-5  bg-white">
     <!-- Filtres -->
-    <FilterSection :title="$t('filter')">
 
+    <FilterSection :title="$t('filter')">
       <h2 class="text-gray-950 text-md mt-2">{{ $t('price') }}</h2>
       <div class="border rounded-full h-8 border-gray-300 flex items-center justify-between md:px-1 px-3 w-full md:w-[160px] mt-2 " >
-        <span v-for="(symbol, index) in priceOptions" :key="index"
-              class="text-gray-800 px-2 text-sm font-medium" :class="{ 'border-l': index > 0, 'border-gray-300': index > 0 }">
+        <button @click="priceOptionFilter(symbol)" v-for="(symbol, index) in priceOptions" :key="index"
+              class="text-gray-800 px-2 text-sm font-medium cursor-default" :class="{ 'border-l': index > 0, 'border-gray-300': index > 0 }">
           {{ symbol }}
-        </span>
-        
+        </button>
       </div>
     </FilterSection>
 
     <!-- Suggestions -->
     <FilterSection :title="$t('suggested')">
-      <CheckboxGroup :items="suggestedOptions" />
+      <CheckboxGroup :items="suggestedOptions" @optionFilter="handleSendNewData" @nothing="handleSendOldData"/>
     </FilterSection>
 
     <!-- Categories -->
     <FilterSection :title="$t('categorie')">
       <div class="flex flex-row flex-wrap gap-2 w-[200px]">
-        <RoundedButton v-for="item in mainCategory" :key="item.id" :label="item" />
+        <RoundedButton v-for="item in mainCategory" :key="item.id" :label="item" @optionFilter="handleSendData" @nothing="handleSendOldData"/>
         <button type="button" @click="isModalOpen = true" class="text-customBlueVariant font-bold hover:underline">{{ $t('see') }}</button>
       </div>
     </FilterSection>
 
     <!-- Features -->
     <FilterSection :title="$t('feature')">
-      <CheckboxGroup :items="featuresOptions" />
+      <CheckboxGroup :items="featuresOptions" @optionFilter="handleSendNewData" @nothing="handleSendOldData"/>
       <button type="button" class="text-customBlueVariant font-bold mt-2 hover:underline">{{ $t('see') }}</button>
     </FilterSection>
-
     <ModalCategory
       :isOpen="isModalOpen"
       :showActionButton="true"
@@ -53,9 +51,24 @@ import RoundedButton from '../filter/RoundedButton.vue'
 import ModalCategory from '../modals/ModalCategory.vue';
 import { useI18n } from "vue-i18n";
 
+const emit = defineEmits(["optionFilter", "nothing", "price"])
 
+const handleSendNewData = (optionFilter) => {
+  emit('optionFilter',optionFilter)
+  console.log(optionFilter)
 
+}
 
+const handleSendOldData = (optionFilter) => {
+  emit('nothing',optionFilter)
+
+}
+
+const priceOptionFilter = (optionFilter) => {
+  emit('price',optionFilter)
+  console.log(optionFilter)
+
+}
 const priceOptions = ref(['$', '$$', '$$$', '$$$$']);
 const { t } = useI18n();
 const isModalOpen = ref(false);

@@ -26,7 +26,7 @@
               <polyline points="17 7 12 12 17 17"/>
             </svg>
           </button>
-          <Filter />
+          <Filter @optionFilter="optionToSort" @nothing="reDoSort" @price="priceFilter" />
           <div class="space-x-8  pb-8 translate-x-10">
           <button class=" text-purple-500 rounded-full text-lg font-normal px-2">{{ $t('cancel') }}</button>
          <button class=" text-black rounded-full text-lg font-normal px-4 py-2 bg-orange-500">{{ $t('applyFilter') }}</button>
@@ -34,10 +34,13 @@
         </div>
       </div>
     </transition>
-    <div class="hidden lg:block lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white border-t border-gray-100 sm:hidden ">
-       <Filter />
+    <div class="hidden lg:block lg:w-1/7 lg:min-w-[200px] p-6  text-white transition-all bg-white border-t border-gray-100 sm:hidden lg:sticky lg:top-6">
+      <div class="">
+        <Filter @optionFilter="optionToSort" @nothing="reDoSort" @price="priceFilter" />
 
-      </div>
+      </div> 
+
+    </div>
 
     <!-- Contenu principal -->
     <div class="flex-1 flex flex-col p-5 items-start mx-auto px-2 border-t border-gray-100 pt-10">
@@ -67,16 +70,9 @@
         </div>
         <div class="mt-7 lg:translate-x-8 translate-x-0 space-y-4">
           <div v-for="item in filteredPlaces" :key="item.id">
-            <ServiceCard
-              :title="item.name"
-              :description="item.description"
-              :rating="item.rating"
-              :localisation="item.address"
-              :hours="item.open_until"
-              :category="item.category"
-              :image="item.images"
-              :search="item.route"
-            />
+
+          <RestaurantList :filters="filteredPlaces"/>
+          
           </div>
         </div>
         <!-- Pagination -->
@@ -150,16 +146,18 @@
 <script setup>
 import Filter from './Filter.vue'
 import { Categories } from '@/mocks/categories';
-import ServiceCard from '@/components/card/ServiceCard.vue' ;
+import RestaurantList from '@/views/restaurant/RestaurantList.vue' ;
 import BaseIcon from '../icons/BaseIcon.vue';
 import MapView from './MapView.vue'
 import { useRoute } from 'vue-router';
 import { ref,onMounted,computed,watch, watchEffect } from 'vue';
 import { useI18n } from "vue-i18n";
+import FilterSection from '../filter/FilterSection.vue';
 // import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
 
-
-
+const allRestaurant = ref([]);
+const sortedRestaurantOption = ref([]);
+const sortedRestaurantList = ref([]);
 const showMenu = ref(false)
 const showDropDown = ref(false)
 const selectedOption = ref(null);
@@ -201,6 +199,45 @@ function toggleMenu() {
   showMenu.value =!showMenu.value;
 }
 
+
+const optionToSort = (optionFilter) => {
+  sortedRestaurantOption.value.push(optionFilter)
+  helpSort(sortedRestaurantOption.value.length);
+  console.log(sortedRestaurantOption.value)
+  console.log(optionFilter)
+
+
+}
+
+const helpSort = (length) => {
+  if(length){
+      for(let i = 0; i<=length; i++ ){
+      sortedRestaurantList.value = sortedRestaurant(sortedRestaurantOption.value[i])
+    }
+  }else{
+    filteredPlaces.value = allRestaurant.value; 
+  }
+}
+
+const sortedRestaurant = (optionFilter) => {
+const arg = optionFilter
+sortedRestaurantList.value = Categories.find(category => category.label === arg);
+filteredPlaces.value = sortedRestaurantList.value;
+
+}
+
+const reDoSort = (optionFilter) =>{
+  sortedRestaurantOption.value = sortedRestaurantOption.value.filter(r => r !== optionFilter)
+  helpSort(sortedRestaurantOption.value.length)
+}
+
+const priceFilter = (optionFilter) => {
+filteredPlaces.value = allRestaurant.value;
+const arg = optionFilter;
+sortedRestaurantList.value = Categories.find(category => category.label === arg);
+filteredPlaces.value = sortedRestaurantList.value;
+
+}
 // const path = route.params.id
 // const pathSegments = computed(() =>
 //   path.split('/').filter(segment => segment.trim() !== '')
@@ -235,6 +272,7 @@ const fetchData = (id_category) => {
   if (selectedCategory) {
     textSearch.value = selectedCategory.label;
     filteredPlaces.value = selectedCategory.places;
+    allRestaurant.value = selectedCategory.places;
     console.log("Données trouvées :", selectedCategory);
   } else {
     console.warn("Aucune catégorie trouvée pour cet ID !");
