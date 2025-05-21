@@ -145,9 +145,8 @@ watch(() => route.params.city, (newCity) => {
             </div>
           </div>
         </router-link>
-        <div class="sticky top-4"> 
+        <div class=" md:top-4 md:sticky"> 
           <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
-
         </div>
         </div>
 

@@ -119,7 +119,8 @@
                             placeholder="Type inside me" />
                         <label for="destination"
                             class="cursor-default absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black font-medium cursor-default"> {{ truncateText(destination, 28) }}
+                            <!-- {{ truncateText(destination, 28) }}  -->
+                            <span class="text-black font-medium cursor-default"> {{ destination }}
                             </span> </label>
                         <label for="destination"
                             class=" cursor-default  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
@@ -278,7 +279,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import { French, English } from "flatpickr/dist/l10n/fr.js";
 import Counter from "@/components/counter/Counter.vue";
 // import BaseIcon from '@/components/icons/BaseIcon.vue';
-import { truncateText } from '@/utils/functions.js';
+// import { truncateText } from '@/utils/functions.js';
 // import { useMIHStore } from '@/stores/manageHotelInterface';
 import {
     UsersIcon,
@@ -464,19 +465,31 @@ const langChanged = (lang) => {
         dateFormat: "d M Y",
         minDate: "today",
         onChange: (selectedDates) => {
-            if (selectedDates.length > 0) {
-                formattedDateArrival.value = _formatDate(selectedDates[0]);
-                if (datepickerAller.value) {
-                    datepickerAller.value.value = formattedDateArrival.value;
-                }
-            }
-            if (selectedDates.length > 1) {
-                formattedDateDeparture.value = _formatDate(selectedDates[1]);
-                if (datepickerRetour.value) {
-                    datepickerRetour.value.value = formattedDateDeparture.value;
-                }
-            }
-        },
+    if (selectedDates.length > 0) {
+        const arrivalDate = selectedDates[0];
+        formattedDateArrival.value = _formatDate(arrivalDate);
+        if (datepickerAller.value) {
+            datepickerAller.value.value = formattedDateArrival.value;
+        }
+    }
+
+    if (selectedDates.length > 1) {
+        let departureDate = selectedDates[1];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        // Si la date de retour est aujourd'hui, on ajoute +1 jour
+        if (departureDate.toDateString() === today.toDateString()) {
+            departureDate.setDate(departureDate.getDate() + 1);
+        }
+
+        formattedDateDeparture.value = _formatDate(departureDate);
+        if (datepickerRetour.value) {
+            datepickerRetour.value.value = formattedDateDeparture.value;
+        }
+    }
+}
+
     });
 
     // Reformater les dates existantes

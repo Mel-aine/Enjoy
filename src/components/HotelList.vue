@@ -5,10 +5,11 @@ import { ArrowUpDownIcon } from 'lucide-vue-next'
 import "vue-skeletor/dist/vue-skeletor.css"
 import { Skeletor } from "vue-skeletor"
 import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
+import { useMIHStore } from '@/stores/manageHotelInterface'
 
-const services = ref([])
-const isLoading = ref(true)
-
+const services = ref([]);
+const isLoading = ref(true);
+const hotelStore = useMIHStore();
 const props = defineProps({
   searchParams: Object,
   filters: Object,
@@ -40,7 +41,7 @@ const filteredHotels = computed(() => {
 
       let parsedFacilities
       try {
-        parsedFacilities = JSON.parse(hotel.facilities) // Ex: ["Parking", "Restaurant"]
+        parsedFacilities = hotel.facilities // Ex: ["Parking", "Restaurant"]
       } catch (e) {
         console.warn('Erreur parsing facilities pour hôtel ID:', hotel.id || hotel._id, e)
         return false
@@ -101,7 +102,8 @@ const sortedHotels = computed(() => {
 onMounted(async () => {
   try {
     isLoading.value = true
-    const response = await getServicesCategoryIdBy(16)
+    const response = await getServicesCategoryIdBy( hotelStore.idfound )
+
     
     // Assurez-vous que la réponse contient bien un tableau data
     services.value = response.data ? response : { data: response }

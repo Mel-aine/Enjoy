@@ -20,7 +20,5 @@ export const useDataStore = defineStore('data', {
       this.searchFrom = searchFrom;
     }
   },
-  persist: {
-    storage: sessionStorage,
-},
+  persist: true
 });

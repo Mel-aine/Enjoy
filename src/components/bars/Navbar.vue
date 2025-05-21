@@ -96,6 +96,8 @@
                 <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
+                
+                <!-- v-model manquant -->
                 <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" v-model="rightValue"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
@@ -305,7 +307,7 @@
       <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
       <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
     </div> -->
-    <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
+    <!-- <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div> -->
 
 
     <!-- ,,Services destiné aux prof,Média,
@@ -384,7 +386,7 @@ const fetchCategories = async () => {
     const response = await getCategories();
     categories.value = response.data.data;
     hotelStore.allCategories = categories.value;
-    console.log('categories', categories.value);
+    console.log('categories from back end', categories.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories:', error);
   }finally{
@@ -423,46 +425,63 @@ onMounted(() => {
 // }
 
 
+// const handleSearch = () => {
+  
+//   // if (!leftValue.value || !rightValue.value) {
+//   //   console.warn("Veuillez remplir les deux champs.");
+//   //   return;
+//   // }
+
+//   // // Récupère le nom de la catégorie EN à partir de l'affichage FR
+//   // const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
+
+//   // const foundCategory = categories.value.find(category =>
+//   //   category.categoryName === englishCategory
+//   // )
+//   // console.log('foundCategory', englishCategory)
+
+//   // if (foundCategory) {
+//   //   store.setSearchData(foundCategory.id, rightValue.value)
+//   //   console.log('foundCategory', englishCategory)
+
+//   //   if (foundCategory.categoryName === 'Hotels & Stays') {
+//   //     isModalOpen.value = true
+            // getServiceIdHotel()
+//   //   } else {
+//   //     router.push({
+//   //       path: `/recherche/${foundCategory.id}`,
+//   //       query: { city: rightValue.value }
+//   //     })
+//   //   }
+//   // } else {
+//   //   console.warn("Catégorie non trouvée")
+//   // }
+// }
+
+
 const handleSearch = () => {
-  if (!leftValue.value || !rightValue.value) {
-    console.warn("Veuillez remplir les deux champs.");
-    return;
-  }
+  console.log('handleSearch')
+  getServiceIdHotel()
 
-  // Récupère le nom de la catégorie EN à partir de l'affichage FR
-  const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
-
-  const foundCategory = categories.value.find(category =>
-    category.categoryName === englishCategory
-  )
-  console.log('foundCategory', englishCategory)
-
-  if (foundCategory) {
-    store.setSearchData(foundCategory.id, rightValue.value)
-    console.log('foundCategory', englishCategory)
-
-    if (foundCategory.categoryName === 'Hotels & Stays') {
-      isModalOpen.value = true
-    } else {
-      router.push({
-        path: `/recherche/${foundCategory.id}`,
-        query: { city: rightValue.value }
-      })
-    }
-  } else {
-    console.warn("Catégorie non trouvée")
-  }
+  // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+  //   isModalOpen.value = true;
+  // }
+  // isModalOpen.value = true;
+  console.log('rigth value', rightValue.value)
 }
 
+const getServiceIdHotel = () => {
+  console.log('getServiceId')
 
-// const handleSearch = () => {
-//   console.log('handleSearch')
+  if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+    isModalOpen.value = true;
+    const foundCategory = categories.value.find(category =>
+    category.categoryName === leftValue.value
+  )
 
-//   if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-//     isModalOpen.value = true;
-//   }
-//   console.log('rigth value', rightValue.value)
-// }
+    hotelStore.idfound = foundCategory.id
+  }
+}
 
 const toggleSidebar = () => {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -509,7 +528,7 @@ const wantToSearchMobil = () => {
 };
 
 const leftValue = ref('');
-const rightValue = ref('');
+const rightValue = ref('Yaounde');
 const activeInput = ref(null);
 const labelToCategory = ref('');
 // const mapId = import.meta.env.VITE_IDCARD;

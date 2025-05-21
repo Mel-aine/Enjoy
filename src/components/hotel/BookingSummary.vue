@@ -68,7 +68,7 @@ watch(() => searchFrom.value.rooms, (newRooms) => {
 const priceDetails = computed(() => [
   {
     label: t('appServices.hotel.RoomsAndOffer'),
-    price: Number(hotelStore?.roomPrice) || 0,
+    price: (Number(hotelStore?.roomPrice) || 0) * stayLength.value,
   },
   {
     label: t('appServices.hotel.carOption'),
@@ -94,10 +94,10 @@ const priceDetails = computed(() => [
   },
 ]);
 
-const test = () => {
-  console.log("check date in summary ", checkInDate.value, checkOutDate.value);
-  console.log("data store", dataStore.searchFrom);
-}
+// const test = () => {
+//   console.log("check date in summary ", checkInDate.value, checkOutDate.value);
+//   console.log("data store", dataStore.searchFrom);
+// }
 watch(
   () => dataStore.searchFrom,
   (newValue) => {
@@ -199,7 +199,7 @@ const formatDate = (dateValue) => {
         <CalendarIcon size="16" class="ml-3 mt-1" />
       </div>
     </div>
-    <button @click="test">test</button>
+    <!-- <button @click="test">test</button> -->
     <div class="py-4 border-b">
       <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
       <div class="font-medium">{{ selectedRoom }}</div>

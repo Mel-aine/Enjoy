@@ -66,8 +66,6 @@ const goToStep3 = async (roomData, lowPriceRoomId) => {
     console.error("Erreur dans goToStep3 :", err);
   }
 
-
-
 };
 
 const goToStep4 = async (paymentData) => {
@@ -137,33 +135,33 @@ const handleSubmitReservation = async (param) => {
   const guest = formData.value.roomDetails.guestInfo;
 
   const reservationPayload = {
-    // Champs utilisateur à plat
-    first_name: guest.firstName,
-    last_name: guest.lastName,
-    email: guest.email,
-    phone_number: guest.phone.number,
-    // role_id: 3,
-    // statusU: 'active',
-    // created_by_U: 2,
-    // last_modified_by:2 ,
+  // Champs utilisateur à plat
+  first_name: guest.firstName,
+  last_name: guest.lastName,
+  email: guest.email,
+  phone_number: guest.phone.number,
 
-    // Champs de réservation
-    // user_id: 2,
-    service_id: hotelStore.this_hotel.id,
-    // reservation_type: "Standard",
-    // statusR: "paid",
-    total_price: hotelStore?.totalPrice || 0,
-    total_person: hotelStore?.totalPerson || 1,
+  // Champs de réservation
+  service_id: hotelStore.this_hotel.id,
+  total_amount: hotelStore?.totalPrice || 0,  // <-- ici le correctif
+  total_person: hotelStore?.totalPerson || 1,
+  arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
+  depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
+  reservation_product: param,
+  reservation_time: new Date().toISOString().split('T')[1].split('.')[0],
+  comment: "No comment",
+  created_by_R: 2,
+  last_modified_by_R: 2,
+  payment: "pending",
+  products: {
+    id: param,
     arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
     depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-    reservation_product: param,
-    reservation_time: new Date().toISOString().split('T')[1].split('.')[0], // "16:08:28"
-    comment: "No comment",
-    created_by_R: 2,
-    last_modified_by_R: 2,
-    payment: "pending",
+  },
+};
 
-  };
+
+  console.log("je tente de reserver")
 
   try {
     hotelStore.isSpinnerDisplayed = true;

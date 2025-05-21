@@ -23,6 +23,7 @@ export const useMIHStore = defineStore("MIH", {
     roomNumber: [],
     isSpinnerDisplayed: false,
     allCategories: [],
+    idfound: null,
   }),
 
   actions: {
@@ -74,7 +75,5 @@ export const useMIHStore = defineStore("MIH", {
   //   getters: {
   //     getShowCount: (state) => state.count,
   //   }
-  persist: {
-    storage: sessionStorage,
-},
+  persist: true
 });

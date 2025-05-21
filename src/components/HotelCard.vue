@@ -20,16 +20,31 @@ const iconMap = {
   'Animaux acceptés': DogIcon,
   'Salle de réunion': BriefcaseIcon
 }
-let lengthAmenities = null
+// let lengthAmenities = null
+
+const dropdownOpen = ref(false)
 const amenities = computed(() => {
   try {
-    const parsedFacilities = JSON.parse(props.hotel.facilities || '[]')
-    lengthAmenities = parsedFacilities.lengthAmenities 
-    return parsedFacilities.filter(facility => iconMap[facility])
+    const parsedFacilities = props.hotel.facilities
+    const filtered = parsedFacilities.filter(facility => iconMap[facility])
+
+    return filtered.slice(0, 5)
   } catch (error) {
     console.warn('Erreur de parsing des facilities:', error)
     return []
-  } 
+  }
+})
+
+const other_amenities = computed(() => {
+  try {
+    const parsedFacilities = props.hotel.facilities
+    const filtered = parsedFacilities.filter(facility => iconMap[facility])
+
+    return filtered.slice(5) // À partir du 6e
+  } catch (error) {
+    console.warn('Erreur de parsing des facilities (other_amenities):', error)
+    return []
+  }
 })
 const displayPriceRange = computed(() => {
   switch (props.hotel.priceRange) {
@@ -77,7 +92,9 @@ console.log('ameneties', amenities)
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
 const hotelStore = useMIHStore();
-const location = JSON.parse(props.hotel.address);
+const location = 'JSON.parse(props.hotel.address)';
+
+// const location = JSON.parse(props.hotel.address);
 
 
 const toggleFavorite = () => {
@@ -97,8 +114,9 @@ const handleViewDeal = () => {
     <div class="flex flex-col md:flex-row">
       <!-- Image -->
       <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
-        <img :src="hotel.images && hotel.images.lengthAmenities ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'" :alt="hotel.name"
-          class="w-full h-full object-cover"/>
+        <img
+          :src="hotel.images && hotel.images.lengthAmenities ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'"
+          :alt="hotel.name" class="w-full h-full object-cover" />
         <button @click="toggleFavorite"
           class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
           <HeartIcon :class="{ 'text-red-500': isFavorite, 'text-gray-500': !isFavorite }" size="20" />
@@ -123,16 +141,29 @@ const handleViewDeal = () => {
 
         <div class="flex items-center text-gray-600 text-md mt-2">
           <MapPinIcon size="16" class="mr-1" />
-          <span>{{ location.text }}</span>
+          <span>{{ location }}</span>
+          <!-- <span>{{ location.text }}</span> -->
+
         </div>
 
         <p class="mt-2 text-sm text-gray-600">{{ hotel.description }}</p>
-
-        <div v-if="lengthAmenities<=6" class="mt-2 flex space-x-2">
+        <div class="mt-2 flex space-x-2">
           <div v-for="amenity in amenities" :key="amenity" class="flex items-center">
-            <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" alt=""/>
+            <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" alt="" />
+          </div>
+          <div v-if="other_amenities.length == 0" class="relative">
+          <button @click="dropdownOpen = !dropdownOpen" class="text-sm text-customBlue border border-customBlue rounded px-2 py-1">
+            +{{ other_amenities.length }} {{ $t('other') }}
+          </button>
+
+          <div v-if="dropdownOpen" class="absolute mt-2 w-48 bg-white shadow rounded border p-2 z-[99]">
+            <div v-for="item in other_amenities" :key="item" class="mb-2">
+              <component :is="iconMap[item]" />
+            </div>
           </div>
         </div>
+        </div>
+
       </div>
 
       <!-- Prix et bouton -->

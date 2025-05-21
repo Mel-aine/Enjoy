@@ -4,12 +4,12 @@ import FormField from '@/components/serviceForm/field/FormField.vue';
 // import {
 // ArrowUpToLine
 // } from 'lucide-vue-next';
-import { useI18n } from 'vue-i18n';
+// import { useI18n } from 'vue-i18n';
 const props = defineProps({
   formData: Object,
   categoriesItems: Array
 });
-const t = useI18n();
+// const t = useI18n();
 const emit = defineEmits(['updateFormData']);
 console.log('props', props.categoriesItems)
 // const categories = [
@@ -113,7 +113,7 @@ const uploadImages = async () => {
           @change="handleChange" required>
           <option value="">{{ $t('selectCategory') }}</option>
           <option v-for="category in props.categoriesItems" :key="category.id" :value="category.id">{{
-            t(category.categoryName) }}</option>
+            $t(category.categoryName) }}</option>
         </select>
       </div>
     </div>

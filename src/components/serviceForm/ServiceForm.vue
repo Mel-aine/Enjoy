@@ -12,6 +12,8 @@ import { useMIHStore } from '@/stores/manageHotelInterface'
 import Prog from '@/components/hotel/Progress.vue';
 import { useI18n } from 'vue-i18n';
 
+// all step constante respect index of table data in vue this is Why first step is '0'
+const isSubmitting = ref(false)
 
 const isVisible = ref(false);
 const { t } = useI18n();
@@ -151,7 +153,7 @@ const handleSubmit = async (e) => {
   try {
     console.log('Données du formulaire:', formData.value);
     console.log('Payload envoyé:', payload);
-
+    isSubmitting.value = true;
     const response = await createService(payload);
     console.log('Réponse du serveur:', response.data);
 
@@ -180,19 +182,21 @@ const handleSubmit = async (e) => {
         emailU: '',
         phone_numberU: ''
       };
-      activeStep.value = 1;
+      activeStep.value = 0;
     }, 3000);
   } catch (error) {
     console.error('Erreur complète:', error);
     console.error('Détails de l\'erreur:', error.response?.data);
     alert(`Erreur lors de l'envoi: ${error.response?.data?.message || error.message}`);
+  } finally {
+    isSubmitting.value = false;
   }
 };
 
 </script>
 
 <template>
-  
+
 
   <div class="bg-white shadow rounded-lg">
     <div v-if="formSubmitted" class="p-8 text-center">
@@ -206,7 +210,8 @@ const handleSubmit = async (e) => {
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
         <AlertInfo v-if="isVisible" @close="closeAlert" type="danger" :message="infoAlert" />
-        <Prog :steps="[t('baseInfos'), t('address'), t('contact'), t('operational'), t('additional')]" :currentStep="activeStep" />
+        <Prog :steps="[t('baseInfos'), t('address'), t('contact'), t('operational'), t('additional')]"
+          :currentStep="activeStep" />
 
       </div>
       <form @submit="handleSubmit">
@@ -228,8 +233,15 @@ const handleSubmit = async (e) => {
             {{ $t('next') }}
           </button>
           <button v-else type="submit"
-            class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700">
-            {{ $t('saveService') }}
+            class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700" :class="isSubmitting ? 'cursor-not-allowed opacity-50' : ''"
+            :disabled="isSubmitting"
+            @click="handleSubmit">
+            <span v-if="!isSubmitting">{{ $t('saveService') }}</span>
+            <svg v-else class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
+              viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path>
+            </svg>
           </button>
         </div>
       </form>

@@ -8,6 +8,7 @@ import 'leaflet/dist/leaflet.css';
 import messages from '@/lang/index'
 
 import App from './App.vue'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const app = createApp(App)
 const pinia = createPinia()
@@ -17,6 +18,7 @@ const i18n = createI18n({
     fallbackLocale: 'en',
     messages,
 })
+pinia.use(piniaPluginPersistedstate) // Ajoute le plugin
 
 app.use(i18n)
 app.use(pinia)

@@ -23,5 +23,6 @@ export const useCounterStore = defineStore('counter', {
   },
   getters: {
     getShowCount: (state) => state.count,
-  }
+  },
+  persist: true
 });
