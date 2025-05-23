@@ -49,7 +49,7 @@ const goToStep3 = async (roomData, lowPriceRoomId) => {
   }
   try {
     await handleSubmitReservation(lowPriceRoomId); // Attend le résultat de la soumission
-
+    console.log(lowPriceRoomId)
     if (isReserved.value) {
       // Seulement avancer les étapes si la réservation a réussi
       step2Active.value = false;
@@ -153,17 +153,19 @@ const handleSubmitReservation = async (param) => {
   created_by_R: 2,
   last_modified_by_R: 2,
   payment: "pending",
-  products: {
-    id: param,
-    arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
-    depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-  },
+  products: [{
+    service_product_id: param,
+    start_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
+    end_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
+  }],
 };
 
 
-  console.log("je tente de reserver")
+  console.log("je tente de reserver", reservationPayload)
 
   try {
+    console.log("je tente de reserver", reservationPayload)
+
     hotelStore.isSpinnerDisplayed = true;
     const response = await makeReservation(reservationPayload);
     tmpIdU.value = response.data.user.id;

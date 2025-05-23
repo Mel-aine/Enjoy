@@ -3,8 +3,8 @@ import { ref,watch } from 'vue'
 import { useRoute } from 'vue-router';
 
 // import Header from '@/components/HeaderHotel.vue'
-import HotelList from '@/components/HotelList.vue'
-import Filters from '@/components/FilterHotel.vue'
+import HotelList from '@/components/hotel/HotelList.vue'
+import Filters from '@/components/hotel/FilterHotel.vue'
 import Map from '@/components/map/Map.vue'
 import SearchHotel from '@/components/search/SearchHotel.vue'
 import { useMIHStore } from '@/stores/manageHotelInterface';

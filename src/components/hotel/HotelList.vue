@@ -122,7 +122,7 @@ onMounted(async () => {
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
         <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span>
-        <span v-if="sortedHotels.length"></span>{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }}
+        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }} </span>
         <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
       </h2>
       

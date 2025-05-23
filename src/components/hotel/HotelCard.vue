@@ -92,8 +92,8 @@ console.log('ameneties', amenities)
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
 const hotelStore = useMIHStore();
-const location = 'JSON.parse(props.hotel.address)';
-
+const location = props.hotel.addressService;
+console.log('location', location)
 // const location = JSON.parse(props.hotel.address);
 
 
@@ -141,7 +141,7 @@ const handleViewDeal = () => {
 
         <div class="flex items-center text-gray-600 text-md mt-2">
           <MapPinIcon size="16" class="mr-1" />
-          <span>{{ location }}</span>
+          <span class="text-sm">{{ location }}</span>
           <!-- <span>{{ location.text }}</span> -->
 
         </div>
@@ -156,9 +156,11 @@ const handleViewDeal = () => {
             +{{ other_amenities.length }} {{ $t('other') }}
           </button>
 
-          <div v-if="dropdownOpen" class="absolute mt-2 w-48 bg-white shadow rounded border p-2 z-[99]">
+          <div v-if="dropdownOpen" class=" mt-2 w-48 bg-white shadow rounded border p-2 z-[99px]">
             <div v-for="item in other_amenities" :key="item" class="mb-2">
               <component :is="iconMap[item]" />
+              <ul>t</ul>
+              <li class="text-sm text-gray-600">{{ item }}</li>
             </div>
           </div>
         </div>
