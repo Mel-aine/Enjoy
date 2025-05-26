@@ -31,13 +31,17 @@ const checkOutDate = computed(() => searchFrom.value.dateRetour);
 const stayLength = computed(() => {
   const checkIn = new Date(checkInDate.value);
   const checkOut = new Date(checkOutDate.value);
-  
+
   console.log('checkIn computed', checkIn);
   console.log('checkOut computed', checkOut);
-  
+
   if (isNaN(checkIn.getTime()) || isNaN(checkOut.getTime())) return 0;
 
   const timeDiff = checkOut.getTime() - checkIn.getTime();
+  if (timeDiff == 0) {
+    return 1;
+  }
+
   return Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 });
 
@@ -177,59 +181,59 @@ const formatDate = (dateValue) => {
 <template>
   <div class="bg-white rounded-xl shadow-sm ">
     <div ref="invoiceRef" class="p-6">
-    <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
-    <div class="flex justify-between pb-4 border-b">
-      <div>
-        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkIn') }}</div>
-        <div class="font-medium">{{ formatDate(checkInDate) }}</div>
-        <!-- <div class="text-sm text-gray-600">from 16:00</div> -->
+      <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
+      <div class="flex justify-between pb-4 border-b">
+        <div>
+          <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkIn') }}</div>
+          <div class="font-medium">{{ formatDate(checkInDate) }}</div>
+          <!-- <div class="text-sm text-gray-600">from 16:00</div> -->
+        </div>
+        <div class="text-right">
+          <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkOut') }}</div>
+          <div class="font-medium">{{ formatDate(checkOutDate) }}</div>
+          <!-- <div class="text-sm text-gray-600">by 11:00</div> -->
+        </div>
       </div>
-      <div class="text-right">
-        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.checkOut') }}</div>
-        <div class="font-medium">{{ formatDate(checkOutDate) }}</div>
-        <!-- <div class="text-sm text-gray-600">by 11:00</div> -->
+
+      <div class="py-4 border-b">
+        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.totalLengthOfStay') }}
+        </div>
+        <div class="font-medium flex">
+          <span>{{ stayLength }}</span>
+          <CalendarIcon size="16" class="ml-3 mt-1" />
+        </div>
+      </div>
+      <!-- <button @click="test">test</button> -->
+      <div class="py-4 border-b">
+        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
+        <div class="font-medium">{{ selectedRoom }}</div>
+        <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
+      </div>
+
+      <div class="py-4">
+        <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>
+        <div class="space-y-2">
+          <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
+            <span>{{ item.label }}</span>
+            <span>FCFA {{ item.price.toFixed(2) }}</span>
+          </div>
+          <div class="flex justify-between font-medium text-customRed pt-2 border-t">
+            <span> {{ $t('appServices.hotel.total') }} {{ $t('appServices.hotel.price') }}
+            </span>
+            <span>FCFA <span class="text-xl font-bold">{{ totalPrice.toFixed(2) }} </span> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mx-6 -my-6">
+      <button @click="downloadBillBooking"
+        class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
+        {{ $t('appServices.hotel.downloadInvoice') }}
+      </button>
+      <div class="text-center text-xs text-gray-500 mt-4 pb-6">
+        {{ $t('appServices.hotel.weRunOnEnjoyInc') }}
       </div>
     </div>
 
-    <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.totalLengthOfStay') }}
-      </div>
-      <div class="font-medium flex">
-        <span>{{ stayLength }}</span>
-        <CalendarIcon size="16" class="ml-3 mt-1" />
-      </div>
-    </div>
-    <!-- <button @click="test">test</button> -->
-    <div class="py-4 border-b">
-      <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
-      <div class="font-medium">{{ selectedRoom }}</div>
-      <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
-    </div>
-
-    <div class="py-4">
-      <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>
-      <div class="space-y-2">
-        <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
-          <span>{{ item.label }}</span>
-          <span>FCFA {{ item.price.toFixed(2) }}</span>
-        </div>
-        <div class="flex justify-between font-medium text-customRed pt-2 border-t">
-          <span> {{ $t('appServices.hotel.total') }} {{ $t('appServices.hotel.price') }}
-          </span>
-          <span>FCFA <span class="text-xl font-bold">{{ totalPrice.toFixed(2) }} </span> </span>
-        </div>
-      </div>
-    </div>
-</div>
-<div class="mx-6 -my-6">
-  <button @click="downloadBillBooking"
-      class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
-      {{ $t('appServices.hotel.downloadInvoice') }}
-    </button>
-    <div class="text-center text-xs text-gray-500 mt-4 pb-6">
-      {{ $t('appServices.hotel.weRunOnEnjoyInc') }}
-    </div>
-</div>
-   
   </div>
 </template>

@@ -5,11 +5,6 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 import { useMIHStore } from '@/stores/manageHotelInterface';
-import { useDataStore } from '@/stores/dataStore';
-import router from '@/router';
-const hotelStore = useMIHStore();
-const dataStore = useDataStore();
-
 const iconMap = {
   'Wi-Fi': WifiIcon,
   'Parking': SquareParkingIcon,
@@ -96,6 +91,7 @@ console.log('ameneties', amenities)
 // const starsArray = computed(() => {
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
+const hotelStore = useMIHStore();
 const location = props.hotel.addressService;
 console.log('location', location)
 // const location = JSON.parse(props.hotel.address);
@@ -105,14 +101,8 @@ const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
 }
 const handleViewDeal = () => {
-router.push({ 
-  name: 'DetailHotel',
-  params: { hotelId: props.hotel.id } 
-});
-dataStore.serviceGeted = props.hotel;
-console.log('hoterest', dataStore.serviceGeted)
-  // hotelStore.singleBooking();
-  // hotelStore.setHotel(props.hotel)
+  hotelStore.singleBooking();
+  hotelStore.setHotel(props.hotel)
   // hotelStore.setViewDeal(true)
   hotelStore.getHotelId(props.hotel.id)
 }
