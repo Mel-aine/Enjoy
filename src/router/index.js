@@ -49,7 +49,7 @@ const router = createRouter({
       meta: {hiddeMap:true , showFooter2:true},
     },
     {
-      path: '/hotel/test',
+      path: '/hotel/test/:hotelId',
       name: 'DetailHotel',
       component: () => import('../views/hotel/EHotelDetailView.vue'),
       meta: {hiddeMap:true , showFooter2:true},

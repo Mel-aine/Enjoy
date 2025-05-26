@@ -1,17 +1,22 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { ArrowLeft, MapPin, Star, Wifi, Tv } from 'lucide-vue-next'
+import { getAllServicesByServiceId } from '@/servicesApi/hotelServicesApi.js'
+import { ArrowLeft, MapPin, Star, Wifi, Tv, ImagesIcon } from 'lucide-vue-next'
 import flatpickr from "flatpickr"
 import "flatpickr/dist/flatpickr.min.css"
 import {
     MailIcon,
     PhoneIcon,
     GlobeIcon,
-    WifiIcon, SquareParkingIcon, AccessibilityIcon, SpadeIcon, SnowflakeIcon, SunIcon, WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, HeartIcon, MapPinIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon
+    WifiIcon, CheckCircleIcon, SquareParkingIcon, AirVentIcon, AccessibilityIcon, SpadeIcon, SnowflakeIcon, SunIcon, WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, HeartIcon, MapPinIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon, UsersIcon
 } from 'lucide-vue-next';
+import ContactItem from '@/components/hotel/ContactItem.vue'
+import DateInput from '@/components/hotel/DateInput.vue'
+import NumberInput from '@/components/hotel/NumberInput.vue'
+import { useDataStore } from '@/stores/dataStore'
 const router = useRouter()
-
+const dataStore = useDataStore()
 const currentIndex = ref(0)
 const imagesPerPage = 3
 const iconMap = {
@@ -27,7 +32,8 @@ const iconMap = {
     'Bar': WineIcon,
     'Espace enfants': BabyIcon,
     'Animaux acceptés': DogIcon,
-    'Salle de réunion': BriefcaseIcon
+    'Salle de réunion': BriefcaseIcon,
+    'Air conditioning': AirVentIcon,
 }
 
 const dates = ref({
@@ -50,6 +56,31 @@ const nextImage = () => {
         currentIndex.value++
     }
 }
+console.log("composant monter")
+const rooms = ref([])
+const isLoading = ref(false);
+onMounted( async () => {
+try {
+    console.log("composant monter")
+
+    isLoading.value = true
+    // Vérifier si l'ID de l'hôtel est passé dans les paramètres de la route
+    const hotelId = router.currentRoute.value.params.hotelId
+    console.log("idh", hotelId)
+
+    if (hotelId) {
+        const response = await getAllServicesByServiceId(hotelId)
+        rooms.value = response.data
+        console.log('Chargement des chambre de l hotel', rooms.value)
+    } else {
+        console.warn('Aucun chambre trouvé dans les paramètres de la route')
+    }
+} catch (error) {
+    console.error('Erreur lors du chargement des chambre de l hotel:', error)
+}finally{
+    isLoading.value = false
+}
+})
 
 // const hotel = {
 //     id: '001',
@@ -76,7 +107,7 @@ const nextImage = () => {
 //     ]
 // }
 const showAllPhotos = ref(false);
-const rooms = ref([
+const roomsTest = ref([
     {
         id: 'r001',
         name: 'Chambre Classique',
@@ -156,6 +187,8 @@ const hotel = {
     updatedAt: "2025-05-20T10:28:38.598Z"
 };
 
+// const hotelObject = dataStore.serviceGeted;
+// console.log('hotelObject', hotelObject)
 
 const checkinInput = ref(null)
 const checkoutInput = ref(null)
@@ -227,7 +260,7 @@ function formatDate(date) {
             </div>
         </div>
 
-        <div class="container mx-auto px-4 py-8">
+        <div class="max-w-7xl mx-auto px-4 py-8">
             <!-- Galerie -->
             <div class="relative mb-8">
                 <!-- Bouton précédent -->
@@ -252,8 +285,10 @@ function formatDate(date) {
 
                     <!-- Bouton "Voir toutes les photos" fixe -->
                     <button @click="showAllPhotos = true"
-                        class="absolute text-xs bottom-4 right-4 bg-white/90 hover:bg-white text-gray-800 font-medium py-2 px-4 rounded-lg shadow-md z-10">
-                        Voir toutes les photos ({{ hotel.images.length }})
+                        class="absolute text-xs bottom-4 right-4 bg-white/90 hover:bg-white text-gray-800 font-medium py-2 px-2 rounded-lg shadow-md z-10">
+                        <div class="flex items-center">
+                        <ImagesIcon class="w-5 h-5"/> <span class="ml-2">({{ hotel.images.length }})+</span>
+                        </div>
                     </button>
                 </div>
 
@@ -308,116 +343,133 @@ function formatDate(date) {
 
 
             <!-- Infos hôtel -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Bloc gauche : Infos hôtel (2/3) -->
-                <div class="lg:col-span-2">
-                    <div class="mb-8">
-                        <!-- Nom + Note -->
-                        <div class="flex justify-between items-start mb-4">
-                            <div class="flex items-center gap-4">
-                                <img :src="hotel.logo" alt="Logo" class="w-12 h-12 rounded-full object-cover" />
-                                <h1 class="text-2xl font-bold text-gray-800">{{ hotel.name }}</h1>
+            <div class="">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Section principale -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Carte Hôtel -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+                                <div class="flex items-center gap-4">
+                                    <img :src="hotel.logo" alt="Logo hôtel"
+                                        class="w-[60px] h-[60px] rounded-full object-cover border-2 border-gray-200" />
+                                    <div>
+                                        <h1 class="text-2xl lg:text-3xl font-bold text-gray-900">{{ dataStore.serviceGeted.name }}</h1>
+                                        <div class="flex items-center gap-2 mt-2">
+                                            <div class="flex items-center">
+                                                <component v-for="i in 5" :is="Star" :key="i" class="w-4 h-4"
+                                                    :class="i <= Math.floor(dataStore.serviceGeted.averageRating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'" />
+                                            </div>
+                                            <span class="font-semibold text-gray-900">{{ dataStore.serviceGeted.averageRating }}</span>
+                                            <span class="text-gray-500">({{ dataStore.serviceGeted.reviewCount }} avis)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span
+                                    class="bg-customBlue/80 text-white px-4 py-2 text-sm font-medium rounded flex items-center">
+                                    <Star class="w-4 h-4 mr-1" />
+                                    {{ dataStore.serviceGeted.averageRating }} 
+                                </span>
                             </div>
-                            <div
-                                class="flex items-center bg-blue-600 text-white px-3 py-1 rounded-lg text-sm font-medium">
-                                <Star class="w-4 h-4 mr-1" />
-                                {{ hotel.averageRating }}
+
+                            <!-- Adresse -->
+                            <div class="flex items-start gap-2 text-gray-600 mb-4">
+                                <MapPin class="w-5 h-5 mt-0.5 text-blue-600" />
+                                <span class="text-sm">{{ dataStore.serviceGeted.addressService }}</span>
                             </div>
+
+                            <!-- Description -->
+                            <p class="text-gray-700 leading-relaxed">{{ dataStore.serviceGeted.description }}</p>
                         </div>
 
-                        <!-- Adresse -->
-                        <div class="flex items-center text-gray-600 mb-4 text-sm">
-                            <MapPin class="w-5 h-5 mr-2" /> {{ hotel.addressService }}
-                        </div>
-
-                        <!-- Description -->
-                        <p class="text-gray-700 mb-6 text-sm">{{ hotel.description }}</p>
-
-                        <!-- Email / Téléphone / Site -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-3 gap-4 mb-6 text-sm text-gray-700">
-                            <div>
-                                <span class="font-semibold">
-                                    <MailIcon class="mb-1" size="20" /> Email :
-                                </span>
-                                <a :href="`mailto:${hotel.emailService}`" class="text-blue-600 hover:underline">{{
-                                    hotel.emailService }}</a>
-                            </div>
-                            <div>
-                                <span class="font-semibold">
-                                    <PhoneIcon class="mb-1" size="20" /> Téléphone :
-                                </span> {{ hotel.phoneNumberService }}
-                            </div>
-                            <div>
-                                <span class="font-semibold">
-                                    <GlobeIcon class="mb-1" size="20" /> Site :
-                                </span>
-                                <a :href="hotel.website" target="_blank" class="text-blue-600 hover:underline"> Visiter
-                                    Nous</a>
+                        <!-- Contact -->
+                        <div class="bg-white shadow rounded-lg p-6 space-y-6">
+                            <h2 class="text-xl font-bold">Informations de contact</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <ContactItem icon="Mail" label="Email" :value="dataStore.serviceGeted.emailService"
+                                    :link="'mailto:' + dataStore.serviceGeted.emailService" />
+                                <ContactItem icon="Phone" label="Téléphone" :value="dataStore.serviceGeted.phoneNumberService" />
+                                <ContactItem icon="Globe" label="Site web" value="Visiter le site"
+                                    :link="dataStore.serviceGeted.website" />
                             </div>
                         </div>
 
                         <!-- Équipements -->
-                        <div class="mb-6 border-t pt-4">
-                            <h2 class="text-lg font-semibold mb-3">Équipements</h2>
-                            <ul class="grid grid-cols-2 md:grid-cols-4 gap-y-2 text-sm text-gray-700 bg-customBlue/20 p-2 rounded">
-                                <li v-for="(facility, index) in hotel.facilities" :key="index"
-                                    class="flex items-center ">
-                                    <component :is="iconMap[facility]" v-if="iconMap[facility]"
-                                        class="text-customBlue mr-2" :size="16" />
-                                    <span class="text-customBlue">{{ facility }}</span>
-                                </li>
-                            </ul>
-
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h2 class="text-xl font-bold mb-4">Équipements et services</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                <div v-for="(facility, index) in dataStore.serviceGeted.facilities" :key="index"
+                                    class="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
+                                    <component :is="iconMap[facility] || CheckCircleIcon"
+                                        class="w-5 h-5 text-blue-600" />
+                                    <span class="text-sm font-medium text-gray-700 ">{{ facility }}</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Moyens de paiement -->
-                        <div class="mb-6">
-                            <h2 class="text-lg font-semibold mb-3">Moyens de paiement acceptés</h2>
-                            <ul class="grid grid-cols-2 md:grid-cols-3 gap-y-2 text-sm text-customRed/90 bg-customRed/20 p-2 rounded">
-                                <li v-for="(method, index) in hotel.paymentMethods" :key="index"
-                                    class="flex items-center">
-                                    <span>{{ method }}</span>
-                                </li>
-                            </ul>
+                        <!-- Paiement -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h2 class="text-xl font-bold mb-4">Moyens de paiement acceptés</h2>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                                <div v-for="(method, index) in dataStore.serviceGeted.paymentMethods" :key="index"
+                                    class="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
+                                    <CreditCardIcon class="w-5 h-5 text-green-600" />
+                                    <span class="text-sm font-medium text-gray-700">{{ method }}</span>
+                                </div>
+                            </div>
                         </div>
 
-                        <!-- Règles -->
-                        <div>
-                            <h2 class="text-lg font-semibold mb-3">Règles de l'hôtel</h2>
-                            <ul class="text-sm text-gray-700">
-                                <li v-for="(rule, index) in hotel.policies" :key="index" class="flex items-start">
-                                    <span class="w-2 h-2 bg-amber-300 rounded-full mr-2 mt-1"></span>
-                                    <span>{{ rule }}.</span>
-                                </li>
-                            </ul>
+                        <!-- Politiques -->
+                        <div class="bg-white shadow rounded-lg p-6">
+                            <h2 class="text-xl font-bold mb-4">Règles et politiques</h2>
+                            <div class="space-y-3">
+                                <div v-for="(rule, index) in hotel.policies" :key="index"
+                                    class="flex items-start gap-3">
+                                    <div class="w-2 h-2 bg-amber-400 rounded-full mt-2 flex-shrink-0" />
+                                    <span class="text-gray-700">{{ rule }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
+                    <!-- Sidebar -->
+                    <div class="lg:col-span-1">
+                        <div class="sticky top-6 bg-white shadow-lg rounded-lg p-6 space-y-6">
+                            <h2 class="text-xl text-center font-bold">Modifier votre séjour</h2>
 
-                <!-- Bloc droit : Modifier les dates (1/3) -->
-                <!-- doit recevoir les donnee de searchHoteldate aller et retour pour pouvoir les changee -->
-                <div class="lg:col-span-1">
-                    <div class="bg-white border rounded-lg  p-6 sticky top-20">
-                        <div class="flex flex-col gap-4">
-                            <!-- Input utilisé par Flatpickr -->
-                            <div class="datepicker">
-                                <label for="checkin" class="text-sm text-gray-600">Date d'arrivée</label>
-                                <input id="checkin" ref="checkinInput"
-                                    class="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
-                                    placeholder="Sélectionnez la date d'arrivée" readonly />
+                            <div class="bg-gray-50 p-4 rounded-lg">
+                                <h3 class="font-medium text-gray-900 mb-2">Séjour actuel</h3>
+                                <p class="text-sm text-gray-600">Arrivée : 15 Mars 2024</p>
+                                <p class="text-sm text-gray-600">Départ : 18 Mars 2024</p>
+                                <p class="font-medium text-sm mt-1">3 nuits • 2 adultes</p>
                             </div>
 
-                            <div class="datepicker">
-                                <label for="checkout" class="text-sm text-gray-600">Date de départ</label>
-                                <input id="checkout" ref="checkoutInput"
-                                    class="w-full border rounded-lg px-3 py-2 mt-1 text-sm"
-                                    placeholder="Sélectionnez la date de départ" readonly />
+                            <hr class="border-t border-gray-200 my-4">
+
+                            <!-- Formulaire -->
+                            <div class="space-y-4">
+                                <DateInput label="Nouvelle date d'arrivée" />
+                                <DateInput label="Nouvelle date de départ" />
+                                <NumberInput label="Nombre de voyageurs" />
                             </div>
 
-                            <button class="bg-customRed text-white py-2 px-4 rounded hover:text-gray-800">
-                                Modifier les dates
-                            </button>
+                            <!-- Boutons -->
+                            <div class="space-y-3">
+                                <button
+                                    class="w-full bg-customBlue/90 hover:bg-customBlue text-white py-3 rounded">Modifier
+                                    les dates</button>
+                            </div>
+
+                            <!-- Note -->
+                            <div class="bg-amber-50 border border-amber-200 rounded-lg p-3 text-xs text-amber-800">
+                                <div class="flex items-start gap-2">
+                                    <Clock class="w-4 h-4 text-amber-600 mt-0.5" />
+                                    <div>
+                                        <p class="font-medium">Modification gratuite</p>
+                                        <p>Vous pouvez modifier vos dates jusqu'à 24h avant l'arrivée.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -432,83 +484,120 @@ function formatDate(date) {
 
 
             <!-- Chambres -->
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">Choisissez votre chambre</h2>
-            <div class="space-y-6">
+            <div class="max-w-6xl mx-auto font-normal p-4 space-y-6 ">
+                <!-- Header -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Chambres disponibles</h1>
+                    <p class="text-gray-600">Trouvez la chambre parfaite pour votre séjour</p>
+                </div>
+
+                <!-- Liste des chambres -->
                 <div class="space-y-6">
-  <div
-    v-for="room in rooms"
-    :key="room.id"
-    class="bg-white rounded-xl shadow overflow-hidden"
-  >
-    <div class="flex flex-col md:flex-row">
-      <!-- Image principale -->
-      <div class="md:w-1/3">
-        <img
-          :src="room.images?.[0] || 'https://via.placeholder.com/400x300?text=No+Image'"
-          class="w-full h-64 object-cover"
-          alt="Image chambre"
-        />
-      </div>
+                    <div v-for="room in rooms" :key="room.id"
+                        class="overflow-hidden hover:shadow-lg transition-shadow duration-300 rounded-lg border">
+                        <div class="flex flex-col lg:flex-row">
+                            <!-- Image -->
+                            <div class="lg:w-80 relative">
+                                <img :src="'https://images.unsplash.com/photo-1618773928121-c32242e63f39?q=80&w=2070&auto=format&fit=crop'"
+                                    :alt="room.productName" class="w-full h-64 lg:h-full object-cover" />
+                                <!-- <img :src="room.images[0] || '/placeholder.svg?height=300&width=400'"
+                                    :alt="room.productName" class="w-full h-64 lg:h-full object-cover" /> -->
+                                <!-- <span v-if="room.discount"
+                                    class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 text-xs rounded">
+                                    -{{ room.discount }}%
+                                </span>
+                                <span v-if="room.isPopular"
+                                    class="absolute top-3 right-3 bg-orange-500 text-white px-2 py-1 text-xs rounded">
+                                    Populaire
+                                </span> -->
+                                <button class="absolute bottom-3 right-3 bg-white/80 hover:bg-white p-2 rounded-full">
+                                    <HeartIcon class="h-4 w-4" />
+                                </button>
+                            </div>
 
-      <!-- Détails chambre -->
-      <div class="p-6 md:w-2/3 flex flex-col">
-        <!-- Nom -->
-        <h3 class="text-xl font-bold text-gray-800">
-          {{ room.productName || 'Chambre sans nom' }}
-        </h3>
+                            <!-- Contenu -->
+                            <div class="flex-1 p-6 flex flex-col justify-between">
+                                <!-- Titre et note -->
+                                <div class="mb-4">
+                                    <div class="flex items-start justify-between mb-2">
+                                        <h3 class="text-xl font-bold text-gray-900 leading-tight">
+                                            {{ room.productName }}
+                                        </h3>
+                                        <div class="flex items-center gap-1 ml-4">
+                                            <div class="flex">
+                                                <Star v-for="i in 5" :key="i" class="w-4 h-4"
+                                                    :class="i <= Math.floor(room.rating) ? 'fill-yellow-400 text-yellow-400' : 'text-gray-300'" />
+                                            </div>
+                                            <span class="text-sm font-medium text-gray-700 ml-1">{{ room.rating
+                                                }}</span>
+                                            <span class="text-sm text-gray-500">({{ room.reviewCount }} avis)</span>
+                                        </div>
+                                    </div>
 
-        <!-- Capacité (si dispo) -->
-        <p
-          v-if="room.capacity"
-          class="text-gray-600 mt-1 mb-4"
-        >
-          Pour {{ room.capacity }} personne{{ room.capacity > 1 ? 's' : '' }}
-        </p>
+                                    <!-- Capacité -->
+                                    <div class="flex items-center text-gray-600 mb-3">
+                                        <UsersIcon class="w-4 h-4 mr-1" />
+                                        <span class="text-sm">Jusqu'à {{ room.capacity || 2 }} personnes{{ room.capacity > 1 ?
+                                            "s" : "" }}</span>
+                                    </div>
+                                </div>
 
-        <!-- Description -->
-        <p v-if="room.description" class="text-gray-700 mb-4">
-          {{ room.description }}
-        </p>
-        <p v-else class="text-gray-400 mb-4 italic">Aucune description disponible</p>
+                                <!-- Description -->
+                                <p class="text-gray-700 mb-4 line-clamp-2">{{ room.description }}</p>
 
-        <!-- Équipements -->
-        <div v-if="room.amenities?.length" class="mb-6">
-          <h4 class="font-medium mb-2">Équipements de la chambre</h4>
-          <ul class="grid grid-cols-2 gap-y-2">
-            <li
-              v-for="(amenity, index) in room.amenities"
-              :key="index"
-              class="flex items-center text-sm"
-            >
-              <component
-                :is="getAmenityIcon(amenity)"
-                class="w-4 h-4 mr-2 text-blue-600"
-                v-if="getAmenityIcon(amenity)"
-              />
-              <span v-else class="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2"></span>
-              {{ amenity }}
-            </li>
-          </ul>
-        </div>
+                                <!-- Équipements -->
+                                <div class="mb-6">
+                                    <!-- <div class="flex flex-wrap gap-3">
+                                        <div v-for="(amenity, index) in roomsTest.slice(0, 6)" :key="index"
+                                            class="flex items-center text-sm text-gray-600">
+                                            <component :is="getAmenityIcon(amenity)"
+                                                v-if="getAmenityIcon(amenity)" class="w-4 h-4 mr-1.5 text-customBlue" />
+                                            <div v-else class="w-1.5 h-1.5 bg-customBlue rounded-full mr-1.5" />
+                                            <span>{{ amenity }}</span>
+                                        </div>
+                                        <span v-if="room.amenities.length > 6"
+                                            class="text-sm text-customBlue font-medium">
+                                            +{{ room.amenities.length - 6 }} autres
+                                        </span>
+                                    </div> -->
+                                </div>
 
-        <!-- Prix + bouton -->
-        <div class="flex justify-between items-center mt-auto">
-          <div>
-            <p class="text-sm text-gray-500">Prix par nuit</p>
-            <p class="text-2xl font-bold text-blue-600">
-              {{ room.price }} €
-            </p>
-          </div>
-          <button class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-            Réserver maintenant
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                                <!-- Prix et actions -->
+                                <div class="flex items-end justify-between mt-auto">
+                                    <div>
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span v-if="room.originalPrice" class="text-sm text-gray-500 line-through">
+                                                {{ room.originalPrice }} FCFA
+                                            </span>
+                                            <span class="text-sm text-gray-600">par nuit</span>
+                                        </div>
+                                        <div class="flex items-baseline gap-1">
+                                            <span class="text-3xl font-bold">{{ room.price }} FCFA</span>
+                                        </div>
+                                        <p class="text-xs text-gray-500 mt-1">Taxes et frais inclus</p>
+                                    </div>
 
-</div>
+                                    <div class="flex flex-col gap-2">
+                                        <button class="bg-customRed hover:text-black text-white px-8 py-2 rounded">
+                                            Réserver maintenant
+                                        </button>
+                                        <div class="flex justify-end">
+                                            <span class="text-xs text-gray-700">
+                                                Réserver maintenant vous permet de voir les détails
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bouton Voir plus -->
+                <div class="flex justify-center mt-8">
+                    <button class="border px-8 py-2 rounded hover:bg-gray-100">Voir plus de chambres</button>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -543,7 +632,7 @@ function getAmenityIcon(amenity) {
         case 'TV':
             return Tv
         default:
-            return null
+            return CheckCircleIcon
     }
 }
 </script>

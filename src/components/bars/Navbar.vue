@@ -307,7 +307,7 @@
       <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
       <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
     </div> -->
-    <!-- <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div> -->
+    <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
 
     <!-- ,,Services destiné aux prof,Média,
@@ -425,50 +425,50 @@ onMounted(() => {
 // }
 
 
-// const handleSearch = () => {
-  
-//   // if (!leftValue.value || !rightValue.value) {
-//   //   console.warn("Veuillez remplir les deux champs.");
-//   //   return;
-//   // }
-
-//   // // Récupère le nom de la catégorie EN à partir de l'affichage FR
-//   // const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
-
-//   // const foundCategory = categories.value.find(category =>
-//   //   category.categoryName === englishCategory
-//   // )
-//   // console.log('foundCategory', englishCategory)
-
-//   // if (foundCategory) {
-//   //   store.setSearchData(foundCategory.id, rightValue.value)
-//   //   console.log('foundCategory', englishCategory)
-
-//   //   if (foundCategory.categoryName === 'Hotels & Stays') {
-//   //     isModalOpen.value = true
-            // getServiceIdHotel()
-//   //   } else {
-//   //     router.push({
-//   //       path: `/recherche/${foundCategory.id}`,
-//   //       query: { city: rightValue.value }
-//   //     })
-//   //   }
-//   // } else {
-//   //   console.warn("Catégorie non trouvée")
-//   // }
-// }
-
-
 const handleSearch = () => {
-  console.log('handleSearch')
-  getServiceIdHotel()
+  
+  if (!leftValue.value || !rightValue.value) {
+    console.warn("Veuillez remplir les deux champs.");
+    return;
+  }
 
-  // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-  //   isModalOpen.value = true;
-  // }
-  // isModalOpen.value = true;
-  console.log('rigth value', rightValue.value)
+  // Récupère le nom de la catégorie EN à partir de l'affichage FR
+  const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
+
+  const foundCategory = categories.value.find(category =>
+    category.categoryName === englishCategory
+  )
+  console.log('foundCategory', englishCategory)
+
+  if (foundCategory) {
+    store.setSearchData(foundCategory.id, rightValue.value)
+    console.log('foundCategory', englishCategory)
+
+    if (foundCategory.categoryName === 'Hotels & Stays') {
+      isModalOpen.value = true
+            getServiceIdHotel()
+    } else {
+      router.push({
+        path: `/recherche/${foundCategory.id}`,
+        query: { city: rightValue.value }
+      })
+    }
+  } else {
+    console.warn("Catégorie non trouvée")
+  }
 }
+
+
+// const handleSearch = () => {
+//   console.log('handleSearch')
+//   getServiceIdHotel()
+
+//   // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+//   //   isModalOpen.value = true;
+//   // }
+//   // isModalOpen.value = true;
+//   console.log('rigth value', rightValue.value)
+// }
 
 const getServiceIdHotel = () => {
   console.log('getServiceId')
@@ -528,7 +528,7 @@ const wantToSearchMobil = () => {
 };
 
 const leftValue = ref('');
-const rightValue = ref('Yaounde');
+const rightValue = ref('');
 const activeInput = ref(null);
 const labelToCategory = ref('');
 // const mapId = import.meta.env.VITE_IDCARD;

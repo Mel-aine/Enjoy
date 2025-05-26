@@ -35,7 +35,7 @@
             </div>
             <div class="flex justify-between mt-2">
                 <label for="toggle-passager"
-                    class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-default peer-checked:bg-blue-200">
+                    class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-pointer peer-checked:bg-blue-200">
                     {{ $t("appServices.hotel.valid") }}</label>
 
             </div>
@@ -82,13 +82,13 @@
                 </button> -->
 
                 <button @click="addRoom"
-                    class="px-4 py-2 ml-auto font-medium rounded-full text-blue-600 hover:bg-blue-200 cursor-default">
+                    class="px-4 py-2 ml-auto font-medium rounded-full text-blue-600 hover:bg-blue-200 cursor-pointer">
                     {{ $t("appServices.hotel.addRoom") }}
                 </button>
             </div>
             <div class="flex justify-between mt-2">
                 <label for="toggle-passager"
-                    class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-default peer-checked:bg-blue-200">
+                    class="px-4 py-2 font-medium ml-auto rounded-full text-blue-600 bg-blue-200 cursor-pointer peer-checked:bg-blue-200">
                     {{ $t("appServices.hotel.valid") }}
                 </label>
 
@@ -109,22 +109,22 @@
         <div ref="dropdown"
             class="flex flex-col sm:flex-row md:grid-cols-2 sm:grid-cols-2 items-center justify-center sm:justify-between w-full">
             <!-- Search Section -->
-            <div class="lg:flex justify-center cursor-default block">
-                <div class="bg-transparent mt-1 rounded-lg cursor-default">
+            <div class="lg:flex justify-center  block">
+                <div class="bg-transparent mt-1 rounded-lg cursor-pointer">
                     <div
-                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-default flex items-start justify-between w-80 md:min-w-56 lg:w-80">
+                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-80">
                         <MapPinIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
                         <input ref="autocompleteInput" type="text" id="destination" v-model="destination"
-                            class="cursor-default opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                            class="cursor-pointer opacity-0 peer bg-transparent h-14 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
                         <label for="destination"
-                            class="cursor-default absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            class="cursor-pointer absolute left-8 top-6 text-md bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <!-- {{ truncateText(destination, 28) }}  -->
-                            <span class="text-black font-medium cursor-default"> {{ destination }}
+                            <span class="text-black font-medium cursor-pointer"> {{ destination }}
                             </span> </label>
                         <label for="destination"
-                            class=" cursor-default  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black  cursor-default ">{{ $t("appServices.hotel.destination")
+                            class=" cursor-pointer  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            <span class="text-black  cursor-pointer ">{{ $t("appServices.hotel.destination")
                             }}</span></label>
                     </div>
                 </div>
@@ -170,7 +170,7 @@
                                 <div v-else>
                                     <ul class="suggestions">
                                         <li v-for="item in recentSearch" :key="item.label"
-                                            class="flex justify-start items-center mt-3 cursor-default"
+                                            class="flex justify-start items-center mt-3 cursor-pointer"
                                             @click="selectSuggestion(item)">
                                             <BaseIcon name="History" size="20" stroke-width="2" />
                                             <span class="ml-3 text-2xl">{{ item }}</span>
@@ -183,7 +183,7 @@
                             <div class="z-[999px]">
                                 <ul v-if="filteredWords.length" class="suggestions">
                                     <li v-for="item in filteredWords" :key="item.label"
-                                        class="flex justify-start items-center mt-3 cursor-default"
+                                        class="flex justify-start items-center mt-3 cursor-pointer"
                                         @click="selectSuggestion(item.label)">
                                         <BaseIcon :name="item.icon" size="20" stroke-width="2" class="ml-2" />
                                         <span class="ml-3 text-2xl">{{ item.label }}</span>
@@ -197,50 +197,50 @@
 
                 </div> -->
             </div>
-            <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-default block">
+            <div class=" bg-transparent p-4 mt-1 rounded-sm cursor-pointer block">
                 <div
-                    class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-default flex items-start justify-between w-80 lg:w-64">
+                    class="datepicker aller relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 lg:w-64">
                     <CalendarRangeIcon size="22"
                         class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
                     <input type="text" ref="datepickerAller" id="dateAller" v-model="formattedDateArrival"
-                        class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                        class="cursor-pointer opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateAller"
-                        class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                        class="cursor-pointer absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                         <span class="text-black font-medium">{{ formattedDateArrival }}</span></label>
                     <label for="dateAller"
-                        class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                        <span class="text-black ">{{ $t("appServices.hotel.arrival") }}</span></label>
+                        class="cursor-pointer absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                        <span class="cursor-pointer text-black ">{{ $t("appServices.hotel.arrival") }}</span></label>
                 </div>
             </div>
 
-            <div class="datepicker retour bg-transparent mt-1 rounded-sm cursor-default block">
+            <div class="datepicker retour bg-transparent mt-1 rounded-sm  block">
                 <div
-                    class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-default flex items-start justify-between w-80 md:min-w-56 lg:w-64">
+                    class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
                     <CalendarRangeIcon size="22"
-                        class="hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" /> <input
+                        class="cursor-pointer hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" /> <input
                         type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
-                        class=" opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                        class="cursor-pointer opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateRetour"
-                        class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                        <span class="text-black font-medium">{{ formattedDateDeparture }}</span></label>
+                        class="cursor-pointer absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                        <span class="cursor-pointer text-black font-medium">{{ formattedDateDeparture }}</span></label>
                     <label for="deteRetour"
-                        class="absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                        <span class="text-black">{{ $t("appServices.hotel.departure") }}</span></label>
+                        class="cursor-pointer absolute left-8 -top-0 text-sm text-black bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                        <span class="cursor-pointer text-black">{{ $t("appServices.hotel.departure") }}</span></label>
                 </div>
             </div>
 
-            <div class="bg-transparent p-4 mt-1 rounded-sm cursor-default block">
+            <div class="bg-transparent p-4 mt-1 rounded-sm cursor-pointer block">
                 <label for="toggle-passager">
                     <div
-                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-default flex items-start justify-between w-80 md:min-w-56 lg:w-72">
+                        class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-72">
                         <UsersIcon size="22" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
                         <input type="text" id="travelers" name="travelers" v-model="nothing"
-                            class="opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
+                            class="cursor-pointer opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                             placeholder="Type inside me" />
                         <label for="toggle-passager"
-                            class="absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
+                            class="cursor-pointer absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <div class="flex items-center justify-center">
                                 <span class="text-black"><span class="text-lg">{{ totalPersons }}</span> <span
                                         class="text-md font-medium">{{ $t("appServices.hotel.persons") }}</span> ,
@@ -254,7 +254,7 @@
                         </label>
                         <label for="toggle-passager"
                             class="absolute left-8 -top-0 text-sm text-gray-500 bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
-                            <span class="text-black">{{ $t("appServices.hotel.guests") }}</span></label>
+                            <span class="cursor-pointer text-black">{{ $t("appServices.hotel.guests") }}</span></label>
                     </div>
                 </label>
             </div>
@@ -655,5 +655,41 @@ const { t } = useI18n();
 .dropdown-menu {
     z-index: 9999 !important;
     /* Assure que le menu reste au-dessus des autres éléments */
+}
+
+/* Couleur de fond des jours sélectionnés */
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange,
+.flatpickr-day.inRange {
+  background: #eb2525 !important; /* bleu tailwind-500 */
+  color: white;
+  border-color: #eb2525 !important;
+}
+
+/* Hover sur les jours */
+.flatpickr-day:hover {
+  background: #93c5fd !important; /* bleu clair */
+  color: black;
+}
+
+/* Aujourd'hui */
+.flatpickr-day.today {
+  border: 5px solid #b93710; /* vert */
+}
+
+/* Texte désactivé (jours avant minDate par ex.) */
+.flatpickr-day.disabled {
+  color: #d1d5db !important; /* gris-300 */
+}
+
+/* Bordures et fond général */
+.flatpickr-calendar {
+  border: 1px solid #e5e7eb; /* gris-200 */
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+:deep(.flatpickr-day.selected) {
+  background: #eb2525 !important;
+  color: white;
 }
 </style>

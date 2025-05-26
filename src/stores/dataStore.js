@@ -5,6 +5,22 @@ export const useDataStore = defineStore('data', {
     data: '',
     parentType: '', // Identifiant du parent
     searchFrom: null,
+    serviceGeted : null,
+    filtedHotel: {
+      hotelId: null,
+      hotelName: null,
+      hotelImage: null,
+      hotelAddress: null,
+      hotelCity: null,
+      hotelPrice: null,
+      hotelRating: null,
+      hotelDescription: null,
+      hotelPhoneNumber: null,
+      hotelEmail: null,
+      hotelWebsite: null,
+      hotelLatitude: null,
+      hotelLongitude: null
+    }
 
   }),
   actions: {

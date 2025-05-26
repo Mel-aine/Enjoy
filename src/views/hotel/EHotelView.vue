@@ -15,8 +15,8 @@ import {useDataStore} from '@/stores/dataStore'
 
 const router = useRouter();
 const route = useRoute();
-const dataStore = useDataStore()
 const hotelStore = useMIHStore();
+const dataStore = useDataStore()
 
 // Reactive state
 const searchParams = ref({
@@ -118,7 +118,7 @@ watch(() => route.params.city, (newCity) => {
 <template>
     <div class="mt-20"><SearchHotel @search="handleSearch"/></div>
   <div class="min-h-screen bg-gray-50">
-    <main class="container mx-auto px-4 py-20">
+    <main class="max-w-7xl mx-auto px-4 py-20">
       <!-- <SearchHotel /> -->
       <div class="flex flex-col md:flex-row gap-6 mt-6">
         <!-- Sidebar Filters -->

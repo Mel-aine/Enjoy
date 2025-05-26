@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        sans: ['"Centra No2"', 'sans-serif'],
       },
       colors:{
         customBlue: '#7B2CBF',
