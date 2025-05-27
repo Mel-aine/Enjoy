@@ -43,11 +43,13 @@ const formData = ref({
   policies: '',
   capacity: '',
   payment_methods: [],
+  files: [],
   status: 'active',
 });
 
 const updateFormData = (newData) => {
   formData.value = { ...formData.value, ...newData };
+  console.log('formData updated:', formData.value);
 };
 
 const handleNext = () => {
@@ -71,11 +73,22 @@ const handlePrevious = () => {
   }
 };
 const validateStep = () => {
+  console.log('files', formData.value.files);
   switch (activeStep.value) {
     case 0:
       if (!formData.value.name || !formData.value.category_id) {
         isVisible.value = true;
         infoAlert.value = ' Veuillez remplir tous les champs obligatoires : Nom et Catégorie.';
+        return false;
+      }
+            if (
+        !Array.isArray(formData.value.files) ||
+        formData.value.files.length === 0 ||
+        !(formData.value.files[0] instanceof File)
+      ) {
+        console.log('formData.value.files in valid', formData.value.files);
+        isVisible.value = true;
+        infoAlert.value = 'Veuillez choisir une image valide pour votre service.';
         return false;
       }
       break;
@@ -104,7 +117,7 @@ const validateStep = () => {
     case 4:
       if (!formData.value.policies) {
         isVisible.value = true;
-        infoAlert.value = ' Veuillez renseigner les politiques du service.';
+        infoAlert.value = ' Veuillez renseigner les politiques de votre service.';
         return false;
       }
       break;
@@ -127,13 +140,13 @@ const handleSubmit = async (e) => {
     name: formData.value.name,
     description: formData.value.description,
     category_id: Number(formData.value.category_id),
-    address: JSON.stringify({
+    address_service: JSON.stringify({
       text: formData.value.address || '',
       lat: formData.value.latitude ?? null,
       lng: formData.value.longitude ?? null
     }),
-    phone_number: formData.value.phone_number,
-    email: formData.value.email,
+    phone_number_service: formData.value.phone_number,
+    email_service: formData.value.email,
     website: formData.value.website,
     openings: formData.value.openings ? JSON.stringify(formData.value.openings) : '{}',
     price_range: formData.value.price_range || null,
@@ -141,13 +154,13 @@ const handleSubmit = async (e) => {
     policies: formData.value.policies || null,
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
-    images: formData.value.url.length ? JSON.stringify(formData.value.url) : '[]',
+    // images: formData.value.url.length ? JSON.stringify(formData.value.url) : '[]',
     status: formData.value.status || 'active',
-    firstname: formData.value.firstName,
-    lastname: formData.value.lastName,
+    first_name: formData.value.firstName,
+    last_name: formData.value.lastName,
     password: formData.value.password,
-    emailU: formData.value.email,
-    phone_numberU: formData.value.phone_number
+    email: formData.value.email,
+    phone_number: formData.value.phone_number
   };
 
   try {
@@ -179,8 +192,8 @@ const handleSubmit = async (e) => {
         lastname: '',
         firstname: '',
         password: '',
-        emailU: '',
-        phone_numberU: ''
+        // emailU: '',
+        // phone_numberU: ''
       };
       activeStep.value = 0;
     }, 3000);
@@ -233,9 +246,8 @@ const handleSubmit = async (e) => {
             {{ $t('next') }}
           </button>
           <button v-else type="submit"
-            class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700" :class="isSubmitting ? 'cursor-not-allowed opacity-50' : ''"
-            :disabled="isSubmitting"
-            @click="handleSubmit">
+            class="ml-3 px-4 py-2 border rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700"
+            :class="isSubmitting ? 'cursor-not-allowed opacity-50' : ''" :disabled="isSubmitting" @click="handleSubmit">
             <span v-if="!isSubmitting">{{ $t('saveService') }}</span>
             <svg v-else class="animate-spin h-5 w-5 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none"
               viewBox="0 0 24 24">

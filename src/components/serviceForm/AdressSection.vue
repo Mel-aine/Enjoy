@@ -65,13 +65,29 @@ const initMap = () => {
 };
 
 const initAutocomplete = () => {
+  // Définir les limites pour Yaoundé (à adapter selon vos besoins)
+  const cityBounds = new google.maps.LatLngBounds(
+    new google.maps.LatLng(3.80, 11.45),
+    new google.maps.LatLng(3.90, 11.55)
+  );
+
   autocomplete.value = new google.maps.places.Autocomplete(addressInput.value, {
     types: ['geocode'],
+    bounds: cityBounds,
+    componentRestrictions: { country: 'cm' },
+    fields: ['address_components', 'geometry', 'formatted_address']
   });
 
   autocomplete.value.addListener('place_changed', () => {
     const place = autocomplete.value.getPlace();
     if (!place.geometry) return;
+
+    // Extraire les composants d'adresse
+    const addressComponents = {
+      quartier: getAddressComponent(place, 'sublocality'),
+      ville: getAddressComponent(place, 'locality'),
+      pays: getAddressComponent(place, 'country')
+    };
 
     const location = place.geometry.location;
     map.value.setCenter(location);
@@ -81,8 +97,17 @@ const initAutocomplete = () => {
       latitude: location.lat(),
       longitude: location.lng(),
       address: place.formatted_address,
+      ...addressComponents
     });
   });
+};
+
+// Helper pour extraire les composants d'adresse
+const getAddressComponent = (place, type) => {
+  const component = place.address_components.find(c => 
+    c.types.includes(type)
+  );
+  return component ? component.long_name : '';
 };
 
 const placeMarker = (location) => {
@@ -99,14 +124,25 @@ const updateAddressFromPosition = async (latLng) => {
   const geocoder = new google.maps.Geocoder();
   geocoder.geocode({ location: latLng }, (results, status) => {
     if (status === 'OK' && results[0]) {
+      const formattedAddress = results[0].formatted_address;
+console.log('Adresse formatée:', formattedAddress);
+      // Mise à jour du champ d'input visuel
+      addressInput.value.value = formattedAddress;
+
+      // Déclenche manuellement l'event @input
+      addressInput.value.dispatchEvent(new Event('input'));
+
+      // Émission des données vers le parent
       emit('updateFormData', {
         latitude: latLng.lat(),
         longitude: latLng.lng(),
-        address: results[0].formatted_address,
+        address: formattedAddress,
       });
     }
   });
 };
+
+
 
 const handleChange = (event) => {
   emit('updateFormData', { address: event.target.value });
@@ -125,17 +161,9 @@ const handleChange = (event) => {
 
     <div v-show="mapsLoaded">
       <label for="address" class="block text-sm font-medium text-gray-700">{{ $t('address') }}</label>
-      <input
-        ref="addressInput"
-        id="address"
-        name="address"
-        type="text"
-        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        placeholder="Rechercher votre adresse..."
-        :value="formData.address"
-        @input="handleChange"
-        required
-      />
+      <input ref="addressInput" id="address" name="address" type="text"
+        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
+        :placeholder="$t('searchAddress')" :value="formData.address" @input="handleChange" required />
     </div>
 
     <div v-show="mapsLoaded">

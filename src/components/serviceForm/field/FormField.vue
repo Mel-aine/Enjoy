@@ -8,8 +8,12 @@
         :type="type"
         :name="name"
         :id="id"
-        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-        :placeholder="placeholder"
+        :class="[
+          'w-full px-3 py-2 border rounded-lg focus:ring-2 sm:text-sm',
+          isValid === false ? 'border-red-500 focus:ring-red-200' :
+          isValid ? 'border-green-500 focus:ring-indigo-500' :
+          'border-gray-300 focus:ring-indigo-500'
+        ]"        :placeholder="placeholder"
         v-model="internalValue"
         :required="required"
       />

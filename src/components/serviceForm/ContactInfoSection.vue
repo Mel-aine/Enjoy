@@ -1,10 +1,30 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-import { Phone, AtSign, Globe, MapPin, CircleUser, LockKeyhole } from 'lucide-vue-next';
+import { defineProps, defineEmits, ref, watch } from 'vue';
+import { Phone, AtSign, Globe, MapPin, CircleUser, LockKeyhole, Eye, EyeOff } from 'lucide-vue-next';
 
 const props = defineProps({
     formData: Object
 });
+const showPassword = ref(false)
+const showConfirmPassword = ref(false)
+const confirmPassword = ref('')
+const passwordsMatch = ref(true);
+
+watch([() => props.formData.password, confirmPassword], () => {
+    // passwordsMatch.value = props.formData.password === confirmPassword.value;
+    if (props.formData.password && confirmPassword.value) {
+        passwordsMatch.value = props.formData.password === confirmPassword.value;
+    } else {
+        passwordsMatch.value = false;
+        return;
+    }
+});
+const togglePasswordVisibility = () => {
+    showPassword.value = !showPassword.value
+}
+const toggleConfirmPasswordVisibility = () => {
+    showConfirmPassword.value = !showConfirmPassword.value
+}
 const emit = defineEmits(['updateFormData']);
 
 const handleChange = (event) => {
@@ -13,19 +33,19 @@ const handleChange = (event) => {
 </script>
 
 <template>
-    <div class="space-y-8">
+    <div class="space-y-6">
         <!-- Section principale - Informations de contact -->
-        <div class="bg-white p-4 rounded-lg">
-            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-2">{{ $t('infoContact')}}</h3>
+        <div class="bg-white  rounded-lg">
+            <h3 class="text-lg font-medium leading-6 text-gray-900 mb-2">{{ $t('infoContact') }}</h3>
             <p class="text-sm text-gray-400 mb-6">{{ $t('descriptioncontactInfo') }}</p>
             <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <MapPin class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="address" class="block text-sm font-medium text-gray-700">{{ $t('Adresse')}}</label>
+                        <label for="address" class="block text-sm font-medium text-gray-700">{{ $t('address') }}</label>
                     </div>
                     <input type="text" name="address" id="address"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 bg-gray-100 cursor-not-allowed rounded-md"
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 bg-gray-300 cursor-not-allowed sm:text-sm"
                         placeholder="123 rue de ville, 75001 ville" :value="formData.address" readonly required />
                 </div>
             </div>
@@ -34,7 +54,7 @@ const handleChange = (event) => {
         <!-- Section - Informations personnelles -->
         <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
             <div class="flex items-center mb-4">
-                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ $t('infoConnectDashboard')}}</h3>
+                <h3 class="text-lg font-medium leading-6 text-gray-900">{{ $t('infoConnectDashboard') }}</h3>
                 <div class="ml-3 flex-grow border-t border-gray-300"></div>
             </div>
 
@@ -42,53 +62,89 @@ const handleChange = (event) => {
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="lastName" class="block text-sm font-medium text-gray-700">{{$t('first_name')}}</label>
+                        <label for="lastName" class="block text-sm font-medium text-gray-700">{{ $t('first_name')
+                            }}</label>
                     </div>
                     <input type="text" name="lastName" id="lastName"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                        placeholder="Votre prénom" :value="formData.lastName" @input="handleChange" required />
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
+                        :placeholder="$t('your_last_name')" :value="formData.lastName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name')}}</label>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name') }}</label>
                     </div>
                     <input type="text" name="firstName" id="firstName"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                        placeholder="Votre nom" :value="formData.firstName" @input="handleChange" required />
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
+                        :placeholder="$t('your_first_name')" :value="formData.firstName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <Phone class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="phone_number" class="block text-sm font-medium text-gray-700">
-                            {{ $t('phone')}}
+                            {{ $t('phone') }}
                         </label>
                     </div>
                     <input type="tel" name="phone_number" id="phone_number"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                        placeholder="+237 640 23 45 67 89" :value="formData.phone_number" @input="handleChange" required />
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
+                        placeholder="+237 640 23 45 67 89" :value="formData.phone_number" @input="handleChange"
+                        required />
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <AtSign class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email')}}</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email') }}</label>
                     </div>
                     <input type="email" name="email" id="email"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
                         placeholder="contact@example.com" :value="formData.email" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('password')}}</label>
+                        <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('password')
+                            }}</label>
                     </div>
-                    <input type="password" name="password" id="password"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                        placeholder="********" :value="formData.password" @input="handleChange" required />
+
+                    <div class="relative">
+                        <input :type="showPassword ? 'text' : 'password'" name="password" id="password"
+                            class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm pr-10"
+                            :class="passwordsMatch ? 'border-gray-300' : 'border-red-500 focus:ring-red-200'"
+                            placeholder="********" :value="formData.password" @input="handleChange" required />
+
+                        <!-- Icône œil -->
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer"
+                            @click="togglePasswordVisibility">
+                            <Eye v-if="!showPassword" class="h-5 w-5 text-gray-500" />
+                            <EyeOff v-else class="h-5 w-5 text-gray-500" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sm:col-span-6">
+                    <div class="flex items-center">
+                        <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
+                        <label for="password" class="block text-sm font-medium text-gray-700">{{
+                            $t('confirmPassword') }}</label>
+                    </div>
+
+                    <div class="relative">
+                        <input :type="showConfirmPassword ? 'text' : 'password'" name="Cpassword" id="Cpassword"
+                            class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm pr-10"
+                            :class="passwordsMatch ? 'border-gray-300' : 'border-red-500 focus:ring-red-200'"
+                            placeholder="********" v-model="confirmPassword" required />
+
+                        <!-- Icône œil -->
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer"
+                            @click="toggleConfirmPasswordVisibility">
+                            <Eye v-if="!showConfirmPassword" class="h-5 w-5 text-gray-500" />
+                            <EyeOff v-else class="h-5 w-5 text-gray-500" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,14 +155,25 @@ const handleChange = (event) => {
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <Globe class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="website" class="block text-sm font-medium text-gray-700">{{ $t('webSite')}}</label>
+                        <label for="website" class="block text-sm font-medium text-gray-700">{{ $t('webSite') }}</label>
                     </div>
                     <input type="url" name="website" id="website"
-                        class="shadow-sm focus:ring-blue-500 focus:border-blue-500 block w-full sm:text-sm border-gray-300 rounded-md"
+                        class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
                         placeholder="https://www.example.com" :value="formData.website" @input="handleChange" />
-                    <p class="mt-1 text-sm text-gray-400">{{ $t('optional')}}</p>
+                    <p class="mt-1 text-sm text-gray-400">{{ $t('optional') }}</p>
                 </div>
             </div>
         </div>
     </div>
 </template>
+<style scoped>
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear {
+    display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-textfield-decoration-container {
+    display: none !important;
+}
+</style>
