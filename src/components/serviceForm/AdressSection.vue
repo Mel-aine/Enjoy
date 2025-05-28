@@ -14,7 +14,7 @@ const autocomplete = ref(null);
 const mapsLoaded = ref(false);
 const mapsLoadingError = ref(null);
 const addressInput = ref(null); // Référence pour l'input de l'adresse
-
+const clicked = ref(false);
 const loadGoogleMapsScript = () => {
   return new Promise((resolve, reject) => {
     if (window.google) {
@@ -48,17 +48,18 @@ const initMap = () => {
     zoom: 12,
   });
 
-  marker.value = new google.maps.Marker({
-    position: { lat: props.formData.latitude || 3.8480, lng: props.formData.longitude || 11.5021 },
-    map: map.value,
-    draggable: true,
-  });
+  // marker.value = new google.maps.Marker({
+  //   position: { lat: props.formData.latitude || 3.8480, lng: props.formData.longitude || 11.5021 },
+  //   map: map.value,
+  //   draggable: true,
+  // });
 
-  marker.value.addListener('dragend', (event) => {
-    updateAddressFromPosition(event.latLng);
-  });
+  // marker.value.addListener('dragend', (event) => {
+  //   updateAddressFromPosition(event.latLng);
+  // });
 
   map.value.addListener('click', (event) => {
+    clicked.value = true;
     placeMarker(event.latLng);
     updateAddressFromPosition(event.latLng);
   });
@@ -91,11 +92,20 @@ const initAutocomplete = () => {
 
     const location = place.geometry.location;
     map.value.setCenter(location);
-    placeMarker(location);
+    map.value.setZoom(13); // <-- Ajoute cette ligne avec le niveau de zoom désiré
 
-    emit('updateFormData', {
+    // placeMarker(location);
+if (clicked.value) {
+      emit('updateFormData', {
       latitude: location.lat(),
       longitude: location.lng(),
+      // address: place.formatted_address,
+      // ...addressComponents
+    });
+    }
+    emit('updateFormData', {
+      // latitude: location.lat(),
+      // longitude: location.lng(),
       address: place.formatted_address,
       ...addressComponents
     });
@@ -111,7 +121,21 @@ const getAddressComponent = (place, type) => {
 };
 
 const placeMarker = (location) => {
-  marker.value.setPosition(location);
+  if (!marker.value) {
+    marker.value = new google.maps.Marker({
+      position: location,
+      map: map.value,
+      draggable: true,
+    });
+
+    // Ajoute un listener de drag seulement une fois
+    marker.value.addListener('dragend', (event) => {
+      updateAddressFromPosition(event.latLng);
+    });
+  } else {
+    marker.value.setPosition(location);
+  }
+
   map.value.setCenter(location);
 
   emit('updateFormData', {
@@ -119,6 +143,7 @@ const placeMarker = (location) => {
     longitude: location.lng(),
   });
 };
+
 
 const updateAddressFromPosition = async (latLng) => {
   const geocoder = new google.maps.Geocoder();
@@ -168,7 +193,7 @@ const handleChange = (event) => {
 
     <div v-show="mapsLoaded">
       <label class="block text-sm font-medium text-gray-700">{{ $t('positionMap') }}</label>
-      <div ref="mapRef" class="w-full h-64 mt-2 rounded-md border border-gray-300"></div>
+      <div ref="mapRef" class="w-full h-96 mt-2 rounded-md border border-gray-300"></div>
       <p class="mt-1 text-sm text-gray-500">{{ $t('descriptionTodoInMap') }}</p>
     </div>
 

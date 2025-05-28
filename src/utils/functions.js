@@ -6,45 +6,46 @@ export function truncateText(text, maxLength) {
 }
 
 export async function uploadImages(establishmentType, establishmentName, files) {
-  const cloudName = 'dylb6x7hj'
-  const uploadPreset = 'preset_hotels'
+  const cloudName = 'dylb6x7hj';
+  const uploadPreset = 'preset_hotels';
 
-  const type = establishmentType.value
-  const nameSlug = slugify(establishmentName.value)
-  const folder = `${slugify(type)}s/${nameSlug}`
-  const uploadedUrls = []
+  const type = establishmentType;
+  console.log('establishmentName', establishmentName);
+  const nameSlug = slugify(establishmentName);
+  const folder = `${slugify(type)}s/${nameSlug}`;
+  const uploadedUrls = [];
 
-  let uploaded = true
+  let uploaded = true;
 
-  for (const file of files.value) {
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('upload_preset', uploadPreset)
-    formData.append('folder', folder)
+  for (const file of files) {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', uploadPreset);
+    formData.append('folder', folder);
 
     try {
       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
         method: 'POST',
         body: formData,
-      })
+      });
 
-      const data = await res.json()
+      const data = await res.json();
 
       if (res.ok && data.secure_url) {
-        uploadedUrls.value.push(data.secure_url)
-        console.log('Image uploadée :', data.secure_url)
+        uploadedUrls.push(data.secure_url); // ✅ corrigé ici
+        console.log('✅ Image uploadée :', data.secure_url);
       } else {
-        console.error('Erreur lors de l\'upload :', data)
-        uploaded = false
+        console.error('❌ Erreur Cloudinary :', data);
+        uploaded = false;
       }
 
     } catch (err) {
-      console.error('Erreur réseau :', err)
-      uploaded = false
+      console.error('🚨 Erreur réseau :', err.message || err);
+      uploaded = false;
     }
   }
 
-  return uploaded
+  return { uploaded, uploadedUrls };
 }
 
 

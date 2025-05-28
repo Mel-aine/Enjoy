@@ -64,7 +64,7 @@
   "descriptioncontactInfo": "How can customers contact and find you?",
   "optional": "Optional",
   "infoOperatinal": "Operationals Informations",
-  "detailsOnHour": "Details on il faut completer en anglais",
+  "detailsOnHour": "Details about your service's schedule and capacity.",
   "openingDays": "Opening days",
   "allWeek": "All the week-end",
   "mondayToFriday": "Monday to Friday",
@@ -87,6 +87,40 @@
   "saveServiceForm": "Service enrollment",
   "addNewService": "Add a new service: Please fill out the form below",
   "noFileSelected": "No file selected",
+  "cash": "Cash",
+  "check": "Check",
+  "paypal": "PayPal",
+  "smallPay": "Small Pay",
+  "title": "Additional Information",
+  "subtitle": "Additional details to better present your service.",
+  "amenitiesTitle": "Amenities and Services",
+  "policiesTitle": "Policies and Rules",
+  "policiesPlaceholder": "Describe your cancellation policies, house rules, etc.",
+  "paymentTitle": "Accepted Payment Methods",
+  "policies.example": "Ex: Free cancellation up to 24 hours before arrival. No smoking allowed in the establishment.",
+    "serviceSuccess": {
+    "title": "Service successfully registered!",
+    "description": "Your service has been added to our database.",
+    "noThanks": "No Thanks!",
+    "backToHotelManagement": "Back to hotel management"
+  },
+    "serviceInProgress": {
+    "title": "Service in progress"
+  },
+  "alert": {
+    "fillNameAndCategory": "Please fill in all required fields: Name and Category.",
+    "chooseValidImage": "Please select a valid image for your service.",
+    "fillAddress": "Please enter the address.",
+    "selectMapPosition": "Please select a location on the map if not already done.",
+    "fillPhoneAndEmail": "Please enter a phone number and an email address.",
+    "selectOpeningDays": "Please select the opening days.",
+    "fillPolicies": "Please provide your service policies.",
+    "fillAllFields": "Please fill in all required fields."
+  },
+    "passwordRules": {
+    "complexity": "Minimum 8 characters, at least one uppercase letter, one lowercase.",
+    "passwordsNotMatch": "Passwords do not match."
+  },
   "navbar": {
     "noResult" : "No found",
     "space": "Current Location",

@@ -149,7 +149,7 @@ console.log('establishmentType', establishmentType.value)
   </div>
   <div class="space-y-6 mt-8 border border-gray-200 bg-white p-4 rounded-lg">
     <label class="block text-sm font-medium text-gray-700 mb-2">
-      {{ $t('mainImage') }}
+      {{ $t('mainImage') }} <span class="text-red-500">*</span>
     </label>
 
     <div class="flex items-center justify-between gap-4 flex-wrap">

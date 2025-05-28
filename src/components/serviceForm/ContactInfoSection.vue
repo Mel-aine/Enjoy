@@ -9,6 +9,16 @@ const showPassword = ref(false)
 const showConfirmPassword = ref(false)
 const confirmPassword = ref('')
 const passwordsMatch = ref(true);
+const passwordValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+watch(() => props.formData.password, (newPassword) => {
+    if (newPassword) {
+        passwordValidFormat.value = passwordRegex.test(newPassword);
+    } else {
+        passwordValidFormat.value = true; 
+    }
+});
 
 watch([() => props.formData.password, confirmPassword], () => {
     // passwordsMatch.value = props.formData.password === confirmPassword.value;
@@ -63,7 +73,7 @@ const handleChange = (event) => {
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="lastName" class="block text-sm font-medium text-gray-700">{{ $t('first_name')
-                            }}</label>
+                            }}<span class="text-red-500">*</span></label>
                     </div>
                     <input type="text" name="lastName" id="lastName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
@@ -73,7 +83,7 @@ const handleChange = (event) => {
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name') }}</label>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name') }}<span class="text-red-500">*</span></label>
                     </div>
                     <input type="text" name="firstName" id="firstName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
@@ -84,19 +94,19 @@ const handleChange = (event) => {
                     <div class="flex items-center">
                         <Phone class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="phone_number" class="block text-sm font-medium text-gray-700">
-                            {{ $t('phone') }}
+                            {{ $t('phone') }}<span class="text-red-500">*</span>
                         </label>
                     </div>
                     <input type="tel" name="phone_number" id="phone_number"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        placeholder="+237 640 23 45 67 89" :value="formData.phone_number" @input="handleChange"
+                        placeholder="640404040" :value="formData.phone_number" @input="handleChange"
                         required />
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <AtSign class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email') }}</label>
+                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email') }}<span class="text-red-500">*</span></label>
                     </div>
                     <input type="email" name="email" id="email"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
@@ -107,13 +117,12 @@ const handleChange = (event) => {
                     <div class="flex items-center">
                         <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('password')
-                            }}</label>
+                            }}</label><span class="text-red-500">*</span>
                     </div>
 
                     <div class="relative">
                         <input :type="showPassword ? 'text' : 'password'" name="password" id="password"
                             class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm pr-10"
-                            :class="passwordsMatch ? 'border-gray-300' : 'border-red-500 focus:ring-red-200'"
                             placeholder="********" :value="formData.password" @input="handleChange" required />
 
                         <!-- Icône œil -->
@@ -123,19 +132,19 @@ const handleChange = (event) => {
                             <EyeOff v-else class="h-5 w-5 text-gray-500" />
                         </div>
                     </div>
+                    <span v-if="!passwordValidFormat" class="m-2 text-red-500 text-sm">{{ $t('passwordRules.complexity') }}</span>
                 </div>
 
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="password" class="block text-sm font-medium text-gray-700">{{
-                            $t('confirmPassword') }}</label>
+                            $t('confirmPassword') }}</label><span class="text-red-500">*</span>
                     </div>
 
                     <div class="relative">
                         <input :type="showConfirmPassword ? 'text' : 'password'" name="Cpassword" id="Cpassword"
                             class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm pr-10"
-                            :class="passwordsMatch ? 'border-gray-300' : 'border-red-500 focus:ring-red-200'"
                             placeholder="********" v-model="confirmPassword" required />
 
                         <!-- Icône œil -->
@@ -145,6 +154,7 @@ const handleChange = (event) => {
                             <EyeOff v-else class="h-5 w-5 text-gray-500" />
                         </div>
                     </div>
+                    <span v-if="!passwordsMatch" class="m-2 text-red-500 text-sm">{{ $t('passwordRules.passwordsNotMatch') }}</span>
                 </div>
             </div>
         </div>

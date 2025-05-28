@@ -87,6 +87,41 @@
   "saveServiceForm": "Enregistrement d'un Service",
   "addNewService": "Complétez le formulaire ci-dessous pour ajouter un nouveau service",
   "noFileSelected": "Aucun fichier sélectionné",
+  "cash": "Espèces",
+  "check": "Chèque",
+  "paypal": "PayPal",
+  "smallPay": "Small Pay",
+  "title": "Informations supplémentaires",
+  "subtitle": "Détails additionnels pour mieux présenter votre service.",
+  "amenitiesTitle": "Équipements et services",
+  "policiesTitle": "Politiques et règlements",
+  "policiesPlaceholder": "Décrivez vos politiques d'annulation, règles de l'établissement, etc.",
+  "paymentTitle": "Modes de paiement acceptés",
+  "policies.example": "Ex: Annulation gratuite 24h avant l'arrivée. Interdiction de fumer dans l'établissement.",
+    "serviceSuccess": {
+    "title": "Service enregistré avec succès!",
+    "description": "Votre service a été ajouté à notre base de données.",
+    "noThanks": "Non Merci!",
+    "backToHotelManagement": "Retour à la gestion de l'hôtel"
+  },
+    "serviceInProgress": {
+    "title": "Service en cours d'enregistrement"
+  },
+   "alert": {
+    "fillNameAndCategory": "Veuillez remplir tous les champs obligatoires : Nom et Catégorie.",
+    "chooseValidImage": "Veuillez choisir une image valide pour votre service.",
+    "fillAddress": "Veuillez renseigner l'adresse.",
+    "selectMapPosition": "Veuillez sélectionner un emplacement sur la carte si ce n'est pas déjà fait.",
+    "fillPhoneAndEmail": "Veuillez entrer un numéro de téléphone et une adresse e-mail.",
+    "selectOpeningDays": "Veuillez sélectionner les jours d'ouverture.",
+    "fillPolicies": "Veuillez renseigner les politiques de votre service.",
+    "fillAllFields": "Veuillez remplir tous les champs obligatoires."
+
+  },
+    "passwordRules": {
+    "complexity": "Minimum 8 caractères, au moins une lettre majuscule, une lettre minuscule et un chiffre.",
+    "passwordsNotMatch": "Les mots de passe ne correspondent pas."
+  },
   "navbar": {
     "noResult" : "Pas trouver",
     "space": "Emplacement actuel",
