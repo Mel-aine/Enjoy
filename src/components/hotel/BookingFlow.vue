@@ -231,7 +231,7 @@ const handleSubmitPayment = async (idU,idR) => {
     </div>
     <div class="lg:w-96">
       <div class="lg:sticky lg:top-6">
-        <BookingSummary />
+        <BookingSummary :isPaid="isPaid" />
       </div>
     </div>
   </div>

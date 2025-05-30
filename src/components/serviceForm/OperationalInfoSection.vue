@@ -113,8 +113,8 @@ const handleChange = (event) => {
             <div v-for="day in daysOfWeek" :key="day.id" class="flex items-center">
               <input :id="`day-${day.id}`" name="opening_days" :value="day.id" type="checkbox"
                 class="h-4 w-4 text-blue-600 border-gray-300 rounded"
-                :checked="props.formData.openings && day in props.formData.openings" @change="handleDaySelection" />
-              <label :for="`day-${day}`" class="ml-2 text-sm text-gray-700">{{ day.label }}</label>
+                :checked="props.formData.openings && day.id in props.formData.openings" @change="handleDaySelection" />
+              <label :for="`day-${day.id}`" class="ml-2 text-sm text-gray-700">{{ day.label }}</label>
             </div>
           </div>
         </fieldset>

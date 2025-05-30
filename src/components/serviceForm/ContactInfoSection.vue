@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, defineEmits, ref, watch } from 'vue';
 import { Phone, AtSign, Globe, MapPin, CircleUser, LockKeyhole, Eye, EyeOff } from 'lucide-vue-next';
+import { validateFirstName, validateLastName, validateEmail, validatePhoneNumber } from '@/utils/functions';
 
 const props = defineProps({
     formData: Object
@@ -10,13 +11,57 @@ const showConfirmPassword = ref(false)
 const confirmPassword = ref('')
 const passwordsMatch = ref(true);
 const passwordValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
+const firstNameValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
+const lastNameValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
+const emailValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
+const phone_numberValidFormat = ref(true); // Peut être utilisé pour afficher une erreur si nécessaire
 
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/; 
+
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+watch(() => props.formData.firstName, (newFirstName) => {
+    if (newFirstName) {
+        firstNameValidFormat.value = validateFirstName(newFirstName)
+        if (!firstNameValidFormat.value) return;
+    } else {
+        firstNameValidFormat.value = true;
+    }
+});
+
+watch(() => props.formData.lastName, (newLastName) => {
+    if (newLastName) {
+        lastNameValidFormat.value = validateLastName(newLastName)
+        if (!lastNameValidFormat.value) return;
+
+    } else {
+        lastNameValidFormat.value = true;
+    }
+});
+
+watch(() => props.formData.email, (newEmail) => {
+    if (newEmail) {
+        emailValidFormat.value = validateEmail(newEmail)
+        if (!emailValidFormat.value) return;
+    } else {
+        emailValidFormat.value = true;
+    }
+});
+
+watch(() => props.formData.phone_number, (newphone_number) => {
+    if (newphone_number) {
+        phone_numberValidFormat.value = validatePhoneNumber(newphone_number)
+        if (!phone_numberValidFormat.value) return;
+    } else {
+        firstNameValidFormat.value = true;
+    }
+});
+
 watch(() => props.formData.password, (newPassword) => {
     if (newPassword) {
         passwordValidFormat.value = passwordRegex.test(newPassword);
+        if (!passwordValidFormat.value) return;
     } else {
-        passwordValidFormat.value = true; 
+        passwordValidFormat.value = true;
     }
 });
 
@@ -24,11 +69,13 @@ watch([() => props.formData.password, confirmPassword], () => {
     // passwordsMatch.value = props.formData.password === confirmPassword.value;
     if (props.formData.password && confirmPassword.value) {
         passwordsMatch.value = props.formData.password === confirmPassword.value;
+        if (!passwordsMatch.value) return;
     } else {
         passwordsMatch.value = false;
         return;
     }
 });
+
 const togglePasswordVisibility = () => {
     showPassword.value = !showPassword.value
 }
@@ -73,21 +120,24 @@ const handleChange = (event) => {
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="lastName" class="block text-sm font-medium text-gray-700">{{ $t('first_name')
-                            }}<span class="text-red-500">*</span></label>
+                        }}<span class="text-red-500">*</span></label>
                     </div>
                     <input type="text" name="lastName" id="lastName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        :placeholder="$t('your_last_name')" :value="formData.lastName" @input="handleChange" required />
+                        :class="firstNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_last_name')"
+                        :value="formData.firstName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <CircleUser class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('name') }}<span class="text-red-500">*</span></label>
+                        <label for="firstName" class="block text-sm font-medium text-gray-700">{{ $t('last_name') }}<span
+                                class="text-red-500">*</span></label>
                     </div>
                     <input type="text" name="firstName" id="firstName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        :placeholder="$t('your_first_name')" :value="formData.firstName" @input="handleChange" required />
+                        :class="lastNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_first_name')"
+                        :value="formData.lastName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
@@ -97,27 +147,30 @@ const handleChange = (event) => {
                             {{ $t('phone') }}<span class="text-red-500">*</span>
                         </label>
                     </div>
+                    
                     <input type="tel" name="phone_number" id="phone_number"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        placeholder="640404040" :value="formData.phone_number" @input="handleChange"
-                        required />
+                        :class="phone_numberValidFormat ? '' : 'border-red-500'" placeholder="640404040"
+                        :value="formData.phone_number" @input="handleChange" required /> <span v-if="!emailValidFormat" class="text-red-500 text-sm">{{ $t('alert.validations.phone_number') }}</span>
                 </div>
 
                 <div class="sm:col-span-3">
                     <div class="flex items-center">
                         <AtSign class="h-5 w-5 text-gray-400 mr-2" />
-                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email') }}<span class="text-red-500">*</span></label>
+                        <label for="email" class="block text-sm font-medium text-gray-700">{{ $t('email') }}<span
+                                class="text-red-500">*</span></label>
                     </div>
                     <input type="email" name="email" id="email"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        placeholder="contact@example.com" :value="formData.email" @input="handleChange" required />
+                        :class="emailValidFormat ? '' : 'border-red-500'" placeholder="contact@example.com"
+                        :value="formData.email" @input="handleChange" required /><span v-if="!emailValidFormat" class="text-red-500 text-sm">{{ $t('alert.validations.email') }}</span>
                 </div>
 
                 <div class="sm:col-span-6">
                     <div class="flex items-center">
                         <LockKeyhole class="h-5 w-5 text-gray-400 mr-2" />
                         <label for="password" class="block text-sm font-medium text-gray-700">{{ $t('password')
-                            }}</label><span class="text-red-500">*</span>
+                        }}</label><span class="text-red-500">*</span>
                     </div>
 
                     <div class="relative">
@@ -132,7 +185,8 @@ const handleChange = (event) => {
                             <EyeOff v-else class="h-5 w-5 text-gray-500" />
                         </div>
                     </div>
-                    <span v-if="!passwordValidFormat" class="m-2 text-red-500 text-sm">{{ $t('passwordRules.complexity') }}</span>
+                    <span v-if="!passwordValidFormat" class="m-2 text-red-500 text-sm">{{ $t('passwordRules.complexity')
+                        }}</span>
                 </div>
 
                 <div class="sm:col-span-6">
@@ -154,7 +208,8 @@ const handleChange = (event) => {
                             <EyeOff v-else class="h-5 w-5 text-gray-500" />
                         </div>
                     </div>
-                    <span v-if="!passwordsMatch" class="m-2 text-red-500 text-sm">{{ $t('passwordRules.passwordsNotMatch') }}</span>
+                    <span v-if="!passwordsMatch" class="m-2 text-red-500 text-sm">{{
+                        $t('passwordRules.passwordsNotMatch') }}</span>
                 </div>
             </div>
         </div>

@@ -1,6 +1,8 @@
 <script setup>
-import { defineProps, defineEmits, ref, computed } from 'vue';
+import { defineProps, defineEmits, ref, computed, watch } from 'vue';
 import FormField from '@/components/serviceForm/field/FormField.vue';
+import { validateFirstName, validateLastName, validateEmail, validatePhoneNumber } from '@/utils/functions';
+
 // import {
 // ArrowUpToLine
 // } from 'lucide-vue-next';
@@ -11,6 +13,7 @@ const props = defineProps({
 });
 // const t = useI18n();
 const emit = defineEmits(['updateFormData']);
+const validName = ref(null)
 console.log('props', props.categoriesItems)
 // const categories = [
 //     { id: 1, name: 'Restaurant' }, { id: 2, name: 'Hôtel' }, { id: 3, name: 'Spa' },
@@ -20,14 +23,22 @@ console.log('props', props.categoriesItems)
 
 const handleChange = (e) => {
   // Create a new object with the uploaded field and include the uploaded URLs
-  const updatedField  = {
+  const updatedField = {
     [e.target.name]: e.target.value,
     establishmentType: establishmentType.value,
     establishmentName: establishmentName.value,
-    files: files.value,
+    image: image.value,
+    logo: logo.value
   };
   emit('updateFormData', updatedField);
 };
+
+watch(() => props.formData.name, (newName) => {
+  if (newName) {
+    validName.value = validateFirstName(newName)
+  }
+
+});
 
 
 const establishmentType = computed(() => {
@@ -37,26 +48,53 @@ const establishmentType = computed(() => {
 });
 
 const establishmentName = computed(() => props.formData.name);
-const files = ref([]);
+const image = ref([]);
+const logo = ref([]);
+
 // const uploadedUrls = ref([]);
 // const uploading = ref(false);
 // const uploaded = ref(false);
 
 
-const previewUrl = ref('')
+const previewUrlImage = ref('')
+const previewUrlLogo = ref('')
 
-const handleFiles = (event) => {
-  const selectedFiles = Array.from(event.target.files)
 
-  if (selectedFiles.length > 0) {
-    files.value = selectedFiles
+const handleFilesImage = (event) => {
+  const selectedImage = Array.from(event.target.files)
+
+  if (selectedImage.length > 0) {
+
+    image.value = selectedImage
+    console.log('selectedFiles', selectedImage, image.value)
+
     // Crée une URL temporaire locale pour la prévisualisation
-    previewUrl.value = URL.createObjectURL(selectedFiles[0])
+    previewUrlImage.value = URL.createObjectURL(selectedImage[0])
+    // previewUrlImage.value = URL.createObjectURL(selectedFiles[1])
+console.log('selectedFiles', selectedImage)
   }
-      emit('updateFormData', {
-      ...props.formData,
-      files: selectedFiles,
-    });
+  emit('updateFormData', {
+    ...props.formData,
+    image: selectedImage,
+  });
+}
+const handleFilesLogo = (event) => {
+  const selectedLogo = Array.from(event.target.files)
+
+  if (selectedLogo.length > 0) {
+
+    logo.value = selectedLogo
+    console.log('selectedFiles', selectedLogo, logo.value)
+
+    // Crée une URL temporaire locale pour la prévisualisation
+    previewUrlLogo.value = URL.createObjectURL(selectedLogo[0])
+    // previewUrlImage.value = URL.createObjectURL(selectedFiles[1])
+console.log('selectedFiles', selectedLogo)
+  }
+  emit('updateFormData', {
+    ...props.formData,
+    logo: selectedLogo,
+  });
 }
 console.log('establishmentName', establishmentName.value)
 console.log('establishmentType', establishmentType.value)
@@ -154,19 +192,42 @@ console.log('establishmentType', establishmentType.value)
 
     <div class="flex items-center justify-between gap-4 flex-wrap">
       <div class="flex items-center gap-4">
-        <label for="file-upload" class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded sm:text-sm">
-          {{ $t('chooseImage') }}
+        <label for="file-uploadLogo"
+          class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded sm:text-sm">
+          {{ $t('chooseLogo') }}
         </label>
         <span class="text-gray-600 text-sm">
-          {{files.length > 0 ? files.map(f => f.name).join(', ') : $t('noFileSelected')}}
+          {{logo.length > 0 ? logo.map(l => l.name).join(', ')  : $t('noLogoSelected')}}
         </span>
       </div>
 
       <!-- Image preview -->
-      <img v-if="previewUrl" :src="previewUrl" class="w-24 h-24 object-cover rounded shadow" alt="Preview" />
+      <img v-if="previewUrlLogo" :src="previewUrlLogo" class="w-16 h-16 object-cover rounded-full shadow" alt="PreviewLogo" />
     </div>
 
-    <input id="file-upload" type="file" accept="image/*" @change="handleFiles" class="hidden" />
+    <input id="file-uploadLogo" type="file" accept="image/*" @change="handleFilesLogo" class="hidden" />
+
+    <p class="text-sm text-gray-500">
+      {{ $t('descriptionUtilBasicInfoLogo') }}
+    </p>
+
+
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+      <div class="flex items-center gap-4">
+        <label for="file-uploadImage"
+          class="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded sm:text-sm">
+          {{ $t('chooseImage') }}
+        </label>
+        <span class="text-gray-600 text-sm">
+          {{image.length > 0 ? image.map(i => i.name).join(', ')  : $t('noFileSelected')}}
+        </span>
+      </div>
+
+      <!-- Image preview -->
+      <img v-if="previewUrlImage" :src="previewUrlImage" class="w-24 h-24 object-cover rounded shadow" alt="PreviewImage" />
+    </div>
+
+    <input id="file-uploadImage" type="file" accept="image/*" @change="handleFilesImage" class="hidden" />
 
     <p class="text-sm text-gray-500">
       {{ $t('descriptionUtilBasicInfoImage') }}

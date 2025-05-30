@@ -44,7 +44,8 @@ const formData = ref({
   policies: '',
   capacity: '',
   payment_methods: [],
-  files: [],
+  logo: [],
+  image: [],
   status: 'active',
   lastname: '',
   firstname: '',
@@ -85,6 +86,7 @@ const validateStep = () => {
   switch (activeStep.value) {
     case 0:
       if (!formData.value.name || !formData.value.category_id) {
+        // if (!formData.value.name) {
         isVisible.value = true;
         infoAlert.value = t('alert.fillNameAndCategory');
         return false;
@@ -116,7 +118,7 @@ const validateStep = () => {
       }
       break;
     case 2:
-      if (!formData.value.phone_number || !formData.value.email || !formData.value.firstName || !formData.value.lastName) {
+      if (!formData.value.phone_number || !formData.value.email || !formData.value.firstName || !formData.value.lastName || !formData.value.password) {
         isVisible.value = true;
         infoAlert.value = t('alert.fillAllFields');
         return false;
@@ -155,15 +157,27 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  const { uploaded, uploadedUrls } = await uploadImages(
+  const { uploadedLogo, uploadedUrlLogo } = await uploadImages(
     formData.value.establishmentType,
     formData.value.establishmentName,
-    formData.value.files
+    formData.value.logo
   );
 
-  if (!uploaded || !uploadedUrls[0]) {
-    console.log('Erreur d’upload', uploaded, uploadedUrls);
-    alert('Erreur lors du téléchargement de l\'image');
+  if (!uploadedLogo || !uploadedUrlLogo[0]) {
+    console.log('Erreur d’upload', uploadedLogo, uploadedUrlLogo);
+    alert(t("error.erroImage"));
+    return;
+  }
+
+    const { uploadedImage, uploadedUrlImage } = await uploadImages(
+    formData.value.establishmentType,
+    formData.value.establishmentName,
+    formData.value.image
+  );
+
+  if (!uploadedImage || !uploadedUrlImage[0]) {
+    console.log('Erreur d’upload', uploadedLogo, uploadedUrlImage);
+    alert(t("error.erroImage"));
     return;
   }
 
@@ -186,7 +200,8 @@ const handleSubmit = async (e) => {
     policies: formData.value.policies || null,
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
-    images: uploadedUrls[0] || [],
+    images: uploadedUrlImage[0] || [],
+    logo: uploadedUrlLogo[0] || [],
     status: formData.value.status || 'active',
     first_name: formData.value.firstName,
     last_name: formData.value.lastName,
@@ -235,40 +250,40 @@ const handleSubmit = async (e) => {
     // }, 3000);
   } catch (error) {
     console.error('Erreur complète:', error);
-    console.error('Détails de l\'erreur:', error.response?.data);
-    alert(`Erreur lors de l'envoi: ${error.response?.data?.message || error.message}`);
+    console.error('Détails de l\'erreur:', error.response?.data?.message || error.message);
+    alert(t('error.erreorSaveService'));
   } finally {
     isSubmitting.value = false;
   }
 };
-const left = () => {
-  formSubmitted.value = false;
-  formData.value = {
-    name: '',
-    description: '',
-    category_id: '',
-    address: '',
-    phone_number: '',
-    email: '',
-    website: '',
-    openings: {},
-    price_range: '',
-    facilities: [],
-    policies: '',
-    capacity: '',
-    payment_methods: [],
-    url: [],
-    status: 'active',
-    lastname: '',
-    firstname: '',
-    password: '',
-    establishmentType: '',
-    establishmentName: '',
-    // emailU: '',
-    // phone_numberU: ''
-  };
-  activeStep.value = 0;
-}
+// const left = () => {
+//   formSubmitted.value = false;
+//   formData.value = {
+//     name: '',
+//     description: '',
+//     category_id: '',
+//     address: '',
+//     phone_number: '',
+//     email: '',
+//     website: '',
+//     openings: {},
+//     price_range: '',
+//     facilities: [],
+//     policies: '',
+//     capacity: '',
+//     payment_methods: [],
+//     url: [],
+//     status: 'active',
+//     lastname: '',
+//     firstname: '',
+//     password: '',
+//     establishmentType: '',
+//     establishmentName: '',
+//     // emailU: '',
+//     // phone_numberU: ''
+//   };
+//   activeStep.value = 0;
+// }
 
 </script>
 
@@ -285,9 +300,7 @@ const left = () => {
       <p class="mt-2 text-gray-600">{{ $t('serviceSuccess.description') }}</p>
       <a href="https://enjoyadmin.onrender.com/"
         class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-        {{ $t('serviceSuccess.backToHotelManagement') }} </a> <button @click="left"
-        class="bg-customRed p-2 rounded-lg text-gray-900 hover:bg-customRed/90">{{ $t('serviceSuccess.noThanks')
-        }}</button>
+        {{ $t('serviceSuccess.backToHotelManagement') }} </a>
     </div>
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">

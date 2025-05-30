@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isLoading">
+  <!-- <div v-if="isLoading">
 
     <div v-if="isLoading" class="space-y-6">
       <div v-for="i in 4" :key="`skeleton-${i}`" class="flex items-start p-6 bg-white rounded-xl shadow-sm">
@@ -38,8 +38,8 @@
       </div>
     </div>
 
-  </div>
-  <div v-else class="bg-white rounded-xl shadow-sm overflow-hidden">
+  </div> -->
+  <div class="bg-white rounded-xl shadow-sm overflow-hidden">
     <div class="p-6">
       <div class="flex items-start">
         <!-- Image at the beginning -->
@@ -302,8 +302,8 @@
 
 
     <!-- Additional ways to booking start -->
-
-    <div class="bg-white rounded-xl p-6 shadow-sm">
+    <!-- isPresentInDB doit provenir de la bd -->
+    <div v-if="isPresentInDB" class="bg-white rounded-xl p-6 shadow-sm">
       <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.addToYourStay') }}
       </h2>
       <!-- Car Park Section -->
@@ -316,8 +316,8 @@
               <div class="font-medium flex items-start justify-start">
                 <span> {{ $t('appServices.hotel.carPark') }}
                 </span>
-                <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOptions.carPark }" />
+                <!-- <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
+                  :class="{ 'rotate-180': selectedOptions.carPark }" /> -->
               </div>
               <div class="text-sm text-gray-500">{{ $t('appServices.hotel.familyChoice') }}
               </div>
@@ -438,8 +438,8 @@
               <div class="font-medium flex items-start justify-start">
                 <span>{{ $t('appServices.hotel.bottle') }}
                 </span>
-                <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOptions.wine }" />
+                <!-- <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
+                  :class="{ 'rotate-180': selectedOptions.wine }" /> -->
               </div>
               <div class="text-sm text-gray-500">
                 Ventisquero Reserva Chardonnay/Valle de Casablanca Aconcagua
@@ -473,8 +473,8 @@
             <div>
               <div class="font-medium flex items-start justify-start">
                 <span>Stay of a pet</span>
-                <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-                  :class="{ 'rotate-180': selectedOptions.pet }" />
+                <!-- <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
+                  :class="{ 'rotate-180': selectedOptions.pet }" /> -->
               </div>
               <div class="text-sm text-gray-500">
                 Traveling with pets can seem like a daunting task
@@ -503,8 +503,7 @@
         <!-- Version mobile -->
         <div class="flex justify-between flex-1 sm:hidden">
           <button @click="handleBack"
-            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
-            >
+            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
             <svg stroke="currentColor" fill="currentColor" viewBox="0 0 20 20" class="w-5 h-5" aria-hidden="true">
               <path fill-rule="evenodd"
                 d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
@@ -554,7 +553,7 @@
       </div>
     </div>
   </div>
-  <LoadingSpinner v-if="hotelStore.isSpinnerDisplayed" />
+  <LoadingSpinner v-if="isLoading" />
 
 </template>
 
@@ -580,8 +579,9 @@ import {
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import { getAllServicesByService, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
 import "vue-skeletor/dist/vue-skeletor.css"
-import { Skeletor } from "vue-skeletor"
+// import { Skeletor } from "vue-skeletor"
 import LoadingSpinner from '@/components/spiner/LoaodingSpinner.vue';
+import { validateFirstName, validateLastName, validateEmail, validatePhoneNumber } from '@/utils/functions';
 // import { useI18n } from 'vue-i18n';
 
 const defaultValues = {
@@ -609,6 +609,7 @@ const phoneNumber = ref('')
 const emailAddress = ref('')
 const countryCode = ref('')
 const isLoading = ref(false)
+const isPresentInDB = ref(false)
 // const selectedPackage = ref('Individual');
 
 // const Package = computed(() => [
@@ -725,42 +726,39 @@ const handleBack = () => {
   hotelStore.listHotel();
   console.log('handleBack');
 };
-const firstNameValid = ref(null);
-const lastNameValid = ref(null);
-const emailValid = ref(null);
-const phoneValid = ref(null);
+// const firstNameValid = ref(null);
+// const lastNameValid = ref(null);
+// const emailValid = ref(null);
+// const phoneValid = ref(null);
 
-// Fonctions de validation
-const validateFirstName = () => {
-  firstNameValid.value = firstName.value.length >= 2;
-};
+// // Fonctions de validation
+// const validateFirstName = () => {
+//   firstNameValid.value = firstName.value.length >= 2;
+// };
 
-const validateLastName = () => {
-  lastNameValid.value = lastName.value.length >= 2;
-};
+// const validateLastName = () => {
+//   lastNameValid.value = lastName.value.length >= 2;
+// };
 
-const validateEmail = () => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  emailValid.value = emailRegex.test(emailAddress.value);
-};
+// const validateEmail = () => {
+//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+//   emailValid.value = emailRegex.test(emailAddress.value);
+// };
 
-const validatePhoneNumber = () => {
-  // Supprime tous les caractères non numériques
-  const cleanedPhone = phoneNumber.value.replace(/\D/g, '');
-  phoneValid.value = cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
-};
+// const validatePhoneNumber = () => {
+//   // Supprime tous les caractères non numériques
+//   const cleanedPhone = phoneNumber.value.replace(/\D/g, '');
+//   phoneValid.value = cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
+// };
 
 // Validation globale avant soumission
 const isFormValid = () => {
-  validateFirstName();
-  validateLastName();
-  validateEmail();
-  validatePhoneNumber();
 
-  return firstNameValid.value &&
-    lastNameValid.value &&
-    emailValid.value &&
-    phoneValid.value;
+  return validateFirstName(firstName) &&
+    validateLastName(lastName) &&
+    validateEmail(emailAddress) &&
+    validatePhoneNumber(phoneNumber);
+
 };
 const handleNext = () => {
   if (!isFormValid()) {
@@ -812,7 +810,7 @@ const handleNext = () => {
   console.log('selectedOption:', selectedOptions.value);
   // setOptionsPrice();
   verifyCarParkOptionSelected();
-  emit('next', roomData,RoomsWithLowPrice.value.id);
+  emit('next', roomData, RoomsWithLowPrice.value.id);
 };
 
 // Helper function to get option prices

@@ -12,6 +12,13 @@ import { useMIHStore } from '@/stores/manageHotelInterface';
 import { useLanguageStore } from "@/lang/language";
 import { storeToRefs } from 'pinia';
 
+const props = defineProps({
+  isPaid: {
+    type: Boolean,
+    required: true,
+    default: false
+  }
+})
 const useLanguage = useLanguageStore()
 const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
 import jsPDF from 'jspdf';
@@ -74,28 +81,28 @@ const priceDetails = computed(() => [
     label: t('appServices.hotel.RoomsAndOffer'),
     price: (Number(hotelStore?.roomPrice) || 0) * stayLength.value,
   },
-  {
-    label: t('appServices.hotel.carOption'),
-    price: stayLength.value > 0
-      ? Number(hotelStore?.carParkPrice) * stayLength.value || 0
-      : Number(hotelStore?.carParkPrice) || 0,
-  },
-  {
-    label: t('appServices.hotel.wineOption'),
-    price: Number(hotelStore?.winePrice) || 0,
-  },
-  {
-    label: t('appServices.hotel.petOption'),
-    price: Number(hotelStore?.petPrice) || 0,
-  },
-  {
-    label: t('appServices.hotel.8%VAT'),
-    price: 2050,
-  },
-  {
-    label: t('appServices.hotel.cityTax'),
-    price: 1600,
-  },
+  // {
+  //   label: t('appServices.hotel.carOption'),
+  //   price: stayLength.value > 0
+  //     ? Number(hotelStore?.carParkPrice) * stayLength.value || 0
+  //     : Number(hotelStore?.carParkPrice) || 0,
+  // },
+  // {
+  //   label: t('appServices.hotel.wineOption'),
+  //   price: Number(hotelStore?.winePrice) || 0,
+  // },
+  // {
+  //   label: t('appServices.hotel.petOption'),
+  //   price: Number(hotelStore?.petPrice) || 0,
+  // },
+  // {
+  //   label: t('appServices.hotel.8%VAT'),
+  //   price: 2050,
+  // },
+  // {
+  //   label: t('appServices.hotel.cityTax'),
+  //   price: 1600,
+  // },
 ]);
 
 // const test = () => {
@@ -174,7 +181,7 @@ const formatDate = (dateValue) => {
 
   const formattedDate = new Intl.DateTimeFormat(currentLocale, options).format(inputDate);
 
-  return isSameDay ? `${t('appServices.agency.today')} - ${formattedDate}` : formattedDate;
+  return formattedDate;
 };
 </script>
 
@@ -226,7 +233,7 @@ const formatDate = (dateValue) => {
       </div>
     </div>
     <div class="mx-6 -my-6">
-      <button @click="downloadBillBooking"
+      <button v-if="props.isPaid" @click="downloadBillBooking"
         class="w-full bg-customRed text-white py-3 rounded-lg mt-4 hover:text-black transition duration-200">
         {{ $t('appServices.hotel.downloadInvoice') }}
       </button>

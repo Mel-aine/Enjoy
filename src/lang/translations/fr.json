@@ -51,7 +51,10 @@
   "searchAddress": "Rechercher votre adresse...",
   "mainImage": "Image principale du service",
   "description": "Description",
-  "chooseImage": "Choisir l'image" ,
+  "chooseImage": "Choisir l'image",
+  "chooseLogo": "Choisr votre logo",
+  "noLogoSelected": "Aucun logo selectionné",
+  "descriptionUtilBasicInfoLogo": "Ce logo sera visible par tous vos clients et present sur votre page d'acceuil sur notre plateforme",
   "uploadImage": "Uploader l'image",
   "pleaseGiveInfo": "Veuillez fournir les informations principales concernant votre service.",
   "errorLoad": "Erreur de chargement de Google Maps:",
@@ -86,7 +89,7 @@
   "additional": "Supplémentaire",
   "saveServiceForm": "Enregistrement d'un Service",
   "addNewService": "Complétez le formulaire ci-dessous pour ajouter un nouveau service",
-  "noFileSelected": "Aucun fichier sélectionné",
+  "noFileSelected": "Aucune image sélectionné",
   "cash": "Espèces",
   "check": "Chèque",
   "paypal": "PayPal",
@@ -98,16 +101,16 @@
   "policiesPlaceholder": "Décrivez vos politiques d'annulation, règles de l'établissement, etc.",
   "paymentTitle": "Modes de paiement acceptés",
   "policies.example": "Ex: Annulation gratuite 24h avant l'arrivée. Interdiction de fumer dans l'établissement.",
-    "serviceSuccess": {
+  "serviceSuccess": {
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",
     "noThanks": "Non Merci!",
     "backToHotelManagement": "Retour à la gestion de l'hôtel"
   },
-    "serviceInProgress": {
+  "serviceInProgress": {
     "title": "Service en cours d'enregistrement"
   },
-   "alert": {
+  "alert": {
     "fillNameAndCategory": "Veuillez remplir tous les champs obligatoires : Nom et Catégorie.",
     "chooseValidImage": "Veuillez choisir une image valide pour votre service.",
     "fillAddress": "Veuillez renseigner l'adresse.",
@@ -115,15 +118,22 @@
     "fillPhoneAndEmail": "Veuillez entrer un numéro de téléphone et une adresse e-mail.",
     "selectOpeningDays": "Veuillez sélectionner les jours d'ouverture.",
     "fillPolicies": "Veuillez renseigner les politiques de votre service.",
-    "fillAllFields": "Veuillez remplir tous les champs obligatoires."
-
+    "fillAllFields": "Veuillez remplir tous les champs obligatoires. (*)",
+    "validations": {
+      "email": "Email invalide",
+      "phone_number": "Télephone invalide"
+    }
   },
-    "passwordRules": {
+  "error": {
+    "errorImage": "Error d'enregistrement d'image voulez vous enregistrer sans image principale?",
+    "erreorSaveService": "Erreur d'enregistrement essayez plus tard"
+  },
+  "passwordRules": {
     "complexity": "Minimum 8 caractères, au moins une lettre majuscule, une lettre minuscule et un chiffre.",
     "passwordsNotMatch": "Les mots de passe ne correspondent pas."
   },
   "navbar": {
-    "noResult" : "Pas trouver",
+    "noResult": "Pas trouver",
     "space": "Emplacement actuel",
     "yelpProfessional": "Enjoy pour les professionnels",
     "writeReview": "Écrire un avis",

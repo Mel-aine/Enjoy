@@ -56,3 +56,24 @@ const slugify = (text) =>
     .replace(/[\u0300-\u036f]/g, '') // enlever accents
     .replace(/\s+/g, '-')            // espaces → tirets
     .replace(/[^\w-]/g, '');         // enlever caractères spéciaux
+
+
+// Fonctions de validation
+export function validateFirstName  (firstName) {
+  return firstName.length >= 2;
+};
+
+export function validateLastName  (lastName)  {
+  return lastName.length >= 2;
+};
+
+export function validateEmail (emailAddress) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(emailAddress);
+};
+
+export function validatePhoneNumber (phoneNumber) {
+  // Supprime tous les caractères non numériques
+  const cleanedPhone = phoneNumber.replace(/\D/g, '');
+  return cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
+};

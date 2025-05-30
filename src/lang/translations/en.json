@@ -52,6 +52,9 @@
   "description": "Description",
   "mainImage": "Primary service image",
   "chooseImage": "Choose an image" ,
+  "chooseLogo": "Choose your logo" ,
+  "noLogoSelected": "No logo selected",
+  "descriptionUtilBasicInfoLogo" : "This logo will be visible to all clients on your landing page on our plateform",
   "uploadImage": "Upload image",
   "pleaseGiveInfo": "Please give all Informations for your service.",
   "errorLoad": "Error to load Google Maps :",
@@ -86,7 +89,7 @@
   "additional": "Additional",
   "saveServiceForm": "Service enrollment",
   "addNewService": "Add a new service: Please fill out the form below",
-  "noFileSelected": "No file selected",
+  "noFileSelected": "No image selected",
   "cash": "Cash",
   "check": "Check",
   "paypal": "PayPal",
@@ -115,7 +118,15 @@
     "fillPhoneAndEmail": "Please enter a phone number and an email address.",
     "selectOpeningDays": "Please select the opening days.",
     "fillPolicies": "Please provide your service policies.",
-    "fillAllFields": "Please fill in all required fields."
+    "fillAllFields": "Please fill in all required fields. (*)",
+    "validations": {
+      "email": " Invalid Email",
+      "phone_number": "Invalid phone number"
+    }
+  },
+  "error": {
+    "errorImage": "Error to upload your main image of service . Do you want to save it?",
+    "erreorSaveService": "Error to save your Service please try later"
   },
     "passwordRules": {
     "complexity": "Minimum 8 characters, at least one uppercase letter, one lowercase.",
