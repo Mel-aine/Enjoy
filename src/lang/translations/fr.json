@@ -101,11 +101,31 @@
   "policiesPlaceholder": "Décrivez vos politiques d'annulation, règles de l'établissement, etc.",
   "paymentTitle": "Modes de paiement acceptés",
   "policies.example": "Ex: Annulation gratuite 24h avant l'arrivée. Interdiction de fumer dans l'établissement.",
+  "bookingTime": "Heure de réservation",
+  "paymentStatus": "Statut du paiement",
+  "bookingStatut": "Statut de la réservation",
+  "financialInfo": "Informations financières",
+  "taxes": "Taxes",
+  "discount": "Remise",
+  "amountPaid": "Montant payé",
+  "finalAmount": "Montant final",
+  "editBooking": "Modifier la réservation",
+  "listReservations": "Liste des réservations",
+  "required": " requise",
+  "seatCountValidation": "Le nombre de places doit être supérieur à 0",
   "serviceSuccess": {
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",
     "noThanks": "Non Merci!",
     "backToHotelManagement": "Retour à la gestion de l'hôtel"
+  },
+  "countries": {
+    "united_states": "États Unis",
+    "canada": "Canada",
+    "united_kingdom": "Royaume Uni",
+    "france": "France",
+    "germany": "Allemagne",
+    "cameroon": "Cameroun"
   },
   "serviceInProgress": {
     "title": "Service en cours d'enregistrement"
@@ -388,9 +408,12 @@
       "oneAdult": " Adulte(s)",
       "children": "Enfant(s)",
       "search": "Chercher",
-      "today": "Aujourd’hui"
+      "today": "Aujourd’hui",
+      "tomorrow": "Demain"
     },
     "hotel": {
+      "timeBeforeAutoCancel": "restant avant l'annulation",
+      "paidToHotel": "Payer à l'hotel",
       "hotelAnnouncement": "Effectuez votre réservation maintenant et réglez à l'hôtel. L'annulation est gratuite.",
       "arrival": "Arrivee",
       "per": "par",

@@ -51,10 +51,10 @@
   "searchAddress": "Search your address...",
   "description": "Description",
   "mainImage": "Primary service image",
-  "chooseImage": "Choose an image" ,
-  "chooseLogo": "Choose your logo" ,
+  "chooseImage": "Choose an image",
+  "chooseLogo": "Choose your logo",
   "noLogoSelected": "No logo selected",
-  "descriptionUtilBasicInfoLogo" : "This logo will be visible to all clients on your landing page on our plateform",
+  "descriptionUtilBasicInfoLogo": "This logo will be visible to all clients on your landing page on our plateform",
   "uploadImage": "Upload image",
   "pleaseGiveInfo": "Please give all Informations for your service.",
   "errorLoad": "Error to load Google Maps :",
@@ -73,7 +73,7 @@
   "mondayToFriday": "Monday to Friday",
   "aParticularDay": "A particular Day",
   "openingHour": "Opening Hours",
-  "priceRange": "Price Range", 
+  "priceRange": "Price Range",
   "selectPriceRange": "Select a Price Range",
   "maxCapacity": "Maximum Capacity",
   "maxNumberPersons": "Can accomodate up to max person",
@@ -101,13 +101,33 @@
   "policiesPlaceholder": "Describe your cancellation policies, house rules, etc.",
   "paymentTitle": "Accepted Payment Methods",
   "policies.example": "Ex: Free cancellation up to 24 hours before arrival. No smoking allowed in the establishment.",
-    "serviceSuccess": {
+  "bookingTime": "Booking Time",
+  "paymentStatus": "Payment Status",
+  "bookingStatut": "Booking Status",
+  "financialInfo": "Financial Information",
+  "taxes": "Taxes",
+  "discount": "Discount",
+  "amountPaid": "Amount Paid",
+  "finalAmount": "Final Amount",
+  "editBooking": "Edit Booking",
+  "listReservations": "List of Reservations",
+  "required": " required",
+  "seatCountValidation": "Number of seats must be greater than 0",
+  "serviceSuccess": {
     "title": "Service successfully registered!",
     "description": "Your service has been added to our database.",
     "noThanks": "No Thanks!",
     "backToHotelManagement": "Back to hotel management"
   },
-    "serviceInProgress": {
+  "countries": {
+    "united_states": "United States",
+    "canada": "Canada",
+    "united_kingdom": "United Kingdom",
+    "france": "France",
+    "germany": "Germany",
+    "cameroon": "Cameroon"
+  },
+  "serviceInProgress": {
     "title": "Service in progress"
   },
   "alert": {
@@ -128,12 +148,12 @@
     "errorImage": "Error to upload your main image of service . Do you want to save it?",
     "erreorSaveService": "Error to save your Service please try later"
   },
-    "passwordRules": {
+  "passwordRules": {
     "complexity": "Minimum 8 characters, at least one uppercase letter, one lowercase.",
     "passwordsNotMatch": "Passwords do not match."
   },
   "navbar": {
-    "noResult" : "No found",
+    "noResult": "No found",
     "space": "Current Location",
     "yelpProfessional": "Enjoy for Professionals",
     "writeReview": "Write a Review",
@@ -186,8 +206,6 @@
     "addABusiness": "Add a Busines",
     "claimYourBusiness": "Claim Your Business",
     "loginInToBusiness": "Log in to Your Business"
-    
-
   },
 
   "home": {
@@ -392,9 +410,12 @@
       "oneAdult": " Adult(s)",
       "children": "Children(s)",
       "search": "Search",
-      "today": "Today"
+      "today": "Today",
+      "tomorrow": "Tomorrow"
     },
     "hotel": {
+      "timeBeforeAutoCancel": "left before cancellation",
+      "paidToHotel": "Paid to hotel",
       "hotelAnnouncement": "Make your reservation now and pay at the hotel. Cancellation is free.",
       "arrival": "Arrival",
       "per": "per",

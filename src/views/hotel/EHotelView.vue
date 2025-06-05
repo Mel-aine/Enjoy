@@ -31,7 +31,8 @@ const activeFilters = ref({
   priceRange: [20000, 40000],
   starRating: [],
   amenities: [],
-  propertyTypes: []
+  propertyTypes: [],
+  capacity: 0,
 })
 const hotels = [
   {

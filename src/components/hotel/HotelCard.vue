@@ -127,13 +127,15 @@ const handleViewDeal = () => {
       <div class="flex-grow p-4">
         <div class="flex items-start justify-between">
           <div>
-            <h3 class="text-2xl font-bold">{{ hotel.name }}</h3>
+            <router-link :to="`/all_service/${hotel.id}`">
+              <h3 class="text-2xl font-bold">{{ hotel.name }}</h3>
+            </router-link>
             <div class="flex items-center space-x-1">
               <span v-for="(star, index) in renderStars" :key="index">
                 <StarIcon :size="16" :class="star === 'filled' ? 'text-yellow-500 fill-yellow-500' : 'text-gray-300'" />
               </span>
               <span class="ml-2 text-sm text-gray-600">
-                {{ hotel.rating }} ({{ hotel.reviews }} {{ $t('appServices.hotel.review') }})
+                {{ hotel.averageRating }} ({{ hotel.reviewCount }} {{ $t('appServices.hotel.review') }})
               </span>
             </div>
           </div>
@@ -151,19 +153,20 @@ const handleViewDeal = () => {
           <div v-for="amenity in amenities" :key="amenity" class="flex items-center">
             <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" alt="" />
           </div>
-          <div v-if="other_amenities.length == 0" class="relative">
-          <button @click="dropdownOpen = !dropdownOpen" class="text-sm text-customBlue border border-customBlue rounded px-2 py-1">
-            +{{ other_amenities.length }} {{ $t('other') }}
-          </button>
+          <div v-if="other_amenities.length >= 6" class="relative">
+            <button @click="dropdownOpen = !dropdownOpen"
+              class="text-sm text-customBlue border border-customBlue rounded px-2 py-1">
+              +{{ other_amenities.length }} {{ $t('other') }}
+            </button>
 
-          <div v-if="dropdownOpen" class=" mt-2 w-48 bg-white shadow rounded border p-2 z-[99px]">
-            <div v-for="item in other_amenities" :key="item" class="mb-2">
-              <component :is="iconMap[item]" />
-              <ul>t</ul>
-              <li class="text-sm text-gray-600">{{ item }}</li>
+            <div v-if="dropdownOpen" class=" mt-2 w-48 bg-white shadow rounded border p-2 z-[99px]">
+              <div v-for="item in other_amenities" :key="item" class="mb-2">
+                <component :is="iconMap[item]" />
+                <!-- <ul>t</ul> -->
+                <li class="text-sm text-gray-600">{{ item }}</li>
+              </div>
             </div>
           </div>
-        </div>
         </div>
 
       </div>
@@ -171,8 +174,8 @@ const handleViewDeal = () => {
       <!-- Prix et bouton -->
       <div class="w-full md:w-1/3 flex flex-col items-end justify-between p-4">
         <div class="flex items-center bg-green-100 px-2 py-1 rounded text-sm text-green-700">
-          <span>{{ $t('appServices.hotel.rating') }}: {{ hotel.rating }} ({{ hotel.reviews }} {{
-            $t('appServices.hotel.review') }})</span>
+          <span>{{ $t('appServices.hotel.rating') }}: {{ hotel.averageRating }} ({{ hotel.reviewCount }}
+            {{ $t('appServices.hotel.review') }})</span>
         </div>
         <div class="text-right mt-2">
 

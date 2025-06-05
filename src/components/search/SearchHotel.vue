@@ -125,7 +125,7 @@
                         <label for="destination"
                             class=" cursor-pointer  absolute left-8 -top-0 text-sm text- bg-inherit place-self-auto mt-1 mx-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <span class="text-black  cursor-pointer ">{{ $t("appServices.hotel.destination")
-                            }}</span></label>
+                                }}</span></label>
                     </div>
                 </div>
                 <!-- <div v-if="isOpen" class="h-[800px]"></div> -->
@@ -218,8 +218,8 @@
                 <div
                     class="relative bg-inherit border-2 border-black rounded-lg px-3  focus:ring-2 focus:ring-blue-500 cursor-pointer flex items-start justify-between w-80 md:min-w-56 lg:w-64">
                     <CalendarRangeIcon size="22"
-                        class="cursor-pointer hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" /> <input
-                        type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
+                        class="cursor-pointer hidden md:block absolute left-3 top-1/2 transform -translate-y-1/2 text-black" />
+                    <input type="text" ref="datepickerRetour" id="dateRetour" v-model="formattedDateDeparture"
                         class="cursor-pointer opacity-0 peer bg-transparent h-14 w-56 rounded text-black pl-8 py-3 placeholder-transparent ring-2 px-6 ring-gray-500 focus:ring-sky-600 focus:outline-none focus:border-rose-600"
                         placeholder="Type inside me" />
                     <label for="dateRetour"
@@ -341,18 +341,18 @@ if (dataStore.parentType === 'navbar') {
 }
 
 const loadGoogleMapsAPI = () => {
-  return new Promise((resolve, reject) => {
-    if (window.google) {
-      resolve();
-      return;
-    }
+    return new Promise((resolve, reject) => {
+        if (window.google) {
+            resolve();
+            return;
+        }
 
-    const script = document.createElement('script');
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
-    script.onload = resolve;
-    script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
-    document.head.appendChild(script);
-  });
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
+        document.head.appendChild(script);
+    });
 };
 
 // const filterSuggestions = () => {
@@ -425,7 +425,7 @@ const totalPersons = computed(() => {
 const handleSearch = () => {
     emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
     console.log({ destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
-    
+
 };
 
 const formatDate = (date) => {
@@ -440,6 +440,17 @@ const formatDate = (date) => {
     ).format(date)}`;
 };
 
+const _formatDate_ = (date) => {
+    const options = { day: "2-digit", month: "short" };
+    const currentLocale = locale.value || 'en';
+    // Utiliser la bonne locale selon la langue
+    const localeString = currentLocale === "en" ? "en-US" : "fr-FR";
+
+    return `${t("appServices.agency.tomorrow")}, ${new Intl.DateTimeFormat(
+        localeString,
+        options
+    ).format(date)}`;
+};
 const _formatDate = (date) => {
     const options = {
         weekday: "short",
@@ -465,39 +476,35 @@ const langChanged = (lang) => {
         dateFormat: "d M Y",
         minDate: "today",
         onChange: (selectedDates) => {
-    if (selectedDates.length > 0) {
-        const arrivalDate = selectedDates[0];
-        formattedDateArrival.value = _formatDate(arrivalDate);
-        if (datepickerAller.value) {
-            datepickerAller.value.value = formattedDateArrival.value;
-        }
-    }
+            if (selectedDates.length > 0) {
+                const arrivalDate = selectedDates[0];
+                formattedDateArrival.value = _formatDate(arrivalDate);
+                if (datepickerAller.value) {
+                    datepickerAller.value.value = formattedDateArrival.value;
+                }
+            }
 
-    if (selectedDates.length > 1) {
-        let departureDate = selectedDates[1];
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        // Si la date de retour est aujourd'hui, on ajoute +1 jour
-        if (departureDate.toDateString() === today.toDateString()) {
-            departureDate.setDate(departureDate.getDate() + 1);
+            if (selectedDates.length > 1) {
+                let departureDate = selectedDates[1];
+                formattedDateDeparture.value = _formatDate(departureDate);
+                if (datepickerRetour.value) {
+                    datepickerRetour.value.value = formattedDateDeparture.value;
+                }
+            }
         }
-
-        formattedDateDeparture.value = _formatDate(departureDate);
-        if (datepickerRetour.value) {
-            datepickerRetour.value.value = formattedDateDeparture.value;
-        }
-    }
-}
 
     });
 
     // Reformater les dates existantes
     const today = new Date();
     formattedDateArrival.value = formatDate(today);
-    formattedDateDeparture.value = formatDate(today);
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    formattedDateDeparture.value =_formatDate_(tomorrow);
 
     console.log("formattedDateArrival.value", formattedDateArrival.value);
+        console.log("formattedDateArrival.value", formattedDateDeparture.value);
+
 };
 
 // window.onload = function() {
@@ -555,22 +562,22 @@ const updateScreenSize = () => {
 
 onMounted(async () => {
     try {
-    await loadGoogleMapsAPI()
+        await loadGoogleMapsAPI()
 
-    if (autocompleteInput.value) {
-      const autocomplete = new google.maps.places.Autocomplete(autocompleteInput.value, {
-        types: ['(cities)'],
-        componentRestrictions: { country: "CM" }, // facultatif
-      })
+        if (autocompleteInput.value) {
+            const autocomplete = new google.maps.places.Autocomplete(autocompleteInput.value, {
+                types: ['(cities)'],
+                componentRestrictions: { country: "CM" }, // facultatif
+            })
 
-      autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace()
-        destination.value = place.formatted_address || place.name || ''
-      })
+            autocomplete.addListener('place_changed', () => {
+                const place = autocomplete.getPlace()
+                destination.value = place.formatted_address || place.name || ''
+            })
+        }
+    } catch (error) {
+        console.error(error)
     }
-  } catch (error) {
-    console.error(error)
-  }
 
     document.addEventListener("click", handleClickOutside);
     checkScrollButtonsVisibility(); // Initial check after component is mounted
@@ -662,34 +669,40 @@ const { t } = useI18n();
 .flatpickr-day.startRange,
 .flatpickr-day.endRange,
 .flatpickr-day.inRange {
-  background: #eb2525 !important; /* bleu tailwind-500 */
-  color: white;
-  border-color: #eb2525 !important;
+    background: #eb2525 !important;
+    /* bleu tailwind-500 */
+    color: white;
+    border-color: #eb2525 !important;
 }
 
 /* Hover sur les jours */
 .flatpickr-day:hover {
-  background: #93c5fd !important; /* bleu clair */
-  color: black;
+    background: #93c5fd !important;
+    /* bleu clair */
+    color: black;
 }
 
 /* Aujourd'hui */
 .flatpickr-day.today {
-  border: 5px solid #b93710; /* vert */
+    border: 5px solid #b93710;
+    /* vert */
 }
 
 /* Texte désactivé (jours avant minDate par ex.) */
 .flatpickr-day.disabled {
-  color: #d1d5db !important; /* gris-300 */
+    color: #d1d5db !important;
+    /* gris-300 */
 }
 
 /* Bordures et fond général */
 .flatpickr-calendar {
-  border: 1px solid #e5e7eb; /* gris-200 */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border: 1px solid #e5e7eb;
+    /* gris-200 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 :deep(.flatpickr-day.selected) {
-  background: #eb2525 !important;
-  color: white;
+    background: #eb2525 !important;
+    color: white;
 }
 </style>

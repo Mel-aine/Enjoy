@@ -132,7 +132,8 @@ hotelStore.totalPrice = totalPrice.value;
 hotelStore.dateArrived = checkInDate.value;
 hotelStore.dateDepart = checkOutDate.value;
 hotelStore.totalPerson = getTotalPersons(searchFrom.value.rooms);
-
+console.log("hotelStore.dateArrived", hotelStore.dateArrived);
+console.log("hotelStore.dateDepart", hotelStore.dateDepart);
 const invoiceRef = ref(null);
 
 const downloadBillBooking = () => {
@@ -168,7 +169,7 @@ const formatDate = (dateValue) => {
     inputDate.getDate() === today.getDate() &&
     inputDate.getMonth() === today.getMonth();
 
-  if (isSameDay) {
+  if (!isSameDay) {
     inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
   }
 
@@ -211,11 +212,11 @@ const formatDate = (dateValue) => {
         </div>
       </div>
       <!-- <button @click="test">test</button> -->
-      <div class="py-4 border-b">
+      <!-- <div class="py-4 border-b">
         <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
-        <div class="font-medium">{{ selectedRoom }}</div>
+        <div class="font-medium">{{ selectedRoom }}</div> -->
         <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
-      </div>
+      <!-- </div> -->
 
       <div class="py-4">
         <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>

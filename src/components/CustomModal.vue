@@ -2,7 +2,7 @@
 <template>
     <Teleport to="body">
       <div v-if="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div class="relative  rounded-lg p-6 max-w-screen-lg ">
+        <div class=" rounded-lg p-6 max-w-screen-lg ">
           <!-- Bouton placé au-dessus du slot -->
           <button 
             class="bg-orange-300 hover:bg-orange-200 rounded-full w-10 h-10 text-black text-lg absolute -top-24 -right-[655px] z-10 shadow-md" 

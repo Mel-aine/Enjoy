@@ -64,20 +64,20 @@
             {{ hotelStore.this_hotel?.name || 'Nom indisponible' }} <span class="text-gray-700">•</span> {{
               RoomsWithLowPrice.productName || 'Nom indisponible' }}
           </h2>
-          <div class="flex items-center space-x-2 mb-4 mt-2">
+          <!-- <div class="flex items-center space-x-2 mb-4 mt-2">
             <div class="flex">
               <StarIcon v-for="star in stars" :key="star" size="16" class="text-yellow-400 fill-yellow-400" />
             </div>
             <span class="font-medium text-gray-900">4.87</span>
             <span class="text-gray-500">(262 {{ $t('appServices.hotel.review') }}s )</span>
-          </div>
+          </div> -->
 
           <!-- Icons section (beds, guests, etc.) - moved inside the flex container -->
           <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-8">
             <div class="flex items-center space-x-2">
               <BedDoubleIcon size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">3</div>
+                <div class="text-sm font-medium text-gray-900">0</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.beds') }} </div>
               </div>
             </div>
@@ -97,21 +97,23 @@
                 <polyline points="4,16 6,16 5,14" fill="none" stroke="#475569" />
               </svg>
               <div>
-                <div class="text-sm font-medium text-gray-900">{{ sizeValue }} m² </div>
+                <!-- <div class="text-sm font-medium text-gray-900">{{ sizeValue }} m² </div> -->
+                <div class="text-sm font-medium text-gray-900">0 m² </div>
+
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Users2Icon size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">6</div>
+                <div class="text-sm font-medium text-gray-900">0</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.guests') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Bath size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">1</div>
+                <div class="text-sm font-medium text-gray-900">0</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.bathroom') }} </div>
               </div>
             </div>
@@ -136,7 +138,7 @@
         </div>
       </div>
     </div>
-    <div class="px-6 py-2">
+    <!-- <div class="px-6 py-2">
       <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
       <div class="space-y-3 text-gray-600 text-sm">
         <p>{{ $t('appServices.hotel.freeCancellation') }}</p>
@@ -151,13 +153,12 @@
           </p>
         </template>
 
-        <button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
-          {{ $t('read') }} {{ expanded ? $t('less') : $t('Plus') }}
-          <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform"
-            :class="{ 'rotate-180': expanded }" />
-        </button>
-      </div>
-    </div>
+<button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
+  {{ $t('read') }} {{ expanded ? $t('less') : $t('Plus') }}
+  <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform" :class="{ 'rotate-180': expanded }" />
+</button>
+</div>
+</div> -->
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
       <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
@@ -169,22 +170,22 @@
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text" v-model="firstName" @input="validateFirstName" :class="[
+            <input type="text" v-model="firstName" @input="validateFirstName(firstName)" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              firstNameValid === false ? 'border-red-500 focus:ring-red-200' :
-                firstNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              validateFirstName(firstName) === false ? 'border-red-500 focus:ring-red-200' :
+                validateFirstName(firstName) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="firstNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="validateFirstName(firstName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="firstNameValid === false"
+              <div v-else-if="validateFirstName(firstName) === false"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="firstNameValid === false" class="mt-1 text-sm text-red-600">
+          <p v-if="validateFirstName(firstName) === false" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.firstNameError') }}
           </p>
         </div>
@@ -196,22 +197,22 @@
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text" v-model="lastName" @input="validateLastName" :class="[
+            <input type="text" v-model="lastName" @input="validateLastName(lastName)" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              lastNameValid === false ? 'border-red-500 focus:ring-red-200' :
-                lastNameValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              validateLastName(lastName) === false ? 'border-red-500 focus:ring-red-200' :
+                validateLastName(lastName) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="lastNameValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="validateLastName(lastName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="lastNameValid === false"
+              <div v-else-if="validateLastName(lastName) === false"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="lastNameValid === false" class="mt-1 text-sm text-red-600">
+          <p v-if="validateLastName(lastName) === false" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.lastNameError') }}
           </p>
         </div>
@@ -223,22 +224,22 @@
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="email" v-model="emailAddress" @input="validateEmail" :class="[
+            <input type="email" v-model="emailAddress" @input="validateEmail(emailAddress)" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              emailValid === false ? 'border-red-500 focus:ring-red-200' :
-                emailValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              validateEmail(emailAddress) === false ? 'border-red-500 focus:ring-red-200' :
+                validateEmail(emailAddress) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="emailValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="validateEmail(emailAddress)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="emailValid === false"
+              <div v-else-if="validateEmail(emailAddress) === false"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="emailValid === false" class="mt-1 text-sm text-red-600">
+          <p v-if="validateEmail(emailAddress) === false" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.emailError') }}
           </p>
         </div>
@@ -259,24 +260,27 @@
             </select>
 
             <!-- Phone Number Input -->
-            <input type="tel" v-model="phoneNumber" @input="validatePhoneNumber" :class="[
+            <input type="tel" v-model="phoneNumber" @input="validatePhoneNumber(phoneNumber)" :class="[
               'flex-1 px-3 py-2 border rounded-lg rounded-l-none focus:ring-2',
-              phoneValid === false ? 'border-red-500 focus:ring-red-200' :
-                phoneValid ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              validatePhoneNumber(phoneNumber) === false
+                ? 'border-red-500 focus:ring-red-200'
+                : phoneValid
+                  ? 'border-green-500 focus:ring-indigo-500'
+                  : 'border-gray-300 focus:ring-indigo-500'
             ]" />
 
             <!-- Validation Icon -->
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="phoneValid" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="validatePhoneNumber(phoneNumber)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="phoneValid === false"
+              <div v-else-if="validatePhoneNumber(phoneNumber) === false"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="phoneValid === false" class="mt-1 text-sm text-red-600">
+          <p v-if="validatePhoneNumber(phoneNumber) === false" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.phoneError') }}
           </p>
         </div>
@@ -303,11 +307,12 @@
 
     <!-- Additional ways to booking start -->
     <!-- isPresentInDB doit provenir de la bd -->
-    <div v-if="isPresentInDB" class="bg-white rounded-xl p-6 shadow-sm">
-      <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.addToYourStay') }}
+    <div class="bg-white rounded-xl p-6 shadow-sm">
+      <h2 v-if="isPresentInDB" class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.addToYourStay')
+      }}
       </h2>
       <!-- Car Park Section -->
-      <div class="border-b" :class="selectedOptions.carPark ? 'pb-6 mb-6' : ''">
+      <div v-if="isPresentInDB" class="border-b" :class="selectedOptions.carPark ? 'pb-6 mb-6' : ''">
         <div class="flex items-start justify-between mb-4">
           <div class="flex items-center space-x-3">
             <input type="checkbox" class="w-4 h-4 rounded border-customRed" :checked="selectedOptions.carPark"
@@ -429,7 +434,7 @@
       </div>
 
       <!-- Bottle of Wine Section -->
-      <div class="border-b" :class="selectedOptions.wine ? 'pb-6 mb-6' : ''">
+      <div v-if="isPresentInDB" class="border-b" :class="selectedOptions.wine ? 'pb-6 mb-6' : ''">
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3 mt-2">
             <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOptions.wine"
@@ -465,7 +470,7 @@
       </div>
 
       <!-- Stay of a Pet Section -->
-      <div :class="selectedOptions.pet ? 'pb-6' : ''">
+      <div v-if="isPresentInDB" :class="selectedOptions.pet ? 'pb-6' : ''">
         <div class="flex items-start justify-between">
           <div class="flex items-center space-x-3 mt-2">
             <input type="checkbox" class="w-4 h-4 rounded text-customRed" :checked="selectedOptions.pet"
@@ -553,7 +558,7 @@
       </div>
     </div>
   </div>
-  <LoadingSpinner v-if="isLoading" />
+  <LoadingSpinner v-if="hotelStore.isSpinnerDisplayed" />
 
 </template>
 
@@ -680,7 +685,7 @@ const selectedParkingType = ref('default');
 const expanded = ref(false);
 
 // Données de la chambre
-const stars = ref([1, 2, 3, 4, 5]);
+// const stars = ref([1, 2, 3, 4, 5]);
 
 const amenitiesStatus = computed(() => {
   return {
@@ -717,9 +722,9 @@ const setSelectedParkingType = (type) => {
   selectedParkingType.value = type;
 };
 
-const toggleExpanded = () => {
-  expanded.value = !expanded.value;
-};
+// const toggleExpanded = () => {
+//   expanded.value = !expanded.value;
+// };
 
 const handleBack = () => {
   emit('back');
@@ -752,17 +757,21 @@ const handleBack = () => {
 // };
 
 // Validation globale avant soumission
-const isFormValid = () => {
+// const isFormValid = () => {
 
-  return validateFirstName(firstName) &&
+//   return validateFirstName(firstName) &&
+//     validateLastName(lastName) &&
+//     validateEmail(emailAddress) &&
+//     validatePhoneNumber(phoneNumber);
+
+// };
+const handleNext = () => {
+  if (validateFirstName(firstName) &&
     validateLastName(lastName) &&
     validateEmail(emailAddress) &&
-    validatePhoneNumber(phoneNumber);
-
-};
-const handleNext = () => {
-  if (!isFormValid()) {
-    return;
+    validatePhoneNumber(phoneNumber)) {
+    return console.log('handleBack');
+    
   }
   const roomData = {
     guestInfo: {
@@ -809,7 +818,9 @@ const handleNext = () => {
   // console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
   console.log('selectedOption:', selectedOptions.value);
   // setOptionsPrice();
-  verifyCarParkOptionSelected();
+  if (isPresentInDB.value) {
+    verifyCarParkOptionSelected();
+  }
   emit('next', roomData, RoomsWithLowPrice.value.id);
 };
 

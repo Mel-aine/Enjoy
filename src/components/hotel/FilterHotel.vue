@@ -11,12 +11,33 @@
     <h3 class="font-medium mb-1">{{ $t('appServices.hotel.priceRange') }}</h3>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-2 gap-x-4">
       <div v-for="option in priceRangeOptions" :key="option.id" class="flex items-center">
-      <input type="checkbox" :id="'price-' + option.id" v-model="priceRange" :value="option.id" class="mr-2"
-        @change="updateFilters" />
-      <label :for="'price-' + option.id" class="cursor-pointer">
-        {{ option.label }}
-      </label>
+        <input type="checkbox" :id="'price-' + option.id" v-model="priceRange" :value="option.id" class="mr-2"
+          @change="updateFilters" />
+        <label :for="'price-' + option.id" class="cursor-pointer">
+          {{ option.label }}
+        </label>
+      </div>
+
     </div>
+    <div>
+      <label for="capacity">Capacity</label>
+      <input type="number" name="capacity" id="capacity" min="1"
+        class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm" placeholder="Ex : 5"
+        :value="capacity" @change="updateFilters" />
+
+    </div>
+    <div>
+      <label for="capacity">Arrival</label>
+      <input type="date" name="Arrival" id="Arrival" min="today"
+        class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm" placeholder="Ex : 5"
+        :value="arrival" @change="updateFilters" />
+
+    </div>
+        <div>
+      <label for="Departure">Departure</label>
+      <input type="date" name="Departure" id="Departure" min="today"
+        class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm" placeholder="Ex : 5"
+        :value="departure" @change="updateFilters" />
 
     </div>
     <!-- <div v-for="option in priceRangeOptions" :key="option.id" class="flex items-center">
@@ -88,13 +109,15 @@ const starRating = ref([...props.activeFilters.starRating]);
 const amenities = ref([...props.activeFilters.amenities]);
 const propertyTypes = ref([...props.activeFilters.propertyTypes || []]);
 const priceRangeOptions = [
-  { id: '$', label: t('appServices.hotel.budget') },       // ou simplement 'Économique'
+  { id: '$', label: t('appServices.hotel.budget') },        // ou simplement 'Économique'
   { id: '$$', label: t('appServices.hotel.standard') },     // ou 'Standard'
   { id: '$$$', label: t('appServices.hotel.premium') },     // ou 'Premium'
   { id: '$$$$', label: t('appServices.hotel.luxury') }      // ou 'Luxe'
-]; const priceRange = ref([]) // ou ton `props.activeFilters.priceRange` si tu fais du v-model direct
-
-
+];
+const priceRange = ref([]) // ou ton `props.activeFilters.priceRange` si tu fais du v-model direct
+const capacity = ref(null)
+const arrival = ref(null)
+const departure = ref(null)
 
 const propertyTypeList = [
   { id: 'room', label: t('appServices.hotel.room') },
@@ -123,7 +146,11 @@ const updateFilters = () => {
     priceRange: priceRange.value,
     starRating: starRating.value,
     amenities: amenities.value,
-    propertyTypes: propertyTypes.value
+    propertyTypes: propertyTypes.value,
+    capacity: capacity.value,
+    arrival: arrival.value,
+    departure: departure.value
+
   });
 };
 </script>

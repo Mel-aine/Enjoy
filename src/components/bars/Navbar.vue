@@ -96,7 +96,7 @@
                 <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
-                
+
                 <!-- v-model manquant -->
                 <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" v-model="rightValue"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
@@ -109,7 +109,8 @@
               <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
                 @mouseleave="handleMouseLeave('left')"
                 class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-                <li v-if="filteredLeftItems.length === 0" class="text-gray-600 italic flex justify-start items-center px-3 py-2">
+                <li v-if="filteredLeftItems.length === 0"
+                  class="text-gray-600 italic flex justify-start items-center px-3 py-2">
                   {{ $t('navbar.noResult') }}
                 </li>
                 <li v-for="item in filteredLeftItems" :key="item.label"
@@ -188,6 +189,15 @@
         </button>
         <Button variant="danger" class="font-poppins">{{ $t('login') }}</Button>
         <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button>
+        <div class="relative inline-block">
+          <router-link to="/hotel/test" class="block p-2 border border-black rounded-full">
+            <UserIcon class="w-6 h-6" />
+            <!-- Point de notification -->
+            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+          </router-link>
+        </div>
+
+
       </div>
     </div>
 
@@ -267,6 +277,7 @@
               <span class="text-black">{{ $t('navbar.otherCategory') }}</span>
             </template>
           </CustomDropdownD>
+
         </div>
       </div>
 
@@ -317,7 +328,7 @@
 
   </div>
 
-<LoaodingSpinner v-if="hotelStore.isSpinnerDisplayed" />
+  <LoaodingSpinner v-if="hotelStore.isSpinnerDisplayed" />
 </template>
 
 <script setup>
@@ -338,8 +349,11 @@ import BaseIcon from '../icons/BaseIcon.vue';
 // import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
 import { getCategories } from '@/servicesApi/hotelServicesApi.js'
-import LoaodingSpinner from '../spiner/LoaodingSpinner.vue'; 
-import { categoryTranslations} from '@/utils/helpToTranslate.js'           
+import LoaodingSpinner from '../spiner/LoaodingSpinner.vue';
+import { categoryTranslations } from '@/utils/helpToTranslate.js'
+import {
+  UserIcon
+} from 'lucide-vue-next'
 const router = useRouter();
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
@@ -389,7 +403,7 @@ const fetchCategories = async () => {
     console.log('categories from back end', categories.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories:', error);
-  }finally{
+  } finally {
     hotelStore.isSpinnerDisplayed = false;
   }
 };
@@ -425,50 +439,50 @@ onMounted(() => {
 // }
 
 
-// const handleSearch = () => {
-  
-//   if (!leftValue.value || !rightValue.value) {
-//     console.warn("Veuillez remplir les deux champs.");
-//     return;
-//   }
-
-//   // Récupère le nom de la catégorie EN à partir de l'affichage FR
-//   const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
-
-//   const foundCategory = categories.value.find(category =>
-//     category.categoryName === englishCategory
-//   )
-//   console.log('foundCategory', englishCategory)
-
-//   if (foundCategory) {
-//     store.setSearchData(foundCategory.id, rightValue.value)
-//     console.log('foundCategory', englishCategory)
-
-//     if (foundCategory.categoryName === 'Hotels & Stays') {
-//       isModalOpen.value = true
-//             getServiceIdHotel()
-//     } else {
-//       router.push({
-//         path: `/recherche/${foundCategory.id}`,
-//         query: { city: rightValue.value }
-//       })
-//     }
-//   } else {
-//     console.warn("Catégorie non trouvée")
-//   }
-// }
-
-
 const handleSearch = () => {
-  console.log('handleSearch')
-  getServiceIdHotel()
 
-  // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-  //   isModalOpen.value = true;
-  // }
-  // isModalOpen.value = true;
-  console.log('rigth value', rightValue.value)
+  if (!leftValue.value || !rightValue.value) {
+    console.warn("Veuillez remplir les deux champs.");
+    return;
+  }
+
+  // Récupère le nom de la catégorie EN à partir de l'affichage FR
+  const englishCategory = categoryTranslations[leftValue.value] || leftValue.value
+
+  const foundCategory = categories.value.find(category =>
+    category.categoryName === englishCategory
+  )
+  console.log('foundCategory', englishCategory)
+
+  if (foundCategory) {
+    store.setSearchData(foundCategory.id, rightValue.value)
+    console.log('foundCategory', englishCategory)
+
+    if (foundCategory.categoryName === 'Hotels & Stays') {
+      isModalOpen.value = true
+      getServiceIdHotel()
+    } else {
+      router.push({
+        path: `/recherche/${foundCategory.id}`,
+        query: { city: rightValue.value }
+      })
+    }
+  } else {
+    console.warn("Catégorie non trouvée")
+  }
 }
+
+
+// const handleSearch = () => {
+//   console.log('handleSearch')
+//   getServiceIdHotel()
+
+//   // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
+//   //   isModalOpen.value = true;
+//   // }
+//   // isModalOpen.value = true;
+//   console.log('rigth value', rightValue.value)
+// }
 
 const getServiceIdHotel = () => {
   console.log('getServiceId')
@@ -476,8 +490,8 @@ const getServiceIdHotel = () => {
   if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
     isModalOpen.value = true;
     const foundCategory = categories.value.find(category =>
-    category.categoryName === leftValue.value
-  )
+      category.categoryName === leftValue.value
+    )
 
     hotelStore.idfound = foundCategory.id
   }
@@ -528,7 +542,7 @@ const wantToSearchMobil = () => {
 };
 
 const leftValue = ref('');
-const rightValue = ref('Yaounde');
+const rightValue = ref('');
 const activeInput = ref(null);
 const labelToCategory = ref('');
 // const mapId = import.meta.env.VITE_IDCARD;
@@ -885,7 +899,7 @@ async function initMap() {
 
     // Initialiser l'autocomplete
     const input = document.getElementById("search-input");
-    const autocomplete = new google.maps.places.Autocomplete(input,{
+    const autocomplete = new google.maps.places.Autocomplete(input, {
       types: ['(cities)'],
       componentRestrictions: { country: "CM" }, // facultatif
     });
