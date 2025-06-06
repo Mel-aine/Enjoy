@@ -165,13 +165,13 @@ const formatDate = (dateValue) => {
   if (isNaN(inputDate.getTime())) return "Invalid date";
 
   // Si c'est aujourd'hui, on force l'année en cours
-  const isSameDay =
-    inputDate.getDate() === today.getDate() &&
-    inputDate.getMonth() === today.getMonth();
+  // const isSameDay =
+  //   inputDate.getDate() === today.getDate() &&
+  //   inputDate.getMonth() === today.getMonth();
 
-  if (!isSameDay) {
+
     inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
-  }
+
 
   const options = {
     weekday: "short",

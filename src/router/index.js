@@ -50,7 +50,7 @@ const router = createRouter({
     {
       path: "/hotel/test",
       name: "DetailHotel",
-      component: () => import("../views/hotel/EHotelDetailView.vue"),
+      component: () => import("../views/hotel/ReservationListView.vue.vue"),
       meta: { hiddeMap: true, showFooter2: true },
     },
     {

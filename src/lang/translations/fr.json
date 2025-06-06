@@ -113,6 +113,12 @@
   "listReservations": "Liste des réservations",
   "required": " requise",
   "seatCountValidation": "Le nombre de places doit être supérieur à 0",
+  "pending": "En cours",
+  "confirmed": "Confirmé",
+  "paid": "Payé",
+  "unpaid": "Non payé",
+  "checked-out": "Départ",
+  "checked-in": "Enregistrement",
   "serviceSuccess": {
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",

@@ -131,6 +131,7 @@ const isPaid = ref(false);
 
 
 //   }
+const reservationDetail = ref({});
 const handleSubmitReservation = async (param) => {
   const guest = formData.value.roomDetails.guestInfo;
 
@@ -172,6 +173,7 @@ const handleSubmitReservation = async (param) => {
     tmpIdR.value = response.data.reservation.id;
     console.log("✅ Réservation réussie :", response.data);
     isReserved.value = true;
+    reservationDetail.value = response.data;
   } catch (error) {
     console.error("❌ Erreur de réservation :", error?.response?.data || error.message);
     isReserved.value = false;
@@ -226,7 +228,7 @@ const handleSubmitPayment = async (idU,idR) => {
         @back="handleBackStep" />
       <BookingPayement v-if="step3Active && !step3Completed && !step4Active" @next="goToStep4" @back="handleBackStep" />
       <div v-if="isReserved">
-        <BookingConfirm v-if="step4Active" :bookingData="formData" @back="handleBackStep" />
+        <BookingConfirm v-if="step4Active" :bookingData="reservationDetail" @back="handleBackStep" />
       </div>
     </div>
     <div class="lg:w-96">

@@ -1,62 +1,18 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getAllServicesByServiceId } from '@/servicesApi/hotelServicesApi.js'
-import { ArrowLeft, MapPin, Star, Wifi, Tv, ImagesIcon } from 'lucide-vue-next'
+import { ArrowLeft, Wifi, Tv, } from 'lucide-vue-next'
 import flatpickr from "flatpickr"
 import "flatpickr/dist/flatpickr.min.css"
-import {
-    MailIcon,
-    PhoneIcon,
-    GlobeIcon,
-    WifiIcon, CheckCircleIcon, SquareParkingIcon, AirVentIcon, AccessibilityIcon, SpadeIcon, SnowflakeIcon, SunIcon, WavesLadderIcon, DumbbellIcon, UtensilsIcon, WineIcon, BabyIcon, DogIcon, BriefcaseIcon, HeartIcon, MapPinIcon, CreditCardIcon, DollarSignIcon, CheckIcon, AppleIcon, UsersIcon
-} from 'lucide-vue-next';
-import ContactItem from '@/components/hotel/ContactItem.vue'
-import DateInput from '@/components/hotel/DateInput.vue'
-import NumberInput from '@/components/hotel/NumberInput.vue'
-import { useDataStore } from '@/stores/dataStore'
 import BookingEdit from '@/components/hotel/BookingEditCard.vue'
 const router = useRouter()
-const dataStore = useDataStore()
-const currentIndex = ref(0)
-const imagesPerPage = 3
-const iconMap = {
-    'Wi-Fi': WifiIcon,
-    'Parking': SquareParkingIcon,
-    'Accessible PMR': AccessibilityIcon,
-    'Climatisation': SnowflakeIcon,
-    'Terrasse': SunIcon,
-    'Piscine': WavesLadderIcon,
-    'Salle de sport': DumbbellIcon,
-    'Spa': SpadeIcon,
-    'Restaurant': UtensilsIcon,
-    'Bar': WineIcon,
-    'Espace enfants': BabyIcon,
-    'Animaux acceptés': DogIcon,
-    'Salle de réunion': BriefcaseIcon,
-    'Air conditioning': AirVentIcon,
-}
 
 const dates = ref({
     checkin: null,
     checkout: null
 })
 
-const maxIndex = computed(() => {
-    return Math.ceil(hotel.images.length / imagesPerPage) - 1
-})
-
-const prevImage = () => {
-    if (currentIndex.value > 0) {
-        currentIndex.value--
-    }
-}
-
-const nextImage = () => {
-    if (currentIndex.value < maxIndex.value) {
-        currentIndex.value++
-    }
-}
 console.log("composant monter")
 const rooms = ref([])
 const isLoading = ref(false);
@@ -262,57 +218,14 @@ function formatDate(date) {
         </div>
 
         <div class="max-w-7xl mx-auto px-4 py-8">
-            <!-- Galerie -->
-
-            <BookingEdit></BookingEdit>
-
-            <!-- Infos reservation -->
-            <div class="">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <!-- Section principale -->
-                    <div class="lg:col-span-2 space-y-8">
-                        <!-- Carte Hôtel -->
-                        <!-- Équipements -->
-                        <!-- <div class="bg-white shadow rounded-lg p-6">
-                            <h2 class="text-xl font-bold mb-4">Équipements et services</h2>
-                            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                                <div v-for="(facility, index) in hotel.facilities" :key="index"
-                                    class="flex items-center gap-2 p-3 bg-blue-50 rounded-lg">
-                                    <component :is="iconMap[facility] || CheckCircleIcon"
-                                        class="w-5 h-5 text-blue-600" />
-                                    <span class="text-sm font-medium text-gray-700 ">{{ facility }}</span>
-                                </div>
-                            </div>
-                        </div> -->
-
-                        <!-- Paiement -->
-                        <!-- <div class="bg-white shadow rounded-lg p-6">
-                            <h2 class="text-xl font-bold mb-4">Moyens de paiement acceptés</h2>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                                <div v-for="(method, index) in hotel.paymentMethods" :key="index"
-                                    class="flex items-center gap-2 p-3 bg-green-50 rounded-lg">
-                                    <CreditCardIcon class="w-5 h-5 text-green-600" />
-                                    <span class="text-sm font-medium text-gray-700">{{ method }}</span>
-                                </div>
-                            </div>
-                        </div> -->
-                    </div>
-
-                    <!-- Sidebar -->
-
-                </div>
+            <!-- ist of reservation -->
+            <div>
+                <p class="text-3xl font-bold">{{ $t('listReservations') }} </p>
             </div>
-
-
-
-
-
-
-
-
-
-
-
+            <div v-for="i in 5" :key="i">
+                <BookingEdit />
+            </div>
+            <!-- <BookingEdit></BookingEdit> -->
         </div>
     </div>
 </template>
@@ -338,7 +251,7 @@ function formatDate(date) {
     transform: translateX(100%);
 }
 </style>
-<script>
+<!-- <script>
 function getAmenityIcon(amenity) {
     switch (amenity) {
         case 'Wifi':
@@ -349,4 +262,4 @@ function getAmenityIcon(amenity) {
             return CheckCircleIcon
     }
 }
-</script>
+</script> -->

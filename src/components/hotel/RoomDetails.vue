@@ -179,13 +179,13 @@
               <div v-if="validateFirstName(firstName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="validateFirstName(firstName) === false"
+              <div v-else-if="!validateFirstName(firstName)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="validateFirstName(firstName) === false" class="mt-1 text-sm text-red-600">
+          <p v-if="!validateFirstName(firstName)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.firstNameError') }}
           </p>
         </div>
@@ -199,20 +199,20 @@
           <div class="relative">
             <input type="text" v-model="lastName" @input="validateLastName(lastName)" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              validateLastName(lastName) === false ? 'border-red-500 focus:ring-red-200' :
+              !validateLastName(lastName) ? 'border-red-500 focus:ring-red-200' :
                 validateLastName(lastName) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
               <div v-if="validateLastName(lastName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="validateLastName(lastName) === false"
+              <div v-else-if="!validateLastName(lastName)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="validateLastName(lastName) === false" class="mt-1 text-sm text-red-600">
+          <p v-if="!validateLastName(lastName)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.lastNameError') }}
           </p>
         </div>
@@ -233,13 +233,13 @@
               <div v-if="validateEmail(emailAddress)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="validateEmail(emailAddress) === false"
+              <div v-else-if="!validateEmail(emailAddress)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="validateEmail(emailAddress) === false" class="mt-1 text-sm text-red-600">
+          <p v-if="!validateEmail(emailAddress)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.emailError') }}
           </p>
         </div>
@@ -597,7 +597,12 @@ const defaultValues = {
   countryCode: '+237'
 }
 // const { t } = useI18n();
-
+const valid = ref({
+  firstName: true,
+  lastName: null,
+  email: null,
+  phone: null
+});
 // Props
 const props = defineProps({
   roomData: {
@@ -951,5 +956,6 @@ watch(
 onMounted(() => {
   // Scroll en haut de la page quand le composant est monté
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
 });
 </script>

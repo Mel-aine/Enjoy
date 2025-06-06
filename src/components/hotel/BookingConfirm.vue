@@ -28,12 +28,12 @@
       </div>
       <div>
         <div class="text-sm text-gray-500 mb-1">{{ $t('appServices.hotel.checkIn') }}</div>
-        <div class="font-medium">{{ checkIn.date }}</div>
+        <div class="font-medium">{{ formattedDate(checkIn) }}</div>
         <!-- <div class="text-sm text-gray-500">{{ checkIn.time }}</div> -->
       </div>
       <div>
         <div class="text-sm text-gray-500 mb-1">{{ $t('appServices.hotel.checkOut') }}</div>
-        <div class="font-medium">{{ checkOut.date }}</div>
+        <div class="font-medium">{{ formattedDate(checkOut) }}</div>
         <!-- <div class="text-sm text-gray-500">{{ checkOut.time }}</div> -->
       </div>
       <div>
@@ -91,11 +91,10 @@ import { CheckIcon } from 'lucide-vue-next';
 import { useDataStore } from '@/stores/dataStore';
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import { useI18n } from 'vue-i18n';
-
 import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 
-const { t } = useI18n();
+const { t , locale} = useI18n();
 
 const hotelStore = useMIHStore();
 const isParkingChoice = ref(hotelStore.isCarParkSelected)
@@ -114,24 +113,23 @@ const props = defineProps({
     default: () => ({})
   }
 });
-const guestName = ref(props.bookingData?.roomDetails?.guestInfo?.firstName || 'Maciej Kuropatwa');
-const checkIn = ref({ date: dataStore.searchFrom.dateAller, time: 'from 16:00' })
-const checkOut = ref({ date: dataStore.searchFrom.dateRetour, time: 'by 11:00' })
+const guestName = ref(props.bookingData?.user?.firstName || 'Maciej Kuropatwa');
+const checkIn = ref(props.bookingData?.reservation?.arrivedDate || 'date de depart')
+const checkOut = ref(props.bookingData?.reservation?.departDate || 'date de arriver')
 const reservation = ref(
   `${hotelStore.stayLength} ${t('appServices.hotel.nights')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.rooms')}`
 ); 
 const phone = ref(
-  props.bookingData?.roomDetails?.guestInfo?.phone?.countryCode && props.bookingData?.roomDetails?.guestInfo?.phone?.number
-    ? `${props.bookingData.roomDetails.guestInfo.phone.countryCode} ${props.bookingData.roomDetails.guestInfo.phone.number}`
-    : '+48 567 890 123'
+  props.bookingData?.user?.phoneNumber ? `${props.bookingData.user.phoneNumber}`
+    : '6 567 890 123'
 );
-const email = ref(props.bookingData?.roomDetails?.guestInfo?.email || 'kuropatwamaciej@gmail.com')
-const bookingNumber = ref('#54237982')
-const parkingDetails = ref({
-  type: 'Car, 3 nights',
-  place: 'Place C-124 on 1st Floor',
-  qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=example'
-})
+const email = ref(props.bookingData?.user?.email || 'kuropatwamaciej@gmail.com')
+const bookingNumber = ref(props.bookingData?.reservation?.reservationNumber)
+// const parkingDetails = ref({
+//   type: 'Car, 3 nights',
+//   place: 'Place C-124 on 1st Floor',
+//   qrCodeUrl: 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=example'
+// })
 // const emit = defineEmits(['back']);
 
 // const handleBack = () => {
@@ -163,4 +161,12 @@ onMounted(() => {
   // Scroll en haut de la page quand le composant est monté
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
+const formattedDate = (dateString) => {
+    return new Intl.DateTimeFormat(locale.value, {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    }).format(new Date(dateString));
+};
 </script>

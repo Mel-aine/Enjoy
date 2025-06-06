@@ -193,7 +193,7 @@
           <router-link to="/hotel/test" class="block p-2 border border-black rounded-full">
             <UserIcon class="w-6 h-6" />
             <!-- Point de notification -->
-            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-red-500 ring-2 ring-white"></span>
+            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-customRed ring-2 ring-white"></span>
           </router-link>
         </div>
 

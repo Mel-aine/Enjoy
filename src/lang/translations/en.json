@@ -113,6 +113,12 @@
   "listReservations": "List of Reservations",
   "required": " required",
   "seatCountValidation": "Number of seats must be greater than 0",
+  "pending": "Pending",
+  "confirmed": "Confirmed", 
+  "paid": "Paid",
+  "unpaid": "Unpaid",
+  "checked-out": "Checked-out",
+  "checked-in": "Checked-in",
   "serviceSuccess": {
     "title": "Service successfully registered!",
     "description": "Your service has been added to our database.",
