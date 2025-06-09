@@ -28,12 +28,12 @@ export const getServicesCategoryIdBy = (id) => {
   return axios.get(`${API_URL}/servicesByCategory/${id}`)
 }
 
-export const getAllServicesByServiceId = (id) => {
-  return axios.get(`${API_URL}/service_product_by_serviceId/${id}`)
-}
+// export const getAllServicesByServiceId = (id) => {
+//   return axios.get(`${API_URL}/service_product_by_serviceId/${id}`)
+// }
 
-export const getAllServicesByService = () => {
-  return axios.get(`${API_URL}/service_product_options`)
+export const getAllServicesByServiceId = (serviceId) => {
+  return axios.get(`${API_URL}/service_product_options`,serviceId)
 }
 
 export const getOptionsByServiceId = (id) => {

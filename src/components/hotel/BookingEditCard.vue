@@ -2,10 +2,10 @@
 
     <!-- Booking Details -->
     <div
-        :class="remainingTime === 0 ? 'bg-gray-500 mb-2 rounded-xl shadow-lg p-6 mt-6' : 'bg-white rounded-xl p-6 mt-8 hover:shadow-lg transition duration-300 ease-in-out'">
+        :class="remainingTime === '00:00:00'? 'bg-gray-900/20 mb-2 rounded-xl shadow-lg p-6 mt-6' : 'bg-white rounded-xl p-6 mt-8 hover:shadow-lg transition duration-300 ease-in-out'">
         <div class="flex justify-end mt-4 mb-2">
             <div class="flex items-center gap-3">
-                <div class="relative">
+                <div v-if="remainingTime !== '00:00:00'" class="relative">
                     <!-- Cercle animé -->
                     <div class="w-4 h-4 rounded-full bg-red-500 animate-ping absolute top-0 left-0"></div>
                     <div class="w-4 h-4 rounded-full bg-red-500 relative z-10"></div>
@@ -20,7 +20,7 @@
         </div>
 
         <h3 class="text-lg font-semibold text-gray-900 mb-8">{{ $t('appServices.hotel.bookingDetails') }} <span
-                class="text-gray-700">•</span> hotel le soleil <span class="text-gray-700">•</span>Room 100</h3>
+                class="text-gray-700">•</span> hotel le soleil <span class="text-gray-700">•</span> Room 100</h3>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="flex items-center gap-3">
                 <div>

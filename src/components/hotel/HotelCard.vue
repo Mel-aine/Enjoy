@@ -5,29 +5,31 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 import { useMIHStore } from '@/stores/manageHotelInterface';
-const iconMap = {
-  'Wi-Fi': WifiIcon,
-  'Parking': SquareParkingIcon,
-  'Accessible PMR': AccessibilityIcon,
-  'Climatisation': SnowflakeIcon,
-  'Terrasse': SunIcon,
-  'Piscine': WavesLadderIcon,
-  'Salle de sport': DumbbellIcon,
-  'Spa': SpadeIcon,
-  'Restaurant': UtensilsIcon,
-  'Bar': WineIcon,
-  'Espace enfants': BabyIcon,
-  'Animaux acceptés': DogIcon,
-  'Salle de réunion': BriefcaseIcon
-}
+const iconMap = [
+  { id: 'Wi-Fi', label: t('appServices.hotel.freeWifi'), icon: WifiIcon },
+  { id: 'Parking', label: t('appServices.hotel.parking'), icon: SquareParkingIcon },
+  { id: 'Acessible PMR', label: t('appServices.hotel.accessiblePmr'), icon: AccessibilityIcon },
+  { id: 'Air Conditioning', label: t('appServices.hotel.airConditioning'), icon: SnowflakeIcon },
+  { id: 'Terrace', label: t('appServices.hotel.terrace'), icon: SunIcon },
+  { id: 'Pool', label: t('appServices.hotel.pool'), icon: WavesLadderIcon },
+  { id: 'Gym', label: t('appServices.hotel.fitnessCenter'), icon: DumbbellIcon },
+  { id: 'Spa', label: t('appServices.hotel.spa'), icon: SpadeIcon },
+  { id: 'Restaurant', label: t('appServices.hotel.restaurant'), icon: UtensilsIcon },
+  { id: 'Bar', label: t('appServices.hotel.bar'), icon: WineIcon },
+  { id: 'Kids', label: t('appServices.hotel.kidsSpace'), icon: BabyIcon },
+  { id: 'Pets', label: t('appServices.hotel.petsAllowed'), icon: DogIcon },
+  { id: 'Roo Meeting', label: t('appServices.hotel.meetingRoom'), icon: BriefcaseIcon }
+]
+const iconMapById = computed(() => {
+  return Object.fromEntries(iconMap.map(entry => [entry.id, entry]))
+})
 // let lengthAmenities = null
 
 const dropdownOpen = ref(false)
 const amenities = computed(() => {
   try {
-    const parsedFacilities = props.hotel.facilities
-    const filtered = parsedFacilities.filter(facility => iconMap[facility])
-
+    const parsedFacilities = props.hotel.facilities || []
+    const filtered = parsedFacilities.filter(facility => iconMapById.value[facility])
     return filtered.slice(0, 5)
   } catch (error) {
     console.warn('Erreur de parsing des facilities:', error)
@@ -37,15 +39,15 @@ const amenities = computed(() => {
 
 const other_amenities = computed(() => {
   try {
-    const parsedFacilities = props.hotel.facilities
-    const filtered = parsedFacilities.filter(facility => iconMap[facility])
-
-    return filtered.slice(5) // À partir du 6e
+    const parsedFacilities = props.hotel.facilities || []
+    const filtered = parsedFacilities.filter(facility => iconMapById.value[facility])
+    return filtered.slice(5)
   } catch (error) {
     console.warn('Erreur de parsing des facilities (other_amenities):', error)
     return []
   }
 })
+
 const displayPriceRange = computed(() => {
   switch (props.hotel.priceRange) {
     case '$':
@@ -92,7 +94,16 @@ console.log('ameneties', amenities)
 //   return [...Array(5)].map((_, i) => (i < props.hotel.stars ? 'filled' : 'empty'))
 // })
 const hotelStore = useMIHStore();
-const location = props.hotel.addressService;
+const location = (() => {
+  try {
+    const addr = typeof props.hotel.addressService === 'string'
+      ? JSON.parse(props.hotel.addressService)
+      : props.hotel.addressService;
+    return addr?.text || 'Location not available';
+  } catch {
+    return 'Location not available';
+  }
+})();
 console.log('location', location)
 // const location = JSON.parse(props.hotel.address);
 
@@ -103,6 +114,7 @@ const toggleFavorite = () => {
 const handleViewDeal = () => {
   hotelStore.singleBooking();
   hotelStore.setHotel(props.hotel)
+  console.log('hotel', props.hotel)
   // hotelStore.setViewDeal(true)
   hotelStore.getHotelId(props.hotel.id)
 }
@@ -149,23 +161,36 @@ const handleViewDeal = () => {
         </div>
 
         <p class="mt-2 text-sm text-gray-600">{{ hotel.description }}</p>
-        <div class="mt-2 flex space-x-2">
+        <div class="mt-2 flex space-x-2 relative">
+          <!-- Icônes visibles -->
           <div v-for="amenity in amenities" :key="amenity" class="flex items-center">
-            <component :is="iconMap[amenity]" size="16" class="text-gray-600" v-if="iconMap[amenity]" alt="" />
+            <component :is="iconMapById[amenity]?.icon" v-if="iconMapById[amenity]" size="16" class="text-gray-600" />
           </div>
-          <div v-if="other_amenities.length >= 6" class="relative">
+          <!-- Bouton -->
+          <div v-if="other_amenities.length >= 6" class="relative group">
             <button @click="dropdownOpen = !dropdownOpen"
               class="text-sm text-customBlue border border-customBlue rounded px-2 py-1">
-              +{{ other_amenities.length }} {{ $t('other') }}
+              +{{ other_amenities.length }} {{ t('other') }}
             </button>
 
-            <div v-if="dropdownOpen" class=" mt-2 w-48 bg-white shadow rounded border p-2 z-[99px]">
-              <div v-for="item in other_amenities" :key="item" class="mb-2">
-                <component :is="iconMap[item]" />
-                <!-- <ul>t</ul> -->
-                <li class="text-sm text-gray-600">{{ item }}</li>
+            <!-- Infobulle / Dropdown -->
+            <transition name="fade">
+              <div v-if="dropdownOpen"
+                class="absolute left-1/2 transform -translate-x-1/2 bottom-full  mt-2 w-64 bg-white shadow-lg rounded border p-2 z-[999] h-32 overflow-y-auto text-sm text-gray-700">
+
+                <!-- Triangle -->
+                <div
+                  class="absolute -top-2 left-1/2 transform -translate-x-1/2 w-3 h-3 rotate-45 bg-white border-l border-t border-gray-300 z-[-1]">
+                </div>
+
+                <ul>
+                  <li v-for="item in other_amenities" :key="item" class="flex items-center space-x-2 mb-2">
+                    <component :is="iconMapById[item]?.icon" v-if="iconMapById[item]" size="16" class="text-gray-600" />
+                    <span>{{ iconMapById[item]?.label || item }}</span>
+                  </li>
+                </ul>
               </div>
-            </div>
+            </transition>
           </div>
         </div>
 

@@ -9,19 +9,19 @@ const props = defineProps({
 const emit = defineEmits(['updateFormData']);
 
 const facilitiesOptions = [
-  { id: 'wifi', label: t('appServices.hotel.freeWifi'), icon: WifiIcon },
-  { id: 'parking', label: t('appServices.hotel.parking'), icon: SquareParkingIcon },
-  { id: 'pmr', label: t('appServices.hotel.accessiblePmr'), icon: AccessibilityIcon },
-  { id: 'ac', label: t('appServices.hotel.airConditioning'), icon: SnowflakeIcon },
-  { id: 'terrace', label: t('appServices.hotel.terrace'), icon: SunIcon },
-  { id: 'pool', label: t('appServices.hotel.pool'), icon: WavesLadderIcon },
-  { id: 'gym', label: t('appServices.hotel.fitnessCenter'), icon: DumbbellIcon },
-  { id: 'spa', label: t('appServices.hotel.spa'), icon: SpadeIcon },
-  { id: 'restaurant', label: t('appServices.hotel.restaurant'), icon: UtensilsIcon },
-  { id: 'bar', label: t('appServices.hotel.bar'), icon: WineIcon },
-  { id: 'kids', label: t('appServices.hotel.kidsSpace'), icon: BabyIcon },
-  { id: 'pets', label: t('appServices.hotel.petsAllowed'), icon: DogIcon },
-  { id: 'meeting', label: t('appServices.hotel.meetingRoom'), icon: BriefcaseIcon }
+  { id: 'Wi-Fi', label: t('appServices.hotel.freeWifi'), icon: WifiIcon },
+  { id: 'Parking', label: t('appServices.hotel.parking'), icon: SquareParkingIcon },
+  { id: 'Acessible PMR', label: t('appServices.hotel.accessiblePmr'), icon: AccessibilityIcon },
+  { id: 'Air Conditioning', label: t('appServices.hotel.airConditioning'), icon: SnowflakeIcon },
+  { id: 'Terrace', label: t('appServices.hotel.terrace'), icon: SunIcon },
+  { id: 'Pool', label: t('appServices.hotel.pool'), icon: WavesLadderIcon },
+  { id: 'Gym', label: t('appServices.hotel.fitnessCenter'), icon: DumbbellIcon },
+  { id: 'Spa', label: t('appServices.hotel.spa'), icon: SpadeIcon },
+  { id: 'Restaurant', label: t('appServices.hotel.restaurant'), icon: UtensilsIcon },
+  { id: 'Bar', label: t('appServices.hotel.bar'), icon: WineIcon },
+  { id: 'Kids', label: t('appServices.hotel.kidsSpace'), icon: BabyIcon },
+  { id: 'Pets', label: t('appServices.hotel.petsAllowed'), icon: DogIcon },
+  { id: 'Room Meeting', label: t('appServices.hotel.meetingRoom'), icon: BriefcaseIcon }
 ];
 
 const paymentMethodsOptions = [

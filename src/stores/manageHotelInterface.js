@@ -54,6 +54,7 @@ export const useMIHStore = defineStore("MIH", {
     },
     getHotelId(hotelId) {
       this.hotelId = hotelId;
+      console.log("Hotel ID set to:", this.hotelId);
     },
     setHotel(hotel) {
       this.this_hotel = { ...hotel };

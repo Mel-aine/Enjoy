@@ -170,22 +170,26 @@
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text" v-model="firstName" @input="validateFirstName(firstName)" :class="[
+            <input type="text" v-model="firstName" @input="firstNameTouched = true" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              validateFirstName(firstName) === false ? 'border-red-500 focus:ring-red-200' :
-                validateFirstName(firstName) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              !firstNameTouched
+                ? 'border-gray-300 focus:ring-indigo-500'
+                : validateFirstName(firstName)
+                  ? 'border-green-500 focus:ring-indigo-500'
+                  : 'border-red-500 focus:ring-red-200'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="validateFirstName(firstName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="firstNameTouched && validateFirstName(firstName)"
+                class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="!validateFirstName(firstName)"
+              <div v-else-if="firstNameTouched && !validateFirstName(firstName)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="!validateFirstName(firstName)" class="mt-1 text-sm text-red-600">
+          <p v-if="firstNameTouched && !validateFirstName(firstName)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.firstNameError') }}
           </p>
         </div>
@@ -197,94 +201,97 @@
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="text" v-model="lastName" @input="validateLastName(lastName)" :class="[
+            <input type="text" v-model="lastName" @input="lastNameTouched = true" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              !validateLastName(lastName) ? 'border-red-500 focus:ring-red-200' :
-                validateLastName(lastName) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              !lastNameTouched
+                ? 'border-gray-300 focus:ring-indigo-500'
+                : validateLastName(lastName)
+                  ? 'border-green-500 focus:ring-indigo-500'
+                  : 'border-red-500 focus:ring-red-200'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="validateLastName(lastName)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="lastNameTouched && validateLastName(lastName)"
+                class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="!validateLastName(lastName)"
+              <div v-else-if="lastNameTouched && !validateLastName(lastName)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="!validateLastName(lastName)" class="mt-1 text-sm text-red-600">
+          <p v-if="lastNameTouched && !validateLastName(lastName)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.lastNameError') }}
           </p>
         </div>
 
-        <!-- Email Address -->
+        <!-- Email -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
             {{ $t('appServices.hotel.email') }}
             <span class="text-red-500">*</span>
           </label>
           <div class="relative">
-            <input type="email" v-model="emailAddress" @input="validateEmail(emailAddress)" :class="[
+            <input type="email" v-model="emailAddress" @input="emailTouched = true" :class="[
               'w-full px-3 py-2 border rounded-lg focus:ring-2',
-              validateEmail(emailAddress) === false ? 'border-red-500 focus:ring-red-200' :
-                validateEmail(emailAddress) ? 'border-green-500 focus:ring-indigo-500' : 'border-gray-300 focus:ring-indigo-500'
+              !emailTouched
+                ? 'border-gray-300 focus:ring-indigo-500'
+                : validateEmail(emailAddress)
+                  ? 'border-green-500 focus:ring-indigo-500'
+                  : 'border-red-500 focus:ring-red-200'
             ]" />
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="validateEmail(emailAddress)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="emailTouched && validateEmail(emailAddress)"
+                class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="!validateEmail(emailAddress)"
+              <div v-else-if="emailTouched && !validateEmail(emailAddress)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="!validateEmail(emailAddress)" class="mt-1 text-sm text-red-600">
+          <p v-if="emailTouched && !validateEmail(emailAddress)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.emailError') }}
           </p>
         </div>
 
-        <!-- Phone Number -->
+        <!-- Phone -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">
             {{ $t('appServices.hotel.phone') }}
             <span class="text-red-500">*</span>
           </label>
           <div class="relative flex">
-            <!-- Country Code Dropdown -->
             <select v-model="countryCode"
               class="px-3 py-2 border border-gray-300 rounded-lg rounded-r-none border-r-0 bg-gray-50 text-gray-500">
               <option value="+237">+237</option>
               <option value="+33">+33</option>
               <option value="+1">+1</option>
             </select>
-
-            <!-- Phone Number Input -->
-            <input type="tel" v-model="phoneNumber" @input="validatePhoneNumber(phoneNumber)" :class="[
+            <input type="tel" v-model="phoneNumber" @input="phoneTouched = true" :class="[
               'flex-1 px-3 py-2 border rounded-lg rounded-l-none focus:ring-2',
-              validatePhoneNumber(phoneNumber) === false
-                ? 'border-red-500 focus:ring-red-200'
-                : phoneValid
+              !phoneTouched
+                ? 'border-gray-300 focus:ring-indigo-500'
+                : validatePhoneNumber(phoneNumber)
                   ? 'border-green-500 focus:ring-indigo-500'
-                  : 'border-gray-300 focus:ring-indigo-500'
+                  : 'border-red-500 focus:ring-red-200'
             ]" />
-
-            <!-- Validation Icon -->
             <div class="absolute right-3 top-1/2 -translate-y-1/2">
-              <div v-if="validatePhoneNumber(phoneNumber)" class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
+              <div v-if="phoneTouched && validatePhoneNumber(phoneNumber)"
+                class="w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
                 <CheckIcon size="12" class="text-white" />
               </div>
-              <div v-else-if="validatePhoneNumber(phoneNumber) === false"
+              <div v-else-if="phoneTouched && !validatePhoneNumber(phoneNumber)"
                 class="w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
                 <XIcon size="12" class="text-white" />
               </div>
             </div>
           </div>
-          <p v-if="validatePhoneNumber(phoneNumber) === false" class="mt-1 text-sm text-red-600">
+          <p v-if="phoneTouched && !validatePhoneNumber(phoneNumber)" class="mt-1 text-sm text-red-600">
             {{ $t('appServices.hotel.phoneError') }}
           </p>
         </div>
-
       </div>
       <!-- picklist start-->
       <!-- <div class=" mt-4">
@@ -582,7 +589,7 @@ import {
   BadgeCheck
 } from 'lucide-vue-next';
 import { useMIHStore } from '@/stores/manageHotelInterface';
-import { getAllServicesByService, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
+import { getAllServicesByServiceId, getOptionsByServiceId } from '@/servicesApi/hotelServicesApi.js';
 import "vue-skeletor/dist/vue-skeletor.css"
 // import { Skeletor } from "vue-skeletor"
 import LoadingSpinner from '@/components/spiner/LoaodingSpinner.vue';
@@ -620,6 +627,10 @@ const emailAddress = ref('')
 const countryCode = ref('')
 const isLoading = ref(false)
 const isPresentInDB = ref(false)
+const firstNameTouched = ref(false)
+const lastNameTouched = ref(false)
+const emailTouched = ref(false)
+const phoneTouched = ref(false)
 // const selectedPackage = ref('Individual');
 
 // const Package = computed(() => [
@@ -776,7 +787,7 @@ const handleNext = () => {
     validateEmail(emailAddress) &&
     validatePhoneNumber(phoneNumber)) {
     return console.log('handleBack');
-    
+
   }
   const roomData = {
     guestInfo: {
@@ -881,7 +892,8 @@ const loadRooms = async () => {
     //   RoomsWithLowPrice.value = {}; // ou null si tu préfères
     // }
 
-    const roomsResponse = await getAllServicesByService();
+    const roomsResponse = await getAllServicesByServiceId(hotelStore.hotelId);
+    console.log('roomsResponse:', hotelStore.hotelId);
     Rooms.value = roomsResponse.data;
     console.log('Rooms chargés:', Rooms.value);
     if (Rooms.value.length > 0) {

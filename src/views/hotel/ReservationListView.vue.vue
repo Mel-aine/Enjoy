@@ -176,34 +176,7 @@ function formatDate(date) {
     return date.toLocaleDateString('fr-FR', options).replace(/\./g, '')
 }
 
-// flatpickr(".datepicker", {
-//         mode: "range",
-//         locale: lang === "en" ? English : French, // Vérifiez la valeur directement
-//         dateFormat: "d M Y",
-//         minDate: "today",
-//         onChange: (selectedDates) => {
-//     if (selectedDates.length > 0) {
-//         if (datepickerAller.value) {
-//             datepickerAller.value.value = formattedDateArrival.value;
-//         }
-//     }
 
-//     if (selectedDates.length > 1) {
-//         let departureDate = selectedDates[1];
-//         const today = new Date();
-//         today.setHours(0, 0, 0, 0);
-
-//         // Si la date de retour est aujourd'hui, on ajoute +1 jour
-//         if (departureDate.toDateString() === today.toDateString()) {
-//             departureDate.setDate(departureDate.getDate() + 1);
-//         }
-
-//         formattedDateDeparture.value = _formatDate(departureDate);
-//         if (datepickerRetour.value) {
-//             datepickerRetour.value.value = formattedDateDeparture.value;
-//         }
-//     }
-// } });
 </script>
 
 <template>
@@ -211,8 +184,9 @@ function formatDate(date) {
         <!-- Header -->
         <div class="bg-white shadow-sm">
             <div class="container mx-auto px-4 py-4">
-                <button @click="router.back()" class="inline-flex items-center text-gray-700 hover:text-blue-600">
-                    <ArrowLeft class="w-5 h-5 mr-2" /> Retour aux résultats
+                <button @click="router.back()" class="inline-flex items-center text-gray-700 hover:text-customRed transition-colors">
+                    <span class="sr-only">{{ $t('back') }}</span>
+                    <ArrowLeft class="w-5 h-5 mr-2" /> 
                 </button>
             </div>
         </div>

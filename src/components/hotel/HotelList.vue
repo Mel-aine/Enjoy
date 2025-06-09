@@ -35,44 +35,42 @@ const filteredHotels = computed(() => {
     )
   }
 
-  if (selectedAmenities.length) {
-    hotels = hotels.filter(hotel => {
-      if (!hotel.facilities) return false
+if (selectedAmenities.length) {
+  const amenityLabels = {
+    wifi: "Wi-Fi",
+    parking: "Parking",
+    pmr: "Accessible PMR",
+    ac: "Climatisation",
+    terrace: "Terrasse",
+    pool: "Pool",
+    gym: "Gym",
+    spa: "Spa",
+    restaurant: "Restaurant",
+    bar: "Bar",
+    kids: "Kids",
+    pets: "Pets",
+    meeting: "Room Meeting"
+  }
 
-      let parsedFacilities
-      try {
-        parsedFacilities = hotel.facilities // Ex: ["Parking", "Restaurant"]
-      } catch (e) {
-        console.warn('Erreur parsing facilities pour hôtel ID:', hotel.id || hotel._id, e)
+  hotels = hotels.filter(hotel => {
+    if (!Array.isArray(hotel.facilities)) return false
+
+    return selectedAmenities.every(amenityId => {
+      const facilityName = amenityLabels[amenityId]
+
+      if (!facilityName) {
+        console.warn(`Amenity ID "${amenityId}" not found in amenityLabels.`)
         return false
       }
 
-      // Normaliser pour éviter les erreurs de casse
-      const normalized = parsedFacilities.map(f => f.toLowerCase())
+      const facilityFound = hotel.facilities.includes(facilityName)
 
-      // Convertir amenities sélectionnés en labels connus (id → label)
-      const amenityLabels = {
-        wifi: "Wi-Fi",
-        parking: "Parking",
-        pmr: "Accessible PMR",
-        ac: "Climatisation",
-        terrace: "Terrasse",
-        pool: "Piscine",
-        gym: "Salle de sport",
-        spa: "Spa",
-        restaurant: "Restaurant",
-        bar: "Bar",
-        kids: "Espace enfants",
-        pets: "Animaux acceptés",
-        meeting: "Salle de réunion"
-      }
-
-      return selectedAmenities.every(amenityId => {
-        const label = amenityLabels[amenityId]?.toLowerCase()
-        return normalized.includes(label)
-      })
+      console.log(`Checking hotel "${hotel.name}" for facility "${facilityName}": ${facilityFound}`)
+      return facilityFound
     })
-  }
+  })
+}
+
 
 
   return hotels
@@ -83,10 +81,10 @@ const sortedHotels = computed(() => {
   console.log('sortedHotels', filteredHotels.value)
   const hotels = filteredHotels.value
   if (!hotels.length) return []
-  
+
   // Créer une copie pour le tri
   const sorted = [...hotels]
-  
+
   switch (props.sortOption) {
     case 'price-low':
       return sorted.sort((a, b) => (a.price || 0) - (b.price || 0))
@@ -102,12 +100,12 @@ const sortedHotels = computed(() => {
 onMounted(async () => {
   try {
     isLoading.value = true
-    const response = await getServicesCategoryIdBy( hotelStore.idfound )
+    const response = await getServicesCategoryIdBy(hotelStore.idfound)
 
-    
+
     // Assurez-vous que la réponse contient bien un tableau data
     services.value = response.data ? response : { data: response }
-    
+
     console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value)))
   } catch (error) {
     console.error('Erreur lors du chargement:', error)
@@ -125,24 +123,19 @@ onMounted(async () => {
         <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }} </span>
         <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
       </h2>
-      
+
       <div class="flex items-center">
         <span class="mr-2 text-sm">{{ $t('appServices.hotel.sortBy') }}</span>
         <div class="relative">
-          <select 
-            :value="sortOption"
-            @change="emit('sortChange', $event.target.value)"
-            class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-customRed focus:border-transparent"
-          >
+          <select :value="sortOption" @change="emit('sortChange', $event.target.value)"
+            class="appearance-none bg-white border border-gray-300 rounded-md py-2 pl-3 pr-8 text-sm focus:outline-none focus:ring-2 focus:ring-customRed focus:border-transparent">
             <option value="recommended">{{ $t('appServices.hotel.recommended') }}</option>
             <option value="price-low">{{ $t('appServices.hotel.priceLowToHigh') }}</option>
             <option value="price-high">{{ $t('appServices.hotel.priceHighToLow') }}</option>
             <option value="rating">{{ $t('appServices.hotel.guestRating') }}</option>
           </select>
-          <ArrowUpDownIcon 
-            size="16"
-            class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none text-customRed"
-          />
+          <ArrowUpDownIcon size="16"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 pointer-events-none text-customRed" />
         </div>
       </div>
     </div>
@@ -158,23 +151,19 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    
+
     <!-- Liste des hôtels -->
     <div v-else class="space-y-4">
       <template v-if="sortedHotels.length > 0">
-        <HotelCard 
-          v-for="hotel in sortedHotels" 
-          :key="hotel.id || hotel._id || Math.random()" 
-          :hotel="hotel" 
-        />
+        <HotelCard v-for="hotel in sortedHotels" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
       </template>
-      
+
       <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
         <p class="text-lg text-gray-600">
-         {{ $t('appServices.hotel.noHotelsMatch') }}
+          {{ $t('appServices.hotel.noHotelsMatch') }}
         </p>
         <p class="text-sm text-gray-500 mt-2">
-         {{ $t('appServices.hotel.adjustFilters') }}
+          {{ $t('appServices.hotel.adjustFilters') }}
         </p>
       </div>
     </div>

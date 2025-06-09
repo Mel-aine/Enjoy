@@ -119,6 +119,10 @@
   "unpaid": "Non payé",
   "checked-out": "Départ",
   "checked-in": "Enregistrement",
+  "capacity": "Capacité",
+  "dates": "Dates",
+  "arrival": "Arrivée",
+  "departure": "Départ",
   "serviceSuccess": {
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",

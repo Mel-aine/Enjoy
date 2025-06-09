@@ -119,6 +119,10 @@
   "unpaid": "Unpaid",
   "checked-out": "Checked-out",
   "checked-in": "Checked-in",
+  "capacity": "Capacity",
+  "dates": "Dates",
+  "arrival": "Arrival",
+  "departure": "Departure",
   "serviceSuccess": {
     "title": "Service successfully registered!",
     "description": "Your service has been added to our database.",
