@@ -123,6 +123,8 @@
   "dates": "Dates",
   "arrival": "Arrival",
   "departure": "Departure",
+  "notAvailable": "Not Available",
+  "to": "to",
   "serviceSuccess": {
     "title": "Service successfully registered!",
     "description": "Your service has been added to our database.",

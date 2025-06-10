@@ -2,7 +2,10 @@ import axios from 'axios'
 const API_URL = import.meta.env.VITE_API_URL
 
 
-
+export const getServiceProductByDate = ({ address, start_date, end_date, guest_count }) => {
+  const params = { address, start_date, end_date, guest_count };
+  return axios.get(`${API_URL}/service_product_by_date`, { params });
+};
 //Services Service Api start
 export const getServices = () => {
   return axios.get(`${API_URL}/services`)
@@ -33,7 +36,7 @@ export const getServicesCategoryIdBy = (id) => {
 // }
 
 export const getAllServicesByServiceId = (serviceId) => {
-  return axios.get(`${API_URL}/service_product_options`,serviceId)
+  return axios.get(`${API_URL}/service_product_options`,{params: { serviceId }})
 }
 
 export const getOptionsByServiceId = (id) => {

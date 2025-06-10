@@ -4,12 +4,14 @@ import HotelCard from './HotelCard.vue'
 import { ArrowUpDownIcon } from 'lucide-vue-next'
 import "vue-skeletor/dist/vue-skeletor.css"
 import { Skeletor } from "vue-skeletor"
-import { getServicesCategoryIdBy } from '@/servicesApi/hotelServicesApi.js'
-import { useMIHStore } from '@/stores/manageHotelInterface'
+import { getServiceProductByDate } from '@/servicesApi/hotelServicesApi.js'
+// import { useMIHStore } from '@/stores/manageHotelInterface'
+import { useDataStore } from '@/stores/dataStore'
+// const hotelStore = useMIHStore();
 
+const dataStore = useDataStore()
 const services = ref([]);
 const isLoading = ref(true);
-const hotelStore = useMIHStore();
 const props = defineProps({
   searchParams: Object,
   filters: Object,
@@ -35,41 +37,41 @@ const filteredHotels = computed(() => {
     )
   }
 
-if (selectedAmenities.length) {
-  const amenityLabels = {
-    wifi: "Wi-Fi",
-    parking: "Parking",
-    pmr: "Accessible PMR",
-    ac: "Climatisation",
-    terrace: "Terrasse",
-    pool: "Pool",
-    gym: "Gym",
-    spa: "Spa",
-    restaurant: "Restaurant",
-    bar: "Bar",
-    kids: "Kids",
-    pets: "Pets",
-    meeting: "Room Meeting"
-  }
+  if (selectedAmenities.length) {
+    const amenityLabels = {
+      wifi: "Wi-Fi",
+      parking: "Parking",
+      pmr: "Accessible PMR",
+      ac: "Climatisation",
+      terrace: "Terrasse",
+      pool: "Pool",
+      gym: "Gym",
+      spa: "Spa",
+      restaurant: "Restaurant",
+      bar: "Bar",
+      kids: "Kids",
+      pets: "Pets",
+      meeting: "Room Meeting"
+    }
 
-  hotels = hotels.filter(hotel => {
-    if (!Array.isArray(hotel.facilities)) return false
+    hotels = hotels.filter(hotel => {
+      if (!Array.isArray(hotel.facilities)) return false
 
-    return selectedAmenities.every(amenityId => {
-      const facilityName = amenityLabels[amenityId]
+      return selectedAmenities.every(amenityId => {
+        const facilityName = amenityLabels[amenityId]
 
-      if (!facilityName) {
-        console.warn(`Amenity ID "${amenityId}" not found in amenityLabels.`)
-        return false
-      }
+        if (!facilityName) {
+          console.warn(`Amenity ID "${amenityId}" not found in amenityLabels.`)
+          return false
+        }
 
-      const facilityFound = hotel.facilities.includes(facilityName)
+        const facilityFound = hotel.facilities.includes(facilityName)
 
-      console.log(`Checking hotel "${hotel.name}" for facility "${facilityName}": ${facilityFound}`)
-      return facilityFound
+        console.log(`Checking hotel "${hotel.name}" for facility "${facilityName}": ${facilityFound}`)
+        return facilityFound
+      })
     })
-  })
-}
+  }
 
 
 
@@ -97,12 +99,57 @@ const sortedHotels = computed(() => {
   }
 })
 
+function formatDate(dateStr) {
+  const today = new Date();
+  const year = today.getFullYear();
+
+  if (dateStr.startsWith("Today")) {
+    return today.toISOString().split("T")[0];
+  }
+
+  if (dateStr.startsWith("Tomorrow")) {
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    return tomorrow.toISOString().split("T")[0];
+  }
+
+  // Cas normal : extraire "Jun 10"
+  const [_, monthStr, dayStr] = dateStr.match(/(\w+)\s(\d+)/) || [];
+  if (monthStr && dayStr) {
+    const date = new Date(`${monthStr} ${dayStr}, ${year}`);
+    return date.toISOString().split("T")[0];
+  }
+
+  return null;
+}
+
+
+
 onMounted(async () => {
+  console.log('Chargement des services avec les paramètres:', dataStore.searchFrom)
+
+  // Vérification des données de recherche
+  if (!dataStore.searchFrom.destination || !dataStore.searchFrom.dateAller || !dataStore.searchFrom.dateRetour) {
+    console.warn('Données de recherche manquantes, impossible de charger les services.')
+    return
+  }
+  // Total guest count
+  const guest_count = dataStore.searchFrom.rooms.reduce((sum, room) => {
+    return sum + (room.adults || 0) + (room.childrens || 0);
+  }, 0);
+
+  // Construction des params
+  const params = {
+    address: dataStore.searchFrom.destination,
+    start_date: formatDate(dataStore.searchFrom.dateAller),
+    end_date: formatDate(dataStore.searchFrom.dateRetour),
+    guest_count,
+  };
   try {
     isLoading.value = true
-    const response = await getServicesCategoryIdBy(hotelStore.idfound)
-
-
+    console.log("Params envoyés à l'API :", params);
+    const response = await getServiceProductByDate(params); console.log('Réponse du service:', response)
+    console.log('Réponse brute du service:', response)
     // Assurez-vous que la réponse contient bien un tableau data
     services.value = response.data ? response : { data: response }
 
@@ -119,9 +166,9 @@ onMounted(async () => {
   <div>
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
-        <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span>
+        <!-- <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span> -->
         <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }} </span>
-        <span v-if="searchParams?.location"> à {{ searchParams.location }}</span>
+        <span v-if="searchParams?.location && sortedHotels.length"> {{ $t('to') }} {{ searchParams.location }}</span>
       </h2>
 
       <div class="flex items-center">

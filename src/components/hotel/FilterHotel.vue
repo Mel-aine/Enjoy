@@ -37,7 +37,7 @@
     <hr />
 
     <!-- Arrival & Departure -->
-    <div>
+    <!-- <div>
       <div class="flex justify-between items-center cursor-pointer" @click="toggleSection('dates')">
         <h3 class="font-medium text-lg">{{ $t('dates') }}</h3>
         <span  class="bg-customRed text-white pt-0.5 rounded-full w-4 h-4 flex items-center justify-center text-sm" >{{ expanded.dates ? '-' : '+' }}</span>
@@ -57,7 +57,7 @@
         </div>
       </div>
     </div>
-    <hr />
+    <hr /> -->
 
     <!-- Star Rating -->
     <div>

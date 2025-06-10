@@ -123,6 +123,8 @@
   "dates": "Dates",
   "arrival": "Arrivée",
   "departure": "Départ",
+  "notAvailable": "Non disponible",
+  "to": "à",
   "serviceSuccess": {
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",

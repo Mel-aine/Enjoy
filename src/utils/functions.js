@@ -44,7 +44,7 @@ export async function uploadImages(establishmentType, establishmentName, files) 
       uploaded = false;
     }
   }
-
+console.log('Images uploadées avec succès :', uploadedUrls);
   return { uploaded, uploadedUrls };
 }
 

@@ -61,8 +61,8 @@
 
           </div>
           <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
-            {{ hotelStore.this_hotel?.name || 'Nom indisponible' }} <span class="text-gray-700">•</span> {{
-              RoomsWithLowPrice.productName || 'Nom indisponible' }}
+            {{ hotelStore.this_hotel?.name ||  $t("notAviable")  }} <span class="text-gray-700">•</span> {{
+              RoomsWithLowPrice.productName ||  $t("notAviable")  }}
           </h2>
           <!-- <div class="flex items-center space-x-2 mb-4 mt-2">
             <div class="flex">
@@ -77,7 +77,13 @@
             <div class="flex items-center space-x-2">
               <BedDoubleIcon size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">0</div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{
+                    RoomsWithLowPrice.options &&
+                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
+                  ||  $t("notAviable") 
+                  }}
+                </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.beds') }} </div>
               </div>
             </div>
@@ -98,7 +104,13 @@
               </svg>
               <div>
                 <!-- <div class="text-sm font-medium text-gray-900">{{ sizeValue }} m² </div> -->
-                <div class="text-sm font-medium text-gray-900">0 m² </div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{
+                    RoomsWithLowPrice.options &&
+                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
+                  ||  $t("notAviable") 
+                  }} m²
+                </div>
 
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
               </div>
@@ -106,21 +118,34 @@
             <div class="flex items-center space-x-2">
               <Users2Icon size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">0</div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{
+                    RoomsWithLowPrice.options &&
+                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Maximum Occupancy')?.value
+                  ||  $t("notAviable") 
+                  }}
+                </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.guests') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <Bath size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">0</div>
+                <div class="text-sm font-medium text-gray-900">
+                  {{
+                    RoomsWithLowPrice.options &&
+                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of bathrooms')?.value
+                  ||  $t("notAviable") 
+                  }}
+                </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.bathroom') }} </div>
               </div>
             </div>
             <div class="flex items-center space-x-2">
               <BadgeCheck size="20" class="text-slate-600" />
               <div>
-                <div class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.yes') }}</div>
+                <div v-if="RoomsWithLowPrice.availability === true " class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.yes') }}</div>
+                <div v-else class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.no') }}</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.availability') }} </div>
               </div>
             </div>
@@ -571,6 +596,9 @@
 
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 import {
   DumbbellIcon,
   XIcon,
@@ -604,12 +632,12 @@ const defaultValues = {
   countryCode: '+237'
 }
 // const { t } = useI18n();
-const valid = ref({
-  firstName: true,
-  lastName: null,
-  email: null,
-  phone: null
-});
+// const valid = ref({
+//   firstName: true,
+//   lastName: null,
+//   email: null,
+//   phone: null
+// });
 // Props
 const props = defineProps({
   roomData: {
@@ -820,7 +848,7 @@ const handleNext = () => {
 
     // Détails de la réservation
     bookingDetails: {
-      hotelName: hotelStore.this_hotel?.name || 'Nom indisponible',
+      hotelName: hotelStore.this_hotel?.name ||  t('notAviable') ,
       rating: 4.87,
       reviewCount: 262,
       amenities: amenitiesStatus.value,

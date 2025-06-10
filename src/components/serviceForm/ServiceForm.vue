@@ -15,7 +15,10 @@ import { uploadImages } from '@/utils/functions';
 
 // all step constante respect index of table data in vue this is Why first step is '0'
 const isSubmitting = ref(false)
-
+// const uploadLogo = ref(false);
+// const uploadedUrlLogo = ref([]);
+// const uploadedUrlImage = ref([]); 
+// const uploadImage = ref(false);
 const isVisible = ref(false);
 const { t } = useI18n();
 const infoAlert = ref('')
@@ -80,7 +83,9 @@ const handlePrevious = () => {
   }
 };
 const validateStep = () => {
-  console.log('files', formData.value.files);
+  console.log('files image', formData.value.image);
+    console.log('files logo', formData.value.logo);
+
   console.log('formData.latitude et longitude', formData.value.latitude, formData.value.longitude);
 
   switch (activeStep.value) {
@@ -92,9 +97,9 @@ const validateStep = () => {
         return false;
       }
       if (
-        !Array.isArray(formData.value.files) ||
-        formData.value.files.length === 0 ||
-        !(formData.value.files[0] instanceof File)
+        !Array.isArray(formData.value.logo) ||
+        formData.value.logo.length === 0 && !Array.isArray(formData.value.logo) || formData.value.image.length === 0 ||
+        !(formData.value.logo[0] instanceof File) || !(formData.value.image[0] instanceof File)
       ) {
         console.log('formData.value.files invalid', formData.value.files);
         isVisible.value = true;
@@ -146,42 +151,62 @@ const validateStep = () => {
   return true;
 };
 
+const saveFile = async (files) => {
+const { uploaded, uploadedUrls } = await uploadImages(
+  formData.value.establishmentType,
+  formData.value.establishmentName,
+  files 
+);
 
+ if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
+  console.error("Échec de l'upload :", uploaded, uploadedUrls);
+  alert(t("error.errorImage"));
+  return;
+}
+  return { uploaded, uploadedUrls };
+};
 
 const handleSubmit = async (e) => {
   e.preventDefault();
   isSubmitting.value = true;
 
-  if (!formData.value.name || !formData.value.category_id) {
-    alert('Les champs "Nom" et "Catégorie" sont obligatoires');
-    return;
-  }
+  // if (!formData.value.name || !formData.value.category_id) {
+  //   alert('Les champs "Nom" et "Catégorie" sont obligatoires');
+  //   return;
+  // }
 
-  const { uploadedLogo, uploadedUrlLogo } = await uploadImages(
-    formData.value.establishmentType,
-    formData.value.establishmentName,
-    formData.value.logo
-  );
+// const { uploaded, uploadedUrls } = await uploadImages(
+//   formData.value.establishmentType,
+//   formData.value.establishmentName,
+//   formData.value.logo // Assurez-vous que c'est un tableau (même pour 1 fichier)
+// );
 
-  if (!uploadedLogo || !uploadedUrlLogo[0]) {
-    console.log('Erreur d’upload', uploadedLogo, uploadedUrlLogo);
-    alert(t("error.erroImage"));
-    return;
-  }
+//  if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
+//   console.error("Échec de l'upload :", uploaded, uploadedUrls);
+//   alert(t("error.errorImage"));
+//   return;
+// }else{
+//   uploadLogo.value = uploaded;
+//   uploadedUrlLogo.value = uploadedUrls;
+// }
 
-    const { uploadedImage, uploadedUrlImage } = await uploadImages(
-    formData.value.establishmentType,
-    formData.value.establishmentName,
-    formData.value.image
-  );
+  //   const { uploaded, uploadedUrls } = await uploadImages(
+  //   formData.value.establishmentType,
+  //   formData.value.establishmentName,
+  //   formData.value.image
+  // );
 
-  if (!uploadedImage || !uploadedUrlImage[0]) {
-    console.log('Erreur d’upload', uploadedLogo, uploadedUrlImage);
-    alert(t("error.erroImage"));
-    return;
-  }
+  // if (!uploadedImage || !uploadedUrlImage[0]) {
+  //   console.log('Erreur d’upload', uploadedLogo, uploadedUrlImage);
+  //   alert(t("error.erroImage"));
+  //   return console.log('Erreur d’upload', uploadedImage, uploadedUrlImage);
+  // }
 
-
+const image = await saveFile(formData.value.image)
+const logo = await saveFile(formData.value.logo)  
+console.log('uploadedUrlLogo', image);
+console.log('uploadedUrlImage', logo);
+  
   const payload = {
     name: formData.value.name,
     description: formData.value.description,
@@ -200,8 +225,8 @@ const handleSubmit = async (e) => {
     policies: formData.value.policies || null,
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
-    images: uploadedUrlImage[0] || [],
-    logo: uploadedUrlLogo[0] || [],
+    images: image.uploadedUrls || [],
+    logo: logo.uploadedUrls || [],
     status: formData.value.status || 'active',
     first_name: formData.value.firstName,
     last_name: formData.value.lastName,

@@ -124,8 +124,8 @@ const handleChange = (event) => {
                     </div>
                     <input type="text" name="lastName" id="lastName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        :class="firstNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_last_name')"
-                        :value="formData.firstName" @input="handleChange" required />
+                        :class="lastNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_last_name')"
+                        :value="formData.lastName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
@@ -136,8 +136,8 @@ const handleChange = (event) => {
                     </div>
                     <input type="text" name="firstName" id="firstName"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
-                        :class="lastNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_first_name')"
-                        :value="formData.lastName" @input="handleChange" required />
+                        :class="firstNameValidFormat ? '' : 'border-red-500'" :placeholder="$t('your_first_name')"
+                        :value="formData.firstName" @input="handleChange" required />
                 </div>
 
                 <div class="sm:col-span-3">
