@@ -169,25 +169,25 @@
 
  <div class="max-w-6xl mx-auto p-6 space-y-8">
     <!-- Header -->
-    <div class="text-center space-y-2">
+    <!-- <div class="text-center space-y-2">
       <h1 class="text-3xl font-bold text-gray-900">Accommodation Details</h1>
       <p class="text-gray-600">Complete overview of room features and amenities</p>
-    </div>
+    </div> -->
 
     <!-- Categories -->
-    <div class="grid gap-6">
+    <!-- <div class="grid gap-6">
       <div 
         v-for="(category, categoryIndex) in categories" 
         :key="categoryIndex" 
         class="bg-white rounded-lg border border-gray-200 shadow-sm"
-      >
+      > -->
         <!-- Card Header -->
-        <div class="px-6 py-4 border-b border-gray-200">
+        <!-- <div class="px-6 py-4 border-b border-gray-200">
           <h2 class="text-lg font-semibold text-gray-800">{{ category.title }}</h2>
         </div>
-        
+         -->
         <!-- Card Content -->
-        <div class="p-6">
+        <!-- <div class="p-6">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div
               v-for="option in category.options"
@@ -212,10 +212,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Summary Stats -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+    <!-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
       <div class="p-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
@@ -236,8 +236,8 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </div>-->
+  </div> 
 
 
 
