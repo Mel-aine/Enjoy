@@ -127,7 +127,7 @@ const handleViewDeal = () => {
       <!-- Image -->
       <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
         <img
-          :src="hotel.images && hotel.images.lengthAmenities ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'"
+          :src="hotel.images ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'"
           :alt="hotel.name" class="w-full h-full object-cover" />
         <button @click="toggleFavorite"
           class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
@@ -155,8 +155,8 @@ const handleViewDeal = () => {
 
         <div class="flex items-center text-gray-600 text-md mt-2">
           <MapPinIcon size="16" class="mr-1" />
-          <span class="text-sm">{{ location }}</span>
-          <!-- <span>{{ location.text }}</span> -->
+          <span v-if="location" class="text-sm">{{ location }}</span>
+          <span v-if="location?.text">{{ location.text }}</span>
 
         </div>
 

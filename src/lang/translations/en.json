@@ -114,7 +114,7 @@
   "required": " required",
   "seatCountValidation": "Number of seats must be greater than 0",
   "pending": "Pending",
-  "confirmed": "Confirmed", 
+  "confirmed": "Confirmed",
   "paid": "Paid",
   "unpaid": "Unpaid",
   "checked-out": "Checked-out",
@@ -402,7 +402,7 @@
   "direct_only": "Direct only",
   "resultat": "Resultat",
   "phrase": "A service fee will be added to each reservation",
-
+  "warnigSearch": "Departure must be after arrival date.",
   "appServices": {
     "agency": {
       "organizeYourTrip": "Organize your trip",
@@ -426,6 +426,8 @@
       "tomorrow": "Tomorrow"
     },
     "hotel": {
+      "searchOthersPlaces": "Search with other places",
+      "noHotelsFound": "No hotels found ",
       "timeBeforeAutoCancel": "left before cancellation",
       "paidToHotel": "Paid to hotel",
       "hotelAnnouncement": "Make your reservation now and pay at the hotel. Cancellation is free.",
@@ -433,10 +435,9 @@
       "per": "per",
       "departure": "Departure",
       "destination": "Destination",
-      "persons": "Person(s)",
+      "person": "Person",
       "room": "Room",
       "question": "WHERE ARE YOU GOING ?",
-      "rooms": "Room(s)",
       "info": "No recent search",
       "addRoom": "Add room",
       "deleteRoom": "Delete room",
@@ -460,7 +461,7 @@
       "high": "High",
       "to": "To",
       "guestRating": "Guest rating",
-      "found": "Found",
+      "found": "found ",
       "min": "Min",
       "max": "Max",
       "beds": "Beds",
@@ -535,7 +536,7 @@
       "mapsError": "Google Maps Error:",
       "priceRange": "Price Range",
       "justAMoment": "Just a moment...",
-      "hotelsFound": "hotels found",
+      "hotel": "hotel",
       "priceLowToHigh": "Price (low to high)",
       "priceHighToLow": "Price (high to low)",
       "noHotelsMatch": "No hotels match your filters.",

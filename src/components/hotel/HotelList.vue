@@ -7,11 +7,14 @@ import { Skeletor } from "vue-skeletor"
 import { getServiceProductByDate } from '@/servicesApi/hotelServicesApi.js'
 // import { useMIHStore } from '@/stores/manageHotelInterface'
 import { useDataStore } from '@/stores/dataStore'
+import LoaodingSpinner from '../spiner/LoaodingSpinner.vue'
 // const hotelStore = useMIHStore();
-
+// const rooms = ref([]);
+const sercivesHotels = ref([]);
 const dataStore = useDataStore()
 const services = ref([]);
 const isLoading = ref(true);
+const isListed = ref(false)
 const props = defineProps({
   searchParams: Object,
   filters: Object,
@@ -21,10 +24,10 @@ const props = defineProps({
 const emit = defineEmits(['sortChange'])
 
 const filteredHotels = computed(() => {
-  if (!services.value.data || !Array.isArray(services.value.data)) return []
 
-  let hotels = [...services.value.data]
-
+  if (!sercivesHotels.value || !Array.isArray(sercivesHotels.value))  return []
+  let hotels = [...sercivesHotels.value]
+console.log('filteredHotels', hotels)
   const selectedRanges = props.filters?.priceRange || []
   const selectedAmenities = props.filters?.amenities || []
 
@@ -56,7 +59,7 @@ const filteredHotels = computed(() => {
 
     hotels = hotels.filter(hotel => {
       if (!Array.isArray(hotel.facilities)) return false
-
+      isListed.value = true
       return selectedAmenities.every(amenityId => {
         const facilityName = amenityLabels[amenityId]
 
@@ -72,8 +75,6 @@ const filteredHotels = computed(() => {
       })
     })
   }
-
-
 
   return hotels
 })
@@ -140,7 +141,7 @@ onMounted(async () => {
 
   // Construction des params
   const params = {
-    address: dataStore.searchFrom.destination,
+    address: encodeURIComponent(dataStore.searchFrom.destination),
     start_date: formatDate(dataStore.searchFrom.dateAller),
     end_date: formatDate(dataStore.searchFrom.dateRetour),
     guest_count,
@@ -148,12 +149,16 @@ onMounted(async () => {
   try {
     isLoading.value = true
     console.log("Params envoyés à l'API :", params);
-    const response = await getServiceProductByDate(params); console.log('Réponse du service:', response)
+    const response = await getServiceProductByDate(params);
+    console.log('Réponse du service:', response)
     console.log('Réponse brute du service:', response)
     // Assurez-vous que la réponse contient bien un tableau data
     services.value = response.data ? response : { data: response }
-
-    console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value)))
+    sercivesHotels.value = services.value.data.hotels || []
+    // rooms.value = services.value.data.serviceProducts || []
+    console.log('Services hotel:', sercivesHotels.value)
+    console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value.data)))
+    console.log('Services chargés utilisation:', services.value.data.hotels)
   } catch (error) {
     console.error('Erreur lors du chargement:', error)
   } finally {
@@ -167,7 +172,7 @@ onMounted(async () => {
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
         <!-- <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span> -->
-        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotelsFound') }} </span>
+        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotel') }}<span v-if="sortedHotels.length>1">s</span> {{ $t('appServices.hotel.found') }}<span v-if="sortedHotels.length>1">s</span></span>
         <span v-if="searchParams?.location && sortedHotels.length"> {{ $t('to') }} {{ searchParams.location }}</span>
       </h2>
 
@@ -186,9 +191,16 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-
-    <!-- Squelettes de chargement -->
-    <div v-if="isLoading" class="space-y-4">
+    <!-- <div  class="bg-white p-6 rounded-lg shadow-md text-center">
+      <p class="text-lg text-gray-600">
+        {{ $t('appServices.hotel.noHotelsFound') }}
+      </p>
+      <p class="text-sm text-gray-500 mt-2">
+        {{ $t('appServices.hotel.searchOthersPlaces') }}
+      </p>
+    </div> -->
+    <div >
+    <!-- <div v-if="isLoading" class="space-y-4">
       <div v-for="i in 4" :key="`skeleton-${i}`" class="flex items-center p-4 bg-white rounded-lg shadow">
         <Skeletor circle size="60" />
         <div class="ml-4 flex-1">
@@ -197,10 +209,10 @@ onMounted(async () => {
           <Skeletor width="80%" height="14px" class="mt-2" />
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- Liste des hôtels -->
-    <div v-else class="space-y-4">
+    <div class="space-y-4">
       <template v-if="sortedHotels.length > 0">
         <HotelCard v-for="hotel in sortedHotels" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
       </template>
@@ -214,5 +226,8 @@ onMounted(async () => {
         </p>
       </div>
     </div>
+    </div>
+    <!-- Squelettes de chargement -->
+  <LoaodingSpinner v-if="isLoading"/>
   </div>
 </template>

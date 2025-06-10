@@ -3,8 +3,8 @@ const API_URL = import.meta.env.VITE_API_URL
 
 
 export const getServiceProductByDate = ({ address, start_date, end_date, guest_count }) => {
-  const params = { address, start_date, end_date, guest_count };
-  return axios.get(`${API_URL}/service_product_by_date`, { params });
+  // const params = { address, start_date, end_date, guest_count };
+  return axios.get(`${API_URL}/service_product_by_date?address=${address}&start_date=${start_date}&end_date=${end_date}&guest_count=${guest_count}`);
 };
 //Services Service Api start
 export const getServices = () => {

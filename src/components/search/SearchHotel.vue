@@ -10,7 +10,7 @@
         class="ma-div overflow-x-auto absolute bg-white rounded-lg h-96 mt-16 left-1/2 shadow-xl p-3 lg:w-[500px] hidden peer-checked:block">
         <div id="modalVoyageur" class="bg-white p-6 rounded-lg ">
             <div v-for="(room, index) in rooms" :key="room.id" class="mb-4">
-                <h3 class="font-bold text-lg">{{ $t("appServices.hotel.room") }} {{ index + 1 }}</h3>
+                <h3 class="font-bold text-lg">{{ $t("appServices.hotel.room") }} N {{ index + 1 }}</h3>
                 <Counter v-model="room.adults">{{ $t("appServices.agency.oneAdult") }}</Counter>
                 <Counter class="mt-2" v-model="room.childrens">{{ $t("appServices.agency.children") }}</Counter>
                 <div class="w-full h-[2px] bg-gradient-to-r from-customBlue via-purple-800 to-customRed my-4"></div>
@@ -243,10 +243,10 @@
                             class="cursor-pointer absolute left-8 top-6 text-md text-black bg-inherit place-self-auto mt-1 px-1 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-3 ">
                             <div class="flex items-center justify-center">
                                 <span class="text-black"><span class="text-lg">{{ totalPersons }}</span> <span
-                                        class="text-md font-medium">{{ $t("appServices.hotel.persons") }}</span> ,
+                                        class="text-md font-medium">{{ $t("appServices.hotel.person") }}<span v-if="totalPersons>1">s</span></span> ,
                                     <span class="text-lg">{{ rooms.length }} </span> <span
                                         class="text-md font-medium">{{
-                                            $t("appServices.hotel.rooms") }}</span>
+                                            $t("appServices.hotel.room") }}<span v-if="rooms.length>1">s</span></span>
                                 </span>
                                 <!-- Chevron down icon added here -->
 
@@ -423,9 +423,30 @@ const totalPersons = computed(() => {
 });
 
 const handleSearch = () => {
-    emit('search', { destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
-    console.log({ destination: destination.value, dateAller: formattedDateArrival.value, dateRetour: formattedDateDeparture.value, rooms: rooms.value });
+  // Convertir les dates en objets Date pour comparaison
+  const dateArrival = new Date(formattedDateArrival.value);
+  const dateDeparture = new Date(formattedDateDeparture.value);
 
+  // Vérifier si la date de départ est avant la date d'arrivée
+  if (dateDeparture <= dateArrival) {
+    alert("La date de retour doit être postérieure à la date d'aller");
+    return; // Arrêter l'exécution si les dates ne sont pas valides
+  }
+
+  // Si les dates sont valides, émettre l'événement
+  emit('search', { 
+    destination: destination.value, 
+    dateAller: formattedDateArrival.value, 
+    dateRetour: formattedDateDeparture.value, 
+    rooms: rooms.value 
+  });
+
+  console.log({ 
+    destination: destination.value, 
+    dateAller: formattedDateArrival.value, 
+    dateRetour: formattedDateDeparture.value, 
+    rooms: rooms.value 
+  });
 };
 
 const formatDate = (date) => {
@@ -474,7 +495,7 @@ const langChanged = (lang) => {
         mode: "range",
         locale: lang === "en" ? English : French, // Vérifiez la valeur directement
         dateFormat: "d M Y",
-        minDate: "today",
+        // minDate: "today",
         onChange: (selectedDates) => {
             if (selectedDates.length > 0) {
                 const arrivalDate = selectedDates[0];

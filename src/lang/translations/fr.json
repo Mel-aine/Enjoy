@@ -401,6 +401,7 @@
   "direct_only": "Direct uniquement",
   "resultat": "Résultat",
   "phrase": "Des frais de service seront ajoutés à chaque réservation",
+  "warnigSearch": "La date de retour doit être postérieure à la date d'aller.",
   "appServices": {
     "agency": {
       "organizeYourTrip": "Organisez votre voyage",
@@ -424,6 +425,8 @@
       "tomorrow": "Demain"
     },
     "hotel": {
+      "searchOthersPlaces": "Rechercher avec d'autres lieux",
+      "noHotelsFound": "Aucun hôtel trouvé",
       "timeBeforeAutoCancel": "restant avant l'annulation",
       "paidToHotel": "Payer à l'hotel",
       "hotelAnnouncement": "Effectuez votre réservation maintenant et réglez à l'hôtel. L'annulation est gratuite.",
@@ -431,11 +434,10 @@
       "per": "par",
       "departure": "Depart",
       "destination": "Destination",
-      "persons": "Personne(s)",
+      "person": "Personne",
       "room": "Chambre",
       "question": "OU ALLEZ VOUS ?",
       "info": "Aucune Recherche Recente",
-      "rooms": "Chambre(s)",
       "addRoom": "Ajouter une chambre",
       "deleteRoom": "Supprimer une chambre",
       "travelers": "Voyageurs",
@@ -458,7 +460,7 @@
       "high": "Élevé",
       "to": "À",
       "guestRating": "Évaluation des clients",
-      "found": "Trouvé",
+      "found": "trouvé",
       "min": "Min",
       "max": "Max",
       "beds": "Lits",
@@ -533,7 +535,7 @@
       "mapsError": "Erreur Google Maps:",
       "priceRange": "Gamme de prix",
       "justAMoment": "Un instant...",
-      "hotelsFound": "hôtels trouvés",
+      "hotel": "hôtel",
       "priceLowToHigh": "Prix (croissant)",
       "priceHighToLow": "Prix (décroissant)",
       "noHotelsMatch": "Aucun hôtel ne correspond à vos critères.",

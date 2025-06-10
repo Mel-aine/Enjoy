@@ -163,6 +163,85 @@
         </div>
       </div>
     </div>
+
+
+
+
+ <div class="max-w-6xl mx-auto p-6 space-y-8">
+    <!-- Header -->
+    <!-- <div class="text-center space-y-2">
+      <h1 class="text-3xl font-bold text-gray-900">Accommodation Details</h1>
+      <p class="text-gray-600">Complete overview of room features and amenities</p>
+    </div> -->
+
+    <!-- Categories -->
+    <!-- <div class="grid gap-6">
+      <div 
+        v-for="(category, categoryIndex) in categories" 
+        :key="categoryIndex" 
+        class="bg-white rounded-lg border border-gray-200 shadow-sm"
+      > -->
+        <!-- Card Header -->
+        <!-- <div class="px-6 py-4 border-b border-gray-200">
+          <h2 class="text-lg font-semibold text-gray-800">{{ category.title }}</h2>
+        </div>
+         -->
+        <!-- Card Content -->
+        <!-- <div class="p-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div
+              v-for="option in category.options"
+              :key="option.optionId"
+              class="flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
+            >
+              <div class="flex items-center space-x-3">
+                <div class="flex-shrink-0">
+                  <span class="text-lg">{{ getIcon(option.optionName) }}</span>
+                </div>
+                <div class="min-w-0 flex-1">
+                  <p class="text-sm font-medium text-gray-900 truncate">{{ option.optionName }}</p>
+                </div>
+              </div>
+              <span 
+                class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors"
+                :class="getValueColor(option.value)"
+              >
+                {{ option.value }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- Summary Stats -->
+    <!-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+      <div class="p-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div>
+            <div class="text-2xl font-bold text-blue-600">15</div>
+            <div class="text-sm text-gray-600">Room Size (sqm)</div>
+          </div>
+          <div>
+            <div class="text-2xl font-bold text-blue-600">1</div>
+            <div class="text-sm text-gray-600">Guest Capacity</div>
+          </div>
+          <div>
+            <div class="text-2xl font-bold text-blue-600">3</div>
+            <div class="text-sm text-gray-600">Bathrooms</div>
+          </div>
+          <div>
+            <div class="text-2xl font-bold text-green-600">{{ includedFeaturesCount }}</div>
+            <div class="text-sm text-gray-600">Included Features</div>
+          </div>
+        </div>
+      </div>
+    </div>-->
+  </div> 
+
+
+
+
     <!-- <div class="px-6 py-2">
       <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
       <div class="space-y-3 text-gray-600 text-sm">
@@ -998,4 +1077,137 @@ onMounted(() => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
 });
+
+
+const accommodationOptions = [
+  { optionId: 1, optionName: "Accommodation Type", value: "Single Room" },
+  { optionId: 2, optionName: "Bed Type", value: "Single Bed" },
+  { optionId: 3, optionName: "View", value: "Sea View" },
+  { optionId: 4, optionName: "Balcony", value: "Yes" },
+  { optionId: 5, optionName: "Terrace", value: "Yes" },
+  { optionId: 6, optionName: "Air Conditioning", value: "Yes" },
+  { optionId: 7, optionName: "Wi-Fi", value: "Free" },
+  { optionId: 8, optionName: "Breakfast Included", value: "Yes" },
+  { optionId: 9, optionName: "Private Bathroom", value: "Yes" },
+  { optionId: 10, optionName: "Kitchen / Kitchenette", value: "Yes" },
+  { optionId: 11, optionName: "Washing Machine", value: "Yes" },
+  { optionId: 12, optionName: "Room Size (sqm)", value: "15" },
+  { optionId: 13, optionName: "Number of Rooms", value: "1" },
+  { optionId: 14, optionName: "Maximum Occupancy", value: "1" },
+  { optionId: 15, optionName: "TV", value: "None" },
+  { optionId: 16, optionName: "Mini Bar", value: "Yes" },
+  { optionId: 17, optionName: "Safe Deposit Box", value: "Yes" },
+  { optionId: 18, optionName: "Extra Bed", value: "Yes" },
+  { optionId: 19, optionName: "Wheelchair Accessible", value: "Yes" },
+  { optionId: 20, optionName: "Private Pool", value: "Yes" },
+  { optionId: 21, optionName: "Jacuzzi / Spa", value: "Yes" },
+  { optionId: 22, optionName: "Smoking Allowed", value: "Smoking" },
+  { optionId: 23, optionName: "Pets Allowed", value: "Yes" },
+  { optionId: 24, optionName: "Housekeeping", value: "Daily" },
+  { optionId: 25, optionName: "Parking", value: "Free" },
+  { optionId: 26, optionName: "Room Service", value: "Yes" },
+  { optionId: 27, optionName: "Self Check-in", value: "Yes" },
+  { optionId: 30, optionName: "House Rules", value: "Quiet Hours" },
+  { optionId: 31, optionName: "Number of beds", value: "1" },
+  { optionId: 32, optionName: "Number of bathrooms", value: "3" },
+]
+
+const getIcon = (optionName) => {
+  const iconMap = {
+    "Accommodation Type": "🏠",
+    "Bed Type": "🛏️",
+    "View": "👁️",
+    "Balcony": "🚪",
+    "Terrace": "🌿",
+    "Air Conditioning": "❄️",
+    "Wi-Fi": "📶",
+    "Breakfast Included": "☕",
+    "Private Bathroom": "🚿",
+    "Kitchen / Kitchenette": "👨‍🍳",
+    "Washing Machine": "🧺",
+    "Room Size (sqm)": "📏",
+    "Number of Rooms": "🏠",
+    "Maximum Occupancy": "👥",
+    "TV": "📺",
+    "Mini Bar": "🍷",
+    "Safe Deposit Box": "🔒",
+    "Extra Bed": "🛏️",
+    "Wheelchair Accessible": "♿",
+    "Private Pool": "🏊",
+    "Jacuzzi / Spa": "✨",
+    "Smoking Allowed": "🚬",
+    "Pets Allowed": "🐾",
+    "Housekeeping": "🧹",
+    "Parking": "🚗",
+    "Room Service": "🛎️",
+    "Self Check-in": "🔑",
+    "House Rules": "⏰",
+    "Number of beds": "🛏️",
+    "Number of bathrooms": "🚿",
+  }
+  return iconMap[optionName] || "🏠"
+}
+
+const getValueColor = (value) => {
+  if (value === "Yes" || value === "Free" || value === "Daily") {
+    return "bg-green-100 text-green-800 hover:bg-green-200"
+  }
+  if (value === "None") {
+    return "bg-gray-100 text-gray-600 hover:bg-gray-200"
+  }
+  if (value === "Smoking") {
+    return "bg-orange-100 text-orange-800 hover:bg-orange-200"
+  }
+  return "bg-blue-100 text-blue-800 hover:bg-blue-200"
+}
+
+const categories = computed(() => [
+  {
+    title: "Accommodation Details",
+    options: accommodationOptions.filter((opt) =>
+      [
+        "Accommodation Type",
+        "Room Size (sqm)",
+        "Number of Rooms",
+        "Maximum Occupancy",
+        "Number of beds",
+        "Number of bathrooms",
+      ].includes(opt.optionName)
+    ),
+  },
+  {
+    title: "Room Features",
+    options: accommodationOptions.filter((opt) =>
+      ["Bed Type", "View", "Balcony", "Terrace", "Private Bathroom", "Kitchen / Kitchenette", "Extra Bed"].includes(
+        opt.optionName
+      )
+    ),
+  },
+  {
+    title: "Amenities & Comfort",
+    options: accommodationOptions.filter((opt) =>
+      ["Air Conditioning", "Wi-Fi", "TV", "Mini Bar", "Safe Deposit Box", "Washing Machine"].includes(opt.optionName)
+    ),
+  },
+  {
+    title: "Premium Features",
+    options: accommodationOptions.filter((opt) => ["Private Pool", "Jacuzzi / Spa"].includes(opt.optionName)),
+  },
+  {
+    title: "Services",
+    options: accommodationOptions.filter((opt) =>
+      ["Breakfast Included", "Housekeeping", "Room Service", "Parking", "Self Check-in"].includes(opt.optionName)
+    ),
+  },
+  {
+    title: "Policies & Accessibility",
+    options: accommodationOptions.filter((opt) =>
+      ["Wheelchair Accessible", "Smoking Allowed", "Pets Allowed", "House Rules"].includes(opt.optionName)
+    ),
+  },
+])
+
+const includedFeaturesCount = computed(() => 
+  accommodationOptions.filter((opt) => opt.value === "Yes").length
+)
 </script>
