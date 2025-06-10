@@ -1,5 +1,5 @@
 <template>
- <div class="flex flex-col sm:flex-row lg:items-center items-start justify-center sm:gap-20 gap-3   p-8 max-w-screen mx-auto">
+ <div class="flex flex-col sm:flex-row lg:items-center items-start justify-center sm:gap-20 gap-3   p-8 max-w-screen ">
   <div class="mb-4 sm:mb-0">
     <span class=" text-md font-semibold text-black">{{$t('overall_rate')}}</span>
     <div class="flex items-center  my-2 sm:my-1 md:my-1 space-x-1 ">
