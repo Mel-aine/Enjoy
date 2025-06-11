@@ -68,7 +68,7 @@ const router = createRouter({
     {
       path: "/all_service/:id",
       name: "all_service",
-      component: () => import("@/views/allServices/EServiceDetailView.vue"),
+      component: () => import("@/views/allServices/ServiceDetails.vue"),
       meta: { hideComponent: true, showHeader2: true, showFooter2: true },
     },
     {

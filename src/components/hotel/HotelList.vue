@@ -8,6 +8,7 @@ import { getServiceProductByDate } from '@/servicesApi/hotelServicesApi.js'
 // import { useMIHStore } from '@/stores/manageHotelInterface'
 import { useDataStore } from '@/stores/dataStore'
 import LoaodingSpinner from '../spiner/LoaodingSpinner.vue'
+import { useServiceStore } from '@/stores/useServiceStore'
 // const hotelStore = useMIHStore();
 // const rooms = ref([]);
 const sercivesHotels = ref([]);
@@ -124,6 +125,7 @@ function formatDate(dateStr) {
   return null;
 }
 
+const serviceStore = useServiceStore()
 
 
 onMounted(async () => {
@@ -155,6 +157,11 @@ onMounted(async () => {
     // Assurez-vous que la réponse contient bien un tableau data
     services.value = response.data ? response : { data: response }
     sercivesHotels.value = services.value.data.hotels || []
+    const servicesData = response.data ? response.data : response
+      serviceStore.setServices(servicesData)
+      console.log('Services hotel:', serviceStore.hotels)
+
+
     // rooms.value = services.value.data.serviceProducts || []
     console.log('Services hotel:', sercivesHotels.value)
     console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value.data)))

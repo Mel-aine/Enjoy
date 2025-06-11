@@ -704,5 +704,26 @@
     "Bar": "Bar"
   },
   "applyFilter": "Appliquer le Filtre",
-  "in": "à"
+  "in": "à",
+  "reduce": "Réduire",
+  "read_more": "Lire la suite",
+  "our_options": "Nos options",
+  "discovery...": "Découvrez notre sélection soigneusement conçue pour votre confort",
+  "area": "Superficie",
+  "peoples": "personnes",
+  "people": "personne",
+  "night": "Nuit",
+  "book_now": "Réserver maintenant",
+  "no_schedule_available": "Aucun horaire disponible",
+  "opening": "Ouverture",
+  "equipment": "Équipements",
+  "service_included": "Services inclus",
+  "book": "Réserver",
+  "no_room": "Aucune chambre ne correspond à vos critères.",
+  "please_change": "Veuillez modifier vos filtres.",
+  "see_more_review": "Voir plus d'avis",
+  "customer_review": "Avis des clients",
+  "discovery_experiance": "Découvrez les expériences authentiques et les retours détaillés de nos clients.",
+  "pricePerNight": "Prix par nuit"
+
 }

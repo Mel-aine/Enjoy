@@ -412,18 +412,18 @@
           <div class="w-[90%]  ">
             <hr class="h-px my-6 bg-gray-200 border-0 dark:bg-gray-700">
           </div>
-          <!-- Avis et commentaires composant -->
-          <RewiewView :rating="hotel.rating" />
+          <!-- Avis et commentaires composant
+          <RewiewView :rating="hotel.rating" />-->
         </div>
-        <!-- suggestion component -->
+        <!-- suggestion component-->
         <InfoService :phone="hotel.phone" :localisation="hotel.localisation" :address="hotel.address"
           :email="hotel.email" />
       </div>
-      <div class="mx-auto max-w-screen-xl mt-44 md:mt-40 lg:mt-12" :class="{ 'hidden': !search }">
+      <!-- <div class="mx-auto max-w-screen-xl mt-44 md:mt-40 lg:mt-12" :class="{ 'hidden': !search }">
         <EHotelView :class="{ 'hidden': hotelStore.booking }"></EHotelView>
         <EBookingHotelView :class="{ 'hidden': !hotelStore.booking }" class="mt-20"></EBookingHotelView>
 
-      </div>
+      </div> -->
     </div>
   </div>
   <!-- modal -->
