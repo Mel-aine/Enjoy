@@ -164,7 +164,7 @@ const handleViewDeal = () => {
 
         </div>
 
-        <p class="mt-2 text-sm text-gray-600">{{ hotel.description }}</p>
+        <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ hotel.description }}</p>
         <div class="mt-2 flex space-x-2 relative">
           <!-- Icônes visibles -->
           <div v-for="amenity in amenities" :key="amenity" class="flex items-center">

@@ -1,3 +1,5 @@
+import lineClamp from '@tailwindcss/line-clamp';
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -21,6 +23,6 @@ export default {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [lineClamp],
 }
 
