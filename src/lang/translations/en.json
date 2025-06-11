@@ -219,7 +219,6 @@
     "claimYourBusiness": "Claim Your Business",
     "loginInToBusiness": "Log in to Your Business"
   },
-
   "home": {
     "descriptionHomePart1": "Discover great deals and have fun effortlessly.",
     "descriptionHomePart2": "Whether you're traveling alone, with family, friends, or colleagues,",
@@ -237,7 +236,6 @@
       "administrations": "Administrations"
     }
   },
-
   "footer": {
     "about": "About",
     "descriptionFooter": "Discover our services and our commitment to providing an exceptional user experience.",
@@ -251,7 +249,6 @@
     "send": "Send",
     "copyRigth": "© 2025 Enjoy. All rights reserved."
   },
-
   "category": "Categories",
   "categories": {
     "Restaurants": "Restaurants",
@@ -278,7 +275,6 @@
     "Média": "Media",
     "Cafés & Thés": "Coffees & Teas"
   },
-
   "places": {
     "Le Gourmet": {
       "name": "The Gourmet",
@@ -294,7 +290,6 @@
       "min_price": "10,000 FCFA"
     }
   },
-
   "price": "Price",
   "rating": "Rating",
   "filterBy": "Filter by",
@@ -704,23 +699,39 @@
   },
   "applyFilter": "Apply Filter",
   "in": "in",
-  "reduce" : "Reduce",
-  "read_more" : "Read more",
-  "our_options" : "Our Options",
-  "discovery..." : "Discover our selection carefully designed for your comfort",
-  "area" : "Area",
-  "peoples" : "peoples",
-  "people" : "people",
+  "reduce": "Reduce",
+  "read_more": "Read more",
+  "our_options": "Our Options",
+  "discovery...": "Discover our selection carefully designed for your comfort",
+  "area": "Area",
+  "peoples": "peoples",
+  "people": "people",
   "night": "Night",
-  "book_now" : "Book now",
-  "no_schedule_available" : "No schedule available",
-  "opening" : "Opening",
-  "equipment" : "Equipment",
-  "service_included" : "Services included",
-  "book" : "Book",
-  "no_room" : "No rooms match your criteria.",
-  "please_change" : "Please change your filters.",
-  "see_more_review" : "See more reviews",
-  "customer_review" : "Customer Reviews",
-  "discovery_experiance" : "Discover our customers' authentic experiences and detailed feedback."
+  "book_now": "Book now",
+  "no_schedule_available": "No schedule available",
+  "opening": "Opening",
+  "equipment": "Equipment",
+  "service_included": "Services included",
+  "book": "Book",
+  "no_room": "No rooms match your criteria.",
+  "please_change": "Please change your filters.",
+  "see_more_review": "See more reviews",
+  "customer_review": "Customer Reviews",
+  "discovery_experiance": "Discover our customers' authentic experiences and detailed feedback.",
+  "amenities": {
+    "apartment": "Apartments",
+    "breakfast": "Breakfast",
+    "restaurant": "Restaurant",
+    "privateBathroom": "Private bathroom",
+    "nonSmoking": "Non-smoking rooms",
+    "balcony": "Balcony",
+    "wifi": "Free Wi-Fi",
+    "familyRooms": "Family rooms",
+    "parking": "Private parking",
+    "bathtub": "Bathtub"
+  },
+  "disponibility": "Disponibility",
+  "room": "Room",
+  "pricePerNight": "Price per night",
+  "availability": "Availability"
 }

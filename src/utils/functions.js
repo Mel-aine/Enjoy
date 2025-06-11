@@ -1,8 +1,8 @@
 export function truncateText(text, maxLength) {
-    if (text.length <= maxLength) {
-        return text;
-    }
-    return text.slice(0, maxLength) + '...';
+  if (text.length <= maxLength) {
+    return text;
+  }
+  return text.slice(0, maxLength) + '...';
 }
 
 export async function uploadImages(establishmentType, establishmentName, files) {
@@ -44,7 +44,7 @@ export async function uploadImages(establishmentType, establishmentName, files) 
       uploaded = false;
     }
   }
-console.log('Images uploadées avec succès :', uploadedUrls);
+  console.log('Images uploadées avec succès :', uploadedUrls);
   return { uploaded, uploadedUrls };
 }
 
@@ -59,21 +59,29 @@ const slugify = (text) =>
 
 
 // Fonctions de validation
-export function validateFirstName  (firstName) {
+export function validateFirstName(firstName) {
   return firstName.length >= 2;
 };
 
-export function validateLastName  (lastName)  {
+export function validateLastName(lastName) {
   return lastName.length >= 2;
 };
 
-export function validateEmail (emailAddress) {
+export function validateEmail(emailAddress) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(emailAddress);
 };
 
-export function validatePhoneNumber (phoneNumber) {
+export function validatePhoneNumber(phoneNumber) {
   // Supprime tous les caractères non numériques
   const cleanedPhone = phoneNumber.replace(/\D/g, '');
   return cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
 };
+
+export function formatPrice(value) {
+  return new Intl.NumberFormat('fr-FR', {
+    style: 'currency',
+    currency: 'XAF',
+    minimumFractionDigits: 0
+  }).format(value) // Optional: replace 'XOF' with 'FCFA'
+}
