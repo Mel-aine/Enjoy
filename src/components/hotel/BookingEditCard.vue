@@ -192,7 +192,7 @@ const guestName = ref(props.bookingData?.roomDetails?.guestInfo?.firstName || 'M
 const checkIn = ref({ date: dataStore.searchFrom.dateAller, time: 'from 16:00' })
 const checkOut = ref({ date: dataStore.searchFrom.dateRetour, time: 'by 11:00' })
 const reservation = ref(
-    `${hotelStore.stayLength} ${t('appServices.hotel.nights')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.rooms')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.persons')}`
+    `${hotelStore.stayLength} ${t('appServices.hotel.nights')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.room')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.person')}`
 );
 const phone = ref(
     props.bookingData?.roomDetails?.guestInfo?.phone?.countryCode && props.bookingData?.roomDetails?.guestInfo?.phone?.number

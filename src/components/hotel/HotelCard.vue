@@ -5,6 +5,7 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 import { useMIHStore } from '@/stores/manageHotelInterface';
+import router from '@/router';
 const iconMap = [
   { id: 'Wi-Fi', label: t('appServices.hotel.freeWifi'), icon: WifiIcon },
   { id: 'Parking', label: t('appServices.hotel.parking'), icon: SquareParkingIcon },
@@ -112,7 +113,10 @@ const toggleFavorite = () => {
   isFavorite.value = !isFavorite.value
 }
 const handleViewDeal = () => {
-  hotelStore.singleBooking();
+  // hotelStore.singleBooking();
+  router.push({
+    name: 'booking',
+  })
   hotelStore.setHotel(props.hotel)
   console.log('hotel', props.hotel)
   // hotelStore.setViewDeal(true)
@@ -195,7 +199,7 @@ const handleViewDeal = () => {
         </div>
 
       </div>
-
+      
       <!-- Prix et bouton -->
       <div class="w-full md:w-1/3 flex flex-col items-end justify-between p-4">
         <div class="flex items-center bg-green-100 px-2 py-1 rounded text-sm text-green-700">
@@ -208,7 +212,7 @@ const handleViewDeal = () => {
           <div class="text-xl font-bold">{{ displayPriceRange }}</div>
           <div class="text-xs text-gray-500">{{ $t('appServices.hotel.includeTaxesFees') }}</div>
           <button @click="handleViewDeal" class="bg-customRed text-white px-4 py-2 rounded-md hover:text-black mt-2">
-            {{ $t('appServices.hotel.viewDeal') }}
+            {{ $t('appServices.hotel.checkAviabilty') }}
           </button>
         </div>
       </div>

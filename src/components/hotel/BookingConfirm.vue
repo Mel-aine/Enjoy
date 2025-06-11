@@ -117,7 +117,7 @@ const guestName = ref(props.bookingData?.user?.firstName || 'Maciej Kuropatwa');
 const checkIn = ref(props.bookingData?.reservation?.arrivedDate || 'date de depart')
 const checkOut = ref(props.bookingData?.reservation?.departDate || 'date de arriver')
 const reservation = ref(
-  `${hotelStore.stayLength} ${t('appServices.hotel.nights')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.rooms')}`
+  `${hotelStore.stayLength} ${t('appServices.hotel.nights')}, ${hotelStore.getRoomNumber(dataStore.searchFrom.rooms)} ${t('appServices.hotel.room')}`
 ); 
 const phone = ref(
   props.bookingData?.user?.phoneNumber ? `${props.bookingData.user.phoneNumber}`

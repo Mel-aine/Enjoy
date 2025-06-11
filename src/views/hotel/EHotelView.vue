@@ -157,9 +157,9 @@ watch(() => route.params.city, (newCity) => {
             @sortChange="handleSortChange" />
         </div>
       </div>
-       <div v-show="hotelStore.isSingleBooking">
+       <!-- <div v-show="hotelStore.isSingleBooking">
           <BookingFlow></BookingFlow>
-      </div>
+      </div> -->
       <!-- <div v-show="hotelStore.isPaymentStepBooking">
 
       </div>

@@ -129,7 +129,7 @@
     "title": "Service successfully registered!",
     "description": "Your service has been added to our database.",
     "noThanks": "No Thanks!",
-    "backToHotelManagement": "Back to hotel management"
+    "backToHotelManagement": "Go to hotel management"
   },
   "countries": {
     "united_states": "United States",
@@ -403,6 +403,7 @@
   "resultat": "Resultat",
   "phrase": "A service fee will be added to each reservation",
   "warnigSearch": "Departure must be after arrival date.",
+  "emptySearch": "Please fill in the search fields.",
   "appServices": {
     "agency": {
       "organizeYourTrip": "Organize your trip",
@@ -426,6 +427,7 @@
       "tomorrow": "Tomorrow"
     },
     "hotel": {
+      "checkAviabilty": "Check availability",
       "searchOthersPlaces": "Search with other places",
       "noHotelsFound": "No hotels found ",
       "timeBeforeAutoCancel": "left before cancellation",
