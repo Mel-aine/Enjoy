@@ -111,7 +111,7 @@
                 <!-- <div class="text-sm text-gray-600">Taxes incluses</div> -->
               </td>
               <td class="px-6 py-4 text-right">
-                <button class="
+                <button @click="booking(room)" class="
                     px-6 py-2 rounded-md text-white text-sm font-medium transition bg-orange-600 hover:bg-orange-700 ">
                   {{ $t('book') }}
                 </button>
@@ -135,6 +135,7 @@
 import { ref } from 'vue'
 import { BedDouble, Eye, Building2, Check, Users, TrendingUp } from 'lucide-vue-next'
 import { formatPrice } from '../../utils/functions'
+import router from '../../router'
 const images = ref(
   "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop"
 )
@@ -145,7 +146,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['selectedRoom'])
+const emit = defineEmits(['selectedRoom,bookRoom'])
 
 const openRoomModal = (room) => {
   emit('selectedRoom', room)
@@ -176,4 +177,7 @@ const getOptionIcon = (optionName) => {
   }
 }
 
+const booking = (room) => {
+  emit('bookRoom', room);
+}
 </script>

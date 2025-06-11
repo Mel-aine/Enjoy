@@ -43,7 +43,8 @@
     <div class="p-6">
       <div class="flex items-start">
         <!-- Image at the beginning -->
-        <img :src='hotelStore.this_hotel?.images?.[0] || "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470"' 
+        <img
+          :src='hotelStore.this_hotel?.images?.[0] || "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470"'
           alt="Room" class="w-48 h-40 object-cover rounded-lg mr-6" />
 
         <!-- Content beside the image -->
@@ -61,8 +62,8 @@
 
           </div>
           <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
-            {{ hotelStore.this_hotel?.name ||  $t("notAviable")  }} <span class="text-gray-700">•</span> {{
-              RoomsWithLowPrice.productName ||  $t("notAviable")  }}
+            {{ hotelStore.this_hotel?.name || $t("notAvaible") }} <span class="text-gray-700">•</span> {{
+              RoomsWithLowPrice.productName || $t("notAvaible") }}
           </h2>
           <!-- <div class="flex items-center space-x-2 mb-4 mt-2">
             <div class="flex">
@@ -81,7 +82,7 @@
                   {{
                     RoomsWithLowPrice.options &&
                     RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
-                  ||  $t("notAviable") 
+                    || $t("notAvaible")
                   }}
                 </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.beds') }} </div>
@@ -108,7 +109,7 @@
                   {{
                     RoomsWithLowPrice.options &&
                     RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
-                  ||  $t("notAviable") 
+                    || $t("notAvaible")
                   }} m²
                 </div>
 
@@ -122,7 +123,7 @@
                   {{
                     RoomsWithLowPrice.options &&
                     RoomsWithLowPrice.options.find(opt => opt.optionName === 'Maximum Occupancy')?.value
-                  ||  $t("notAviable") 
+                    || $t("notAvaible")
                   }}
                 </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.guests') }} </div>
@@ -135,7 +136,7 @@
                   {{
                     RoomsWithLowPrice.options &&
                     RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of bathrooms')?.value
-                  ||  $t("notAviable") 
+                    || $t("notAvaible")
                   }}
                 </div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.bathroom') }} </div>
@@ -144,7 +145,8 @@
             <div class="flex items-center space-x-2">
               <BadgeCheck size="20" class="text-slate-600" />
               <div>
-                <div v-if="RoomsWithLowPrice.availability === true " class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.yes') }}</div>
+                <div v-if="RoomsWithLowPrice.availability === true" class="text-sm font-medium text-gray-900">{{
+                  $t('appServices.hotel.yes') }}</div>
                 <div v-else class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.no') }}</div>
                 <div class="text-xs text-gray-500">{{ $t('appServices.hotel.availability') }} </div>
               </div>
@@ -167,27 +169,27 @@
 
 
 
- <div class="max-w-6xl mx-auto p-6 space-y-8">
-    <!-- Header -->
-    <!-- <div class="text-center space-y-2">
+    <div class="max-w-6xl mx-auto p-6 space-y-8">
+      <!-- Header -->
+      <!-- <div class="text-center space-y-2">
       <h1 class="text-3xl font-bold text-gray-900">Accommodation Details</h1>
       <p class="text-gray-600">Complete overview of room features and amenities</p>
     </div> -->
 
-    <!-- Categories -->
-    <!-- <div class="grid gap-6">
+      <!-- Categories -->
+      <!-- <div class="grid gap-6">
       <div 
         v-for="(category, categoryIndex) in categories" 
         :key="categoryIndex" 
         class="bg-white rounded-lg border border-gray-200 shadow-sm"
       > -->
-        <!-- Card Header -->
-        <!-- <div class="px-6 py-4 border-b border-gray-200">
+      <!-- Card Header -->
+      <!-- <div class="px-6 py-4 border-b border-gray-200">
           <h2 class="text-lg font-semibold text-gray-800">{{ category.title }}</h2>
         </div>
          -->
-        <!-- Card Content -->
-        <!-- <div class="p-6">
+      <!-- Card Content -->
+      <!-- <div class="p-6">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div
               v-for="option in category.options"
@@ -214,8 +216,8 @@
       </div>
     </div> -->
 
-    <!-- Summary Stats -->
-    <!-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
+      <!-- Summary Stats -->
+      <!-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
       <div class="p-6">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
           <div>
@@ -237,7 +239,7 @@
         </div>
       </div>
     </div>-->
-  </div> 
+    </div>
 
 
 
@@ -720,6 +722,9 @@ const defaultValues = {
 // });
 // Props
 const props = defineProps({
+  roomId: {
+    type: Number
+  },
   roomData: {
     type: Object,
     required: false,
@@ -853,7 +858,7 @@ const setSelectedParkingType = (type) => {
 const handleBack = () => {
   emit('back');
   hotelStore.listHotel();
-  router.back()                
+  router.back()
   console.log('handleBack');
 };
 // const firstNameValid = ref(null);
@@ -896,7 +901,7 @@ const handleNext = () => {
   emailTouched.value = true;
   phoneTouched.value = true;
 
-  if (validateFirstName(firstName) && 
+  if (validateFirstName(firstName) &&
     validateLastName(lastName) &&
     validateEmail(emailAddress) &&
     validatePhoneNumber(phoneNumber)) {
@@ -934,7 +939,7 @@ const handleNext = () => {
 
     // Détails de la réservation
     bookingDetails: {
-      hotelName: hotelStore.this_hotel?.name ||  t('notAviable') ,
+      hotelName: hotelStore.this_hotel?.name || t('notAvaible'),
       rating: 4.87,
       reviewCount: 262,
       amenities: amenitiesStatus.value,
@@ -982,41 +987,18 @@ const loadRooms = async () => {
   try {
     isLoading.value = true;
     console.log('serviceId:', serviceId.value);
-
-    // if (!serviceId.value) {
-    //   console.error('Aucun service ID trouvé dans this_hotel');
-    //   return;
-    // }
-
-    // const roomsResponse = await getAllServicesByServiceId(serviceId.value);
-    // Rooms.value = roomsResponse.data;
-    // console.log('Rooms chargés:', Rooms.value);
-
-    // // Trouver la chambre avec le prix le plus bas
-    // if (Rooms.value.length > 0) {
-    //   const cheapestRoom = Rooms.value.reduce((min, room) => {
-    //     return room.price < min.price ? room : min;
-    //   }, Rooms.value[0]);
-
-    // RoomsWithLowPrice.value = cheapestRoom;
-    // console.log('Chambre la moins chère:', RoomsWithLowPrice.value);
-    // loadOptions(RoomsWithLowPrice.value.id); // Charger les options pour la chambre la moins chère
-    // hotelStore.roomPrice = RoomsWithLowPrice.value.price; // Mettre à jour le store avec la chambre la moins chère
-    // } else {
-    //   RoomsWithLowPrice.value = {}; // ou null si tu préfères
-    // }
-
     const roomsResponse = await getAllServicesByServiceId(hotelStore.hotelId);
     console.log('roomsResponse:', hotelStore.hotelId);
     Rooms.value = roomsResponse.data;
     console.log('Rooms chargés:', Rooms.value);
+    console.log('props.roomId', props.roomId)
     if (Rooms.value.length > 0) {
-      const cheapestRoom = Rooms.value.reduce((min, room) => {
-        return room.price < min.price ? room : min;
-      }, Rooms.value[0]);
-
-      RoomsWithLowPrice.value = cheapestRoom;
-      console.log('Chambre la moins chère:', RoomsWithLowPrice.value);
+      const cheapestRoom = Rooms.value.filter((e) => {
+        console.log('e.id', e.id)
+        return e.id == props.roomId;
+      });
+      RoomsWithLowPrice.value = cheapestRoom[0];
+      console.log('Chambre la moins chère:', cheapestRoom);
       // loadOptions(RoomsWithLowPrice.value.id); // Charger les options pour la chambre la moins chère
       hotelStore.roomPrice = RoomsWithLowPrice.value.price; // Mettre à jour le store avec la chambre la moins chère
       const optionIds = RoomsWithLowPrice.value.options?.map(opt => opt.optionId) || [];
@@ -1214,7 +1196,7 @@ const categories = computed(() => [
   },
 ])
 
-const includedFeaturesCount = computed(() => 
+const includedFeaturesCount = computed(() =>
   accommodationOptions.filter((opt) => opt.value === "Yes").length
 )
 </script>

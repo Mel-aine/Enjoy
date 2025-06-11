@@ -114,13 +114,9 @@ const toggleFavorite = () => {
 }
 const handleViewDeal = () => {
   // hotelStore.singleBooking();
-  router.push({
-    name: 'booking',
-  })
   hotelStore.setHotel(props.hotel)
-  console.log('hotel', props.hotel)
-  // hotelStore.setViewDeal(true)
   hotelStore.getHotelId(props.hotel.id)
+  window.location.href = `/all_service/${props.hotel.id}#disponibility`;
 }
 
 </script>
@@ -199,7 +195,7 @@ const handleViewDeal = () => {
         </div>
 
       </div>
-      
+
       <!-- Prix et bouton -->
       <div class="w-full md:w-1/3 flex flex-col items-end justify-between p-4">
         <div class="flex items-center bg-green-100 px-2 py-1 rounded text-sm text-green-700">

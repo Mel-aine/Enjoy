@@ -9,6 +9,15 @@ import { useI18n } from 'vue-i18n';
 import { useMIHStore } from '@/stores/manageHotelInterface';
 
 import { makeReservation, makePayment } from '@/servicesApi/hotelServicesApi.js';
+import router from '../../router';
+
+
+
+const hotelId = router.currentRoute.value.params.hotelId;
+const roomId = router.currentRoute.value.params.roomId;
+
+
+
 const hotelStore = useMIHStore()
 
 
@@ -111,55 +120,35 @@ const updateForm = (data, stepName) => {
 };
 const isReserved = ref(false);
 const isPaid = ref(false);
-// const payload = {
-//     userId: 4,
-//     serviceId: 16,
-//     reservationType: "Standard",
-//     status: "pending",
-//     totalPrice: hotelStore?.totalPrice,
-//     createdBy: "",
-//     lastModifiedBy: "",
-//     create_at: new Date().toISOString(),
-//     update_at: new Date().toISOString(),
-//     totalPerson: hotelStore?.totalPerson,
-//     arrivedDate: hotelStore?.dateArrived,
-//     departDate: hotelStore?.dateDepart,
-//     reservationTime: "",
-//     comment: "No comment",
-//     reservationProduct: 49,
-//     payment: "paid"
-
-
-//   }
 const reservationDetail = ref({});
 const handleSubmitReservation = async (param) => {
   const guest = formData.value.roomDetails.guestInfo;
 
   const reservationPayload = {
-  // Champs utilisateur à plat
-  first_name: guest.firstName,
-  last_name: guest.lastName,
-  email: guest.email,
-  phone_number: guest.phone.number,
+    // Champs utilisateur à plat
+    first_name: guest.firstName,
+    last_name: guest.lastName,
+    email: guest.email,
+    phone_number: guest.phone.number,
 
-  // Champs de réservation
-  service_id: hotelStore.this_hotel.id,
-  total_amount: hotelStore?.totalPrice || 0,  // <-- ici le correctif
-  total_person: hotelStore?.totalPerson || 1,
-  arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
-  depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-  reservation_product: param,
-  reservation_time: new Date().toISOString().split('T')[1].split('.')[0],
-  comment: "No comment",
-  created_by_R: 2,
-  last_modified_by_R: 2,
-  payment: "pending",
-  products: [{
-    service_product_id: param,
-    start_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
-    end_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-  }],
-};
+    // Champs de réservation
+    service_id: hotelStore.this_hotel.id,
+    total_amount: hotelStore?.totalPrice || 0,  // <-- ici le correctif
+    total_person: hotelStore?.totalPerson || 1,
+    arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
+    depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
+    reservation_product: param,
+    reservation_time: new Date().toISOString().split('T')[1].split('.')[0],
+    comment: "No comment",
+    created_by_R: 2,
+    last_modified_by_R: 2,
+    payment: "pending",
+    products: [{
+      service_product_id: param,
+      start_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
+      end_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
+    }],
+  };
 
 
   console.log("je tente de reserver", reservationPayload)
@@ -183,7 +172,7 @@ const handleSubmitReservation = async (param) => {
   }
 };
 
-const handleSubmitPayment = async (idU,idR) => {
+const handleSubmitPayment = async (idU, idR) => {
   const pay = formData.value.paymentDetails;
   const currentDate = new Date().toISOString(); // Format ISO standard (ex: "2025-05-02T14:35:00.000Z")
 
@@ -224,8 +213,8 @@ const handleSubmitPayment = async (idU,idR) => {
       <ProgressSteps
         :steps="[t('appServices.hotel.datesRooms'), t('appServices.hotel.extras'), t('appServices.hotel.payment'), t('appServices.hotel.confirmation')]"
         :currentStep="step" />
-      <RoomDetails v-if="step2Active && !step3Active && !step4Active" :roomData="formData.roomDetails" @next="goToStep3"
-        @back="handleBackStep" />
+      <RoomDetails v-if="step2Active && !step3Active && !step4Active && roomId" :roomData="formData.roomDetails"
+        @next="goToStep3" :room-id="roomId" @back="handleBackStep" />
       <BookingPayement v-if="step3Active && !step3Completed && !step4Active" @next="goToStep4" @back="handleBackStep" />
       <div v-if="isReserved">
         <BookingConfirm v-if="step4Active" :bookingData="reservationDetail" @back="handleBackStep" />

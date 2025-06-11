@@ -23,6 +23,7 @@ const useLanguage = useLanguageStore()
 const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
 import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
+import { formatPrice } from "../../utils/functions";
 
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
@@ -170,7 +171,7 @@ const formatDate = (dateValue) => {
   //   inputDate.getMonth() === today.getMonth();
 
 
-    inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
+  inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
 
 
   const options = {
@@ -215,7 +216,7 @@ const formatDate = (dateValue) => {
       <!-- <div class="py-4 border-b">
         <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
         <div class="font-medium">{{ selectedRoom }}</div> -->
-        <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
+      <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
       <!-- </div> -->
 
       <div class="py-4">
@@ -223,12 +224,12 @@ const formatDate = (dateValue) => {
         <div class="space-y-2">
           <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
             <span>{{ item.label }}</span>
-            <span>FCFA {{ item.price.toFixed(2) }}</span>
+            <span>{{ formatPrice(item.price) }}</span>
           </div>
           <div class="flex justify-between font-medium text-customRed pt-2 border-t">
             <span> {{ $t('appServices.hotel.total') }} {{ $t('appServices.hotel.price') }}
             </span>
-            <span>FCFA <span class="text-xl font-bold">{{ totalPrice.toFixed(2) }} </span> </span>
+            <span> <span class="text-xl font-bold">{{ formatPrice(totalPrice) }} </span> </span>
           </div>
         </div>
       </div>

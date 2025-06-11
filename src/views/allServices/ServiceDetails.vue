@@ -230,7 +230,7 @@
       </div>
 
       <div class="pb-10">
-        <RoomList :rooms="hotel.rooms || []" @selected-room="selectedRooms" />
+        <RoomList :rooms="hotel.rooms || []" @selected-room="selectedRooms" @book-room="startBooking" />
       </div>
     </section>
 
@@ -371,6 +371,7 @@ import { useRoute } from "vue-router";
 import { useServiceStore } from "@/stores/useServiceStore";
 import Amenities from "../../components/ui/Amenities.vue";
 import PhotoGallery from "../../components/ui/PhotoGallery.vue";
+import router from "../../router";
 
 
 const hotelStore = useServiceStore();
@@ -388,28 +389,6 @@ const images = ref([
   "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop",
   "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&h=600&fit=crop"
 ])
-const facilities = computed(() => hotel.value.facilities || [])
-const facilitySvgs = {
-  "Wi-Fi": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
-              <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
-              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
-              <line x1="12" y1="20" x2="12.01" y2="20"/>
-            </svg>`,
-  "Parking": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M4 17h8a4 4 0 0 0 0-8H4z"/>
-                <path d="M10 9v6"/>
-              </svg>`,
-  "Terrace": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                <line x1="3" y1="9" x2="21" y2="9"/>
-              </svg>`,
-  "Air conditioning": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                          <path d="M2 12h20"/>
-                          <path d="M12 2v20"/>
-                        </svg>`
-}
-
 
 const parsedAddress = computed(() => {
   try {
@@ -493,7 +472,7 @@ onMounted(() => {
 })
 
 
-defineProps({
+const props = defineProps({
   title: String,
   image: {
     type: String,
@@ -510,4 +489,12 @@ const handleSearch = (hotel) => {
   search.value = !search.value;
   console.log("hotel", hotel);
 };
+
+const startBooking = (room) => {
+  console.log('this is the selected room', room);
+  //      path: "/booking/:hotelId/:roomId",
+  router.push({
+    path: `/booking/${hotelId}/${room.id}`,
+  })
+}
 </script>
