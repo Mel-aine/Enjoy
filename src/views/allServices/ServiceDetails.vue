@@ -80,6 +80,18 @@
             </svg>
           </span>
         </div>
+
+      <div class="flex space-x-8">
+    <div
+      v-for="(facility, index) in facilities"
+      :key="index"
+      class="flex flex-col items-center text-purple-700"
+    >
+      <div v-html="facilitySvgs[facility] || ''"></div>
+      <span class="text-sm mt-1">{{ facility }}</span>
+    </div>
+  </div>
+
       </div>
 
       <div
@@ -214,7 +226,7 @@
     <!-- Description (plus large) -->
     <div class="flex-[1.8]">
       <div class="bg-white/20 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-xl text-gray-950">
-        <h2 class="text-2xl font-bold mb-4">Description</h2>
+        <h2 class="text-2xl font-bold mb-4">{{ $t('description') }}</h2>
         <p
           :class="{
             'max-h-[4.5rem] overflow-hidden': !showFull,
@@ -228,7 +240,7 @@
           @click="showFull = !showFull"
           class="mt-3 text-purple-400 font-semibold hover:underline focus:outline-none"
         >
-          {{ showFull ? "Réduire" : "Lire plus" }}
+          {{ showFull ? $t("reduce") : $t('read_more')}}
         </button>
       </div>
     </div>
@@ -253,14 +265,16 @@
         </a>
         <div class="flex flex-col sm:flex-row justify-between gap-6">
           <div class="flex-1">
-            <a
+            <!-- <a
               href="#"
               class="text-purple-600 hover:underline text-md font-medium"
             >
               {{ hotel.location }}
-            </a>
-            <p class="text-gray-800 font-medium">
-              {{ hotel.address }}
+            </a> -->
+
+
+            <p v-if="parsedAddress" class="text-gray-800 font-medium">
+              {{ parsedAddress.text }}
             </p>
           </div>
           <div class="flex items-center">
@@ -275,40 +289,41 @@
 
       <!-- Table Horaires -->
       <div class="bg-white rounded-xl shadow-lg p-6">
-        <div v-if="hotel.opening_hours && hotel.opening_hours.length">
-          <table class="w-full table-auto border-collapse">
-            <thead>
-              <tr class="bg-gray-50">
-                <th class="text-left py-3 px-4 text-orange-500 font-semibold">
-                  {{ $t("day") }}
-                </th>
-                <th class="text-left py-3 px-4 text-orange-500 font-semibold">
-                  {{ $t("openning") }}
-                </th>
-                <th class="text-left py-3 px-4 text-orange-500 font-semibold">
-                  {{ $t("closing") }}
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="(schedule, index) in hotel.opening_hours"
-                :key="index"
-                class="border-t hover:bg-purple-50"
-              >
-                <td class="py-3 px-4 text-gray-800">
-                  {{ $t("schedule." + schedule.day) }}
-                </td>
-                <td class="py-3 px-4 text-gray-600">
-                  {{ schedule.open }}
-                </td>
-                <td class="py-3 px-4 text-gray-600">
-                  {{ schedule.close }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <div v-if="sortedOpenings.length">
+    <table class="w-full table-auto border-collapse">
+      <thead>
+        <tr class="bg-gray-50">
+          <th class="text-left py-3 px-4 text-orange-500 font-semibold">
+            {{ $t("day") }}
+          </th>
+          <th class="text-left py-3 px-4 text-orange-500 font-semibold">
+            {{ $t("opening") }}
+          </th>
+          <th class="text-left py-3 px-4 text-orange-500 font-semibold">
+            {{ $t("closing") }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="(schedule, index) in sortedOpenings"
+          :key="index"
+          class="border-t hover:bg-purple-50"
+        >
+          <td class="py-3 px-4 text-gray-800">
+            {{ schedule.day }}
+          </td>
+          <td class="py-3 px-4 text-gray-600">
+            {{ formatHour(schedule.opening) }}
+          </td>
+          <td class="py-3 px-4 text-gray-600">
+            {{ formatHour(schedule.closing) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
         <div v-else class="text-center py-4 text-gray-500">
           {{ $t("no_schedule_available") }}
         </div>
@@ -329,9 +344,9 @@
     <!-- Room Selection -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
       <div class="text-center mb-12">
-        <h3 class="text-3xl font-bold text-gray-900 mb-4">Nos Options</h3>
+        <h3 class="text-3xl font-bold text-gray-900 mb-4">{{ $t('our_options') }}</h3>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Découvrez notre sélection soigneusement conçues pour votre confort
+          {{ $t('discovery...') }}
         </p>
       </div>
 
@@ -458,23 +473,21 @@
       </div> -->
 
       <div class="pb-10">
-        <RoomList :rooms="rooms" @selected-room="selectedRooms" />
+        <RoomList :rooms="hotel.rooms || []" @selected-room="selectedRooms" />
       </div>
     </section>
 
 
         <!-- Avis et commentaires composant-->
-         <div class="mx-auto text-center ">
-             <h3 class="text-3xl font-bold text-gray-900 mb-4">Avis et commentaires</h3>
-             </div>
-             <div class="translate-x-60">
+
+             <div class="mx-auto">
           <RewiewView :rating="hotel.rating" />
           </div>
 
 
     <!-- Room Modal -->
     <div
-      v-if="selectedRoom"
+      v-if="openRoom"
       class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4"
       @click="closeModal"
     >
@@ -486,7 +499,7 @@
           <!-- Modal Header -->
           <div class="flex items-center justify-between p-6 border-b">
             <h3 class="text-2xl font-bold text-gray-900">
-              {{ selectedRoom.name }}
+              {{ selectedRoom.productName }}
             </h3>
             <button
               @click="closeModal"
@@ -497,10 +510,10 @@
           </div>
 
           <!-- Image Gallery -->
-          <div class="relative h-96">
+           <div class="relative h-96">
             <img
-              :src="selectedRoom.images[currentImageIndex]"
-              :alt="selectedRoom.name"
+              :src="images[currentImageIndex]"
+              :alt="selectedRoom.productName"
               class="w-full h-full object-cover"
             />
             <button
@@ -531,7 +544,7 @@
               class="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2"
             >
               <div
-                v-for="(_, index) in selectedRoom.images"
+                v-for="(_, index) in images"
                 :key="index"
                 class="w-2 h-2 rounded-full"
                 :class="
@@ -544,16 +557,16 @@
           </div>
 
           <!-- Room Details -->
-          <div class="p-6">
+           <div class="p-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <h4 class="text-lg font-semibold mb-4">Description</h4>
+                <h4 class="text-lg font-semibold mb-4">{{ $t('description') }}</h4>
                 <p class="text-gray-600 mb-6">{{ selectedRoom.description }}</p>
 
-                <h4 class="text-lg font-semibold mb-4">Équipements</h4>
+                <h4 class="text-lg font-semibold mb-4">{{ $t('equipment') }}</h4>
                 <div class="grid grid-cols-2 gap-2">
                   <div
-                    v-for="amenity in selectedRoom.amenities"
+                    v-for="amenity in selectedRoom.options"
                     :key="amenity"
                     class="flex items-center space-x-2 text-sm text-gray-600"
                   >
@@ -568,7 +581,7 @@
                         clip-rule="evenodd"
                       />
                     </svg>
-                    <span>{{ amenity }}</span>
+                    <span>{{ amenity.optionName }} : {{ amenity.value }}</span>
                   </div>
                 </div>
               </div>
@@ -588,9 +601,9 @@
                           clip-rule="evenodd"
                         />
                       </svg>
-                      <div class="text-sm text-gray-600">Superficie</div>
+                      <div class="text-sm text-gray-600">{{ $t('area') }}</div>
                       <div class="font-semibold">
-                        {{ selectedRoom.size }} m²
+                        {{ getRoomDetail(selectedRoom, 'Room Size (sqm)') }} m²
                       </div>
                     </div>
                     <div class="text-center">
@@ -605,9 +618,9 @@
                           clip-rule="evenodd"
                         />
                       </svg>
-                      <div class="text-sm text-gray-600">Capacité</div>
+                      <div class="text-sm text-gray-600">{{ $t('capacity') }}</div>
                       <div class="font-semibold">
-                        {{ selectedRoom.maxGuests }} personnes
+                       {{ getRoomDetail(selectedRoom, 'Maximum Occupancy') }} {{ $t('people') }}
                       </div>
                     </div>
                   </div>
@@ -615,31 +628,23 @@
                   <div class="border-t pt-4">
                     <div class="flex items-center justify-between mb-4">
                       <div class="flex items-center space-x-2">
-                        <span
+                        <!-- <span
                           v-if="selectedRoom.originalPrice > selectedRoom.price"
                           class="text-lg text-gray-500 line-through"
                         >
                           {{ selectedRoom.originalPrice }}€
-                        </span>
+                        </span> -->
                         <span class="text-3xl font-bold text-gray-900"
-                          >{{ selectedRoom.price }}€</span
+                          >{{ selectedRoom.price }}FCFA</span
                         >
-                        <span class="text-gray-600">/nuit</span>
+                        <span class="text-gray-600">/{{ $t('night') }}</span>
                       </div>
                     </div>
 
                     <button
-                      v-if="selectedRoom.available"
                       class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-medium"
                     >
-                      Réserver maintenant
-                    </button>
-                    <button
-                      v-else
-                      disabled
-                      class="w-full bg-gray-400 text-white py-3 px-6 rounded-lg cursor-not-allowed font-medium"
-                    >
-                      Chambre indisponible
+                     {{ $t('book_now') }}
                     </button>
                   </div>
                 </div>
@@ -653,149 +658,83 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, reactive,computed } from "vue";
 import RoomList from "./RoomList.vue";
 import SearchHotel from "@/components/search/SearchHotel.vue";
+import { useI18n } from "vue-i18n";
+import RewiewView from "@/components/review/RewiewView.vue";
+import { onUnmounted, onMounted } from "vue";
+import { useRoute } from "vue-router";
+import { useServiceStore } from "@/stores/useServiceStore";
+
+
+const hotelStore = useServiceStore();
+const route = useRoute();
+const hotelId = route.params.id;
+const hotel = ref({});
+const search = ref(false);
+const { t } = useI18n();
 
 const selectedRoom = ref(null);
 const currentImageIndex = ref(0);
 const showFull = ref(false);
+const images = ref([
+          "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop",
+          "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop",
+          "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&h=600&fit=crop"
+        ])
+const facilities = computed(() => hotel.value.facilities || [])
+const facilitySvgs = {
+  "Wi-Fi": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+              <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+              <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+              <line x1="12" y1="20" x2="12.01" y2="20"/>
+            </svg>`,
+  "Parking": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 17h8a4 4 0 0 0 0-8H4z"/>
+                <path d="M10 9v6"/>
+              </svg>`,
+  "Terrace": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <line x1="3" y1="9" x2="21" y2="9"/>
+              </svg>`,
+  "Air conditioning": `<svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M2 12h20"/>
+                          <path d="M12 2v20"/>
+                        </svg>`
+}
 
-const hotelInfo = reactive({
-  name: "Grand Hôtel Étoile",
-  rating: 4.5,
-  reviews: 1247,
-  location: "Centre-ville, Paris",
-  description:
-    "Un hôtel de luxe au cœur de Paris, offrant un service exceptionnel et des chambres élégantes avec vue sur la ville.",
-  amenities: [
-    { name: "WiFi gratuit" },
-    { name: "Parking" },
-    { name: "Restaurant" },
-    { name: "Salle de sport" },
-  ],
-  contact: {
-    phone: "+33 1 42 60 34 12",
-    email: "contact@grandhotel-etoile.fr",
-    address: "123 Avenue des Champs-Élysées, 75008 Paris",
-  },
-});
 
-const rooms = reactive([
-  {
-    id: 1,
-    name: "Chambre Standard",
-    description: "Chambre confortable avec toutes les commodités essentielles",
-    price: 120,
-    originalPrice: 150,
-    size: 25,
-    capacity: 2,
-    beds: "1 lit double",
-    bathroom: "Salle de bain privée",
-    amenities: ["WiFi gratuit", "Climatisation", "TV écran plat", "Minibar"],
-    images: [
-      "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&h=600&fit=crop",
-    ],
-    available: true,
-  },
-  {
-    id: 2,
-    name: "Chambre Supérieure",
-    description: "Chambre spacieuse avec vue sur la ville et balcon privé",
-    price: 180,
-    originalPrice: 220,
-    size: 35,
-    capacity: 3,
-    beds: "1 lit king-size",
-    bathroom: "Salle de bain avec baignoire",
-    amenities: [
-      "WiFi gratuit",
-      "Climatisation",
-      "TV écran plat",
-      "Minibar",
-      "Balcon",
-      "Coffre-fort",
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&h=600&fit=crop",
-    ],
-    available: true,
-  },
-  {
-    id: 3,
-    name: "Suite Junior",
-    description: "Suite élégante avec salon séparé et vue panoramique",
-    price: 280,
-    originalPrice: 350,
-    size: 50,
-    capacity: 4,
-    beds: "1 lit king-size + canapé-lit",
-    bathroom: "Salle de bain avec douche à l'italienne",
-    amenities: [
-      "WiFi gratuit",
-      "Climatisation",
-      "TV écran plat",
-      "Minibar",
-      "Salon séparé",
-      "Service d'étage 24h/24",
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1591088398332-8a7791972843?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop",
-    ],
-    available: true,
-  },
-  {
-    id: 4,
-    name: "Suite Présidentielle",
-    description: "Suite de luxe avec terrasse privée et services premium",
-    price: 450,
-    originalPrice: 550,
-    size: 80,
-    capacity: 6,
-    beds: "1 lit king-size + 2 lits simples",
-    bathroom: "2 salles de bain avec jacuzzi",
-    amenities: [
-      "WiFi gratuit",
-      "Climatisation",
-      "TV écran plat",
-      "Minibar",
-      "Terrasse privée",
-      "Butler personnel",
-      "Spa privé",
-    ],
-    images: [
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&h=600&fit=crop",
-      "https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&h=600&fit=crop",
-    ],
-    available: false,
-  },
-]);
+const parsedAddress = computed(() => {
+  try {
+    return hotel.value.addressService
+      ? JSON.parse(hotel.value.addressService)
+      : null
+  } catch (e) {
+    console.error("Erreur de parsing de addressService:", e)
+    return null
+  }
+})
 
-const openRoomModal = (room) => {
-  selectedRoom.value = room;
-  currentImageIndex.value = 0;
-};
+const openRoom = ref(false)
+
 
 const selectedRooms = (room) => {
-  openRoomModal(room);
-};
+  selectedRoom.value = room
+  console.log('selectroom',selectedRoom.value)
+  openRoom.value = true
+}
 
 const closeModal = () => {
   selectedRoom.value = null;
-  currentImageIndex.value = 0;
+  openRoom.value = false
 };
 
 const nextImage = () => {
   if (selectedRoom.value) {
     currentImageIndex.value =
-      currentImageIndex.value === selectedRoom.value.images.length - 1
+      currentImageIndex.value === images.length - 1
         ? 0
         : currentImageIndex.value + 1;
   }
@@ -805,59 +744,49 @@ const prevImage = () => {
   if (selectedRoom.value) {
     currentImageIndex.value =
       currentImageIndex.value === 0
-        ? selectedRoom.value.images.length - 1
+        ? images.length - 1
         : currentImageIndex.value - 1;
   }
 };
 
-import RewiewView from "@/components/review/RewiewView.vue";
-import InfoService from "@/components/review/InfoService.vue";
-import { onUnmounted, onMounted } from "vue";
-import ModalCategory from "@/components/modals/ModalCategory.vue";
-import { useRoute } from "vue-router";
-import inside1 from "@/assets/inside1.jpg";
-import inside2 from "@/assets/inside2.jpg";
-import outside2 from "@/assets/outside2.jpg";
-import EHotelView from "../hotel/EHotelView.vue";
-import EBookingHotelView from "../hotel/EBookingHotelView.vue";
-import outside1 from "@/assets/outside1.jpg";
-import { useReservationHotelStore } from "@/stores/reservationHotel";
-import { getServiceById } from "@/servicesApi/hotelServicesApi";
+const getRoomDetail = (room, key) => {
+  const found = room.options?.find(opt =>
+    opt.optionName?.toLowerCase() === key.toLowerCase()
+  )
+  return found?.value || '—'
+}
 
-const hotelStore = useReservationHotelStore();
-const isModalOpen = ref(false);
+const daysOrder = [
+  'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'
+]
 
-const route = useRoute();
-const hotelId = route.params.id;
-// const filteredPlaces = ref([]);
-// const filteredPlace = ref([]);
-const hotel = ref({});
+const sortedOpenings = computed(() => {
+  if (!hotel.value.openings) return []
 
-onMounted(async () => {
-  // const selectedCategory = Categories.find(category => category.label === "Hôtels & Séjours");
+  return daysOrder
+    .filter(day => hotel.value.openings[day])
+    .map(day => ({
+      day,
+      opening: hotel.value.openings[day].opening,
+      closing: hotel.value.openings[day].closing,
+    }))
+})
 
-  // if (selectedCategory) {
-  //   filteredPlace.value = selectedCategory.places
-  //   const place = selectedCategory.places.find(place => place.id === hotelId);
-  //   filteredPlaces.value = place ? [place] : [];
-  //   console.log("filteredPlaces", filteredPlaces.value);
+function formatHour(hour) {
+  if (!hour) return ''
+  const [h, m] = hour.split(':')
+  return `${h}h${m}`
+}
 
-  // }
-  try {
-    const response = await getServiceById(hotelId);
-    hotel.value = response.data;
-    console.log("hotel", hotel.value);
-    // const selectedCategory = Categories.find(category => category.label === "Hôtels & Séjours");
-    // if (selectedCategory) {
-    //   filteredPlace.value = selectedCategory.places;
-    //   const place = selectedCategory.places.find(place => place.id === hotelId);
-    //   filteredPlaces.value = place ? [place] : [];
-    //   console.log("filteredPlaces", filteredPlaces.value);
-    // }
-  } catch (error) {
-    console.error("Error fetching hotel data:", error);
-  }
-});
+
+
+onMounted(() => {
+  console.log('ID de l’hôtel depuis la route:', hotelId)
+  console.log('Liste des hôtels dans le store:', hotelStore.hotels)
+  const foundHotel = hotelStore.hotels.find(h => String(h.id) === String(hotelId))
+  hotel.value = foundHotel || { rooms: [] }
+})
+
 
 defineProps({
   title: String,
@@ -868,48 +797,9 @@ defineProps({
   },
 });
 
-const search = ref(false);
-const images = ref([inside1, inside2, outside1, outside2]);
-const images1 = ref([inside1, inside2]);
-const images2 = ref([outside1, outside2]);
 
-const currentIndex = ref(0);
-const currentIndex1 = ref(0);
-const currentIndex2 = ref(0);
-let interval = null;
 
-const nextSlide = () => {
-  currentIndex.value = (currentIndex.value + 1) % images2.value.length;
-};
-const nextSlide2 = () => {
-  currentIndex2.value = (currentIndex2.value + 1) % images1.value.length;
-};
 
-const nextSlide1 = () => {
-  currentIndex1.value = (currentIndex1.value + 1) % images.value.length;
-};
-
-const prevSlide = () => {
-  currentIndex.value =
-    (currentIndex.value - 1 + images2.value.length) % images2.value.length;
-};
-const prevSlide1 = () => {
-  currentIndex1.value =
-    (currentIndex1.value - 1 + images.value.length) % images.value.length;
-};
-const prevSlide2 = () => {
-  currentIndex2.value =
-    (currentIndex2.value - 1 + images1.value.length) % images1.value.length;
-};
-
-// Auto-play carousel
-// onMounted(() => {
-//   interval = setInterval(nextSlide, 3000);
-// });
-
-onUnmounted(() => {
-  clearInterval(interval);
-});
 
 const handleSearch = (hotel) => {
   search.value = !search.value;

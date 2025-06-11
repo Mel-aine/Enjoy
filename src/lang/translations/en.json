@@ -703,5 +703,24 @@
     "Bar": "Bar"
   },
   "applyFilter": "Apply Filter",
-  "in": "in"
+  "in": "in",
+  "reduce" : "Reduce",
+  "read_more" : "Read more",
+  "our_options" : "Our Options",
+  "discovery..." : "Discover our selection carefully designed for your comfort",
+  "area" : "Area",
+  "peoples" : "peoples",
+  "people" : "people",
+  "night": "Night",
+  "book_now" : "Book now",
+  "no_schedule_available" : "No schedule available",
+  "opening" : "Opening",
+  "equipment" : "Equipment",
+  "service_included" : "Services included",
+  "book" : "Book",
+  "no_room" : "No rooms match your criteria.",
+  "please_change" : "Please change your filters.",
+  "see_more_review" : "See more reviews",
+  "customer_review" : "Customer Reviews",
+  "discovery_experiance" : "Discover our customers' authentic experiences and detailed feedback."
 }
