@@ -151,7 +151,7 @@ const handleChange = (event) => {
                     <input type="tel" name="phone_number" id="phone_number"
                         class="w-full px-2 py-3 mt-1 border border-gray-300 rounded-lg focus:ring-2 sm:text-sm"
                         :class="phone_numberValidFormat ? '' : 'border-red-500'" placeholder="640404040"
-                        :value="formData.phone_number" @input="handleChange" required /> <span v-if="!emailValidFormat" class="text-red-500 text-sm">{{ $t('alert.validations.phone_number') }}</span>
+                        :value="formData.phone_number" @input="handleChange" required /> <span v-if="!phone_numberValidFormat" class="text-red-500 text-sm">{{ $t('alert.validations.phone_number') }}</span>
                 </div>
 
                 <div class="sm:col-span-3">

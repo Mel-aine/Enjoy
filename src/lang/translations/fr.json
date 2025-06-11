@@ -129,7 +129,7 @@
     "title": "Service enregistré avec succès!",
     "description": "Votre service a été ajouté à notre base de données.",
     "noThanks": "Non Merci!",
-    "backToHotelManagement": "Retour à la gestion de l'hôtel"
+    "backToHotelManagement": "Aller à la gestion de l'hôtel"
   },
   "countries": {
     "united_states": "États Unis",
@@ -402,6 +402,7 @@
   "resultat": "Résultat",
   "phrase": "Des frais de service seront ajoutés à chaque réservation",
   "warnigSearch": "La date de retour doit être postérieure à la date d'aller.",
+  "emptySearch": "Aucun résultat trouvé",
   "appServices": {
     "agency": {
       "organizeYourTrip": "Organisez votre voyage",
@@ -425,6 +426,7 @@
       "tomorrow": "Demain"
     },
     "hotel": {
+      "checkAviabilty": "Vérifier la disponibilité",
       "searchOthersPlaces": "Rechercher avec d'autres lieux",
       "noHotelsFound": "Aucun hôtel trouvé",
       "timeBeforeAutoCancel": "restant avant l'annulation",

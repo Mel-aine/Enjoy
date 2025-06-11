@@ -438,7 +438,7 @@ onMounted(() => {
 const handleSearch = () => {
 
   if (!leftValue.value || !rightValue.value) {
-    console.warn("Veuillez remplir les deux champs.");
+    alert(t('emptySearch'));
     return;
   }
 

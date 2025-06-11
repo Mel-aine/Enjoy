@@ -3,8 +3,8 @@ import { defineStore } from "pinia";
 export const useMIHStore = defineStore("MIH", {
   state: () => ({
     hotelId: null,
-    this_hotel: null,
     isListed: true,
+    this_hotel: null,
     isSingleBooking: false,
     isPaymentStepBooking: false,
     isConfirmedBooking: false,
@@ -28,7 +28,6 @@ export const useMIHStore = defineStore("MIH", {
 
   actions: {
     listHotel(){
-      this.isListed = true;
       this.isSingleBooking = false;
     },
 
@@ -36,21 +35,18 @@ export const useMIHStore = defineStore("MIH", {
       this.isSingleBooking = true;
       this.isPaymentStepBooking = false;
       this.isConfirmedBooking = false;
-      this.isListed = false;
     },
 
     paymentStepBooking() {
       this.isSingleBooking = false;
       this.isPaymentStepBooking = true;
       this.isConfirmedBooking = false;
-      this.isListed = false;
     },
 
     confirmedBooking() {
       this.isSingleBooking = false;
       this.isPaymentStepBooking = false;
       this.isConfirmedBooking = true;
-      this.isListed = false;
     },
     getHotelId(hotelId) {
       this.hotelId = hotelId;

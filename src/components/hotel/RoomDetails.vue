@@ -43,7 +43,7 @@
     <div class="p-6">
       <div class="flex items-start">
         <!-- Image at the beginning -->
-        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470"
+        <img :src='hotelStore.this_hotel?.images?.[0] || "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470"' 
           alt="Room" class="w-48 h-40 object-cover rounded-lg mr-6" />
 
         <!-- Content beside the image -->
@@ -676,8 +676,8 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router';
 
-const { t } = useI18n()
 import {
   DumbbellIcon,
   XIcon,
@@ -702,7 +702,8 @@ import "vue-skeletor/dist/vue-skeletor.css"
 import LoadingSpinner from '@/components/spiner/LoaodingSpinner.vue';
 import { validateFirstName, validateLastName, validateEmail, validatePhoneNumber } from '@/utils/functions';
 // import { useI18n } from 'vue-i18n';
-
+const router = useRouter()
+const { t } = useI18n()
 const defaultValues = {
   firstName: '',
   lastName: '',
@@ -852,6 +853,7 @@ const setSelectedParkingType = (type) => {
 const handleBack = () => {
   emit('back');
   hotelStore.listHotel();
+  router.back()                
   console.log('handleBack');
 };
 // const firstNameValid = ref(null);
@@ -889,7 +891,12 @@ const handleBack = () => {
 
 // };
 const handleNext = () => {
-  if (validateFirstName(firstName) &&
+  firstNameTouched.value = true;
+  lastNameTouched.value = true;
+  emailTouched.value = true;
+  phoneTouched.value = true;
+
+  if (validateFirstName(firstName) && 
     validateLastName(lastName) &&
     validateEmail(emailAddress) &&
     validatePhoneNumber(phoneNumber)) {
