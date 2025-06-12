@@ -1,5 +1,5 @@
 <script setup>
-import { ref,watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
 
 // import Header from '@/components/HeaderHotel.vue'
@@ -10,7 +10,7 @@ import SearchHotel from '@/components/search/SearchHotel.vue'
 import { useMIHStore } from '@/stores/manageHotelInterface';
 import BookingFlow from '@/components/hotel/BookingFlow.vue'
 import { useRouter } from 'vue-router';
-import {useDataStore} from '@/stores/dataStore'
+import { useDataStore } from '@/stores/dataStore'
 
 
 const router = useRouter();
@@ -109,7 +109,7 @@ const handleSortChange = (option) => {
 
 watch(() => route.params.city, (newCity) => {
   // chaque fois que la ville change => tu mets à jour les données
-    console.log("🔁 Ville changée :", newCity); // Ajoute ceci
+  console.log("🔁 Ville changée :", newCity); // Ajoute ceci
 
   searchParams.value.location = newCity;
   // ici tu peux relancer la recherche ou un appel API
@@ -117,7 +117,9 @@ watch(() => route.params.city, (newCity) => {
 </script>
 
 <template>
-    <div class="mt-20"><SearchHotel @search="handleSearch"/></div>
+  <div class="mt-20">
+    <SearchHotel @search="handleSearch" />
+  </div>
   <div class="min-h-screen bg-gray-50">
     <main class="max-w-7xl mx-auto px-4 py-20">
       <!-- <SearchHotel /> -->
@@ -126,40 +128,41 @@ watch(() => route.params.city, (newCity) => {
 
         <div v-show="hotelStore.isListed" class="w-full  md:w-1/4 ">
           <router-link to="/viewInMap" class="relative hidden md:block">
-          <div class="max-w-sm rounded-md mb-4 border bg-white ">
-            <div class="w-full rounded border border-gray-300"> <Map :places="hotels" size="sm" :showMarkers="false"/></div>
-            <div class="border-b"></div>
-            <div class="px-6 py-4">
-              <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
+            <div class="max-w-sm rounded-md mb-4 border bg-white ">
+              <div class="w-full rounded border border-gray-300"> <Map :places="hotels" size="sm"
+                  :showMarkers="false" /></div>
+              <div class="border-b"></div>
+              <div class="px-6 py-4">
+                <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
+              </div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
 
-        <router-link to="/viewInMap" class="md:hidden">
-          <div class="max-w-sm rounded-md mb-4 border bg-white">
-            <!-- <div class="w-full h-[200px] md:h-[500px] lg:h-[100px] ">
+          <router-link to="/viewInMap" class="md:hidden">
+            <div class="max-w-sm rounded-md mb-4 border bg-white">
+              <!-- <div class="w-full h-[200px] md:h-[500px] lg:h-[100px] ">
                 <MapView />
             </div> -->
-            <div class="border-b"></div>
-            <div class="px-6 py-4">
-              <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
+              <div class="border-b"></div>
+              <div class="px-6 py-4">
+                <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
+              </div>
             </div>
+          </router-link>
+          <div class=" md:top-4 md:sticky">
+            <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
           </div>
-        </router-link>
-        <div class=" md:top-4 md:sticky"> 
-          <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
-        </div>
         </div>
 
         <!-- Hotel List -->
         <div v-show="hotelStore.isListed" class="w-full md:w-3/4">
-          <HotelList :key="searchParams.location" :searchParams="searchParams" :filters="activeFilters" :sortOption="sortOption"
-            @sortChange="handleSortChange" />
+          <HotelList :key="searchParams.location" :searchParams="searchParams" :filters="activeFilters"
+            :sortOption="sortOption" @sortChange="handleSortChange" />
         </div>
       </div>
-       <!-- <div v-show="hotelStore.isSingleBooking">
-          <BookingFlow></BookingFlow>
-      </div> -->
+      <div v-show="hotelStore.isSingleBooking">
+        <BookingFlow></BookingFlow>
+      </div>
       <!-- <div v-show="hotelStore.isPaymentStepBooking">
 
       </div>
