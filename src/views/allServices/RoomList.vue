@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="rooms.length > 0">
-      <!-- Mobile view -->
+      <!-- Mobile view 
       <div class="space-y-4 md:hidden">
         <div v-for="room in rooms" :key="room.id" class="bg-white rounded-lg shadow-md p-4">
           <div class="relative">
@@ -48,75 +48,72 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
 
       <!-- Desktop view -->
       <div class="hidden md:block overflow-x-auto">
         <table class="w-full border-collapse">
           <thead class="bg-purple-100">
             <tr class="text-left">
-              <th class="px-6 py-4 text-sm font-semibold text-gray-600">{{ $t('room') }}</th>
+              <th class="px-6 py-4 text-sm font-semibold text-gray-600">{{ $t('roomType') }}</th>
               <th class="px-6 py-4 text-sm font-semibold text-gray-600">{{ $t('capacity') }}</th>
               <th class="px-6 py-4 text-sm font-semibold text-gray-600">{{ $t('service_included') }}</th>
               <th class="px-6 py-4 text-sm font-semibold text-gray-600 text-right">{{ $t('pricePerNight') }}</th>
-              <th class="px-6 py-4 text-sm font-semibold text-gray-600 text-right">{{ $t('availability') }}</th>
+              <th class="px-6 py-4 text-sm font-semibold text-gray-600 text-right">{{ $t('Sélectionner des chambres') }}
+              </th>
+              <th class="px-6 py-4 text-sm font-semibold text-gray-600 text-right">{{ $t('') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <tr v-for="room in rooms" :key="room.id" class="bg-white hover:bg-gray-50 transition-colors">
-              <td class="px-6 py-4">
-                <div class="flex items-start space-x-4">
-                  <button @click="openRoomModal(room)" class=" block focus:outline-none">
-                    <img :src="images" :alt="room.productName" class="w-24 h-20 object-cover rounded-lg" />
-                  </button>
-                  <div>
-                    <button @click="openRoomModal(room)">
-                      <h3 class="font-semibold text-gray-800">{{ room.productName }}</h3>
-                    </button>
-                    <p class="text-sm text-gray-600 mt-1">{{ room.description }}</p>
-                    <div class="flex items-center mt-1 text-sm text-gray-500">
-                      <TrendingUp class="w-3.5 h-3.5 mr-1" />
-                      <span>{{ getRoomDetail(room, 'Room Size (sqm)') }} m²</span>
+            <template v-for="type in rooms" :key="type.accommodationType">
+              <template tr v-for="gp in type.groups" :key="gp.accommodationType">
+                <tr v-for="room in gp.products" :key="room.id" class="bg-white hover:bg-gray-50 transition-colors">
+                  <td class="px-6 py-4">{{ gp.accommodationType }}</td>
+                  <td class="px-6 py-4">
+                    <div class="items-start text-sm text-gray-600 inline-flex">
+                      <Users class="w-4 h-4 mr-2" />
+                      {{ getRoomDetail(room, 'Maximum Occupancy') }} {{ $t('people') }}
+                      {{ getRoomDetail(room, 'Maximum Occupancy') > 1 ? 's' : '' }}
+
                     </div>
-                  </div>
-                </div>
-              </td>
-              <td class="px-6 py-4">
-                <div class="items-start text-sm text-gray-600 inline-flex">
-                  <Users class="w-4 h-4 mr-2" />
-                  {{ getRoomDetail(room, 'Maximum Occupancy') }} {{ $t('people') }}
-                  {{ getRoomDetail(room, 'Maximum Occupancy') > 1 ? 's' : '' }}
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class="flex flex-column gap-2">
 
-                </div>
-              </td>
-              <td class="px-6 py-4">
-                <div class="flex flex-column gap-2">
-
-                  <div v-for="(option, index) in room.options.slice(0, 3)" :key="index"
-                    class="flex items-center text-sm text-gray-600">
-                    <component :is="getOptionIcon(option.optionName)" class="w-4 h-4 mr-1 text-purple-500" />
-                    <span>{{ option.optionName }}: {{ option.value }}</span>
-                  </div>
+                      <div v-for="(option, index) in room.options.slice(0, 3)" :key="index"
+                        class="flex items-center text-sm text-gray-600">
+                        <component :is="getOptionIcon(option.option.optionName)" class="w-4 h-4 mr-1 text-purple-500" />
+                        <span>{{ option.optionName }}: {{ option.value }}</span>
+                      </div>
 
 
-                  <span v-if="room.options.length > 3" class="text-sm text-purple-600">
-                    +{{ room.options.length - 3 }}
-                  </span>
-                </div>
-              </td>
-              <td class="px-6 py-4 text-right">
-                <div class="text-lg font-bold text-gray-800">
-                  {{ formatPrice(room.price) }}
-                </div>
-                <!-- <div class="text-sm text-gray-600">Taxes incluses</div> -->
-              </td>
-              <td class="px-6 py-4 text-right">
-                <button @click="booking(room)" class="
+                      <span v-if="room.options.length > 3" class="text-sm text-purple-600">
+                        +{{ room.options.length - 3 }}
+                      </span>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <div class="text-lg font-bold text-gray-800">
+                      {{ formatPrice(room.price) }}
+                    </div>
+                    <!-- <div class="text-sm text-gray-600">Taxes incluses</div> -->
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <select>
+                      <option value="0">0</option>
+                      <option v-for="i in gp.count" :value="i">{{ i }}</option>
+                    </select>
+                  </td>
+                  <td class="px-6 py-4 text-right">
+                    <button @click="booking(room)" class="
                     px-6 py-2 rounded-md text-white text-sm font-medium transition bg-orange-600 hover:bg-orange-700 ">
-                  {{ $t('book') }}
-                </button>
-              </td>
-            </tr>
+                      {{ $t('book') }}
+                    </button>
+                  </td>
+                </tr>
+              </template>
+
+            </template>
           </tbody>
         </table>
       </div>

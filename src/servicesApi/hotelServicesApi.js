@@ -36,7 +36,7 @@ export const getServicesCategoryIdBy = (id) => {
 // }
 
 export const getAllServicesByServiceId = (serviceId) => {
-  return axios.get(`${API_URL}/service_product_options`,{params: { serviceId }})
+  return axios.get(`${API_URL}/service_product_options`, { params: { serviceId } })
 }
 
 export const getOptionsByServiceId = (id) => {
@@ -58,7 +58,16 @@ export const makePayment = (paymentData) => {
 
 
 //Categories Service Api start
-export const getCategories  = () => {
+export const getCategories = () => {
   return axios.get(`${API_URL}/category`)
 }
 //Categories Service Api end
+
+
+
+//// this function is used to getProduct grouped
+
+export const getServiceProductGrouped = (hotelId) => {
+  // const params = { address, start_date, end_date, guest_count };
+  return axios.get(`${API_URL}/services/${hotelId}/products/grouped`);
+};

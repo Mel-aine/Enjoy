@@ -179,7 +179,7 @@ onMounted(async () => {
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
         <!-- <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span> -->
-        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotel') }}<span v-if="sortedHotels.length>1">s</span> {{ $t('appServices.hotel.found') }}<span v-if="sortedHotels.length>1">s</span></span>
+        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotel') }}<span v-if="sortedHotels.length>1">s</span> {{ $t('appServices.hotel.found') }}<span v-if="sortedHotels.length>1">s </span></span>
         <span v-if="searchParams?.location && sortedHotels.length"> {{ $t('to') }} {{ searchParams.location }}</span>
       </h2>
 
@@ -198,25 +198,7 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <!-- <div  class="bg-white p-6 rounded-lg shadow-md text-center">
-      <p class="text-lg text-gray-600">
-        {{ $t('appServices.hotel.noHotelsFound') }}
-      </p>
-      <p class="text-sm text-gray-500 mt-2">
-        {{ $t('appServices.hotel.searchOthersPlaces') }}
-      </p>
-    </div> -->
     <div >
-    <!-- <div v-if="isLoading" class="space-y-4">
-      <div v-for="i in 4" :key="`skeleton-${i}`" class="flex items-center p-4 bg-white rounded-lg shadow">
-        <Skeletor circle size="60" />
-        <div class="ml-4 flex-1">
-          <Skeletor width="60%" height="20px" />
-          <Skeletor width="40%" height="16px" class="mt-2" />
-          <Skeletor width="80%" height="14px" class="mt-2" />
-        </div>
-      </div>
-    </div> -->
 
     <!-- Liste des hôtels -->
     <div class="space-y-4">

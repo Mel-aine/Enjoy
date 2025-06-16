@@ -85,3 +85,27 @@ export function formatPrice(value) {
     minimumFractionDigits: 0
   }).format(value) // Optional: replace 'XOF' with 'FCFA'
 }
+
+export function formatDate(dateStr) {
+  const today = new Date();
+  const year = today.getFullYear();
+
+  if (dateStr.startsWith("Today")) {
+    return today.toISOString().split("T")[0];
+  }
+
+  if (dateStr.startsWith("Tomorrow")) {
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    return tomorrow.toISOString().split("T")[0];
+  }
+
+  // Cas normal : extraire "Jun 10"
+  const [_, monthStr, dayStr] = dateStr.match(/(\w+)\s(\d+)/) || [];
+  if (monthStr && dayStr) {
+    const date = new Date(`${monthStr} ${dayStr}, ${year}`);
+    return date.toISOString().split("T")[0];
+  }
+
+  return null;
+}

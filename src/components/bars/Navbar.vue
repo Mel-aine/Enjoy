@@ -23,14 +23,6 @@
 
       <!-- search bar for mobile start -->
       <div v-show="searchInMobil" id="menuToggle" class="container relative block md:hidden">
-        <!-- <button @click="wantToSearchMobil" class="relative block md:hidden bg-customRed rounded px-5 py-1 mb-2">
-          <div class="flex justify-start items-start">
-            <span class="text-black">Annuler</span>
-            <BaseIcon name="SearchX" size="20" stroke-width="2" class="ml-1 text-black" />
-          </div>
-
-
-        </button> -->
         <div class="w-full max-w-sm min-w-[200px] relative">
           <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
             <div class="flex items-center justify-between ">
@@ -98,7 +90,7 @@
                 <div class="h-6 border-l border-slate-200 ml-1"></div>
 
                 <!-- v-model manquant -->
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaound" v-model="rightValue"
+                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaounde" v-model="rightValue"
                   class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
                   <BaseIcon name="Search" size="20" stroke-width="2" />
@@ -122,20 +114,6 @@
                   </span>
                 </li>
               </ul>
-
-              <!-- <ul v-if="activeInput === 'right'" @mouseenter="activeInput = 'right'"
-                @mouseleave="handleMouseLeave('right')"
-                class="absolute right-0 w-1/2 bg-white border z-[100] rounded shadow-lg mt-1 overflow-auto">
-                <li class="flex justify-center items-center mt-3">
-                  <BaseIcon name="MapPin" customColor="text-blue-500" size="20" stroke-width="3" />
-                  <span class="text-md text-blue-400"> {{ $t('navbar.space') }} </span>
-                </li>
-                <li v-for="item in filteredRighttItems" :key="item" @mouseenter="rightValue = item.name"
-                  @click="selectItem('right', item.name)"
-                  class="px-3 py-2 text-md z-[100] hover:bg-gray-100 cursor-pointer mx-2">
-                  {{ item.name }} - {{ item.vicinity }}
-                </li>
-              </ul> -->
             </div>
 
             <CustomModal :isOpen="isModalOpen" @close="toggleModal">
@@ -339,10 +317,7 @@ import { useDataStore } from '@/stores/dataStore';
 import { useRouter, useRoute } from 'vue-router';
 import { useCategoryStore } from "@/stores/map";
 import { useMIHStore } from '@/stores/manageHotelInterface.js';
-// import FloatingInput from '../input/FloatingInput.vue';
 import BaseIcon from '../icons/BaseIcon.vue';
-// import { useRouter } from 'vue-router';
-// import backgroundImage from '@/assets/wp7388245-satisfied-wallpapers.jpg';
 import { useI18n } from 'vue-i18n';
 import { getCategories } from '@/servicesApi/hotelServicesApi.js'
 import LoaodingSpinner from '../spiner/LoaodingSpinner.vue';
@@ -408,33 +383,6 @@ onMounted(() => {
   fetchCategories();
   initMap();
 });
-// const categoryTranslations = {
-//   "Restaurants": "Restaurants",
-//   "Shopping": "Shopping",
-//   "Vie Nocturne": "Nightlife",
-//   "Sport & Loisirs": "Sport & Leisure Activities",
-//   "Salons de beauté & Spas": "Beauty Salons & Spas",
-//   "Automobile": "Automobile",
-//   "Maisons & Travaux": "Houses & Works",
-//   "Cafés & Thés": "Coffees & Teas",
-//   "Fournitures d'énergie": "Power Supplies",
-//   "Art & Loisirs": "Art & Leisure",
-//   "Santé & Médical": "Health & Medical",
-//   "Services Professionnels": "Services For Professional",
-//   "Animaux": "Pets",
-//   "Immobilier": "Real Estate",
-//   "Hôtels & séjours": "Hotels & Stays",
-//   "Services Locaux": "Local Services",
-//   "Organisation d'Événements": "Event Organization",
-//   "Services Publics & Gouvernement": "Public Services & Government",
-//   "Services Financiers": "Financial Services",
-//   "Formation & Enseignement": "Training & Teaching",
-//   "Organisations Religieuses": "Religious Organization",
-//   "Voyage": "Travel",
-//   "Médias": "Media"
-// }
-
-
 const handleSearch = () => {
 
   if (!leftValue.value || !rightValue.value) {
@@ -467,18 +415,6 @@ const handleSearch = () => {
     console.warn("Catégorie non trouvée")
   }
 }
-
-
-// const handleSearch = () => {
-//   console.log('handleSearch')
-//   getServiceIdHotel()
-
-//   // if (leftValue.value === 'Hôtels & Séjours' || leftValue.value === 'Hotels & Stays') {
-//   //   isModalOpen.value = true;
-//   // }
-//   // isModalOpen.value = true;
-//   console.log('rigth value', rightValue.value)
-// }
 
 const getServiceIdHotel = () => {
   console.log('getServiceId')
@@ -516,16 +452,6 @@ const handleSearchWithComponent = (searchFromNavbar) => {
 };
 
 
-// const scrollLeft = () => {
-//   scrollMenu.value.scrollLeft -= 100;
-//   checkScrollButtonsVisibility();
-// };
-
-// const scrollRight = () => {
-//   scrollMenu.value.scrollLeft += 100;
-//   checkScrollButtonsVisibility(); // Update visibility after scrolling
-// };
-
 const handleClickOutside = (event) => {
   if (!event.target.closest('.group')) {
     isDropdownVisible.value = false;
@@ -541,8 +467,6 @@ const leftValue = ref('');
 const rightValue = ref('');
 const activeInput = ref(null);
 const labelToCategory = ref('');
-// const mapId = import.meta.env.VITE_IDCARD;
-
 
 let leftSelected = false; // Track if a selection is made for left field
 // let rightSelected = false; // Track if a selection is made for right field

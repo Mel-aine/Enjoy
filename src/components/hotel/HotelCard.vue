@@ -122,13 +122,13 @@ const handleViewDeal = () => {
 </script>
 
 <template>
-  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+  <div class="bg-whiteoverflow-hidden border-b pb-5 z-0">
     <div class="flex flex-col md:flex-row">
       <!-- Image -->
-      <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0">
+      <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0 ">
         <img
           :src="hotel.images ? hotel.images : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'"
-          :alt="hotel.name" class="w-full h-full object-cover" />
+          :alt="hotel.name" class="w-full h-full object-cover rounded-lg" />
         <button @click="toggleFavorite"
           class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
           <HeartIcon :class="{ 'text-red-500': isFavorite, 'text-gray-500': !isFavorite }" size="20" />

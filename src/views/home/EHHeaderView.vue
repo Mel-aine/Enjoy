@@ -45,7 +45,7 @@
             <div class="h-6 border-l border-slate-200 ml-2"></div>
             <div class="flex items-center justify-between ">
 
-              <input v-model="rightValue" @click="activeInput = 'right'" placeholder="Yaoun"
+              <input v-model="rightValue" @click="activeInput = 'right'" :placeholder="$t('enter_address')"
                 class="w-full px-3 py-2 text-sm text-gray-600 placeholder:text-gray-500 focus:outline-none" />
                 <button @click="wantToSearchMobil" class="p-2 w-15">
                   <BaseIcon name="CircleX" size="20" stroke-width="2" />
@@ -99,7 +99,7 @@
                   <input
                     v-model="rightValue"
                     @mouseenter="activeInput = 'right'"
-                    placeholder="Yaoun"
+                    :placeholder="$t('enter_address')"
                     class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none"
                   />
                   <router-link to="/recherche">
@@ -146,7 +146,7 @@
                     </div>
                   </template>
                 </CustomDropdown>
-                <router-link to="/recherche/hotel"
+                <router-link to="/hotel"
                 class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
                 active-class="border-b-2 border-customRed">
                 {{ $t('hotel') }}

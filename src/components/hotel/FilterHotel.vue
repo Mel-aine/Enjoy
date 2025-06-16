@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-4 space-y-6">
+  <div class="bg-white rounded-lg  p-4 space-y-6">
     <h2 class="font-bold text-lg mb-4">{{ $t('appServices.hotel.filterBy') }} :</h2>
 
     <!-- Price Range -->

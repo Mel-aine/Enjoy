@@ -110,7 +110,7 @@ const toggleCategory = () => {
     <div v-if="showCategory"  class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 md:space-x-2 max-w-screen-lg mx-auto justify-center my-6  transition-opacity duration-700 ease-in-out">
         <div v-for="category in hiddenCategories" :key="category.id" class="flex flex-row items-center  gap-2 p-2 rounded-lg  transition-all cursor-pointer">
           <i :class="`${category.icon} text-2xl text-customRed`"></i>
-          <router-link :to="'/recherche/' + category.id" class="text-sm md:text-md sm:text-sm lg:text-lg font-semibold text-gray-700 hover:text-customBlue hover:underline truncate" >
+          <router-link :to="category.link??'/find'" class="text-sm md:text-md sm:text-sm lg:text-lg font-semibold text-gray-700 hover:text-customBlue hover:underline truncate" >
             {{ $t('categories.' + category.label) }}
           </router-link>
         </div>

@@ -136,7 +136,7 @@
                   {{ showFull ? $t("reduce") : $t('read_more') }}
                 </button>
               </div>
-              <!-- Table Horaires -->
+              <!-- Table Horaires
               <div class=" rounded-xl mt-5">
                 <div class="text-center lg:text-left">
                   <span class="text-gray-900 text-xl font-semibold">
@@ -177,7 +177,7 @@
                 <div v-else class="text-center py-4 text-gray-500">
                   {{ $t("no_schedule_available") }}
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <!-- Emplacement & Horaires -->
@@ -230,7 +230,7 @@
       </div>
 
       <div class="pb-10">
-        <RoomList :rooms="hotel.rooms || []" @selected-room="selectedRooms" @book-room="startBooking" />
+        <RoomList :rooms="groupedHome || []" @selected-room="selectedRooms" @book-room="startBooking" />
       </div>
     </section>
 
@@ -372,6 +372,7 @@ import { useServiceStore } from "@/stores/useServiceStore";
 import Amenities from "../../components/ui/Amenities.vue";
 import PhotoGallery from "../../components/ui/PhotoGallery.vue";
 import router from "../../router";
+import { getServiceProductGrouped } from "../../servicesApi/hotelServicesApi";
 
 
 const hotelStore = useServiceStore();
@@ -380,7 +381,7 @@ const hotelId = route.params.id;
 const hotel = ref({});
 const search = ref(false);
 const { t } = useI18n();
-
+const groupedHome = ref([]);
 const selectedRoom = ref(null);
 const currentImageIndex = ref(0);
 const showFull = ref(false);
@@ -462,13 +463,18 @@ function formatHour(hour) {
   return `${h}h${m}`
 }
 
-
+const getDisponibility = async () => {
+  console.log('hotelId', hotelId)
+  const response = await getServiceProductGrouped(hotelId);
+  const result = response.data ? response : { data: response }
+  groupedHome.value = result.data;
+  console.log('result', result);
+}
 
 onMounted(() => {
-  console.log('ID de l’hôtel depuis la route:', hotelId)
-  console.log('Liste des hôtels dans le store:', hotelStore.hotels)
   const foundHotel = hotelStore.hotels.find(h => String(h.id) === String(hotelId))
   hotel.value = foundHotel || { rooms: [] }
+  getDisponibility()
 })
 
 
@@ -497,4 +503,5 @@ const startBooking = (room) => {
     path: `/booking/${hotelId}/${room.id}`,
   })
 }
+
 </script>

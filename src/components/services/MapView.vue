@@ -198,7 +198,7 @@ watch(() => store.category, (newCategory) => {
 
 
     <div v-show="mapsLoaded" class="">
-      <div ref="mapRef" class="w-screen md:w-[930px] h-[900px] lg:w-full   rounded-md border border-gray-300"></div>
+      <div ref="mapRef" class="w-screen md:w-[930px] h-[88vh] lg:w-full border border-gray-300"></div>
       <p class="mt-1 text-sm text-gray-500">Cliquez sur la carte ou recherchez une adresse pour définir l'emplacement.</p>
     </div>
   </div>

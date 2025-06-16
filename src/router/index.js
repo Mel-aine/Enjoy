@@ -69,7 +69,7 @@ const router = createRouter({
       path: "/all_service/:id",
       name: "all_service",
       component: () => import("@/views/allServices/ServiceDetails.vue"),
-      meta: { hideComponent: true, showHeader2: true, showFooter2: true },
+      meta: { hideComponent: false, showHeader2: false, showFooter2: true,hiddeMap:true  },
     },
     {
       path: "/restaurant/:id",
@@ -113,7 +113,13 @@ const router = createRouter({
       name: "hotelList",
       // component: () => import('@/views/hotel/EBookingHotelView.vue'),
       component: () => import("@/views/hotel/EHotelView.vue"),
-      meta: { hideComponent: true, showHeader2: true, showFooter2: true },
+      meta: { hideComponent: false, hiddeMap:true},
+    },
+     {
+      path: "/hotels",
+      name: "hotels",
+      component: () => import("@/views/hotel/EHotelView.vue"),
+      meta: { hideComponent: false, showHeader2: false, showFooter2: false, hiddeMap:true },
     },
     {
       path: "/this.hotel",

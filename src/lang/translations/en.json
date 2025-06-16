@@ -458,7 +458,7 @@
       "high": "High",
       "to": "To",
       "guestRating": "Guest rating",
-      "found": "found ",
+      "found": "found",
       "min": "Min",
       "max": "Max",
       "beds": "Beds",
@@ -736,5 +736,6 @@
   "room": "Room",
   "pricePerNight": "Price per night",
   "availability": "Availability",
-  "notAvaible": "Not avaible"
+  "notAvaible": "Not avaible",
+  "enter_address":"Enter Address"
 }

@@ -1,0 +1,611 @@
+{
+    "sections": [
+        {
+            "type": "availability",
+            "title": "Disponibilités",
+            "options": [
+                {
+                    "label": "Ne voir que les établissements disponibles",
+                    "aria_label": "Ne voir que les établissements disponibles: 26 établissements",
+                    "name": "oos=1",
+                    "value": "oos=1",
+                    "count": 26
+                }
+            ]
+        },
+        {
+            "type": "price",
+            "title": "Votre budget (par nuit)",
+            "slider": {
+                "range_display": "De XAF 15 000 à XAF 200 000+"
+            }
+        },
+        {
+            "type": "popular",
+            "title": "Filtres populaires",
+            "options": [
+                {
+                    "label": "Réservation sans carte de crédit",
+                    "aria_label": "Réservation sans carte de crédit: 24 établissements",
+                    "name": "fc=4",
+                    "value": "fc=4",
+                    "count": 24
+                },
+                {
+                    "label": "Pas de prépaiement",
+                    "aria_label": "Pas de prépaiement: 25 établissements",
+                    "name": "fc=5",
+                    "value": "fc=5",
+                    "count": 25
+                },
+                {
+                    "label": "Annulation gratuite",
+                    "aria_label": "Annulation gratuite: 3 établissements",
+                    "name": "fc=2",
+                    "value": "fc=2",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "title": "Filtres populaires",
+            "type": "popular",
+            "options": [
+                {
+                    "label": "Réservation sans carte de crédit",
+                    "aria_label": "Réservation sans carte de crédit: 24 établissements",
+                    "name": "fc=4",
+                    "value": "fc=4",
+                    "count": 24
+                },
+                {
+                    "label": "Pas de prépaiement",
+                    "aria_label": "Pas de prépaiement: 25 établissements",
+                    "name": "fc=5",
+                    "value": "fc=5",
+                    "count": 25
+                },
+                {
+                    "label": "Annulation gratuite",
+                    "aria_label": "Annulation gratuite: 3 établissements",
+                    "name": "fc=2",
+                    "value": "fc=2",
+                    "count": 3
+                },
+                {
+                    "label": "Climatisation",
+                    "aria_label": "Climatisation: 26 établissements",
+                    "name": "roomfacility=11",
+                    "value": "roomfacility=11",
+                    "count": 26
+                },
+                {
+                    "label": "Appartement",
+                    "aria_label": "Appartement: 23 établissements",
+                    "name": "ht_id=201",
+                    "value": "ht_id=201",
+                    "count": 23
+                },
+                {
+                    "label": "Hôtel",
+                    "aria_label": "Hôtel: 1 établissement",
+                    "name": "ht_id=204",
+                    "value": "ht_id=204",
+                    "count": 1
+                },
+                {
+                    "label": "4 étoiles",
+                    "aria_label": "4 étoiles: 1 établissement",
+                    "name": "class=4",
+                    "value": "class=4",
+                    "count": 1
+                },
+                {
+                    "label": "Connexion Wi-Fi gratuite",
+                    "aria_label": "Connexion Wi-Fi gratuite: 26 établissements",
+                    "name": "hotelfacility=107",
+                    "value": "hotelfacility=107",
+                    "count": 26
+                }
+            ]
+        },
+        {
+            "title": "Repas",
+            "type": "mealplan",
+            "options": [
+                {
+                    "label": "Logement avec cuisine",
+                    "aria_label": "Logement avec cuisine: 25 établissements",
+                    "name": "mealplan=999",
+                    "value": "mealplan=999",
+                    "count": 25
+                },
+                {
+                    "label": "Petit-déjeuner compris",
+                    "aria_label": "Petit-déjeuner compris: 1 établissement",
+                    "name": "mealplan=1",
+                    "value": "mealplan=1",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "title": "Équipements",
+            "type": "hotelfacility",
+            "options": [
+                {
+                    "label": "Parking",
+                    "aria_label": "Parking: 24 établissements",
+                    "name": "hotelfacility=2",
+                    "value": "hotelfacility=2",
+                    "count": 24
+                },
+                {
+                    "label": "Restaurant",
+                    "aria_label": "Restaurant: 1 établissement",
+                    "name": "hotelfacility=3",
+                    "value": "hotelfacility=3",
+                    "count": 1
+                },
+                {
+                    "label": "Service d'étage",
+                    "aria_label": "Service d'étage: 3 établissements",
+                    "name": "hotelfacility=5",
+                    "value": "hotelfacility=5",
+                    "count": 3
+                },
+                {
+                    "label": "Réception ouverte 24h/24",
+                    "aria_label": "Réception ouverte 24h/24: 11 établissements",
+                    "name": "hotelfacility=8",
+                    "value": "hotelfacility=8",
+                    "count": 11
+                },
+                {
+                    "label": "Centre de remise en forme",
+                    "aria_label": "Centre de remise en forme: 1 établissement",
+                    "name": "hotelfacility=11",
+                    "value": "hotelfacility=11",
+                    "count": 1
+                },
+                {
+                    "label": "Chambres non-fumeurs",
+                    "aria_label": "Chambres non-fumeurs: 11 établissements",
+                    "name": "hotelfacility=16",
+                    "value": "hotelfacility=16",
+                    "count": 11
+                },
+                {
+                    "label": "Navette aéroport",
+                    "aria_label": "Navette aéroport: 6 établissements",
+                    "name": "hotelfacility=17",
+                    "value": "hotelfacility=17",
+                    "count": 6
+                },
+                {
+                    "label": "Chambres familiales",
+                    "aria_label": "Chambres familiales: 10 établissements",
+                    "name": "hotelfacility=28",
+                    "value": "hotelfacility=28",
+                    "count": 10
+                },
+                {
+                    "label": "Bain à remous/jacuzzi",
+                    "aria_label": "Bain à remous/jacuzzi: 1 établissement",
+                    "name": "hotelfacility=63",
+                    "value": "hotelfacility=63",
+                    "count": 1
+                },
+                {
+                    "label": "Connexion Wi-Fi gratuite",
+                    "aria_label": "Connexion Wi-Fi gratuite: 26 établissements",
+                    "name": "hotelfacility=107",
+                    "value": "hotelfacility=107",
+                    "count": 26,
+                    "checked": true
+                },
+                {
+                    "label": "Borne de recharge pour les véhicules électriques",
+                    "aria_label": "Borne de recharge pour les véhicules électriques: 1 établissement",
+                    "name": "hotelfacility=182",
+                    "value": "hotelfacility=182",
+                    "count": 1
+                },
+                {
+                    "label": "Piscine",
+                    "aria_label": "Piscine: 25 établissements",
+                    "name": "hotelfacility=433",
+                    "value": "hotelfacility=433",
+                    "count": 25
+                }
+            ]
+        },
+        {
+            "title": "Type d'établissement",
+            "type": "ht_id",
+            "options": [
+                {
+                    "label": "Maisons/Appartements entiers",
+                    "aria_label": "Maisons/Appartements entiers: 25 établissements",
+                    "name": "privacy_type=3",
+                    "value": "privacy_type=3",
+                    "count": 25
+                },
+                {
+                    "label": "Appartement",
+                    "aria_label": "Appartement: 23 établissements",
+                    "name": "ht_id=201",
+                    "value": "ht_id=201",
+                    "count": 23
+                },
+                {
+                    "label": "Villa",
+                    "aria_label": "Villa: 2 établissements",
+                    "name": "ht_id=213",
+                    "value": "ht_id=213",
+                    "count": 2
+                },
+                {
+                    "label": "Hôtel",
+                    "aria_label": "Hôtel: 1 établissement",
+                    "name": "ht_id=204",
+                    "value": "ht_id=204",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "title": "Chambres et salles de bains",
+            "type": "unit_config_grouped",
+            "options": [
+                {
+                    "label": "Chambres",
+                    "name": "entire_place_bedroom_count",
+                    "type": "stepper",
+                    "min": 0,
+                    "max": 4,
+                    "value": 0
+                },
+                {
+                    "label": "Salles de bains",
+                    "name": "min_bathrooms",
+                    "type": "stepper",
+                    "min": 0,
+                    "max": 6,
+                    "value": 0
+                }
+            ]
+        },
+        {
+            "title": "Catégorie",
+            "type": "class",
+            "description": "Trouvez des hôtels et des locations de vacances de haute qualité.",
+            "options": [
+                {
+                    "label": "3 étoiles",
+                    "id": ":ri6:",
+                    "name": "class=3",
+                    "value": "class=3",
+                    "count": 2
+                },
+                {
+                    "label": "4 étoiles",
+                    "id": ":ri8:",
+                    "name": "class=4",
+                    "value": "class=4",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "title": "Lits souhaités",
+            "type": "tdb",
+            "options": [
+                {
+                    "label": "Lits jumeaux",
+                    "id": ":rig:",
+                    "name": "tdb=2",
+                    "value": "tdb=2",
+                    "count": 4
+                },
+                {
+                    "label": "Lit double",
+                    "id": ":rii:",
+                    "name": "tdb=3",
+                    "value": "tdb=3",
+                    "count": 24
+                }
+            ]
+        },
+        {
+            "title": "Équipements de l'hébergement",
+            "type": "fc",
+            "options": [
+                {
+                    "label": "Piscine privée",
+                    "id": ":rip:",
+                    "name": "=93",
+                    "value": "=93",
+                    "count": 26
+                },
+                {
+                    "label": "Climatisation",
+                    "id": ":r13l:",
+                    "name": "=11",
+                    "value": "=11",
+                    "count": 26
+                },
+                {
+                    "label": "Salle de bains privative",
+                    "id": ":r13n:",
+                    "name": "=38",
+                    "value": "=38",
+                    "count": 19
+                },
+                {
+                    "label": "Lave-linge",
+                    "id": ":r13p:",
+                    "name": "=34",
+                    "value": "=34",
+                    "count": 15
+                },
+                {
+                    "label": "Bain à remous",
+                    "id": ":r13r:",
+                    "name": "=14",
+                    "value": "=14",
+                    "count": 1
+                },
+                {
+                    "label": "Vue",
+                    "id": ":r13t:",
+                    "name": "=81",
+                    "value": "=81",
+                    "count": 19
+                },
+                {
+                    "label": "Réfrigérateur",
+                    "id": ":r13v:",
+                    "name": "=22",
+                    "value": "=22",
+                    "count": 11
+                },
+                {
+                    "label": "Télévision à écran plat",
+                    "id": ":r141:",
+                    "name": "=75",
+                    "value": "=75",
+                    "count": 25
+                },
+                {
+                    "label": "Baignoire",
+                    "id": ":rnl:",
+                    "name": "=5",
+                    "value": "=5",
+                    "count": 4
+                },
+                {
+                    "label": "Toilettes",
+                    "id": ":ro1:",
+                    "name": "=31",
+                    "value": "=31",
+                    "count": 11
+                },
+                {
+                    "label": "Étages supérieurs accessibles par ascenseur",
+                    "id": ":rnh:",
+                    "name": "=132",
+                    "value": "=132",
+                    "count": 2
+                },
+                {
+                    "label": "Douche",
+                    "id": ":r143:",
+                    "name": "=4",
+                    "value": "=4",
+                    "count": 10
+                },
+                {
+                    "label": "Serviettes",
+                    "id": ":r145:",
+                    "name": "=124",
+                    "value": "=124",
+                    "count": 11
+                },
+                {
+                    "label": "Sauna",
+                    "id": ":r147:",
+                    "name": "=92",
+                    "value": "=92",
+                    "count": 1
+                },
+                {
+                    "label": "Télévision",
+                    "id": ":rnt:",
+                    "name": "=8",
+                    "value": "=8",
+                    "count": 10
+                },
+                {
+                    "label": "Cheminée",
+                    "id": ":r149:",
+                    "name": "=71",
+                    "value": "=71",
+                    "count": 1
+                },
+                {
+                    "label": "Barbecue",
+                    "id": ":r14b:",
+                    "name": "=99",
+                    "value": "=99",
+                    "count": 2
+                },
+                {
+                    "label": "Linge de maison",
+                    "id": ":r14d:",
+                    "name": "=125",
+                    "value": "=125",
+                    "count": 5
+                },
+                {
+                    "label": "Piscine à débordement",
+                    "id": ":r14f:",
+                    "name": "=158",
+                    "value": "=158",
+                    "count": 3
+                },
+                {
+                    "label": "Micro-ondes",
+                    "id": ":r14h:",
+                    "name": "=32",
+                    "value": "=32",
+                    "count": 10
+                },
+                {
+                    "label": "Bassin profond",
+                    "id": ":r14j:",
+                    "name": "=162",
+                    "value": "=162",
+                    "count": 3
+                },
+                {
+                    "label": "Couverture de piscine",
+                    "id": ":rnb:",
+                    "name": "=165",
+                    "value": "=165",
+                    "count": 1
+                },
+                {
+                    "label": "Piscine sur le toit",
+                    "id": ":rnr:",
+                    "name": "=157",
+                    "value": "=157",
+                    "count": 3
+                },
+                {
+                    "label": "Four",
+                    "id": ":r14l:",
+                    "name": "=96",
+                    "value": "=96",
+                    "count": 7
+                },
+                {
+                    "label": "Moustiquaire",
+                    "id": ":rmr:",
+                    "name": "=90",
+                    "value": "=90",
+                    "count": 1
+                }
+            ]
+        },
+        {
+            "title": "Note des commentaires",
+            "type": "review_score",
+            "options": [
+                {
+                    "label": "Fabuleux : 9+",
+                    "id": ":r24l:",
+                    "name": "review_score=90",
+                    "value": "review_score=90",
+                    "count": 1
+                },
+                {
+                    "label": "Très bien : 8+",
+                    "id": ":rj2:",
+                    "name": "review_score=80",
+                    "value": "review_score=80",
+                    "count": 2
+                },
+                {
+                    "label": "Bien : 7+",
+                    "id": ":rj4:",
+                    "name": "review_score=70",
+                    "value": "review_score=70",
+                    "count": 4
+                },
+                {
+                    "label": "Agréable : 6+",
+                    "id": ":rj6:",
+                    "name": "review_score=60",
+                    "value": "review_score=60",
+                    "count": 7
+                }
+            ]
+        },
+        {
+            "title": "Conditions de réservation",
+            "type": "fc",
+            "options": [
+                {
+                    "label": "Annulation gratuite",
+                    "id": ":rj9:",
+                    "name": "fc=2",
+                    "value": "fc=2",
+                    "count": 3
+                },
+                {
+                    "label": "Réservation sans carte de crédit",
+                    "id": ":rjb:",
+                    "name": "fc=4",
+                    "value": "fc=4",
+                    "count": 24
+                },
+                {
+                    "label": "Pas de prépaiement",
+                    "id": ":rjd:",
+                    "name": "fc=5",
+                    "value": "fc=5",
+                    "count": 25
+                }
+            ]
+        },
+        {
+            "title": "Accessibilité de l'hébergement",
+            "type": "accessible_room_facilities",
+            "options": [
+                {
+                    "label": "Logement entièrement situé au rez-de-chaussée",
+                    "id": ":rkj:",
+                    "name": "accessible_room_facilities=131",
+                    "value": "accessible_room_facilities=131",
+                    "count": 1
+                },
+                {
+                    "label": "Étages supérieurs accessibles par ascenseur",
+                    "id": ":rkl:",
+                    "name": "accessible_room_facilities=132",
+                    "value": "accessible_room_facilities=132",
+                    "count": 2
+                },
+                {
+                    "label": "Logement entièrement accessible en fauteuil roulant",
+                    "id": ":rkn:",
+                    "name": "accessible_room_facilities=134",
+                    "value": "accessible_room_facilities=134",
+                    "count": 2
+                },
+                {
+                    "label": "Douche accessible en fauteuil roulant",
+                    "id": ":rkt:",
+                    "name": "accessible_room_facilities=149",
+                    "value": "accessible_room_facilities=149",
+                    "count": 1
+                },
+                {
+                    "label": "Douche à l'italienne",
+                    "id": ":rkv:",
+                    "name": "accessible_room_facilities=150",
+                    "value": "accessible_room_facilities=150",
+                    "count": 2
+                },
+                {
+                    "label": "Lavabo bas adapté aux personnes à mobilité réduite",
+                    "id": ":rl3:",
+                    "name": "accessible_room_facilities=152",
+                    "value": "accessible_room_facilities=152",
+                    "count": 1
+                }
+            ]
+        }
+    ]
+}
