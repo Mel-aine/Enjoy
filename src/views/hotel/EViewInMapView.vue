@@ -18,7 +18,7 @@
 <script setup>
 
 import EServiceList from '../../components/ui/EServiceList.vue';
-import EserviceMapList from '../../components/ui/EserviceMapList.vue';
+import EServiceMapList from '../../components/ui/EServiceMapList.vue';
 import EServiceFilter from '../../components/ui/EServiceFilter.vue';
 import { ref } from 'vue';
 const currentAddress = ref(null);
