@@ -22,23 +22,23 @@ const showHeader2 = computed(() => $route.meta.showHeader2);
   <!-- ===== Page Wrapper Start ===== -->
   <!-- ===== Header Start ===== -->
   <div class="bg- customNeutreColor">
-    <div v-if="!showNavbar" > <!-- Cache la Navbar sur les routes définies -->
+    <div v-if="!showNavbar"> <!-- Cache la Navbar sur les routes définies -->
       <Navbar />
     </div>
-    <EHHeaderView v-if="showHeader2"/>
+    <EHHeaderView v-if="showHeader2" />
     <!-- ===== Header End ===== -->
 
-        <!-- ===== Main Content Start ===== -->
-        <main>
-          <div class=" ">
-            <slot></slot>
-          </div>
-        </main>
-        <!-- ===== Main Content End ===== -->
+    <!-- ===== Main Content Start ===== -->
+    <main>
+      <div class=" ">
+        <slot></slot>
+      </div>
+    </main>
+    <!-- ===== Main Content End ===== -->
   </div>
   <!-- ===== Page Wrapper End ===== -->
   <div v-if="showFooter2">
-   <Footer />
+    <Footer />
   </div>
 </template>
 
