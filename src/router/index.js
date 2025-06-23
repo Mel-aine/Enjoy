@@ -38,7 +38,13 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: () => import("../views/user/ELoginView.vue"),
+      component: () => import("@/views/user/ELoginView.vue"),
+      meta: { hideComponent: true },
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: () => import("../views/user/ERegisterView.vue"),
       meta: { hideComponent: true },
     },
     {
@@ -50,7 +56,7 @@ const router = createRouter({
     {
       path: "/hotel/test",
       name: "DetailHotel",
-      component: () => import("../views/hotel/ReservationListView.vue.vue"),
+      component: () => import("../views/hotel/ReservationListView.vue"),
       meta: { hiddeMap: true, showFooter2: true },
     },
     {

@@ -38,7 +38,7 @@
       <div class="">
         <Filter @optionFilter="optionToSort" @nothing="reDoSort" @price="priceFilter" />
 
-      </div> 
+      </div>
 
     </div>
 
@@ -72,28 +72,10 @@
           <div v-for="item in filteredPlaces" :key="item.id">
 
           <RestaurantList :filters="filteredPlaces"/>
-          
+
           </div>
         </div>
-        <!-- Pagination -->
-       <!-- <div class="flex justify-center space-x-4">
 
-        <button
-          :disabled="currentPage === 1"
-          @click="currentPage--"
-          class="text-gray-500 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-gray-200"
-        >
-          {{ $t('previous') }}
-        </button>
-
-         <button
-          :disabled="currentPage === totalPages"
-          @click="currentPage++"
-          class="text-gray-500 text-sm font-semibold px-4 py-2 rounded-lg hover:bg-gray-200"
-        >
-          {{ $t('next') }}
-      </button>
-       </div>-->
        <div class="flex justify-center items-center space-x-2 mt-6">
       <!-- Bouton Précédent -->
           <button
@@ -215,7 +197,7 @@ const helpSort = (length) => {
       sortedRestaurantList.value = sortedRestaurant(sortedRestaurantOption.value[i])
     }
   }else{
-    filteredPlaces.value = allRestaurant.value; 
+    filteredPlaces.value = allRestaurant.value;
   }
 }
 
@@ -291,10 +273,10 @@ watchEffect(() => {
 //   try {
 //     isLoading.value = true
 //     const response = await getServicesCategoryIdBy(16)
-    
+
 //     // Assurez-vous que la réponse contient bien un tableau data
 //     services.value = response.data ? response : { data: response }
-    
+
 //     console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value)))
 //   } catch (error) {
 //     console.error('Erreur lors du chargement:', error)

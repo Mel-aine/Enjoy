@@ -143,7 +143,7 @@ onMounted(async () => {
 
   // Construction des params
   const params = {
-    address: encodeURIComponent(dataStore.searchFrom.destination),
+    address: dataStore.searchFrom.destination,
     start_date: formatDate(dataStore.searchFrom.dateAller),
     end_date: formatDate(dataStore.searchFrom.dateRetour),
     guest_count,
@@ -171,6 +171,37 @@ onMounted(async () => {
   } finally {
     isLoading.value = false
   }
+})
+
+
+const currentPage = ref(1)
+const servicesPerPage = ref(3)
+
+const totalPages = computed(() =>
+  Math.ceil(sortedHotels.value.length / servicesPerPage.value)
+)
+
+const paginatedServices = computed(() => {
+  const start = (currentPage.value - 1) * servicesPerPage.value
+  const end = start + servicesPerPage.value
+  return sortedHotels.value.slice(start, end)
+})
+
+const visiblePages = computed(() => {
+  const total = totalPages.value
+  const current = currentPage.value
+  const delta = 2
+  let start = Math.max(1, current - delta)
+  let end = Math.min(total, current + delta)
+
+  if (current - delta <= 0) {
+    end = Math.min(total, end + (delta - current + 1))
+  }
+  if (current + delta >= total) {
+    start = Math.max(1, start - (current + delta - total))
+  }
+
+  return Array.from({ length: end - start + 1 }, (_, i) => start + i)
 })
 </script>
 
@@ -203,7 +234,46 @@ onMounted(async () => {
     <!-- Liste des hôtels -->
     <div class="space-y-4">
       <template v-if="sortedHotels.length > 0">
-        <HotelCard v-for="hotel in sortedHotels" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
+        <HotelCard v-for="hotel in paginatedServices" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
+
+           <!-- Pagination -->
+              <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2 mt-8">
+                <button
+                  @click="currentPage = Math.max(1, currentPage - 1)"
+                  :disabled="currentPage === 1"
+                  class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                  </svg>
+                </button>
+
+                <div class="flex space-x-1">
+                  <button
+                    v-for="page in visiblePages"
+                    :key="page"
+                    @click="currentPage = page"
+                    :class="[
+                      'px-3 py-2 rounded-lg transition-colors',
+                      page === currentPage
+                        ? 'bg-purple-600 text-white'
+                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                    ]"
+                  >
+                    {{ page }}
+                  </button>
+                </div>
+
+                <button
+                  @click="currentPage = Math.min(totalPages, currentPage + 1)"
+                  :disabled="currentPage === totalPages"
+                  class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                  </svg>
+                </button>
+              </div>
       </template>
 
       <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">

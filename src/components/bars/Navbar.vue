@@ -161,8 +161,10 @@
         <button class="hidden md:block">
           <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
         </button>
-        <Button variant="danger" class="font-poppins">{{ $t('login') }}</Button>
-        <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button>
+        <!-- <Button @click="login" variant="danger" class="font-poppins">{{ $t('login') }}</Button> -->
+          <!-- <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button> -->
+         <router-link to="/login"  class="font-poppins bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300 p-1">{{ $t('login') }}</router-link>
+         <router-link to="/register"  class="font-poppins bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300 p-1">{{ $t('register') }}</router-link>
         <div class="relative inline-block">
           <router-link to="/hotel/test" class="block p-2 border border-black rounded-full">
             <UserIcon class="w-6 h-6" />
@@ -343,7 +345,6 @@ const scrollMenu = ref(null);
 const showLeftButton = ref(false);
 const showRightButton = ref(false);
 const searchInMobil = ref(false);
-// const router = useRouter();
 const isSidebarOpen = ref(false);
 const isModalOpen = ref(false);
 // const clickedLocation = ref(null); // Données du lieu cliqué

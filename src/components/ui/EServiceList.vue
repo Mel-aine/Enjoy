@@ -74,7 +74,7 @@ const fetchServices = async () => {
     console.log('currentPlace.value.address', currentPlace.value)
     const params = {
 
-        address: encodeURIComponent(currentPlace.value.address ?? ''),
+        address: currentPlace.value.address ?? '',
         start_date: formatDate('Today'),
         end_date: formatDate('Tomorrow'),
         guest_count,

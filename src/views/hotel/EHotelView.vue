@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch ,computed } from 'vue'
 import { useRoute } from 'vue-router';
 
 // import Header from '@/components/HeaderHotel.vue'
@@ -112,6 +112,9 @@ watch(() => route.params.city, (newCity) => {
   searchParams.value.location = newCity;
   // ici tu peux relancer la recherche ou un appel API
 }, { immediate: true });
+
+
+
 </script>
 
 <template>
@@ -143,13 +146,13 @@ watch(() => route.params.city, (newCity) => {
             <div class="max-w-sm rounded-md mb-4 border bg-white">
              <div class="w-full h-[200px] md:h-[500px] lg:h-[100px] ">
                 <MapView />
-            </div>  
+            </div>
               <div class="border-b"></div>
               <div class="px-6 py-4">
                 <div class="font-bold text-center mb-2">{{ $t('appServices.hotel.displayCard') }}</div>
               </div>
             </div>
-          </router-link> 
+          </router-link>
           <div class=" md:sticky">
             <Filters @filterChange="handleFilterChange" :activeFilters="activeFilters" />
           </div>
@@ -200,11 +203,11 @@ watch(() => route.params.city, (newCity) => {
               <HotelList :key="searchParams.location" :searchParams="searchParams" :filters="activeFilters"
                 :sortOption="sortOption" @sortChange="handleSortChange" />
             </div>
-            <div class="flex justify-center items-center space-x-2 mt-6" v-if="totalPages>1">
-              <!-- Bouton Précédent -->
+             <div class="flex justify-center items-center space-x-2 mt-6" v-if="totalPages>1">
+
               <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1" class="px-4 py-1 text-sm font-semibold rounded-lg transition duration-300
               hover:bg-gray-200 disabled:text-gray-400 disabled:bg-gray-100">
-                <!-- {{ $t('previous') }} -->
+
                 <svg class="h-8 w-8 text-orange-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
                   stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                   <path stroke="none" d="M0 0h24v24H0z" />
@@ -212,17 +215,17 @@ watch(() => route.params.city, (newCity) => {
                 </svg>
               </button>
 
-              <!-- Pagination Numérotée -->
+
               <button v-for="page in totalPages" :key="page" @click="changePage(page)" class="px-3 py-2 text-sm font-semibold rounded-lg transition duration-300
               hover:bg-gray-200"
                 :class="{ 'bg-purple-500 text-white': currentPage === page, 'text-gray-700': currentPage !== page }">
                 {{ page }}
               </button>
 
-              <!-- Bouton Suivant -->
+
               <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages" class="px-4 py-1 text-sm font-semibold rounded-lg transition duration-300
             hover:bg-gray-200 disabled:text-gray-400 disabled:bg-gray-100">
-                <!-- {{ $t('next') }} -->
+
                 <svg class="h-8 w-8 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                   <polyline points="9 18 15 12 9 6" />

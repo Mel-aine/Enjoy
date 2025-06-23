@@ -178,9 +178,9 @@
 
       <!-- Categories -->
       <!-- <div class="grid gap-6">
-      <div 
-        v-for="(category, categoryIndex) in categories" 
-        :key="categoryIndex" 
+      <div
+        v-for="(category, categoryIndex) in categories"
+        :key="categoryIndex"
         class="bg-white rounded-lg border border-gray-200 shadow-sm"
       > -->
       <!-- Card Header -->
@@ -204,7 +204,7 @@
                   <p class="text-sm font-medium text-gray-900 truncate">{{ option.optionName }}</p>
                 </div>
               </div>
-              <span 
+              <span
                 class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors"
                 :class="getValueColor(option.value)"
               >
@@ -671,7 +671,7 @@
       </div>
     </div>
   </div>
-  <LoadingSpinner v-if="hotelStore.isSpinnerDisplayed" />
+  <!-- <LoadingSpinner v-if="hotelStore.isSpinnerDisplayed" /> -->
 
 </template>
 
