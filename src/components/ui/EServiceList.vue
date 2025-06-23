@@ -25,7 +25,7 @@ const props = defineProps({
 
 const emit = defineEmits(['sortChange', 'address-change'])
 
-const serviceType = ref(serviceStore.serviceType || props.serviceType)
+const serviceType = ref(serviceStore.serviceType || props.serviceType || {})
 const optionsService = ref([...Categories])
 const sortedHotels = computed(() => {
     const hotels = []
@@ -136,7 +136,7 @@ watch(() => currentPlace.value, fetchServices, { deep: true })
                         v-if="sortedHotels.length > 1">s</span> {{ $t('appServices.hotel.found') }}<span
                         v-if="sortedHotels.length > 1">s </span></span>
                 <span v-if="searchParams?.location && sortedHotels.length"> {{ $t('to') }} {{ searchParams.location
-                    }}</span>
+                }}</span>
             </h2>
 
             <div class="flex items-center">
