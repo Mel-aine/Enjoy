@@ -15,7 +15,7 @@
 
       <div
         class="absolute sm:top-[52%] top-[30%]  lg:left-[22%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 text-white p-5 sm:p-8 max-w-[90vw] sm:max-w-[600px]">
-        <h1 class="mb-4 text-3xl sm:text-5xl font-extrabold text-white">
+        <h1 class="mb-4 text-3xl sm:text-5xl font-extrabold text-purple-600">
           {{ hotel.name }}
         </h1>
         <div class="flex items-center mb-4 space-x-1">
@@ -24,7 +24,7 @@
               class="w-6 h-6 fill-current text-white rounded-md bg-orange-500 p-1" viewBox="0 0 24 24">
               <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z" />
             </svg>
-            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-white p-1 rounded-md bg-white/25"
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-white p-1 rounded-md bg-purple-500"
               viewBox="0 0 24 24">
               <path d="M12 2l2.58 7.95H22l-6.29 4.74 2.58 7.95-6.29-4.74-6.29 4.74 2.58-7.95L2 9.95h7.42L12 2z" />
             </svg>
@@ -43,7 +43,7 @@
       <div
         class="absolute lg:top-[45%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-3 lg:py-2 py-1 rounded-md hover:bg-white/15">
         <button
-          class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-white transition-transform duration-300 hover:scale-110">
+          class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-orange-800 transition-transform duration-300 hover:scale-110">
           {{ $t("see_photo") }}
         </button>
       </div>

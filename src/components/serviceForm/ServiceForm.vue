@@ -17,7 +17,7 @@ import { uploadImages } from '@/utils/functions';
 const isSubmitting = ref(false)
 // const uploadLogo = ref(false);
 // const uploadedUrlLogo = ref([]);
-// const uploadedUrlImage = ref([]); 
+// const uploadedUrlImage = ref([]);
 // const uploadImage = ref(false);
 const isVisible = ref(false);
 const { t } = useI18n();
@@ -47,7 +47,7 @@ const formData = ref({
   policies: '',
   capacity: '',
   payment_methods: [],
-  logo: [],
+  logo: '',
   image: [],
   status: 'active',
   lastname: '',
@@ -155,7 +155,7 @@ const saveFile = async (files) => {
 const { uploaded, uploadedUrls } = await uploadImages(
   formData.value.establishmentType,
   formData.value.establishmentName,
-  files 
+  files
 );
 
  if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
@@ -203,10 +203,10 @@ const handleSubmit = async (e) => {
   // }
 
 const image = await saveFile(formData.value.image)
-const logo = await saveFile(formData.value.logo)  
+const logo = await saveFile(formData.value.logo)
 console.log('uploadedUrlLogo', image);
 console.log('uploadedUrlImage', logo);
-  
+
   const payload = {
     name: formData.value.name,
     description: formData.value.description,
@@ -226,7 +226,7 @@ console.log('uploadedUrlImage', logo);
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
     images: image.uploadedUrls || [],
-    logo: logo.uploadedUrls || [],
+    logo: logo.uploadedUrls[0] || '',
     status: formData.value.status || 'active',
     first_name: formData.value.firstName,
     last_name: formData.value.lastName,
