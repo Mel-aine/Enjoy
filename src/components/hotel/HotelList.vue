@@ -237,7 +237,7 @@ const visiblePages = computed(() => {
         <HotelCard v-for="hotel in paginatedServices" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
 
            <!-- Pagination -->
-              <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2 mt-8">
+              <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2 mt-8 pb-5">
                 <button
                   @click="currentPage = Math.max(1, currentPage - 1)"
                   :disabled="currentPage === 1"
@@ -287,6 +287,6 @@ const visiblePages = computed(() => {
     </div>
     </div>
     <!-- Squelettes de chargement -->
-  <LoaodingSpinner v-if="isLoading"/>
+  <!-- <LoaodingSpinner v-if="isLoading"/> -->
   </div>
 </template>
