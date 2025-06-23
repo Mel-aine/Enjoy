@@ -105,18 +105,14 @@
                   class="text-gray-600 italic flex justify-start items-center px-3 py-2">
                   {{ $t('navbar.noResult') }}
                 </li>
-                <li
-                  v-for="item in filteredLeftItems"
-                  :key="item.id"
-                  @click="selectItem('left',  item.categoryName)"
-                  class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer"
-                >
+                <li v-for="item in filteredLeftItems" :key="item.label"
+                  @click="selectItem('left', $t('categories.' + item.label))"
+                  class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
                   <i :class="item.icon" class="text-gray-700 mr-2"></i>
                   <span class="ml-2">
-                    {{  item.categoryName }}
+                    {{ $t('categories.' + item.label) }}
                   </span>
                 </li>
-
               </ul>
             </div>
 
@@ -308,11 +304,11 @@
 
   </div>
 
-  <!-- <LoaodingSpinner v-if="hotelStore.isSpinnerDisplayed" /> -->
+  <LoaodingSpinner v-if="hotelStore.isSpinnerDisplayed" />
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed,watch } from 'vue';
+import { ref, onMounted, onUnmounted, computed } from 'vue';
 import Button from '@/components/buttons/Button.vue';
 import CustomDropdown from '@/components/dropDown/dropdownContentP.vue';
 import CustomDropdownD from '@/components/dropDown/dropdownColumnsP.vue';
@@ -376,7 +372,7 @@ const fetchCategories = async () => {
     const response = await getCategories();
     categories.value = response.data.data;
     hotelStore.allCategories = categories.value;
-    console.log('categories from back end', response.data.data);
+    console.log('categories from back end', categories.value);
   } catch (error) {
     console.error('Erreur lors de la récupération des catégories:', error);
   } finally {
@@ -384,31 +380,10 @@ const fetchCategories = async () => {
   }
 };
 
-onMounted(async() => {
-  await fetchCategories();
+onMounted(() => {
+  fetchCategories();
+  initMap();
 });
-onMounted(()=>{
-   initMap();
-})
-
-const filteredLeftItems = computed(() => {
-  if (!categories.value || categories.value.length === 0) return []
-
-  if (!leftValue.value) return categories.value
-
-  return categories.value.filter(item =>
-  t('categories.' + item.categoryName)
-    .toLowerCase()
-    .startsWith(leftValue.value.toLowerCase())
-)
-
-})
-
-watch(filteredLeftItems, (newVal) => {
-  console.log('🔍 Catégories filtrées :', newVal)
-})
-
-
 const handleSearch = () => {
 
   if (!leftValue.value || !rightValue.value) {
@@ -497,13 +472,13 @@ const labelToCategory = ref('');
 let leftSelected = false; // Track if a selection is made for left field
 // let rightSelected = false; // Track if a selection is made for right field
 
-// const filteredLeftItems = computed(() => {
-//   console.log('Categories', Categories);
+const filteredLeftItems = computed(() => {
+  console.log('Categories', Categories);
 
-//   return leftValue.value
-//     ? Categories.filter(item => t('categories.' + item.label).toLowerCase().startsWith(leftValue.value.toLowerCase()))
-//     : Categories;
-// });
+  return leftValue.value
+    ? Categories.filter(item => t('categories.' + item.label).toLowerCase().startsWith(leftValue.value.toLowerCase()))
+    : Categories;
+});
 
 // const filteredRighttItems = computed(() => {
 //   return rightValue.value
