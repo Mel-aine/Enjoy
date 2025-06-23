@@ -14,7 +14,7 @@ import { useServiceStore } from '@/stores/useServiceStore'
 const sercivesHotels = ref([]);
 const dataStore = useDataStore()
 const services = ref([]);
-const isLoading = ref(true);
+const isLoading = ref(false);
 const isListed = ref(false)
 const props = defineProps({
   searchParams: Object,
@@ -26,9 +26,9 @@ const emit = defineEmits(['sortChange'])
 
 const filteredHotels = computed(() => {
 
-  if (!sercivesHotels.value || !Array.isArray(sercivesHotels.value))  return []
+  if (!sercivesHotels.value || !Array.isArray(sercivesHotels.value)) return []
   let hotels = [...sercivesHotels.value]
-console.log('filteredHotels', hotels)
+  console.log('filteredHotels', hotels)
   const selectedRanges = props.filters?.priceRange || []
   const selectedAmenities = props.filters?.amenities || []
 
@@ -149,7 +149,7 @@ onMounted(async () => {
     guest_count,
   };
   try {
-    isLoading.value = true
+    //isLoading.value = true
     console.log("Params envoyés à l'API :", params);
     const response = await getServiceProductByDate(params);
     console.log('Réponse du service:', response)
@@ -158,8 +158,8 @@ onMounted(async () => {
     services.value = response.data ? response : { data: response }
     sercivesHotels.value = services.value.data.hotels || []
     const servicesData = response.data ? response.data : response
-      serviceStore.setServices(servicesData)
-      console.log('Services hotel:', serviceStore.hotels)
+    serviceStore.setServices(servicesData)
+    console.log('Services hotel:', serviceStore.hotels)
 
 
     // rooms.value = services.value.data.serviceProducts || []
@@ -210,7 +210,9 @@ const visiblePages = computed(() => {
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-xl font-bold">
         <!-- <span v-if="!sortedHotels.length">{{ $t('appServices.hotel.justAMoment') }}</span> -->
-        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotel') }}<span v-if="sortedHotels.length>1">s</span> {{ $t('appServices.hotel.found') }}<span v-if="sortedHotels.length>1">s </span></span>
+        <span v-if="sortedHotels.length">{{ sortedHotels.length }} {{ $t('appServices.hotel.hotel') }}<span
+            v-if="sortedHotels.length > 1">s</span> {{ $t('appServices.hotel.found') }}<span
+            v-if="sortedHotels.length > 1">s </span></span>
         <span v-if="searchParams?.location && sortedHotels.length"> {{ $t('to') }} {{ searchParams.location }}</span>
       </h2>
 
@@ -229,64 +231,53 @@ const visiblePages = computed(() => {
         </div>
       </div>
     </div>
-    <div >
+    <div>
 
-    <!-- Liste des hôtels -->
-    <div class="space-y-4">
-      <template v-if="sortedHotels.length > 0">
-        <HotelCard v-for="hotel in paginatedServices" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
+      <!-- Liste des hôtels -->
+      <div class="space-y-4">
+        <template v-if="sortedHotels.length > 0">
+          <HotelCard v-for="hotel in paginatedServices" :key="hotel.id || hotel._id || Math.random()" :hotel="hotel" />
 
-           <!-- Pagination -->
-              <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2 mt-8">
-                <button
-                  @click="currentPage = Math.max(1, currentPage - 1)"
-                  :disabled="currentPage === 1"
-                  class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                  </svg>
-                </button>
+          <!-- Pagination -->
+          <div v-if="totalPages > 1" class="flex items-center justify-center space-x-2 mt-8">
+            <button @click="currentPage = Math.max(1, currentPage - 1)" :disabled="currentPage === 1"
+              class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
 
-                <div class="flex space-x-1">
-                  <button
-                    v-for="page in visiblePages"
-                    :key="page"
-                    @click="currentPage = page"
-                    :class="[
-                      'px-3 py-2 rounded-lg transition-colors',
-                      page === currentPage
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
-                    ]"
-                  >
-                    {{ page }}
-                  </button>
-                </div>
+            <div class="flex space-x-1">
+              <button v-for="page in visiblePages" :key="page" @click="currentPage = page" :class="[
+                'px-3 py-2 rounded-lg transition-colors',
+                page === currentPage
+                  ? 'bg-purple-600 text-white'
+                  : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+              ]">
+                {{ page }}
+              </button>
+            </div>
 
-                <button
-                  @click="currentPage = Math.min(totalPages, currentPage + 1)"
-                  :disabled="currentPage === totalPages"
-                  class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                  </svg>
-                </button>
-              </div>
-      </template>
+            <button @click="currentPage = Math.min(totalPages, currentPage + 1)" :disabled="currentPage === totalPages"
+              class="px-3 py-2 rounded-lg bg-white border border-gray-300 text-gray-500 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </template>
 
-      <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
-        <p class="text-lg text-gray-600">
-          {{ $t('appServices.hotel.noHotelsMatch') }}
-        </p>
-        <p class="text-sm text-gray-500 mt-2">
-          {{ $t('appServices.hotel.adjustFilters') }}
-        </p>
+        <div v-else class="bg-white p-6 rounded-lg shadow-md text-center">
+          <p class="text-lg text-gray-600">
+            {{ $t('appServices.hotel.noHotelsMatch') }}
+          </p>
+          <p class="text-sm text-gray-500 mt-2">
+            {{ $t('appServices.hotel.adjustFilters') }}
+          </p>
+        </div>
       </div>
     </div>
-    </div>
     <!-- Squelettes de chargement -->
-  <LoaodingSpinner v-if="isLoading"/>
+    <!-- <LoaodingSpinner v-if="isLoading" />-->
   </div>
 </template>

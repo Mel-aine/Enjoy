@@ -10,7 +10,7 @@
       <EServiceList @address-change="addressChange" @hotels-loaded="onHotelsLoaded"></EServiceList>
     </div>
     <div class="w-full lg:w-5/12 h-screen">
-      <EserviceMapList size="lg" :places="hotels" class="h-screen" :address="currentAddress"></EserviceMapList>
+      <EServiceMapList size="lg" :places="hotels" class="h-screen" :address="currentAddress"></EServiceMapList>
     </div>
   </div>
 </template>

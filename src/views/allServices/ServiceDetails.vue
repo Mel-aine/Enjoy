@@ -372,7 +372,7 @@ import { useServiceStore } from "@/stores/useServiceStore";
 import Amenities from "../../components/ui/Amenities.vue";
 import PhotoGallery from "../../components/ui/PhotoGallery.vue";
 import router from "../../router";
-import { getServiceProductGrouped } from "../../servicesApi/hotelServicesApi";
+import { getServiceById, getServiceProductGrouped } from "../../servicesApi/hotelServicesApi";
 
 
 const hotelStore = useServiceStore();
@@ -471,9 +471,9 @@ const getDisponibility = async () => {
   console.log('result', result);
 }
 
-onMounted(() => {
-  const foundHotel = hotelStore.hotels.find(h => String(h.id) === String(hotelId))
-  hotel.value = foundHotel || { rooms: [] }
+onMounted(async () => {
+  const result = await getServiceById(hotelId);
+  hotel.value = result.data;
   getDisponibility()
 })
 
