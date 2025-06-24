@@ -43,7 +43,7 @@
       <div
         class="absolute lg:top-[45%] top-[92%] left-[81%] transform -translate-x-1/2 -translate-y-1/2 text-white border lg:px-5 px-3 lg:py-2 py-1 rounded-md hover:bg-white/15">
         <button
-          class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-orange-800 transition-transform duration-300 hover:scale-110">
+          class="text-md md:text-sm lg:text-xl font-extrabold tracking-tight leading-none text-gray-800 transition-transform duration-300 hover:scale-110">
           {{ $t("see_photo") }}
         </button>
       </div>
