@@ -2,7 +2,7 @@
   <div class="relative">
     <!-- <div class="absolute inset-0 bg-black opacity-50"></div> Superposition sombre -->
     <!-- Top Bar -->
-    <div id="topBar" class="flex items-center p-2 justify-between container mx-auto">
+    <div id="topBar" class="flex items-center p-2 justify-between  mx-auto">
       <!-- Menu Mobile: Bouton avec icône "fa-bars" -->
       <div v-show="!searchInMobil" id="menuToggle" class="relative block md:hidden">
         <button @click="toggleSidebar" class="text-black text-2xl">
@@ -11,8 +11,9 @@
       </div>
 
       <!-- Logo -->
-      <div v-show="!searchInMobil" id="logo" class="relative rounded-full flex-shrink-0">
-        <img class="rounded-full" src="@/assets/logo2.png" width="50" alt="Logo">
+      <div v-show="!searchInMobil" id="logo"
+        class="relative rounded-full flex-shrink-0 lg:w-[100px] 3xl:w-[300px] ms-10">
+        <img class="rounded-full" src="@/assets/logo2.png" width="60" alt="Logo">
       </div>
 
       <div v-show="!searchInMobil" id="logo" class="relative bg-customRed rounded-full  flex-shrink-0 md:hidden">
@@ -76,108 +77,100 @@
       </div>
       <!-- search bar for mobile end -->
 
+      <div class="flex container">
 
-      <!-- Menu Principal (Desktop) -->
-      <div id="mainMenu" class="relative w-full hidden md:block">
-        <nav>
-          <div class="flex justify-center space-x-4">
+        <!-- Menu Principal (Desktop) -->
+        <div id="mainMenu" class="relative w-full hidden md:block">
+          <nav>
+            <div class="flex w-full ">
+              <div class="w-full max-w-3xl min-w-[200px] relative  shadow-lg shadow-slate-400 rounded">
+                <div class="flex items-center rounded overflow-hidden bg-white">
+                  <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
+                    class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
+                  <div class="h-6 border-l border-slate-200 ml-1"></div>
 
+                  <!-- v-model manquant -->
+                  <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaounde"
+                    v-model="rightValue"
+                    class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
+                  <button @click="handleSearch" class="bg-customRed px-4 py-3 text-white font-bold ml-2">
+                    <BaseIcon name="Search" size="20" stroke-width="2" />
+                  </button>
 
-            <div class="w-full max-w-sm min-w-[200px] relative ml-1">
-              <div class="flex items-center rounded shadow-sm overflow-hidden bg-white">
-                <input v-model="leftValue" @mouseenter="activeInput = 'left'" placeholder="Restaurant"
-                  class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                <div class="h-6 border-l border-slate-200 ml-1"></div>
+                </div>
 
-                <!-- v-model manquant -->
-                <input id="search-input" @mouseenter="activeInput = 'right'" placeholder="Yaounde" v-model="rightValue"
-                  class="w-1/2 px-3 py-2 text-md text-gray-600 placeholder:text-gray-500 focus:outline-none" />
-                <button @click="handleSearch" class="bg-customRed px-4 py-3 text-black ml-2">
-                  <BaseIcon name="Search" size="20" stroke-width="2" />
-                </button>
-
+                <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
+                  @mouseleave="handleMouseLeave('left')"
+                  class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
+                  <li v-if="filteredLeftItems.length === 0"
+                    class="text-gray-600 italic flex justify-start items-center px-3 py-2">
+                    {{ $t('navbar.noResult') }}
+                  </li>
+                  <li v-for="item in filteredLeftItems" :key="item.label"
+                    @click="selectItem('left', $t('categories.' + item.label))"
+                    class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
+                    <i :class="item.icon" class="text-gray-700 mr-2"></i>
+                    <span class="ml-2">
+                      {{ $t('categories.' + item.label) }}
+                    </span>
+                  </li>
+                </ul>
               </div>
 
-              <ul v-if="activeInput === 'left'" @mouseenter="activeInput = 'left'"
-                @mouseleave="handleMouseLeave('left')"
-                class="ma-div absolute min-h-10 max-h-80 left-0 w-1/2 bg-white z-[100] border rounded shadow-lg mt-1 overflow-auto">
-                <li v-if="filteredLeftItems.length === 0"
-                  class="text-gray-600 italic flex justify-start items-center px-3 py-2">
-                  {{ $t('navbar.noResult') }}
-                </li>
-                <li v-for="item in filteredLeftItems" :key="item.label"
-                  @click="selectItem('left', $t('categories.' + item.label))"
-                  class="flex justify-start items-center px-3 py-2 text-sm hover:bg-gray-100 cursor-pointer">
-                  <i :class="item.icon" class="text-gray-700 mr-2"></i>
-                  <span class="ml-2">
-                    {{ $t('categories.' + item.label) }}
-                  </span>
-                </li>
-              </ul>
+              <CustomModal :isOpen="isModalOpen" @close="toggleModal">
+                <SearchHotel @search="handleSearchWithComponent" />
+              </CustomModal>
+
+              <div class=" flex ms-10 justify-center items-center">
+                <CustomDropdown :footerDropdown="false" iconColor="text-black">
+                  <template #button>
+                    <span class="text-black"> {{ $t('navbar.yelpProfessional') }} </span>
+                  </template>
+                  <template #content>
+                    <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
+                      <h3 class="text-xl font-semibold hover:bg-gray-300 p-1 text-gray-800 mt-2">
+                        <router-link :to="itemY.route" class=" flex justify-start item-center text-md text-customRed ">
+                          <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
+                          <span class="text-sm text-gray-700  ml-2"> {{ itemY.label }}</span>
+                        </router-link>
+
+                      </h3>
+                    </div>
+                  </template>
+                </CustomDropdown>
+              </div>
             </div>
-
-            <CustomModal :isOpen="isModalOpen" @close="toggleModal">
-              <SearchHotel @search="handleSearchWithComponent" />
-            </CustomModal>
-
-            <CustomDropdown :footerDropdown="false" iconColor="text-black">
-              <template #button>
-                <span class="text-black"> {{ $t('navbar.yelpProfessional') }} </span>
-              </template>
-              <template #content>
-                <div v-for="itemY in menuYelp" :key="itemY" class="space-y-1">
-                  <h3 class="text-lg font-semibold text-gray-800 mt-2">
-                    <router-link :to="itemY.route"
-                      class=" flex justify-start item-center text-sm text-customRed hover:text-gray-900">
-                      <BaseIcon :name="itemY.icon" customColor="text-gray-700" size="20" stroke-width="2" />
-                      <span class="text-xs text-gray-700 hover:bg-gray-300 ml-2"> {{ itemY.label }}</span>
-                    </router-link>
-
-                  </h3>
-                </div>
-              </template>
-            </CustomDropdown>
-
-            <router-link to="/comunity"
-              class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-              active-class="border-b-2 border-indigo-400">
-              {{ $t('navbar.writeReview') }}
-            </router-link>
-
-            <router-link to="/comunity"
-              class="text-black hover:bg-white/20 px-4 py-2 rounded-sm font-medium font-poppins"
-              active-class="border-b-2 border-indigo-400">
-              {{ $t('navbar.startProject') }}
-            </router-link>
-
-          </div>
-        </nav>
-      </div>
-
-
-
-      <!-- User Management (à droite) -->
-      <div v-show="!searchInMobil" id="userManage" class="relative flex items-center space-x-4">
-        <button class="hidden md:block">
-          <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
-        </button>
-        <!-- <Button @click="login" variant="danger" class="font-poppins">{{ $t('login') }}</Button> -->
-        <!-- <Button variant="danger" class="font-poppins">{{ $t('register') }}</Button> -->
-        <router-link to="/login"
-          class="font-poppins bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300 p-1">{{ $t('login')
-          }}</router-link>
-        <router-link to="/register"
-          class="font-poppins bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300 p-1">{{ $t('register')
-          }}</router-link>
-        <div class="relative inline-block">
-          <router-link to="/hotel/test" class="block p-2 border border-black rounded-full">
-            <UserIcon class="w-6 h-6" />
-            <!-- Point de notification -->
-            <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-customRed ring-2 ring-white"></span>
-          </router-link>
+          </nav>
         </div>
 
 
+
+        <!-- User Management (à droite) -->
+        <div v-show="!searchInMobil" id="userManage" class="relative hidden md:flex items-center space-x-4 me-10">
+          <button class="hidden md:block">
+            <i class="fa fa-star text-customWhite hover:text-gray-300"></i>
+          </button>
+          <div class="flex gap-4" v-if="!user">
+            <Button @click="login" size="sm">
+              {{
+                $t('login')
+              }}
+            </Button>
+            <Button @click="register" size="sm" variant="outline">
+              {{ $t('register')
+              }}
+            </Button>
+          </div>
+          <div class="relative inline-block" v-if="user">
+            <router-link to="/hotel/test" class="block p-2 border border-black rounded-full">
+              <UserIcon class="w-6 h-6" />
+              <!-- Point de notification -->
+              <span class="absolute top-0 right-0 block h-2 w-2 rounded-full bg-customRed ring-2 ring-white"></span>
+            </router-link>
+          </div>
+
+
+        </div>
       </div>
     </div>
 
@@ -270,7 +263,7 @@
     </div>
 
 
-    <div class="md:block container mx-auto px-[212px]  flex flex-col lg:flex-row">
+    <div class="md:block hidden container mx-auto max-w-7xl   flex-col lg:flex-row justify-end">
       <CustomDropdownD :menuData="menuRestaurants" columnClass="lg:grid-cols-2" iconColor="text-black">
         <template #button>
           <span class="text-black">{{ $t('navbar.restaurant') }}</span>
@@ -293,18 +286,9 @@
       </CustomDropdownD>
     </div>
 
-    <!-- <div v-if="clickedLocation">
-      <h2>Détails du lieu cliqué</h2>
-      <p><strong>Coordonnées :</strong> {{ clickedLocation.lat }}, {{ clickedLocation.lng }}</p>
-      <p><strong>Adresse :</strong> {{ clickedLocation.address }}</p>
-    </div> -->
+   
     <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
-
-    <!-- ,,Services destiné aux prof,Média,
-    Formation & Enseignement,Organisation d
-    événements,Services Locaux,Immobilier
-    map -->
 
   </div>
 
@@ -337,8 +321,16 @@ const dataStore = useDataStore();
 const store = useCategoryStore();
 const categories = ref([])
 
+const user = computed(() => {
+  return false
+})
+const login = () => {
+  window.location.href = '/login'
+}
 
-
+const register = () => {
+  window.location.href = '/login'
+}
 
 // Utilisation de useI18n pour accéder aux traductions
 const $route = useRoute();

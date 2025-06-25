@@ -12,6 +12,7 @@ import { useMIHStore } from '@/stores/manageHotelInterface'
 import Prog from '@/components/hotel/Progress.vue';
 import { useI18n } from 'vue-i18n';
 import { uploadImages } from '@/utils/functions';
+import FindServiceByName from './FindServiceByName.vue';
 
 // all step constante respect index of table data in vue this is Why first step is '0'
 const isSubmitting = ref(false)
@@ -84,12 +85,12 @@ const handlePrevious = () => {
 };
 const validateStep = () => {
   console.log('files image', formData.value.image);
-    console.log('files logo', formData.value.logo);
+  console.log('files logo', formData.value.logo);
 
   console.log('formData.latitude et longitude', formData.value.latitude, formData.value.longitude);
 
   switch (activeStep.value) {
-    case 0:
+    case 1:
       if (!formData.value.name || !formData.value.category_id) {
         // if (!formData.value.name) {
         isVisible.value = true;
@@ -107,7 +108,7 @@ const validateStep = () => {
         return false;
       }
       break;
-    case 1:
+    case 2:
       if (!formData.value.address) {
         isVisible.value = true;
         infoAlert.value = t('alert.fillAddress');
@@ -122,14 +123,14 @@ const validateStep = () => {
         return false;
       }
       break;
-    case 2:
+    case 3:
       if (!formData.value.phone_number || !formData.value.email || !formData.value.firstName || !formData.value.lastName || !formData.value.password) {
         isVisible.value = true;
         infoAlert.value = t('alert.fillAllFields');
         return false;
       }
       break;
-    case 3:
+    case 4:
       if (!formData.value.openings || Object.keys(formData.value.openings).length === 0 || formData.value.price_range === '' || !formData.value.capacity) {
         isVisible.value = true;
         console.log('formData.value.openings', formData.value.openings);
@@ -137,7 +138,7 @@ const validateStep = () => {
         return false;
       }
       break;
-    case 4:
+    case 5:
       if (!formData.value.policies || formData.value.openings === '' || formData.value.payment_methods.length === 0) {
         isVisible.value = true;
         infoAlert.value = t('alert.fillAllFields');
@@ -152,61 +153,28 @@ const validateStep = () => {
 };
 
 const saveFile = async (files) => {
-const { uploaded, uploadedUrls } = await uploadImages(
-  formData.value.establishmentType,
-  formData.value.establishmentName,
-  files 
-);
+  const { uploaded, uploadedUrls } = await uploadImages(
+    formData.value.establishmentType,
+    formData.value.establishmentName,
+    files
+  );
 
- if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
-  console.error("Échec de l'upload :", uploaded, uploadedUrls);
-  alert(t("error.errorImage"));
-  return;
-}
+  if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
+    console.error("Échec de l'upload :", uploaded, uploadedUrls);
+    alert(t("error.errorImage"));
+    return;
+  }
   return { uploaded, uploadedUrls };
 };
 
 const handleSubmit = async (e) => {
   e.preventDefault();
   isSubmitting.value = true;
+  const image = await saveFile(formData.value.image)
+  const logo = await saveFile(formData.value.logo)
+  console.log('uploadedUrlLogo', image);
+  console.log('uploadedUrlImage', logo);
 
-  // if (!formData.value.name || !formData.value.category_id) {
-  //   alert('Les champs "Nom" et "Catégorie" sont obligatoires');
-  //   return;
-  // }
-
-// const { uploaded, uploadedUrls } = await uploadImages(
-//   formData.value.establishmentType,
-//   formData.value.establishmentName,
-//   formData.value.logo // Assurez-vous que c'est un tableau (même pour 1 fichier)
-// );
-
-//  if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
-//   console.error("Échec de l'upload :", uploaded, uploadedUrls);
-//   alert(t("error.errorImage"));
-//   return;
-// }else{
-//   uploadLogo.value = uploaded;
-//   uploadedUrlLogo.value = uploadedUrls;
-// }
-
-  //   const { uploaded, uploadedUrls } = await uploadImages(
-  //   formData.value.establishmentType,
-  //   formData.value.establishmentName,
-  //   formData.value.image
-  // );
-
-  // if (!uploadedImage || !uploadedUrlImage[0]) {
-  //   console.log('Erreur d’upload', uploadedLogo, uploadedUrlImage);
-  //   alert(t("error.erroImage"));
-  //   return console.log('Erreur d’upload', uploadedImage, uploadedUrlImage);
-  // }
-
-const image = await saveFile(formData.value.image)
-const logo = await saveFile(formData.value.logo)  
-console.log('uploadedUrlLogo', image);
-console.log('uploadedUrlImage', logo);
-  
   const payload = {
     name: formData.value.name,
     description: formData.value.description,
@@ -244,35 +212,6 @@ console.log('uploadedUrlImage', logo);
     console.log('Réponse du serveur:', response.data);
 
     formSubmitted.value = true;
-
-    // setTimeout(() => {
-    //   formSubmitted.value = false;
-    //   formData.value = {
-    //     name: '',
-    //     description: '',
-    //     category_id: '',
-    //     address: '',
-    //     phone_number: '',
-    //     email: '',
-    //     website: '',
-    //     openings: {},
-    //     price_range: '',
-    //     facilities: [],
-    //     policies: '',
-    //     capacity: '',
-    //     payment_methods: [],
-    //     url: [],
-    //     status: 'active',
-    //     lastname: '',
-    //     firstname: '',
-    //     password: '',
-    //     establishmentType: '',
-    //     establishmentName: '',
-    //     // emailU: '',
-    //     // phone_numberU: ''
-    //   };
-    //   activeStep.value = 0;
-    // }, 3000);
   } catch (error) {
     console.error('Erreur complète:', error);
     console.error('Détails de l\'erreur:', error.response?.data?.message || error.message);
@@ -281,35 +220,16 @@ console.log('uploadedUrlImage', logo);
     isSubmitting.value = false;
   }
 };
-// const left = () => {
-//   formSubmitted.value = false;
-//   formData.value = {
-//     name: '',
-//     description: '',
-//     category_id: '',
-//     address: '',
-//     phone_number: '',
-//     email: '',
-//     website: '',
-//     openings: {},
-//     price_range: '',
-//     facilities: [],
-//     policies: '',
-//     capacity: '',
-//     payment_methods: [],
-//     url: [],
-//     status: 'active',
-//     lastname: '',
-//     firstname: '',
-//     password: '',
-//     establishmentType: '',
-//     establishmentName: '',
-//     // emailU: '',
-//     // phone_numberU: ''
-//   };
-//   activeStep.value = 0;
-// }
 
+const getInitInformation =(service)=>{
+  console.log('service',service);
+  formData.value.name= service.name
+  formData.value.description = service.description;
+  formData.value.category_id = service.categoryId;
+  formData.value.logo =service.logo;
+  formData.value.image = service.images;
+  activeStep.value = 1;
+}
 </script>
 
 <template>
@@ -330,18 +250,20 @@ console.log('uploadedUrlImage', logo);
     <div v-else class="px-4 py-5 sm:p-6">
       <div class="mb-8">
         <AlertInfo v-if="isVisible" @close="closeAlert" type="danger" :message="infoAlert" />
-        <Prog :steps="[t('baseInfos'), t('address'), t('contact'), t('operational'), t('additional')]"
+        <Prog
+          :steps="[t('find_business'), t('baseInfos'), t('address'), t('contact'), t('operational'), t('additional')]"
           :currentStep="activeStep" />
       </div>
       <form @submit="handleSubmit">
-        <BasicInfoSection v-if="activeStep === 0" :formData="formData" @updateFormData="updateFormData"
+        <FindServiceByName v-if="activeStep === 0" @start="getInitInformation" />
+        <BasicInfoSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData"
           :categoriesItems="hotelStore.allCategories || []" />
-        <AdressSection v-if="activeStep === 1" :formData="formData" @updateFormData="updateFormData" />
-        <ContactInfoSection v-if="activeStep === 2" :formData="formData" @updateFormData="updateFormData" />
-        <OperationalInfoSection v-if="activeStep === 3" :formData="formData" @updateFormData="updateFormData" />
-        <AdditionalInfoSection v-if="activeStep === 4" :formData="formData" @updateFormData="updateFormData" />
+        <AdressSection v-if="activeStep === 2" :formData="formData" @updateFormData="updateFormData" />
+        <ContactInfoSection v-if="activeStep === 3" :formData="formData" @updateFormData="updateFormData" />
+        <OperationalInfoSection v-if="activeStep === 4" :formData="formData" @updateFormData="updateFormData" />
+        <AdditionalInfoSection v-if="activeStep === 5" :formData="formData" @updateFormData="updateFormData" />
 
-        <div class="mt-8 flex justify-between">
+        <div class="mt-8 flex justify-between" v-if="activeStep!=0">
           <button type="button" @click="handlePrevious" :disabled="activeStep === 0"
             class="px-4 py-2 border rounded-md shadow-sm text-sm font-medium"
             :class="activeStep === 0 ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'bg-white text-gray-700 hover:bg-gray-50'">

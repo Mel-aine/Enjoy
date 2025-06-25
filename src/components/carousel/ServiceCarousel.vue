@@ -8,7 +8,7 @@
                     $t(category.categoryName) }}</a>
                 <a :href="'/categories/' + category.id" class="font-semibold text-sm text-customRed cursor-pointer">{{
                     $t("view_more")
-                    }}</a>
+                }}</a>
             </div>
             <div class="relative w-full">
                 <!-- Left Scroll Button -->
@@ -20,16 +20,20 @@
                 <!-- Scrollable Card Container -->
                 <div ref="scrollContainer" class="flex gap-4 overflow-x-auto scroll-smooth px-10 py-4 no-scrollbar">
                     <div v-for="(service, index) in services" :key="index"
-                        class="min-w-[250px] max-w-xs bg-white rounded-lg shadow-md p-4 flex-shrink-0">
+                        class="min-w-[250px] max-w-xs bg-white rounded-lg shadow-md p-4 flex-shrink-0 cursor-pointer"
+                        @click="handleViewDeal(service)">
                         <img v-if="service.image" :src="service.image" alt="hotel"
                             class="w-full h-40 object-cover rounded-md mb-2" />
                         <h3 class="font-semibold text-lg">{{ service.name }}</h3>
                         <p class="text-sm text-gray-500">{{ service.location }}</p>
-                        <p class="text-sm mt-1">À partir de {{ service.price }} XAF / personne</p>
+                        <p class="text-sm mt-1" v-if="service.price">
+                            {{ $t("starting_from") }} {{ service.price }} / {{ $t("per_person") }}
+                        </p>
                         <div class="flex items-center mt-2">
                             <Star class="w-4 h-4 text-yellow-400" />
                             <span class="ml-1 text-sm">{{ service.rating }}</span>
-                            <span class="ml-auto text-sm text-gray-500">({{ service.likes }} like)</span>
+                            <span class="ml-auto text-sm text-gray-500" v-if="service.likes > 0"> ({{ service.likes }} {{
+                                $t("likes") }})</span>
                         </div>
                     </div>
                 </div>
@@ -48,6 +52,9 @@
 import { onMounted, ref } from 'vue'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-vue-next'
 import { getServicesCategoryIdBy } from '../../servicesApi/hotelServicesApi'
+import { useMIHStore } from '@/stores/manageHotelInterface';
+
+const hotelStore = useMIHStore();
 const props = defineProps({
     category: {
         type: Object,
@@ -77,6 +84,7 @@ const getServiceListLocal = async () => {
             length > 0) {
             services.value = datas.items.map((e) => {
                 return {
+                    id:e.id,
                     name: e.name,
                     location: JSON.parse(e.addressService).text,
                     price: e.price,
@@ -94,7 +102,11 @@ const getServiceListLocal = async () => {
         loading.value = false;
     }
 }
-
+const handleViewDeal = (service) => {
+    hotelStore.setHotel(service)
+    hotelStore.getHotelId(service.id)
+    window.location.href = `/all_service/${service.id}`;
+}
 onMounted(() => {
     getServiceListLocal();
 })

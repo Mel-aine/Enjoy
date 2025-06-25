@@ -17,7 +17,8 @@ export default {
         customDark: '#171616',
         customDarkVariant1: '#3e3e3e',
         customDarkVariant2: '#737373',
-        customWhite: '#fff9f9'
+        customWhite: '#fff9f9',
+        primary: '#FF5400',
       },
     },
   },
