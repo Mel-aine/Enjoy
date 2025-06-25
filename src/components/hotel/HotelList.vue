@@ -101,77 +101,159 @@ const sortedHotels = computed(() => {
   }
 })
 
+// function formatDate(dateStr) {
+//   const today = new Date();
+//   const year = today.getFullYear();
+
+//   if (dateStr.startsWith("Today")) {
+//     return today.toISOString().split("T")[0];
+//   }
+
+//   if (dateStr.startsWith("Tomorrow")) {
+//     const tomorrow = new Date();
+//     tomorrow.setDate(today.getDate() + 1);
+//     return tomorrow.toISOString().split("T")[0];
+//   }
+
+//   // Cas normal : extraire "Jun 10"
+//   const [_, monthStr, dayStr] = dateStr.match(/(\w+)\s(\d+)/) || [];
+//   if (monthStr && dayStr) {
+//     const date = new Date(`${monthStr} ${dayStr}, ${year}`);
+//     return date.toISOString().split("T")[0];
+//   }
+
+//   return null;
+// }
+
 function formatDate(dateStr) {
-  const today = new Date();
-  const year = today.getFullYear();
+  const mois = {
+    janvier: "01",
+    février: "02",
+    fevrier: "02",
+    mars: "03",
+    avril: "04",
+    mai: "05",
+    juin: "06",
+    juillet: "07",
+    août: "08",
+    aout: "08",
+    septembre: "09",
+    octobre: "10",
+    novembre: "11",
+    décembre: "12",
+    decembre: "12"
+  };
 
-  if (dateStr.startsWith("Today")) {
-    return today.toISOString().split("T")[0];
+  // Exemple : "jeu. 26 juin 2025"
+  const match = dateStr.match(/(\d{1,2})\s+([a-zéû]+)\s+(\d{4})/i);
+  if (match) {
+    const [_, jour, moisStr, annee] = match;
+    const moisNum = mois[moisStr.toLowerCase()];
+    if (moisNum) {
+      const day = jour.padStart(2, '0');
+      return `${annee}-${moisNum}-${day}`;
+    }
   }
 
-  if (dateStr.startsWith("Tomorrow")) {
-    const tomorrow = new Date();
-    tomorrow.setDate(today.getDate() + 1);
-    return tomorrow.toISOString().split("T")[0];
-  }
-
-  // Cas normal : extraire "Jun 10"
-  const [_, monthStr, dayStr] = dateStr.match(/(\w+)\s(\d+)/) || [];
-  if (monthStr && dayStr) {
-    const date = new Date(`${monthStr} ${dayStr}, ${year}`);
-    return date.toISOString().split("T")[0];
-  }
-
-  return null;
+  return null; // format invalide
 }
+
+
 
 const serviceStore = useServiceStore()
 
 
+// onMounted(async () => {
+//   console.log('Chargement des services avec les paramètres:', dataStore.searchFrom)
+
+//   // Vérification des données de recherche
+//   if (!dataStore.searchFrom.destination || !dataStore.searchFrom.dateAller || !dataStore.searchFrom.dateRetour) {
+//     console.warn('Données de recherche manquantes, impossible de charger les services.')
+//     return
+//   }
+//   // Total guest count
+//   const guest_count = dataStore.searchFrom.rooms.reduce((sum, room) => {
+//     return sum + (room.adults || 0) + (room.childrens || 0);
+//   }, 0);
+
+//   // Construction des params
+//   const params = {
+//     address: dataStore.searchFrom.destination,
+//     start_date: formatDate(dataStore.searchFrom.dateAller),
+//     end_date: formatDate(dataStore.searchFrom.dateRetour),
+//     guest_count,
+//   };
+//   try {
+//     isLoading.value = true
+//     console.log("Params envoyés à l'API :", searchFrom.dateAller);
+//     const response = await getServiceProductByDate(params);
+//     console.log('Réponse du service:', response)
+//     console.log('Réponse brute du service:', response)
+//     // Assurez-vous que la réponse contient bien un tableau data
+//     services.value = response.data ? response : { data: response }
+//     sercivesHotels.value = services.value.data.hotels || []
+//     const servicesData = response.data ? response.data : response
+//       serviceStore.setServices(servicesData)
+//       console.log('Services hotel:', serviceStore.hotels)
+
+
+//     // rooms.value = services.value.data.serviceProducts || []
+//     console.log('Services hotel:', sercivesHotels.value)
+//     console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value.data)))
+//     console.log('Services chargés utilisation:', services.value.data.hotels)
+//   } catch (error) {
+//     console.error('Erreur lors du chargement:', error)
+//   } finally {
+//     isLoading.value = false
+//   }
+// })
+
 onMounted(async () => {
   console.log('Chargement des services avec les paramètres:', dataStore.searchFrom)
 
-  // Vérification des données de recherche
-  if (!dataStore.searchFrom.destination || !dataStore.searchFrom.dateAller || !dataStore.searchFrom.dateRetour) {
-    console.warn('Données de recherche manquantes, impossible de charger les services.')
-    return
-  }
-  // Total guest count
-  const guest_count = dataStore.searchFrom.rooms.reduce((sum, room) => {
-    return sum + (room.adults || 0) + (room.childrens || 0);
-  }, 0);
+  const { destination, dateAller, dateRetour, rooms } = dataStore.searchFrom;
 
-  // Construction des params
+  if (!destination || !dateAller || !dateRetour) {
+    console.warn('Données de recherche manquantes');
+    return;
+  }
+
+  const startDate = formatDate(dateAller);
+  const endDate = formatDate(dateRetour);
+  if (!startDate || !endDate) {
+    console.warn('Dates de départ ou retour invalides');
+    return;
+  }
+
+  const guest_count = rooms.reduce((sum, room) =>
+    sum + (room.adults || 0) + (room.childrens || 0), 0);
+
   const params = {
-    address: dataStore.searchFrom.destination,
-    start_date: formatDate(dataStore.searchFrom.dateAller),
-    end_date: formatDate(dataStore.searchFrom.dateRetour),
+    address: destination,
+    start_date: startDate,
+    end_date: endDate,
     guest_count,
   };
+
   try {
-    isLoading.value = true
+    isLoading.value = true;
     console.log("Params envoyés à l'API :", params);
     const response = await getServiceProductByDate(params);
-    console.log('Réponse du service:', response)
-    console.log('Réponse brute du service:', response)
-    // Assurez-vous que la réponse contient bien un tableau data
-    services.value = response.data ? response : { data: response }
-    sercivesHotels.value = services.value.data.hotels || []
-    const servicesData = response.data ? response.data : response
-      serviceStore.setServices(servicesData)
-      console.log('Services hotel:', serviceStore.hotels)
+    const data = response.data ?? response;
 
+    services.value = { data };
+    sercivesHotels.value = data.hotels || [];
 
-    // rooms.value = services.value.data.serviceProducts || []
-    console.log('Services hotel:', sercivesHotels.value)
-    console.log('Services chargés (raw):', JSON.parse(JSON.stringify(services.value.data)))
-    console.log('Services chargés utilisation:', services.value.data.hotels)
+    serviceStore.setServices(data);
+    console.log('Services hotel:', serviceStore.hotels);
+    console.log('Services chargés utilisation:', sercivesHotels.value );
   } catch (error) {
-    console.error('Erreur lors du chargement:', error)
+    console.error('Erreur lors du chargement:', error);
   } finally {
-    isLoading.value = false
+    isLoading.value = false;
   }
-})
+});
+
 
 
 const currentPage = ref(1)
