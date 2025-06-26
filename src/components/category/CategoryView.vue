@@ -5,8 +5,8 @@
       class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-10 md:space-x-2 max-w-screen-2xl mx-auto justify-center ">
 
       <div v-for="category in mainCategories" :key="category.id">
-        <router-link :to="'/recherche/' + category.id">
-          <CategoryCard :name="$t('categories.' + category.label)" :icon="category.icon" />
+        <router-link :to="'/categories/' + category.id">
+          <CategoryCard :name="t(category.categoryName)" :icon="category.icon" />
         </router-link>
       </div>
       <div class="flex flex-col items-center justify-center text-gray-700 hover:bg-orange-200
@@ -26,9 +26,14 @@
 <script setup>
 import { ref, computed, defineEmits } from "vue";
 import CategoryCard from "@/components/categoryCard/CategoryCard.vue";
-import { Categories } from '@/mocks/categories.js';
 import { useI18n } from "vue-i18n";
+import { useMIHStore } from '../../stores/manageHotelInterface';
 
+const hotelStore = useMIHStore();
+
+const categories = computed(() => {
+  return hotelStore.allCategories
+});
 const { t } = useI18n();
 const showMore = ref(false);
 
@@ -39,7 +44,7 @@ const toggleShowMore = () => {
 };
 
 // Séparer les catégories en principales et cachées
-const mainCategories = computed(() => Categories.slice(0, 9));
+const mainCategories = computed(() => categories.value.slice(0, 9));
 //const mainCategoriesSuit = computed(() => Categories.slice(0,7));
 const emit = defineEmits(["toggle-footer"]);
 </script>

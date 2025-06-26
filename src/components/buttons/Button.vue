@@ -1,50 +1,61 @@
 <template>
-    <button class="flex items-center justify-center whitespace-nowrap" :class="buttonClasses" @click="handleClick">
-        <slot> </slot>
-    </button>
+  <button
+    :class="[
+      'inline-flex items-center justify-center font-medium gap-2 rounded-lg transition',
+      sizeClasses[size],
+      variantClasses[variant],
+      className,
+      { 'cursor-not-allowed opacity-50': disabled },
+    ]"
+    @click="onClick"
+    :disabled="disabled"
+  >
+    <span v-if="startIcon" class="flex items-center">
+      <component :is="startIcon" />
+    </span>
+    <slot></slot>
+    <span v-if="endIcon" class="flex items-center">
+      <component :is="endIcon" />
+    </span>
+  </button>
 </template>
-<script setup>
-import { computed } from 'vue';
 
+<script setup lang="ts">
+import { computed } from 'vue'
 
-const props = defineProps({
-    variant: {
-        type: String,
-        default: 'nothing',
-    },
-    size: {
-        type: String,
-        default: 'sm',
-    },
-});
+interface ButtonProps {
+  size?: 'sm' | 'md'
+  variant?: 'primary' | 'outline' | 'neutral'|'danger'
+  startIcon?: object
+  endIcon?: object
+  onClick?: () => void
+  className?: string
+  disabled?: boolean
+}
 
-const emits = defineEmits(['click']);
+const props = withDefaults(defineProps<ButtonProps>(), {
+  size: 'md',
+  variant: 'primary',
+  className: '',
+  disabled: false,
+})
 
-const handleClick = () => {
-    emits('click');
-};
+const sizeClasses = {
+  sm: 'px-3 py-2 text-sm',
+  md: 'px-5 py-3.5 text-sm',
+}
 
-const buttonClasses = computed(() => {
-    const baseClasses = 'front-medium rounded-sm focus:outline-none focus:ring-2 transition';
+const variantClasses = {
+  primary: 'bg-primary text-white shadow-theme-xs hover:bg-primary/25 disabled:bg-purple-300',
+  danger:  'bg-red-800 text-white shadow-theme-xs hover:bg-red-600 disabled:bg-red-300',
+  neutral:' border-none bg-white text-gray-700 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:ring-gray-700 dark:hover:bg-white/[0.03] dark:hover:text-gray-300',
+  outline:
+    'bg-white text-primary ring-1 ring-inset ring-primary hover:bg-gray-50    hover:bg-white/25 dark:hover:text-primary',
+}
 
-    const variantClasses = {
-        nothing: '',
-        ligth: 'bg-white/10 text-customWhite hover:bg-white/30 focus:ring-gray-100',
-        primary: 'bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-300',
-        secondary: 'bg-gray-500 text-white hover:bg-gray-600 focus:ring-gray-300',
-        danger: 'bg-customRed text-customWhite hover:bg-customRed focus:ring-red-300',
-
-    };
-
-    const sizeClasses = {
-        sm: 'px-3 py-1 text-sm',
-        md: 'px-4 py-2 text-md',
-        lg: 'px-5 py-3 text-lg',
-    };
-
-    
-    return `${baseClasses} ${variantClasses[props.variant] || ''} ${sizeClasses[props.size] || ''}`;
-
-});
-
+const onClick = () => {
+  if (!props.disabled && props.onClick) {
+    props.onClick()
+  }
+}
 </script>

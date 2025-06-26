@@ -30,7 +30,9 @@ export const deleteService = (id) => {
 export const getServicesCategoryIdBy = (id) => {
   return axios.get(`${API_URL}/servicesByCategory/${id}`)
 }
-
+export const searchServiceByName = (name) => {
+  return axios.get(`${API_URL}/services?q=${name}`)
+}
 // export const getAllServicesByServiceId = (id) => {
 //   return axios.get(`${API_URL}/service_product_by_serviceId/${id}`)
 // }

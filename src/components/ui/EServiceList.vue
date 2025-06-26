@@ -98,9 +98,11 @@ const fetchServices = async () => {
                 category: hotel.categoryId || '',
             }
         })
-        emit('hotels-loaded', formattedList)
+        emit('hotels-loaded', formattedList);
+        isLoading.value = false
     } catch (error) {
-        console.error('Erreur lors du chargement:', error)
+        console.error('Erreur lors du chargement:', error);
+        isLoading.value = false;
     } finally {
         isLoading.value = false
     }

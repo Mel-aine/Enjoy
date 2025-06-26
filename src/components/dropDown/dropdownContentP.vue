@@ -1,26 +1,34 @@
 <template>
-  <div class="relative inline-block text-left" ref="dropdownRef">
-    <div>
-      <button @click="toggleDropdown" :class="buttonClasses" class="px-4 py-2 rounded-sm">
-        <slot name="button">Menu</slot>
-        <i class="fa fa-chevron-down text-xs ml-1" :class="props.iconColor"></i>
-      </button>
-    </div>
+  <div class="relative inline-block text-left w-max" ref="dropdownRef">
+    <!-- Button -->
+    <button
+      @click="toggleDropdown"
+      :class="[
+        'flex items-center gap-1 px-4 py-2 bg-white/10 text-white rounded-md transition duration-200 hover:bg-white/20 focus:outline-none focus:ring-2 focus:ring-orange-700',
+        isOpen ? 'ring-2 ring-orange-700' : ''
+      ]"
+    >
+      <slot name="button">Menu</slot>
+      <i
+        class="fa fa-chevron-down text-xs ml-1 transition-transform duration-200"
+        :class="[{ 'rotate-180': isOpen }, props.iconColor]"
+      ></i>
+    </button>
 
-    <div v-show="isOpen"
-      class="absolute transform -translate-x-1 z-[100] bg-white shadow-xl mt-2 rounded-lg transition duration-300"
-      :style="dropdownStyle">
-      <div class="p-3" ref="dropdownContentRef">
-        <slot name="content">No content available</slot>
-        <div v-show="props.footerDropdown">
-          <slot name="footerDrop"> <span class="text-red-500 text-center">No footer element please check this element on
-              your component template name missing !!! </span></slot>
-
+    <!-- Dropdown Panel -->
+    <transition name="fade-slide">
+      <div
+        v-show="isOpen"
+        class="absolute z-[100] mt-1 border-t-2 border-primary bg-white shadow-lg  overflow-hidden w-full"
+      >
+        <div class="p-3 " ref="dropdownContentRef">
+          <slot name="content"></slot>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
+
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue';
@@ -76,5 +84,13 @@ const buttonClasses = computed(() => ({
 </script>
 
 <style scoped>
-/**** Styles supplémentaires si nécessaire ****/
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
 </style>

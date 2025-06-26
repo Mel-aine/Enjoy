@@ -3,10 +3,7 @@ import { defineProps, defineEmits, ref, computed, watch } from 'vue';
 import FormField from '@/components/serviceForm/field/FormField.vue';
 import { validateFirstName, validateLastName, validateEmail, validatePhoneNumber } from '@/utils/functions';
 
-// import {
-// ArrowUpToLine
-// } from 'lucide-vue-next';
-// import { useI18n } from 'vue-i18n';
+;
 const props = defineProps({
   formData: Object,
   categoriesItems: Array
@@ -15,11 +12,7 @@ const props = defineProps({
 const emit = defineEmits(['updateFormData']);
 const validName = ref(null)
 console.log('props', props.categoriesItems)
-// const categories = [
-//     { id: 1, name: 'Restaurant' }, { id: 2, name: 'Hôtel' }, { id: 3, name: 'Spa' },
-//     { id: 4, name: 'Salle de sport' }, { id: 5, name: 'Divertissement' },
-//     { id: 6, name: 'Éducation' }, { id: 7, name: 'Santé' }, { id: 8, name: 'Transport' }, { id: 9, name: 'Autre' },
-// ];
+
 
 const handleChange = (e) => {
   // Create a new object with the uploaded field and include the uploaded URLs
@@ -51,10 +44,6 @@ const establishmentName = computed(() => props.formData.name);
 const image = ref([]);
 const logo = ref([]);
 
-// const uploadedUrls = ref([]);
-// const uploading = ref(false);
-// const uploaded = ref(false);
-
 
 const previewUrlImage = ref('')
 const previewUrlLogo = ref('')
@@ -71,7 +60,7 @@ const handleFilesImage = (event) => {
     // Crée une URL temporaire locale pour la prévisualisation
     previewUrlImage.value = URL.createObjectURL(selectedImage[0])
     // previewUrlImage.value = URL.createObjectURL(selectedFiles[1])
-console.log('selectedFiles', selectedImage)
+    console.log('selectedFiles', selectedImage)
   }
   emit('updateFormData', {
     ...props.formData,
@@ -89,7 +78,7 @@ const handleFilesLogo = (event) => {
     // Crée une URL temporaire locale pour la prévisualisation
     previewUrlLogo.value = URL.createObjectURL(selectedLogo[0])
     // previewUrlImage.value = URL.createObjectURL(selectedFiles[1])
-console.log('selectedFiles', selectedLogo)
+    console.log('selectedFiles', selectedLogo)
   }
   emit('updateFormData', {
     ...props.formData,
@@ -98,62 +87,7 @@ console.log('selectedFiles', selectedLogo)
 }
 console.log('establishmentName', establishmentName.value)
 console.log('establishmentType', establishmentType.value)
-// Fonction pour générer un slug à partir du nom
-// const slugify = (text) =>
-//   text
-//     .toLowerCase()
-//     .normalize('NFD')
-//     .replace(/[\u0300-\u036f]/g, '') // enlever accents
-//     .replace(/\s+/g, '-')            // espaces → tirets
-//     .replace(/[^\w-]/g, '');         // enlever caractères spéciaux
 
-// const test = () => {
-//   console.log('test', files.value);
-// }
-
-// const uploadImages = async () => {
-//   const cloudName = 'dylb6x7hj';
-//   const uploadPreset = 'preset_hotels';
-//   const type = establishmentType.value;
-//   const nameSlug = slugify(establishmentName.value);
-//   const folder = `${slugify(type)}s/${nameSlug}`;
-//   uploadedUrls.value = [];
-//   uploading.value = true;
-//   for (const file of files.value) {
-//     const formData = new FormData();
-//     formData.append('file', file);
-//     formData.append('upload_preset', uploadPreset);
-//     formData.append('folder', folder);
-
-//     try {
-//       const res = await fetch(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
-//         method: 'POST',
-//         body: formData,
-//       });
-
-//       const data = await res.json();
-//       console.log('Image uploadée:', data.secure_url);
-//       uploadedUrls.value.push(data.secure_url);
-//       uploaded.value = true;
-
-//     } catch (err) {
-//       console.error('Erreur dupload:', err);
-//       uploaded.value = false;
-
-//     }
-//   }
-
-//   uploading.value = false;
-
-//   // Emit an update with the current form data and the new URLs
-// emit('updateFormData', {
-//   ...props.formData,
-//   'test': 'test',
-//   establishmentType: establishmentType.value,
-//   establishmentName: establishmentName.value,
-//   files: [...files.value] // clone du tableau pour éviter les effets de bord
-// })
-// }
 </script>
 
 <template>
@@ -162,7 +96,7 @@ console.log('establishmentType', establishmentType.value)
     <p class="text-sm text-gray-500">{{ $t('pleaseGiveInfo') }}</p>
 
     <div class="flex items-end gap-4 space-y-6">
-      <FormField class="flex-1" :label="$t('nameOfService')" id="name" name="name" type="text" :value="formData.name"
+      <FormField class="flex-1" :label="$t('nameOfService')" id="name" name="name" type="text" v-model="formData.name"
         @input="handleChange" :placeholder="$t('exampleServiceName')" required />
 
       <div class="flex-1 ">
@@ -197,12 +131,13 @@ console.log('establishmentType', establishmentType.value)
           {{ $t('chooseLogo') }}
         </label>
         <span class="text-gray-600 text-sm">
-          {{logo.length > 0 ? logo.map(l => l.name).join(', ')  : $t('noLogoSelected')}}
+          {{logo.length > 0 ? logo.map(l => l.name).join(', ') : $t('noLogoSelected')}}
         </span>
       </div>
 
       <!-- Image preview -->
-      <img v-if="previewUrlLogo" :src="previewUrlLogo" class="w-16 h-16 object-cover rounded-full shadow" alt="PreviewLogo" />
+      <img v-if="previewUrlLogo || formData.logo" :src="formData.logo??previewUrlLogo" class="w-16 h-16 object-cover rounded-full shadow"
+        alt="PreviewLogo" />
     </div>
 
     <input id="file-uploadLogo" type="file" accept="image/*" @change="handleFilesLogo" class="hidden" />
@@ -219,12 +154,13 @@ console.log('establishmentType', establishmentType.value)
           {{ $t('chooseImage') }}
         </label>
         <span class="text-gray-600 text-sm">
-          {{image.length > 0 ? image.map(i => i.name).join(', ')  : $t('noFileSelected')}}
+          {{image.length > 0 ? image.map(i => i.name).join(', ') : $t('noFileSelected')}}
         </span>
       </div>
 
       <!-- Image preview -->
-      <img v-if="previewUrlImage" :src="previewUrlImage" class="w-24 h-24 object-cover rounded shadow" alt="PreviewImage" />
+      <img v-if="previewUrlImage" :src="previewUrlImage" class="w-24 h-24 object-cover rounded shadow"
+        alt="PreviewImage" />
     </div>
 
     <input id="file-uploadImage" type="file" accept="image/*" @change="handleFilesImage" class="hidden" />
