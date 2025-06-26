@@ -286,7 +286,7 @@
       </CustomDropdownD>
     </div>
 
-   
+
     <div v-if="!showMap" id="map" style="height: 800px; width: 100%;"></div>
 
 
@@ -329,7 +329,7 @@ const login = () => {
 }
 
 const register = () => {
-  window.location.href = '/login'
+  window.location.href = '/register'
 }
 
 // Utilisation de useI18n pour accéder aux traductions
@@ -378,7 +378,7 @@ const fetchCategories = async () => {
 
 onMounted(() => {
   fetchCategories();
-  initMap();
+  // initMap();
 });
 const handleSearch = () => {
 
@@ -683,22 +683,49 @@ const getTerminologyToSearchInGoogleMap = (item) => {
 const selectedCategories = ref([""]); // Catégorie sélectionnée
 let map = null; // Référence à la carte Google Maps
 let markers = []; // Liste des marqueurs affichés sur la carte
-// Fonction pour charger le script Google Maps
+// Fonction pour charger le script Google Maps 'ce qui etait avant'
+// function loadGoogleMapsScript() {
+//   return new Promise((resolve, reject) => {
+//     if (window.google) {
+//       resolve(); // L'API est déjà chargée
+//       return;
+//     }
+
+//     const script = document.createElement('script');
+//     // script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
+//     script.src = ` https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&callback=initMap&v=weekly&libraries=places,marker`;
+//     script.onload = resolve;
+//     script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
+//     document.head.appendChild(script);
+//   });
+// }
+
 function loadGoogleMapsScript() {
   return new Promise((resolve, reject) => {
-    if (window.google) {
-      resolve(); // L'API est déjà chargée
+    if (window.google && window.google.maps) {
+      resolve();
+      return;
+    }
+
+    const existingScript = document.querySelector('script[src^="https://maps.googleapis.com/maps/api/js"]');
+    if (existingScript) {
+      existingScript.addEventListener('load', resolve);
+      existingScript.addEventListener('error', () => reject(new Error("Erreur lors du chargement de l'API Google Maps")));
       return;
     }
 
     const script = document.createElement('script');
-    // script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places`;
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&callback=initMap&v=weekly&libraries=places,marker`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${import.meta.env.VITE_API_KEY}&libraries=places,marker`;
+    script.async = true;
+    script.defer = true;
+
     script.onload = resolve;
-    script.onerror = () => reject(new Error('Erreur lors du chargement de l\'API Google Maps'));
+    script.onerror = () => reject(new Error("Erreur lors du chargement de l'API Google Maps"));
+
     document.head.appendChild(script);
   });
 }
+
 
 // Fonction pour effacer tous les marqueurs de la carte
 function clearMarkers() {
@@ -843,7 +870,8 @@ async function initMap() {
 
 // Initialiser la carte au montage du composant
 onMounted(() => {
-  initMap();
+  // initMap();j ai modifier
+   window.initMap = initMap
 });
 
 onMounted(() => {
