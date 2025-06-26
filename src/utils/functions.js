@@ -109,3 +109,34 @@ export function formatDate(dateStr) {
 
   return null;
 }
+
+// utils/categoryUtils.js
+
+export function getCategoryCheckers(currentCategoryId) {
+  return {
+    isRestaurant: currentCategoryId === 1,
+    isNightlife: currentCategoryId === 2,
+    isShopping: currentCategoryId === 3,
+    isSportsLeisure: currentCategoryId === 4,
+    isBeautySalonsSpas: currentCategoryId === 5,
+    isAutomobile: currentCategoryId === 6,
+    isHousesWorks: currentCategoryId === 7,
+    isPowerSupplies: currentCategoryId === 8,
+    isArtLeisure: currentCategoryId === 9,
+    isHealthMedical: currentCategoryId === 10,
+    isServicesForProfessionals: currentCategoryId === 11,
+    isPets: currentCategoryId === 12,
+    isRealEstate: currentCategoryId === 13,
+    isHotel: currentCategoryId === 14,
+    isLocalServices: currentCategoryId === 15,
+    isEventOrganization: currentCategoryId === 16,
+    isPublicServicesGovernment: currentCategoryId === 17,
+    isFinancialServices: currentCategoryId === 18,
+    isTrainingTeaching: currentCategoryId === 19,
+    isReligiousOrganization: currentCategoryId === 20,
+    isTravel: currentCategoryId === 21,
+    isMedia: currentCategoryId === 22,
+    isCoffeesTeas: currentCategoryId === 23,
+    isTouristAttractions: currentCategoryId === 185,
+  };
+}

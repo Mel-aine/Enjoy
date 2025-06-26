@@ -782,5 +782,10 @@
   "find_business": "Find Business",
   "search_heading": "Let’s find your business",
   "search_description": "Your business might already be on Enjoy. If not, you can add it.",
-  "start": "Start"
+  "start": "Start",
+  "closed": "Closed",
+  "tomorrow": "(tomorrow)",
+  "inDays": "in {count} days",
+  "unavailable": "Hours unavailable",
+  "timeRange": "{start} - {end}"
 }
