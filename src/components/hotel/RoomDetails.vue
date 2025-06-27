@@ -42,7 +42,7 @@
   <div class="bg-white rounded-xl shadow-sm overflow-hidden">
   
     <!-- User Details Form start-->
-    <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
+    <div class="bg-white  px-6 py-2">
       <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <!-- First Name -->
@@ -175,27 +175,9 @@
           </p>
         </div>
       </div>
-      <!-- picklist start-->
-      <!-- <div class=" mt-4">
-        <div>
-          <label for="packageSelect" class="block mb-2">{{ $t('appServices.hotel.choiceOnePackage') }}</label>
-          <select id="packageSelect" v-model="selectedPackage" class="border border-gray-300 p-2 rounded-lg w-full">
-            <option v-for="pkg in Package" :key="pkg.value" :value="pkg.value">
-              {{ pkg.label }}
-            </option>
-          </select>
-        </div>
-      </div> -->
-      <!-- picklist end-->
     </div>
     <!-- User Details Form end-->
-
-
-
-
-
-    <!-- Additional ways to booking start -->
-    <!-- isPresentInDB doit provenir de la bd -->
+    <SpecialRequestAvail/>
     <div class="bg-white rounded-xl p-6 shadow-sm">
       <h2 v-if="isPresentInDB" class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.addToYourStay')
       }}
@@ -455,7 +437,7 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router';
-
+import SpecialRequestAvail from '../ui/SpecialRequestAvail.vue';
 import {
   DumbbellIcon,
   XIcon,
@@ -628,17 +610,14 @@ const handleNext = () => {
       hotelName: hotelStore.this_hotel?.name || t('notAvaible'),
       rating: 4.87,
       reviewCount: 262,
-      amenities: amenitiesStatus.value,
+      amenities:[],
       cancellationPolicy: expanded.value ?
         "Free cancellation until 11:59 PM on May 21, 2022. Your account will be charged on Sunday, May 22, 2022. If you cancel by 11:59 PM on Tuesday, May 31, 2022 you'll get your money back!" :
         "Free cancellation until 11:59 PM on May 21, 2022"
     }
   };
 
-  // hotelStore.this_hotel.price = hotelStore.this_hotel.price + getOptionPrice('carPark') + getOptionPrice('wine') + getOptionPrice('pet');
-  // console.log('hotelStore.this_hotel.price:', hotelStore.this_hotel.price);
   console.log('selectedOption:', selectedOptions.value);
-  // setOptionsPrice();
   if (isPresentInDB.value) {
     verifyCarParkOptionSelected();
   }
@@ -672,12 +651,8 @@ const RoomsWithLowPrice = ref({})
 const loadRooms = async () => {
   try {
     isLoading.value = true;
-    console.log('serviceId:', serviceId.value);
     const roomsResponse = await getAllServicesByServiceId(hotelStore.hotelId);
-    console.log('roomsResponse:', hotelStore.hotelId);
     Rooms.value = roomsResponse.data;
-    console.log('Rooms chargés:', Rooms.value);
-    console.log('props.roomId', props.roomId)
    
 
   } catch (error) {
@@ -728,7 +703,7 @@ watch(
 onMounted(() => {
   // Scroll en haut de la page quand le composant est monté
   window.scrollTo({ top: 0, behavior: 'smooth' });
-
+console.log('hotelStore.this_hotel',hotelStore.this_hotel);
 });
 
 

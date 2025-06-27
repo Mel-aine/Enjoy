@@ -105,7 +105,7 @@
                     </select>
 
                   </td>
-                  <td class=" w-2/12 px-6 py-4 text-left align-top " :rowspan="totalRows" v-if="tyIn == 0">
+                  <td class=" w-2/12 px-6 py-4 text-left align-top " :rowspan="totalRows" v-if="tyIn == 0 &&index ==0">
 
                     <div class="flex flex-col gap-2 mb-5" v-if="reservationItems && reservationItems.length>0">
                       <span>{{ reservationItems.length }} room(s) for</span>
@@ -185,7 +185,7 @@ const getOptionIcon = (optionName) => {
 }
 
 const booking = () => {
-  emit('bookRoom', reservationItems);
+  emit('bookRoom', reservationItems.value);
 }
 // Gérer le changement de quantité
 const handleRoomQuantityChange = (room, quantity) => {

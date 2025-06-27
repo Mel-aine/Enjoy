@@ -15,7 +15,7 @@ import router from '../../router';
 
 const hotelId = router.currentRoute.value.params.hotelId;
 
-const reservationItems = computed(()=>{
+const reservationItems = computed(() => {
   return hotelStore.reservationItems;
 })
 
@@ -56,20 +56,20 @@ const goToStep3 = async (roomData, lowPriceRoomId) => {
     updateForm(roomData, 'room');
   }
   try {
-    await handleSubmitReservation(lowPriceRoomId); // Attend le résultat de la soumission
+    // await handleSubmitReservation(lowPriceRoomId); // Attend le résultat de la soumission
     console.log(lowPriceRoomId)
-    if (isReserved.value) {
-      // Seulement avancer les étapes si la réservation a réussi
-      step2Active.value = false;
-      step2Completed.value = true;
-      step3Completed.value = false;
-      step3Active.value = true;
-      step4Active.value = false;
-      step.value = 2;
-    } else {
-      // Optionnel : afficher un message d'erreur à l'utilisateur
-      console.warn("La réservation a échoué. Étape non avancée.");
-    }
+    //if (isReserved.value) {
+    // Seulement avancer les étapes si la réservation a réussi
+    step2Active.value = false;
+    step2Completed.value = true;
+    step3Completed.value = false;
+    step3Active.value = true;
+    step4Active.value = false;
+    step.value = 2;
+    //} else {
+    // Optionnel : afficher un message d'erreur à l'utilisateur
+    //console.warn("La réservation a échoué. Étape non avancée.");
+    //}
   } catch (err) {
     console.error("Erreur dans goToStep3 :", err);
   }
@@ -82,6 +82,7 @@ const goToStep4 = async (paymentData) => {
   }
 
   try {
+    await handleSubmitReservation(); // Attend le résultat de la soumission
     await handleSubmitPayment(tmpIdU.value, tmpIdR.value); // Attend le résultat de la soumission
 
     if (isPaid.value) {
@@ -120,7 +121,7 @@ const updateForm = (data, stepName) => {
 const isReserved = ref(false);
 const isPaid = ref(false);
 const reservationDetail = ref({});
-const handleSubmitReservation = async (param) => {
+const handleSubmitReservation = async () => {
   const guest = formData.value.roomDetails.guestInfo;
 
   const reservationPayload = {
@@ -136,17 +137,19 @@ const handleSubmitReservation = async (param) => {
     total_person: hotelStore?.totalPerson || 1,
     arrived_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
     depart_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-    reservation_product: param,
+    reservation_product: '',
     reservation_time: new Date().toISOString().split('T')[1].split('.')[0],
     comment: "No comment",
     created_by_R: 2,
     last_modified_by_R: 2,
     payment: "pending",
-    products: [{
-      service_product_id: param,
-      start_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
-      end_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
-    }],
+    products: reservationItems.value.map((p) => {
+      return {
+        service_product_id: p.id,
+        start_date: new Date(hotelStore?.dateArrived).toISOString().split('T')[0],
+        end_date: new Date(hotelStore?.dateDepart).toISOString().split('T')[0],
+      }
+    })
   };
 
 
@@ -212,8 +215,8 @@ const handleSubmitPayment = async (idU, idR) => {
       <ProgressSteps
         :steps="[t('appServices.hotel.datesRooms'), t('appServices.hotel.extras'), t('appServices.hotel.payment'), t('appServices.hotel.confirmation')]"
         :currentStep="step" />
-      <RoomDetails v-if="step2Active && !step3Active && !step4Active " :roomData="formData.roomDetails"
-        @next="goToStep3" :room-id="reservationItems[0]" @back="handleBackStep" />
+      <RoomDetails v-if="step2Active && !step3Active && !step4Active" :roomData="formData.roomDetails" @next="goToStep3"
+        :room-id="reservationItems[0]" @back="handleBackStep" />
       <BookingPayement v-if="step3Active && !step3Completed && !step4Active" @next="goToStep4" @back="handleBackStep" />
       <div v-if="isReserved">
         <BookingConfirm v-if="step4Active" :bookingData="reservationDetail" @back="handleBackStep" />

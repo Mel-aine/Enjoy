@@ -5,7 +5,8 @@
     </h2>
     <div class="space-y-4">
       <!-- Card Payment Option -->
-      <button v-if="payment_accepted.includes('Credit Card')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('Credit Card')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'card' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'card'">
         <div class="flex items-center space-x-4">
@@ -26,7 +27,8 @@
       </button>
 
       <!-- Small Pay Option -->
-      <button v-if="payment_accepted.includes('smallpay')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('SmallPay')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'smallPay' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'smallPay'">
         <div class="flex items-center space-x-4">
@@ -42,7 +44,8 @@
       </button>
 
       <!-- PayPal Option -->
-      <button v-if="payment_accepted.includes('PayPal')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('PayPal')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'paypal' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'paypal'">
         <div class="flex items-center space-x-4">
@@ -56,7 +59,8 @@
       </button>
 
       <!-- cash Pay Option -->
-      <button v-if="payment_accepted.includes('Cash')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('Cash') || payment_accepted.includes('Espèces')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'cash' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'cash'">
         <div class="flex items-center space-x-4">
@@ -73,7 +77,8 @@
       </button>
 
       <!-- cash Pay Option -->
-      <button v-if="payment_accepted.includes('Check')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('Check')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'check' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'check'">
         <div class="flex items-center space-x-4">
@@ -90,23 +95,24 @@
       </button>
 
 
-      <button v-if="payment_accepted.includes('Orange Money')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('Orange Money')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'Orange Money' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'Orange Money'">
         <div class="flex items-center space-x-4">
           <div class="text-left">
-            <div class="font-medium">Orange Money</div> 
+            <div class="font-medium">Orange Money</div>
             <div class="text-sm text-gray-500">Orange Money
             </div>
           </div>
         </div>
-        <img
-          src="https://th.bing.com/th/id/OIP.bg3dmiuTl9j1cbe_v31-JgHaB0?w=332&h=85&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        <img src="https://th.bing.com/th/id/OIP.bg3dmiuTl9j1cbe_v31-JgHaB0?w=332&h=85&c=7&r=0&o=5&dpr=1.3&pid=1.7"
           alt="OM" class="h-6" />
 
       </button>
 
-      <button v-if="payment_accepted.includes('Mobile Money')" class="w-full flex items-center justify-between p-4 rounded-lg border"
+      <button v-if="payment_accepted.includes('Mobile Money')"
+        class="w-full flex items-center justify-between p-4 rounded-lg border"
         :class="paymentMethod === 'Mobile Money' ? 'border-indigo-600 bg-indigo-50' : 'border-gray-200 hover:border-gray-300'"
         @click="paymentMethod = 'Mobile Money'">
         <div class="flex items-center space-x-4">
@@ -116,8 +122,7 @@
             </div>
           </div>
         </div>
-        <img
-          src="https://th.bing.com/th/id/OIP.zHmenbJ6iC8x6Poo7cZn7wHaEK?w=301&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+        <img src="https://th.bing.com/th/id/OIP.zHmenbJ6iC8x6Poo7cZn7wHaEK?w=301&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
           alt="MoMo" class="h-6" />
 
       </button>
@@ -578,22 +583,7 @@ const handleNext = async () => {
 onMounted(() => {
   // Scroll en haut de la page quand le composant est monté
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  
 
-  try {
-  const parsed = JSON.parse(payment_accepted);
-  // Vérifie si c'est bien un tableau après parsing
-  if (Array.isArray(parsed)) {
-    payment_accepted.value = parsed;
-  }
-} catch (e) {
-  // Ce n'est pas du JSON, on garde payment_accepted tel quel
-  console.log('Invalid JSON format for payment methods:', e);
-  payment_accepted.value = payment_accepted;
-}
-  // Vérifie si payment_accepted est un tableau
-//   if (!Array.isArray(payment_accepted.value)) {
-//     console.error('payment_accepted should be an array');
-//     payment_accepted.value = [];
-//   }
 });
 </script>

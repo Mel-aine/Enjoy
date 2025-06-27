@@ -274,7 +274,7 @@
     "Travel": "Travel",
     "Média": "Media",
     "Cafés & Thés": "Coffees & Teas",
-    "Attractions Touristiques" : "Tourist Attractions"
+    "Attractions Touristiques": "Tourist Attractions"
   },
   "places": {
     "Le Gourmet": {
@@ -787,5 +787,33 @@
   "tomorrow": "(tomorrow)",
   "inDays": "in {count} days",
   "unavailable": "Hours unavailable",
-  "timeRange": "{start} - {end}"
+  "timeRange": "{start} - {end}",
+  "night(s)": "night(s)",
+  "roomsForAdults": "{count} room | {count} rooms for {adults} adult | {count} rooms for {adults} adults",
+  "changeSelection": "Change selection",
+  "youSelect":"You have selected",
+  "loginPrompt": {
+    "message": "{login} to book using your saved information or {register} to manage your bookings from anywhere!",
+    "login": "Log in",
+    "register": "Sign up"
+  }
+,
+  "specialRequests": {
+    "title": "Special Requests",
+    "description": "Special requests cannot be guaranteed but the property will do its best to meet your needs. You can always make special requests, even after completing your booking!",
+    "inputLabel": "Please write your requests in English or Italian"
+  },
+  "arrival_": {
+    "title": "Your Arrival Time",
+    "info": "Check-in will be available for your accommodation between 14:00 and 00:00.",
+    "label": "Add your expected arrival time",
+    "placeholder": "Please select",
+    "timezoneNote": "The selected time is in the timezone of"
+  },
+  "common": {
+    "optional": "optional"
+  }
+
+
+
 }

@@ -345,12 +345,7 @@
                                     <div class="border-t pt-4">
                                         <div class="flex items-center justify-between mb-4">
                                             <div class="flex items-center space-x-2">
-                                                <!-- <span
-                          v-if="selectedRoom.originalPrice > selectedRoom.price"
-                          class="text-lg text-gray-500 line-through"
-                        >
-                          {{ selectedRoom.originalPrice }}€
-                        </span> -->
+                                            
                                                 <span class="text-3xl font-bold text-gray-900">{{ selectedRoom.price
                                                     }}FCFA</span>
                                                 <span class="text-gray-600">/{{ $t('night') }}</span>
@@ -510,6 +505,8 @@ const handleSearch = (hotel) => {
 };
 
 const startBooking = (reservationItems) => {
+    hotelStore.setHotel(hotel.value)
+    hotelStore.getHotelId(hotel.value.id)
     hotelStore.setReservationItems(reservationItems);
     router.push({
         path: `/booking/${hotelId}`,

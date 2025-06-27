@@ -69,12 +69,9 @@ export const useMIHStore = defineStore("MIH", {
       return this.roomNumber;
     },
     setReservationItems(rs){
-      this.reservationItems = rs;
+      this.reservationItems = [...rs];
     }
   },
-  //   ,
-  //   getters: {
-  //     getShowCount: (state) => state.count,
-  //   }
+ 
   persist: true
 });

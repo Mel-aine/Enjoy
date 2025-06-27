@@ -25,6 +25,7 @@ import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 import { formatPrice } from "../../utils/functions";
 import StarIcon from "../../icons/StarIcon.vue";
+import LoginPrompt from "../ui/LoginPrompt.vue";
 
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
@@ -163,12 +164,20 @@ const amenitiesStatus = computed(() => {
   };
 });
 
-const reservationItems = computed(()=>{
+const reservationItems = computed(() => {
   return hotelStore.reservationItems;
+});
+const totalReservationPrice = computed(() => {
+  return reservationItems.value.reduce((sum, item) => {
+    return sum + (item.quantity * (item.room.price || 0))
+  }, 0)
 })
 </script>
 
 <template>
+  <div class="bg-white rounded-xl mb-2">
+    <LoginPrompt/>
+    </div>
   <div class="bg-white rounded-xl shadow-sm mb-2 p-3">
     <div class="flex items-start">
       <div class="flex flex-col">
@@ -185,7 +194,7 @@ const reservationItems = computed(()=>{
           {{ hotelStore.this_hotel?.name || $t("notAvaible") }} <span class="text-gray-700">•</span>
         </h2>
         <div class="text-gray-700">
-          {{ hotelStore.this_hotel?.location  }}
+          {{ hotelStore.this_hotel?.location }}
         </div>
         <div class="flex items-start justify-between space-x-3">
 
@@ -201,6 +210,7 @@ const reservationItems = computed(()=>{
       </div>
     </div>
   </div>
+
   <div class="bg-white rounded-xl shadow-sm ">
     <div ref="invoiceRef" class="p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
@@ -226,27 +236,32 @@ const reservationItems = computed(()=>{
           </div>
         </div>
       </div>
-         <div class="py-4 border-b">
-        <div class="text-sm text-gray-600 mb-1">{{ $t('Vous avez sélectionné') }}
+      <div class="py-4 border-b">
+        <div class="text-sm text-gray-600 mb-1">{{ $t('youSelect') }}
         </div>
-        <div class="font-medium flex items-center">
-          <div class="self-center items-center h-full">
-           {{reservationItems.length}} chambres pour {{ hotelStore.totalPerson }} adultes
+        <div class="font-medium flex flex-col">
+          <div class="h-full">
+            {{ $t('roomsForAdults', { count: reservationItems.length, adults: hotelStore.totalPerson }) }}
+          </div>
+          <div class="mt-3">
+            <button class="text-primary font-bold cursor-pointer hover:text-primary/25">
+              {{ $t('changeSelection') }}
+            </button>
           </div>
         </div>
-      </div> 
+      </div>
 
       <div class="py-4">
-        <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>
+        <h4 class="font-medium text-gray-600 mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>
         <div class="space-y-2">
           <div v-for="(item, index) in priceDetails" :key="index" class="flex justify-between text-sm">
             <span>{{ item.label }}</span>
-            <span>{{ formatPrice(item.price) }}</span>
+            <span>{{ formatPrice(totalReservationPrice) }}</span>
           </div>
           <div class="flex justify-between font-medium text-customRed pt-2 border-t">
             <span> {{ $t('appServices.hotel.total') }} {{ $t('appServices.hotel.price') }}
             </span>
-            <span> <span class="text-xl font-bold">{{ formatPrice(totalPrice) }} </span> </span>
+            <span> <span class="text-xl font-bold">{{ formatPrice(totalReservationPrice) }} </span> </span>
           </div>
         </div>
       </div>
