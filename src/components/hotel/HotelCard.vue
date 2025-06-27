@@ -125,22 +125,27 @@ const handleViewDeal = () => {
   <div class="bg-whiteoverflow-hidden border-b pb-5 z-0">
     <div class="flex flex-col md:flex-row">
       <!-- Image -->
-      <div class="relative w-full md:w-1/3 h-48 md:h-auto flex-shrink-0 ">
+      <div class="relative w-full md:w-1/3 h-48 flex-shrink-0">
         <img
           :src="hotel.logo ? hotel.logo : 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470'"
-          :alt="hotel.name" class="w-full h-full object-cover rounded-lg" />
-        <button @click="toggleFavorite"
-          class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100">
+          :alt="hotel.name"
+          class="w-full h-full object-cover object-center rounded-lg"
+        />
+        <button
+          @click="toggleFavorite"
+          class="absolute top-2 right-2 bg-white p-2 rounded-full shadow-md hover:bg-gray-100"
+        >
           <HeartIcon :class="{ 'text-red-500': isFavorite, 'text-gray-500': !isFavorite }" size="20" />
         </button>
       </div>
+
 
       <!-- Informations sur l'hôtel -->
       <div class="flex-grow p-4">
         <div class="flex items-start justify-between">
           <div>
             <router-link :to="`/all_service/${hotel.id}`">
-              <h3 class="text-2xl font-bold">{{ hotel.name }}</h3>
+              <h3 class="text-2xl font-bold line-clamp-1">{{ hotel.name }}</h3>
             </router-link>
             <div class="flex items-center space-x-1">
               <span v-for="(star, index) in renderStars" :key="index">
@@ -155,7 +160,7 @@ const handleViewDeal = () => {
 
         <div class="flex items-center text-gray-600 text-md mt-2">
           <MapPinIcon size="16" class="mr-1" />
-          <span v-if="location" class="text-sm">{{ location }}</span>
+          <span v-if="location" class="text-sm line-clamp-1">{{ location }}</span>
           <span v-if="location?.text">{{ location.text }}</span>
 
         </div>

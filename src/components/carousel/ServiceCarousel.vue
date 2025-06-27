@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref,watch } from 'vue'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-vue-next'
 import { getServicesCategoryIdBy } from '../../servicesApi/hotelServicesApi'
 import { useMIHStore } from '@/stores/manageHotelInterface';
@@ -80,13 +80,16 @@ const getServiceListLocal = async () => {
         loading.value = true;
         const result = await getServicesCategoryIdBy(props.category.id);
         const datas = result.data;
+        console.log("props.category.id",props.category.id)
         if (datas && datas.items.
             length > 0) {
             services.value = datas.items.map((e) => {
                 return {
                     id:e.id,
                     name: e.name,
-                    location: JSON.parse(e.addressService).text,
+                     location: e.addressService
+                      ? JSON.parse(e.addressService).text
+                      : 'Location not available',
                     price: e.price,
                     rating: e.averageRating ?? 0,
                     likes: 0,
@@ -94,14 +97,23 @@ const getServiceListLocal = async () => {
                 };
             })
         }
-        console.log('result', datas);
+        console.log('services.value', services.value);
         loading.value = false;
         emit('display');
 
-    } catch {
+    } catch (error) {
         loading.value = false;
+        console.error('Erreur lors du chargement des services :', error)
     }
 }
+
+
+watch(() => props.category.id, async (newId) => {
+  if (newId) {
+    await getServiceListLocal()
+  }
+})
+
 const handleViewDeal = (service) => {
     hotelStore.setHotel(service)
     hotelStore.getHotelId(service.id)

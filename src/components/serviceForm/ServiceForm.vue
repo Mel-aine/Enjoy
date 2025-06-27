@@ -18,7 +18,7 @@ import FindServiceByName from './FindServiceByName.vue';
 const isSubmitting = ref(false)
 // const uploadLogo = ref(false);
 // const uploadedUrlLogo = ref([]);
-// const uploadedUrlImage = ref([]); 
+// const uploadedUrlImage = ref([]);
 // const uploadImage = ref(false);
 const isVisible = ref(false);
 const { t } = useI18n();
@@ -48,7 +48,7 @@ const formData = ref({
   policies: '',
   capacity: '',
   payment_methods: [],
-  logo: [],
+  logo: '',
   image: [],
   status: 'active',
   lastname: '',
@@ -170,10 +170,43 @@ const saveFile = async (files) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   isSubmitting.value = true;
-  const image = await saveFile(formData.value.image)
-  const logo = await saveFile(formData.value.logo)
-  console.log('uploadedUrlLogo', image);
-  console.log('uploadedUrlImage', logo);
+
+  // if (!formData.value.name || !formData.value.category_id) {
+  //   alert('Les champs "Nom" et "Catégorie" sont obligatoires');
+  //   return;
+  // }
+
+// const { uploaded, uploadedUrls } = await uploadImages(
+//   formData.value.establishmentType,
+//   formData.value.establishmentName,
+//   formData.value.logo // Assurez-vous que c'est un tableau (même pour 1 fichier)
+// );
+
+//  if (!uploaded || !uploadedUrls[0]) {  // Optional Chaining au cas où
+//   console.error("Échec de l'upload :", uploaded, uploadedUrls);
+//   alert(t("error.errorImage"));
+//   return;
+// }else{
+//   uploadLogo.value = uploaded;
+//   uploadedUrlLogo.value = uploadedUrls;
+// }
+
+  //   const { uploaded, uploadedUrls } = await uploadImages(
+  //   formData.value.establishmentType,
+  //   formData.value.establishmentName,
+  //   formData.value.image
+  // );
+
+  // if (!uploadedImage || !uploadedUrlImage[0]) {
+  //   console.log('Erreur d’upload', uploadedLogo, uploadedUrlImage);
+  //   alert(t("error.erroImage"));
+  //   return console.log('Erreur d’upload', uploadedImage, uploadedUrlImage);
+  // }
+
+const image = await saveFile(formData.value.image)
+const logo = await saveFile(formData.value.logo)
+console.log('uploadedUrlLogo', image);
+console.log('uploadedUrlImage', logo);
 
   const payload = {
     name: formData.value.name,
@@ -194,7 +227,7 @@ const handleSubmit = async (e) => {
     capacity: formData.value.capacity ? Number(formData.value.capacity) : null,
     payment_methods: formData.value.payment_methods.length ? JSON.stringify(formData.value.payment_methods) : '[]',
     images: image.uploadedUrls || [],
-    logo: logo.uploadedUrls || [],
+    logo: logo.uploadedUrls[0] || '',
     status: formData.value.status || 'active',
     first_name: formData.value.firstName,
     last_name: formData.value.lastName,

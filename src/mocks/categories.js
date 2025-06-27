@@ -536,4 +536,31 @@ export const Categories = [
       }
     ]
   },
+  {
+    id: "24",
+    label: "Attractions Touristiques",
+    icon: "fa-solid fa-map-signs",
+    link: "/hotels",
+    places: [
+      {
+        id: "PLACE-MEDI-001",
+        name: "Services",
+        route: "/recherche/media/PLACE-MEDI-001",
+        description: "description",
+        address: "Hôtel de Ville, Yaoundé",
+        location: "3.8767° N, 11.5198° E",
+        phone: "+237696789012",
+        email: "contact@yaounde.cm",
+        opening_hours: [
+          { day: "monday", open: "12h00", close: "23h00" },
+          { day: "wednesday", open: "14h00", close: "00h00" },
+          { day: "sunday", open: "01h00", close: "00h00" }
+        ],
+        min_price: "N/A",
+        status: "active",
+        category: ["Media"],
+        images: [image1, image1, image1]
+      }
+    ]
+  },
 ];

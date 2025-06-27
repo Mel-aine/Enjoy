@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="rooms.length > 0">
-      <!-- Mobile view 
+      <!-- Mobile view
       <div class="space-y-4 md:hidden">
         <div v-for="room in rooms" :key="room.id" class="bg-white rounded-lg shadow-md p-4">
           <div class="relative">
