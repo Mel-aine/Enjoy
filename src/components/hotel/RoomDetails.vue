@@ -40,231 +40,7 @@
 
   </div> -->
   <div class="bg-white rounded-xl shadow-sm overflow-hidden">
-    <div class="p-6">
-      <div class="flex items-start">
-        <!-- Image at the beginning -->
-        <img
-          :src='hotelStore.this_hotel?.images?.[0] || "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1470"'
-          alt="Room" class="w-48 h-40 object-cover rounded-lg mr-6" />
-
-        <!-- Content beside the image -->
-        <div class="flex-1">
-
-          <div class="flex items-start justify-between space-x-3">
-            <span class=" px-2 py-1 bg-orange-100 text-orange-800 text-xs font-medium rounded-md mb-2">
-              {{ $t('appServices.hotel.bestChoice') }}</span>
-            <div class="flex space-x-3 mt-1 ">
-              <WifiIcon v-if="amenitiesStatus.wifi" size="18" class="text-gray-600" />
-              <CoffeeIcon v-if="amenitiesStatus.breakfast" size="18" class="text-gray-600" />
-              <WavesLadderIcon v-if="amenitiesStatus.pool" size="18" class="text-gray-600" />
-              <DumbbellIcon v-if="amenitiesStatus.gym" size="18" class="text-gray-600" />
-            </div>
-
-          </div>
-          <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
-            {{ hotelStore.this_hotel?.name || $t("notAvaible") }} <span class="text-gray-700">•</span> {{
-              RoomsWithLowPrice.productName || $t("notAvaible") }}
-          </h2>
-          <!-- <div class="flex items-center space-x-2 mb-4 mt-2">
-            <div class="flex">
-              <StarIcon v-for="star in stars" :key="star" size="16" class="text-yellow-400 fill-yellow-400" />
-            </div>
-            <span class="font-medium text-gray-900">4.87</span>
-            <span class="text-gray-500">(262 {{ $t('appServices.hotel.review') }}s )</span>
-          </div> -->
-
-          <!-- Icons section (beds, guests, etc.) - moved inside the flex container -->
-          <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-8">
-            <div class="flex items-center space-x-2">
-              <BedDoubleIcon size="20" class="text-slate-600" />
-              <div>
-                <div class="text-sm font-medium text-gray-900">
-                  {{
-                    RoomsWithLowPrice.options &&
-                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
-                    || $t("notAvaible")
-                  }}
-                </div>
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.beds') }} </div>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
-                stroke="#475569" stroke-width="2">
-                <!-- Carré avec coins arrondis -->
-                <rect x="1" y="1" width="18" height="18" rx="3" ry="3" stroke="#475569" />
-
-                <!-- Ligne diagonale -->
-                <line x1="4" y1="16" x2="16" y2="4" stroke="#475569" />
-
-                <!-- Pointe de flèche en haut -->
-                <polyline points="16,4 14,4 15,6" fill="none" stroke="#475569" />
-
-                <!-- Pointe de flèche en bas -->
-                <polyline points="4,16 6,16 5,14" fill="none" stroke="#475569" />
-              </svg>
-              <div>
-                <!-- <div class="text-sm font-medium text-gray-900">{{ sizeValue }} m² </div> -->
-                <div class="text-sm font-medium text-gray-900">
-                  {{
-                    RoomsWithLowPrice.options &&
-                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of beds')?.value
-                    || $t("notAvaible")
-                  }} m²
-                </div>
-
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.area') }} </div>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <Users2Icon size="20" class="text-slate-600" />
-              <div>
-                <div class="text-sm font-medium text-gray-900">
-                  {{
-                    RoomsWithLowPrice.options &&
-                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Maximum Occupancy')?.value
-                    || $t("notAvaible")
-                  }}
-                </div>
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.guests') }} </div>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <Bath size="20" class="text-slate-600" />
-              <div>
-                <div class="text-sm font-medium text-gray-900">
-                  {{
-                    RoomsWithLowPrice.options &&
-                    RoomsWithLowPrice.options.find(opt => opt.optionName === 'Number of bathrooms')?.value
-                    || $t("notAvaible")
-                  }}
-                </div>
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.bathroom') }} </div>
-              </div>
-            </div>
-            <div class="flex items-center space-x-2">
-              <BadgeCheck size="20" class="text-slate-600" />
-              <div>
-                <div v-if="RoomsWithLowPrice.availability === true" class="text-sm font-medium text-gray-900">{{
-                  $t('appServices.hotel.yes') }}</div>
-                <div v-else class="text-sm font-medium text-gray-900">{{ $t('appServices.hotel.no') }}</div>
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.availability') }} </div>
-              </div>
-            </div>
-            <!-- <div class="flex items-center space-x-2">
-              <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none"
-                stroke="#475569" stroke-width="2">
-                <path d="M1 16 H6 M6 12 H10 M10 8 H14 M14 4 H18" />
-              </svg>
-              <div>
-                <div class="text-sm font-medium text-gray-900">4</div>
-                <div class="text-xs text-gray-500">{{ $t('appServices.hotel.floor') }} </div>
-              </div>
-            </div> -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="max-w-6xl mx-auto p-6 space-y-8">
-      <!-- Header -->
-      <!-- <div class="text-center space-y-2">
-      <h1 class="text-3xl font-bold text-gray-900">Accommodation Details</h1>
-      <p class="text-gray-600">Complete overview of room features and amenities</p>
-    </div> -->
-
-      <!-- Categories -->
-      <!-- <div class="grid gap-6">
-      <div
-        v-for="(category, categoryIndex) in categories"
-        :key="categoryIndex"
-        class="bg-white rounded-lg border border-gray-200 shadow-sm"
-      > -->
-      <!-- Card Header -->
-      <!-- <div class="px-6 py-4 border-b border-gray-200">
-          <h2 class="text-lg font-semibold text-gray-800">{{ category.title }}</h2>
-        </div>
-         -->
-      <!-- Card Content -->
-      <!-- <div class="p-6">
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div
-              v-for="option in category.options"
-              :key="option.optionId"
-              class="flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:border-gray-300 transition-colors"
-            >
-              <div class="flex items-center space-x-3">
-                <div class="flex-shrink-0">
-                  <span class="text-lg">{{ getIcon(option.optionName) }}</span>
-                </div>
-                <div class="min-w-0 flex-1">
-                  <p class="text-sm font-medium text-gray-900 truncate">{{ option.optionName }}</p>
-                </div>
-              </div>
-              <span
-                class="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium transition-colors"
-                :class="getValueColor(option.value)"
-              >
-                {{ option.value }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-
-      <!-- Summary Stats -->
-      <!-- <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg">
-      <div class="p-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <div class="text-2xl font-bold text-blue-600">15</div>
-            <div class="text-sm text-gray-600">Room Size (sqm)</div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-blue-600">1</div>
-            <div class="text-sm text-gray-600">Guest Capacity</div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-blue-600">3</div>
-            <div class="text-sm text-gray-600">Bathrooms</div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-green-600">{{ includedFeaturesCount }}</div>
-            <div class="text-sm text-gray-600">Included Features</div>
-          </div>
-        </div>
-      </div>
-    </div>-->
-    </div>
-
-
-
-
-    <!-- <div class="px-6 py-2">
-      <h2 class="font-semibold text-lg -900 mb-4">{{ $t('appServices.hotel.getStarted') }} :</h2>
-      <div class="space-y-3 text-gray-600 text-sm">
-        <p>{{ $t('appServices.hotel.freeCancellation') }}</p>
-        <p>
-          {{ $t('appServices.hotel.chargeDate') }} {{ $t('appServices.hotel.ifYouCancel') }}
-          {{ $t('appServices.hotel.apartmentDescription') }}
-        </p>
-
-        <template v-if="expanded">
-          <p>
-            {{ $t('appServices.hotel.bookNowAgreement') }}
-          </p>
-        </template>
-
-<button class="text-customBlue font-medium flex items-center" @click="toggleExpanded">
-  {{ $t('read') }} {{ expanded ? $t('less') : $t('Plus') }}
-  <ChevronDownIcon size="16" class="ml-1 mt-1.5 transform transition-transform" :class="{ 'rotate-180': expanded }" />
-</button>
-</div>
-</div> -->
+  
     <!-- User Details Form start-->
     <div class="bg-white rounded-xl px-6 py-2 shadow-sm">
       <h2 class="font-semibold text-lg text-gray-900 mb-4">{{ $t('appServices.hotel.enterYourDetails') }}</h2>
@@ -713,14 +489,9 @@ const defaultValues = {
   emailAddress: '',
   countryCode: '+237'
 }
-// const { t } = useI18n();
-// const valid = ref({
-//   firstName: true,
-//   lastName: null,
-//   email: null,
-//   phone: null
-// });
-// Props
+const reservationItems = computed(()=>{
+  return hotelStore.reservationItems;
+})
 const props = defineProps({
   roomId: {
     type: Number
@@ -744,18 +515,6 @@ const firstNameTouched = ref(false)
 const lastNameTouched = ref(false)
 const emailTouched = ref(false)
 const phoneTouched = ref(false)
-// const selectedPackage = ref('Individual');
-
-// const Package = computed(() => [
-//   { value: 'Individual', label: t('appServices.hotel.Individual') },
-//   { value: 'Group', label: t('appServices.hotel.Group') },
-//   { value: 'Corporate', label: t('appServices.hotel.Corporate') },
-//   { value: 'Wedding', label: t('appServices.hotel.Wedding') },
-//   { value: 'Honeymoon', label: t('appServices.hotel.Honeymoon') },
-//   { value: 'Standard', label: t('appServices.hotel.Standard') },
-// ]);
-
-// Fonction pour initialiser les champs depuis les props ou les defaults
 const initializeForm = () => {
   const guestInfo = props.roomData?.guestInfo || {}
 
@@ -774,30 +533,7 @@ const emit = defineEmits(['next', 'back']);
 const Rooms = ref([]);
 const options = ref([]);
 const sizeValue = ref(0);
-// const priceOption = ref([
-//   { id: 1, name: 'Car Park', price: 0 },
-//   { id: 2, name: 'Wine', price: 0 },
-//   { id: 3, name: 'Pet', price: 0 }
-// ]);
 
-// const setOptionsPrice = () =>{
-//   if(selectedOptions.value.carPark){
-//     priceOption.value[0].price = getOptionPrice('carPark');
-//     console.log('priceOption.value.price',priceOption.value.price)
-//     console.log('getOptionPrice carkPark',getOptionPrice('carPark'))
-// }
-//   if(selectedOptions.value.carPark){
-//     priceOption.value[1].price = getOptionPrice('wine');
-//   }
-
-//   if(selectedOptions.value.carPark){
-//     priceOption.value[2].price = getOptionPrice('pet');
-//   }
-// hotelStore.priceOption = priceOption.value;
-// console.log('priceOption store',hotelStore.priceOption)
-// }
-
-// Options supplémentaires
 const selectedOptions = ref({
   carPark: false,
   wine: false,
@@ -812,18 +548,6 @@ const verifyCarParkOptionSelected = () => {
 const selectedVehicle = ref('motorcycle');
 const selectedParkingType = ref('default');
 const expanded = ref(false);
-
-// Données de la chambre
-// const stars = ref([1, 2, 3, 4, 5]);
-
-const amenitiesStatus = computed(() => {
-  return {
-    wifi: hotelStore.this_hotel?.amenities?.includes('wifi') || false,
-    breakfast: hotelStore.this_hotel?.amenities?.includes('breakfast') || false,
-    pool: hotelStore.this_hotel?.amenities?.includes('pool') || false,
-    gym: hotelStore.this_hotel?.amenities?.includes('gym') || false
-  };
-});
 
 const toggleOption = (option) => {
   selectedOptions.value[option] = !selectedOptions.value[option];
@@ -851,50 +575,12 @@ const setSelectedParkingType = (type) => {
   selectedParkingType.value = type;
 };
 
-// const toggleExpanded = () => {
-//   expanded.value = !expanded.value;
-// };
-
 const handleBack = () => {
   emit('back');
   hotelStore.listHotel();
   router.back()
   console.log('handleBack');
 };
-// const firstNameValid = ref(null);
-// const lastNameValid = ref(null);
-// const emailValid = ref(null);
-// const phoneValid = ref(null);
-
-// // Fonctions de validation
-// const validateFirstName = () => {
-//   firstNameValid.value = firstName.value.length >= 2;
-// };
-
-// const validateLastName = () => {
-//   lastNameValid.value = lastName.value.length >= 2;
-// };
-
-// const validateEmail = () => {
-//   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//   emailValid.value = emailRegex.test(emailAddress.value);
-// };
-
-// const validatePhoneNumber = () => {
-//   // Supprime tous les caractères non numériques
-//   const cleanedPhone = phoneNumber.value.replace(/\D/g, '');
-//   phoneValid.value = cleanedPhone.length >= 8 && cleanedPhone.length <= 15;
-// };
-
-// Validation globale avant soumission
-// const isFormValid = () => {
-
-//   return validateFirstName(firstName) &&
-//     validateLastName(lastName) &&
-//     validateEmail(emailAddress) &&
-//     validatePhoneNumber(phoneNumber);
-
-// };
 const handleNext = () => {
   firstNameTouched.value = true;
   lastNameTouched.value = true;
@@ -992,29 +678,7 @@ const loadRooms = async () => {
     Rooms.value = roomsResponse.data;
     console.log('Rooms chargés:', Rooms.value);
     console.log('props.roomId', props.roomId)
-    if (Rooms.value.length > 0) {
-      const cheapestRoom = Rooms.value.filter((e) => {
-        console.log('e.id', e.id)
-        return e.id == props.roomId;
-      });
-      RoomsWithLowPrice.value = cheapestRoom[0];
-      console.log('Chambre la moins chère:', cheapestRoom);
-      // loadOptions(RoomsWithLowPrice.value.id); // Charger les options pour la chambre la moins chère
-      hotelStore.roomPrice = RoomsWithLowPrice.value.price; // Mettre à jour le store avec la chambre la moins chère
-      const optionIds = RoomsWithLowPrice.value.options?.map(opt => opt.optionId) || [];
-      console.log("IDs des options:", optionIds);
-      await loadOptions();
-      const roomSizeOption = options.value.find(opt => opt.optionName === "Room Size (sqm)");
-
-      // Ensuite, tu peux accéder à la valeur "15" comme ceci :
-      sizeValue.value = roomSizeOption?.values?.find(v => v === "15");
-
-      console.log(sizeValue); // Affichera "15" si elle est présente
-
-
-    } else {
-      RoomsWithLowPrice.value = {}; // ou null si tu préfères
-    }
+   
 
   } catch (error) {
     console.error('Erreur lors du chargement:', error);

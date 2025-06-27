@@ -65,48 +65,56 @@
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200">
-            <template v-for="type in rooms" :key="type.accommodationType">
-              <template tr v-for="gp in type.groups" :key="gp.accommodationType">
-                <tr v-for="room in gp.products" :key="room.id" class="bg-white hover:bg-gray-50 transition-colors">
-                  <td class="px-6 py-4">{{ gp.accommodationType }}</td>
+            <template v-for="(type, tyIn) in rooms" :key="type.accommodationType">
+              <template tr v-for="(gp, index) in type.groups" :key="gp.accommodationType">
+                <tr v-for="(room, id) in gp.products" :key="room.id"
+                  class="bg-white hover:bg-gray-50 transition-colors">
+                  <td class="px-6 py-4" v-if="index == 0" :rowspan="type.groups.length">{{ gp.accommodationType }}</td>
                   <td class="px-6 py-4">
                     <div class="items-start text-sm text-gray-600 inline-flex">
                       <Users class="w-4 h-4 mr-2" />
                       {{ getRoomDetail(room, 'Maximum Occupancy') }} {{ $t('people') }}
-                      {{ getRoomDetail(room, 'Maximum Occupancy') > 1 ? 's' : '' }}
 
                     </div>
                   </td>
                   <td class="px-6 py-4">
-                    <div class="flex flex-column gap-2">
-
-                      <div v-for="(option, index) in room.options.slice(0, 3)" :key="index"
+                    <div class="flex flex-col gap-2">
+                      <div v-for="(option, index) in room.options.sort().slice(0, 6)" :key="index"
                         class="flex items-center text-sm text-gray-600">
                         <component :is="getOptionIcon(option.option.optionName)" class="w-4 h-4 mr-1 text-purple-500" />
-                        <span>{{ option.optionName }}: {{ option.value }}</span>
+                        <span>{{ option.option.optionName }}: {{ option.value }}</span>
                       </div>
 
 
-                      <span v-if="room.options.length > 3" class="text-sm text-purple-600">
-                        +{{ room.options.length - 3 }}
+                      <span v-if="room.options.length > 6" class="text-sm text-purple-600">
+                        +{{ room.options.length - 6 }}
                       </span>
                     </div>
                   </td>
                   <td class="px-6 py-4 text-right">
-                    <div class="text-lg font-bold text-gray-800">
+                    <div class="text-sm font-bold text-gray-800">
                       {{ formatPrice(room.price) }}
                     </div>
                     <!-- <div class="text-sm text-gray-600">Taxes incluses</div> -->
                   </td>
-                  <td class="px-6 py-4 text-right">
-                    <select>
+                  <td class="px-6 py-4 text-right w-10">
+                    <select @change="handleRoomQuantityChange(room, Number($event.target.value))"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white text-gray-700">
                       <option value="0">0</option>
-                      <option v-for="i in gp.count" :value="i">{{ i }}</option>
+                      <option v-for="i in gp.count" :key="i" :value="i">{{ i }} - {{ formatPrice(room.price) }}</option>
                     </select>
+
                   </td>
-                  <td class="px-6 py-4 text-right">
-                    <button @click="booking(room)" class="
-                    px-6 py-2 rounded-md text-white text-sm font-medium transition bg-orange-600 hover:bg-orange-700 ">
+                  <td class=" w-2/12 px-6 py-4 text-left align-top " :rowspan="totalRows" v-if="tyIn == 0">
+
+                    <div class="flex flex-col gap-2 mb-5" v-if="reservationItems && reservationItems.length>0">
+                      <span>{{ reservationItems.length }} room(s) for</span>
+                      <span class="text-gray-600 text-sm">{{ formatPrice(totalReservationPrice) }}</span>
+
+                    </div>
+
+                    <button @click="booking" :disabled="!reservationItems || reservationItems.length == 0" class="
+                    px-6 py-2 rounded-md text-white text-sm font-medium transition bg-orange-600 hover:bg-orange-700 w-full">
                       {{ $t('book') }}
                     </button>
                   </td>
@@ -129,37 +137,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { BedDouble, Eye, Building2, Check, Users, TrendingUp } from 'lucide-vue-next'
 import { formatPrice } from '../../utils/functions'
 import router from '../../router'
-const images = ref(
-  "https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&h=600&fit=crop"
-)
+
 const props = defineProps({
   rooms: {
     type: Array,
     required: true
   }
 })
-
+const reservationItems = ref([]);
 const emit = defineEmits(['selectedRoom,bookRoom'])
 
-const openRoomModal = (room) => {
-  emit('selectedRoom', room)
-  console.log('Ouvrir modal pour :', room)
-
-}
 
 const getRoomDetail = (room, key) => {
+  console.log('room', room),
+    console.log('room', room.options);
   const found = room.options?.find(opt =>
-    opt.optionName?.toLowerCase() === key.toLowerCase()
+    opt.option.optionName?.toLowerCase() === key.toLowerCase()
   )
   return found?.value || '—'
 }
 
 
-
+const totalRows = computed(() => {
+  if (!props.rooms || !props.rooms.length) return 0
+  return props.rooms.reduce((typeAcc, type) => {
+    return typeAcc + type.groups.reduce((groupAcc, group) => {
+      return groupAcc + (group.products ? group.products.length : 0)
+    }, 0)
+  }, 0)
+})
 
 const getOptionIcon = (optionName) => {
   switch (optionName.toLowerCase()) {
@@ -174,7 +184,27 @@ const getOptionIcon = (optionName) => {
   }
 }
 
-const booking = (room) => {
-  emit('bookRoom', room);
+const booking = () => {
+  emit('bookRoom', reservationItems);
 }
+// Gérer le changement de quantité
+const handleRoomQuantityChange = (room, quantity) => {
+  // Retirer la chambre si quantité = 0
+  reservationItems.value = reservationItems.value.filter(item => item.id !== room.id)
+  if (quantity > 0) {
+    // Ajouter ou mettre à jour la chambre dans la liste
+    reservationItems.value.push({
+      id: room.id,
+      quantity,
+      options: room.options,
+      room
+    })
+  }
+  //emit('selectedRoom', reservationItems.value)
+}
+const totalReservationPrice = computed(() => {
+  return reservationItems.value.reduce((sum, item) => {
+    return sum + (item.quantity * (item.room.price || 0))
+  }, 0)
+})
 </script>

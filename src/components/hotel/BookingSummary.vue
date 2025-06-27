@@ -24,6 +24,7 @@ const { locale } = storeToRefs(useLanguage); // ✅ Conserve la réactivité
 import jsPDF from 'jspdf';
 import domtoimage from 'dom-to-image';
 import { formatPrice } from "../../utils/functions";
+import StarIcon from "../../icons/StarIcon.vue";
 
 const hotelStore = useMIHStore();
 const dataStore = useDataStore();
@@ -63,7 +64,6 @@ watch([checkInDate, checkOutDate], ([newCheckIn, newCheckOut]) => {
   hotelStore.dateDepart = newCheckOut;
 });
 
-const selectedRoom = ref("King bed stylish Apartment with Loft style family room");
 const { t } = useI18n();
 
 function getTotalPersons(rooms) {
@@ -82,34 +82,8 @@ const priceDetails = computed(() => [
     label: t('appServices.hotel.RoomsAndOffer'),
     price: (Number(hotelStore?.roomPrice) || 0) * stayLength.value,
   },
-  // {
-  //   label: t('appServices.hotel.carOption'),
-  //   price: stayLength.value > 0
-  //     ? Number(hotelStore?.carParkPrice) * stayLength.value || 0
-  //     : Number(hotelStore?.carParkPrice) || 0,
-  // },
-  // {
-  //   label: t('appServices.hotel.wineOption'),
-  //   price: Number(hotelStore?.winePrice) || 0,
-  // },
-  // {
-  //   label: t('appServices.hotel.petOption'),
-  //   price: Number(hotelStore?.petPrice) || 0,
-  // },
-  // {
-  //   label: t('appServices.hotel.8%VAT'),
-  //   price: 2050,
-  // },
-  // {
-  //   label: t('appServices.hotel.cityTax'),
-  //   price: 1600,
-  // },
 ]);
 
-// const test = () => {
-//   console.log("check date in summary ", checkInDate.value, checkOutDate.value);
-//   console.log("data store", dataStore.searchFrom);
-// }
 watch(
   () => dataStore.searchFrom,
   (newValue) => {
@@ -165,11 +139,6 @@ const formatDate = (dateValue) => {
 
   if (isNaN(inputDate.getTime())) return "Invalid date";
 
-  // Si c'est aujourd'hui, on force l'année en cours
-  // const isSameDay =
-  //   inputDate.getDate() === today.getDate() &&
-  //   inputDate.getMonth() === today.getMonth();
-
 
   inputDate.setFullYear(today.getFullYear()); // on corrige l'année si nécessaire
 
@@ -185,9 +154,53 @@ const formatDate = (dateValue) => {
 
   return formattedDate;
 };
+const amenitiesStatus = computed(() => {
+  return {
+    wifi: hotelStore.this_hotel?.amenities?.includes('wifi') || false,
+    breakfast: hotelStore.this_hotel?.amenities?.includes('breakfast') || false,
+    pool: hotelStore.this_hotel?.amenities?.includes('pool') || false,
+    gym: hotelStore.this_hotel?.amenities?.includes('gym') || false
+  };
+});
+
+const reservationItems = computed(()=>{
+  return hotelStore.reservationItems;
+})
 </script>
 
 <template>
+  <div class="bg-white rounded-xl shadow-sm mb-2 p-3">
+    <div class="flex items-start">
+      <div class="flex flex-col">
+        <div class="flex gap-3">
+          <span>{{ $t('hotel') }}</span>
+          <div class="flex gap-1">
+            <span v-for="star in 5" :key="star" class="">
+              <StarIcon />
+            </span>
+          </div>
+        </div>
+
+        <h2 class="text-xl font-semibold text-gray-900 mb-2 mt-2" role="title">
+          {{ hotelStore.this_hotel?.name || $t("notAvaible") }} <span class="text-gray-700">•</span>
+        </h2>
+        <div class="text-gray-700">
+          {{ hotelStore.this_hotel?.location  }}
+        </div>
+        <div class="flex items-start justify-between space-x-3">
+
+          <div class="flex space-x-3 mt-1 ">
+            <WifiIcon v-if="amenitiesStatus.wifi" size="18" class="text-gray-600" />
+            <CoffeeIcon v-if="amenitiesStatus.breakfast" size="18" class="text-gray-600" />
+            <WavesLadderIcon v-if="amenitiesStatus.pool" size="18" class="text-gray-600" />
+            <DumbbellIcon v-if="amenitiesStatus.gym" size="18" class="text-gray-600" />
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
   <div class="bg-white rounded-xl shadow-sm ">
     <div ref="invoiceRef" class="p-6">
       <h3 class="text-lg font-semibold text-gray-900 mb-4">{{ $t('appServices.hotel.reservationSummary') }}</h3>
@@ -207,17 +220,21 @@ const formatDate = (dateValue) => {
       <div class="py-4 border-b">
         <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.totalLengthOfStay') }}
         </div>
-        <div class="font-medium flex">
-          <span>{{ stayLength }}</span>
-          <CalendarIcon size="16" class="ml-3 mt-1" />
+        <div class="font-medium flex items-center">
+          <div class="self-center items-center h-full">
+            <span>{{ stayLength }} {{ $t('night(s)') }}</span>
+          </div>
         </div>
       </div>
-      <!-- <button @click="test">test</button> -->
-      <!-- <div class="py-4 border-b">
-        <div class="text-sm text-gray-600 mb-1">{{ $t('appServices.hotel.youSelected') }}</div>
-        <div class="font-medium">{{ selectedRoom }}</div> -->
-      <!-- <button class="text-customBlue text-sm mt-1">{{$t('appServices.hotel.changeYourSelection')}}</button> -->
-      <!-- </div> -->
+         <div class="py-4 border-b">
+        <div class="text-sm text-gray-600 mb-1">{{ $t('Vous avez sélectionné') }}
+        </div>
+        <div class="font-medium flex items-center">
+          <div class="self-center items-center h-full">
+           {{reservationItems.length}} chambres pour {{ hotelStore.totalPerson }} adultes
+          </div>
+        </div>
+      </div> 
 
       <div class="py-4">
         <h4 class="font-medium mb-2">{{ $t('appServices.hotel.yourPriceSummary') }}</h4>

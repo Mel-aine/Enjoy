@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import RoomDetails from '@/components/hotel/RoomDetails.vue';
 import BookingSummary from '@/components/hotel/BookingSummary.vue';
 import BookingPayement from '@/components/hotel/BookingPayement.vue';
@@ -14,13 +14,12 @@ import router from '../../router';
 
 
 const hotelId = router.currentRoute.value.params.hotelId;
-const roomId = router.currentRoute.value.params.roomId;
 
-
+const reservationItems = computed(()=>{
+  return hotelStore.reservationItems;
+})
 
 const hotelStore = useMIHStore()
-
-
 const step2Active = ref(true);
 const step3Active = ref(false);
 const step4Active = ref(false);
@@ -213,8 +212,8 @@ const handleSubmitPayment = async (idU, idR) => {
       <ProgressSteps
         :steps="[t('appServices.hotel.datesRooms'), t('appServices.hotel.extras'), t('appServices.hotel.payment'), t('appServices.hotel.confirmation')]"
         :currentStep="step" />
-      <RoomDetails v-if="step2Active && !step3Active && !step4Active && roomId" :roomData="formData.roomDetails"
-        @next="goToStep3" :room-id="roomId" @back="handleBackStep" />
+      <RoomDetails v-if="step2Active && !step3Active && !step4Active " :roomData="formData.roomDetails"
+        @next="goToStep3" :room-id="reservationItems[0]" @back="handleBackStep" />
       <BookingPayement v-if="step3Active && !step3Completed && !step4Active" @next="goToStep4" @back="handleBackStep" />
       <div v-if="isReserved">
         <BookingConfirm v-if="step4Active" :bookingData="reservationDetail" @back="handleBackStep" />

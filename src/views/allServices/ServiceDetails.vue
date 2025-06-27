@@ -2,7 +2,8 @@
   <template v-if="categoryFlags.isHotel">
     <EHotelDetails />
   </template>
-  <div class="min-h-screen bg-gray-50" v-if="service">
+  <template v-else>
+    <div class="min-h-screen bg-gray-50" v-if="service">
     <div class="relative w-full  top-0 overflow-hidden" >
       <div class=" inset-0 transition-opacity duration-700 ease-in-out flex">
         <div class=" inset-0 flex justify-center items-center transition-opacity duration-700 ease-in-out">
@@ -210,6 +211,7 @@
     </div>
 
   </div>
+  </template>
 </template>
 
 <script setup>
@@ -319,7 +321,6 @@ function formatHour(hour) {
 onMounted(async () => {
   const result = await getServiceById(hotelId);
   service.value = result.data;
-  getDisponibility()
 })
 
 

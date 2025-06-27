@@ -24,6 +24,7 @@ export const useMIHStore = defineStore("MIH", {
     isSpinnerDisplayed: false,
     allCategories: [],
     idfound: null,
+    reservationItems:[]
   }),
 
   actions: {
@@ -66,6 +67,9 @@ export const useMIHStore = defineStore("MIH", {
     getRoomNumber(rooms) {
       this.roomNumber = rooms.length;
       return this.roomNumber;
+    },
+    setReservationItems(rs){
+      this.reservationItems = rs;
     }
   },
   //   ,
